@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void adjustNavColor(BuildContext context){
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarIconBrightness:
-      Theme.of(context).brightness == Brightness.dark
-          ? Brightness.light
-          : Brightness.dark,
-      systemNavigationBarDividerColor: Colors.black,
-      systemNavigationBarColor: Theme.of(context).canvasColor));
+//  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+//      systemNavigationBarIconBrightness:
+//      Theme.of(context).brightness == Brightness.dark
+//          ? Brightness.light
+//          : Brightness.dark,
+//      systemNavigationBarDividerColor: Colors.black,
+//      systemNavigationBarColor: Theme.of(context).canvasColor));
 }
 
 class LifecycleEventHandler extends WidgetsBindingObserver {

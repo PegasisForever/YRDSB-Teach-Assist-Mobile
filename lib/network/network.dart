@@ -8,7 +8,7 @@ import '../firebaseMsg.dart';
 
 const String baseUrl = "http://192.168.1.22:1560/";
 
-Future<List> regi(User user) async {
+Future<String> regi(User user) async {
   Response response = await post(baseUrl + "regi",
       body: jsonEncode({"user": user, "token": firebaseToken}));
 
@@ -17,7 +17,7 @@ Future<List> regi(User user) async {
     throw HttpException(statusCode.toString());
   }
 
-  return jsonDecode(response.body);
+  return response.body;
 }
 
 Future<void> deregi(User user) async{
@@ -30,4 +30,16 @@ Future<void> deregi(User user) async{
   }
 
   return;
+}
+
+Future<String> getMark(User user) async {
+  Response response = await post(baseUrl + "getmark",
+      body: jsonEncode({"number": user.number, "password": user.password}));
+
+  int statusCode = response.statusCode;
+  if (statusCode != 200) {
+    throw HttpException(statusCode.toString());
+  }
+
+  return response.body;
 }

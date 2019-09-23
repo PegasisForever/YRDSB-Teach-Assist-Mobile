@@ -36,7 +36,11 @@ class Strings {
       "cancel":"Cancel",
       "remove":"Remove",
       "removing":"Removing...",
-      "long_press_and_drag_to_reorder_the_list":"Long press and drag to reorder the list"
+      "long_press_and_drag_to_reorder_the_list":"Long press and drag to reorder the list",
+      "report_for_student":"Report for %s",
+      "room_number":"Room %s",
+      "marks_unavailable":"Marks unavailable",
+      "period_number":"Period %s"
     },
     "zh": {
       "login_your_account": "登录帐号：",

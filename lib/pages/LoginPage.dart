@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/res/Strings.dart';
@@ -25,18 +27,8 @@ class _LoginPageState extends State<LoginPage> {
   ErrorText _passwordErrorText = ErrorText(null);
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(new LifecycleEventHandler(() {
-      adjustNavColor(context);
-      return;
-    }));
-  }
-
-  @override
   Widget build(BuildContext context) {
     adjustNavColor(context);
-
     return Scaffold(
       body: Builder(
         builder: (BuildContext context){
@@ -136,6 +128,9 @@ class _LoginPageState extends State<LoginPage> {
                               var res=await regi(user);
                               addUser(user);
                               setCurrentUser(user);
+
+                              saveCourseListOf(user.number, res);
+
                               Navigator.pushReplacementNamed(context, "/");
                             }catch(e){
                               _handleError(e,context);
@@ -159,7 +154,6 @@ class _LoginPageState extends State<LoginPage> {
         },
       ));
   }
-
 
   _handleError(Exception e,BuildContext context){
     if (e is SocketException) {

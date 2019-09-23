@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/res/Strings.dart';
@@ -45,6 +46,7 @@ class _EditAccountState extends State<EditAccount> {
 
   @override
   Widget build(BuildContext context) {
+    adjustNavColor(context);
     var _oldUser = widget.user;
     return Scaffold(
         appBar: AppBar(
@@ -199,11 +201,13 @@ class _EditAccountState extends State<EditAccount> {
 
                           try {
                             if (_addNew) {
-                              await regi(user);
+                              var res= await regi(user);
+                              saveCourseListOf(user.number, res);
                               addUser(user);
                             } else {
                               await deregi(_oldUser);
-                              await regi(user);
+                              var res= await regi(user);
+                              saveCourseListOf(user.number, res);
                               editUser(user, _oldUser.number);
                             }
 
@@ -304,17 +308,5 @@ class _EditAccountState extends State<EditAccount> {
     } else {
       showSnackBar(context, e.toString());
     }
-  }
-}
-
-class _editAccountAppbar extends StatefulWidget {
-  @override
-  __editAccountAppbarState createState() => __editAccountAppbarState();
-}
-
-class __editAccountAppbarState extends State<_editAccountAppbar> {
-  @override
-  Widget build(BuildContext context) {
-    return null;
   }
 }

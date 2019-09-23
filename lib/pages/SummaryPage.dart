@@ -2,8 +2,11 @@ import 'package:after_layout/after_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
+import 'package:ta/network/network.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:sprintf/sprintf.dart';
 import '../tools.dart';
 import '../widgets/user_accounts_drawer_header.dart' as UADrawerHeader;
 
@@ -20,27 +23,19 @@ class _SummaryPageState extends State<SummaryPage>
   var drawerHeaderOpened=false;
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(new LifecycleEventHandler(() {
-      adjustNavColor(context);
-      return;
-    }));
-  }
-
-  @override
   Widget build(BuildContext context) {
     if (userList.length == 0) {
       return Container();
     }
 
+    adjustNavColor(context);
     Strings.updateCurrentLanguage(context);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Report for 349891234',
+            sprintf(Strings.get("report_for_student"),[currentUser.getName()]),
             maxLines: 2,
           ),
           bottom: TabBar(
@@ -139,42 +134,12 @@ class _SummaryPageState extends State<SummaryPage>
         body: TabBarView(
           children: <Widget>[
             RefreshIndicator(
-              onRefresh: () {
-                return;
+              onRefresh: () async {
+                saveCourseListOf(currentUser.number, await getMark(currentUser));
               },
               child: ListView(
                 padding: const EdgeInsets.all(8),
-                children: <Widget>[
-                  Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: InkWell(
-                      onTap: (){},
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text("Functions and Relations",
-                                style: Theme.of(context).textTheme.title),
-                            SizedBox(height: 4),
-                            Text("Rm. 233",
-                                style: Theme.of(context).textTheme.subhead),
-                            SizedBox(height: 16),
-                            LinearPercentIndicator(
-                              animation: true,
-                              lineHeight: 20.0,
-                              animationDuration: 500,
-                              percent: 0.9,
-                              center: Text("90.0%"),
-                              linearStrokeCap: LinearStrokeCap.roundAll,
-                              progressColor: Colors.lightGreenAccent,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+                children: _getsummaryCards(),
               ),
             ),
             Container()
@@ -184,12 +149,66 @@ class _SummaryPageState extends State<SummaryPage>
     );
   }
 
+  List<Widget> _getsummaryCards(){
+    var list=List<Widget>();
+    var courses=getCourseListOf(currentUser.number);
+
+    courses.forEach((course){
+      var infoStr=[];
+      if (course.block!=""){
+        infoStr.add(sprintf(Strings.get("period_number"),[course.block]));
+      }
+      if (course.room!=""){
+        infoStr.add(sprintf(Strings.get("room_number"),[course.room]));
+      }
+      list.add(Card(
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: (){},
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(course.name==""?course.code:course.name,
+                    style: Theme.of(context).textTheme.title),
+                SizedBox(height: 4),
+                Text(infoStr.join("  -  "),
+                    style: Theme.of(context).textTheme.subhead),
+                SizedBox(height: 16),
+                course.overallMark!="N/A"?
+                LinearPercentIndicator(
+                  animation: true,
+                  lineHeight: 20.0,
+                  animationDuration: 500,
+                  percent: double.parse(course.overallMark)/100,
+                  center: Text(course.overallMark+"%",
+                  style: TextStyle(color: Colors.black)),
+                  linearStrokeCap: LinearStrokeCap.roundAll,
+                  progressColor: Colors.lightGreenAccent,
+                ):LinearPercentIndicator(
+                  lineHeight: 20.0,
+                  percent: 0,
+                  center: Text(Strings.get("marks_unavailable"),
+                      style: TextStyle(color: Colors.black)),
+                  linearStrokeCap: LinearStrokeCap.roundAll,
+                  progressColor: Colors.lightGreenAccent,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ));
+    });
+
+    return list;
+  }
+
   @override
   void afterFirstLayout(BuildContext context) {
     if (userList.length == 0) {
       Navigator.pushReplacementNamed(context, "/login");
     } else {}
-    adjustNavColor(context);
   }
 
   List<Widget> getAccountSelectorList(){
@@ -209,6 +228,7 @@ class _SummaryPageState extends State<SummaryPage>
             drawerHeaderOpened=false;
             _accountSelectorHeight=0;
           });
+          Navigator.pop(context);
         },
       ));
     }
