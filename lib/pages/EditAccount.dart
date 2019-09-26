@@ -50,9 +50,12 @@ class _EditAccountState extends State<EditAccount> {
     var _oldUser = widget.user;
     return Scaffold(
         appBar: AppBar(
+          brightness: Brightness.dark,
+          iconTheme: new IconThemeData(color: Colors.white),
           title: Text(_oldUser.number != ""
               ? Strings.get("edit") + " " + _oldUser.number
-              : Strings.get("add_a_new_account")),
+              : Strings.get("add_a_new_account"),
+              style: TextStyle(color: Colors.white)),
           actions: <Widget>[
             Builder(
               builder: (context) {

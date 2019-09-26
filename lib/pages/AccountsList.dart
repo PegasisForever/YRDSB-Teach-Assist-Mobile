@@ -16,7 +16,10 @@ class _AccountsListState extends State<AccountsList> {
     adjustNavColor(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(Strings.get("accounts_list")),
+        brightness: Brightness.dark,
+        iconTheme: new IconThemeData(color: Colors.white),
+        title: Text(Strings.get("accounts_list"),
+          style: TextStyle(color: Colors.white),),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),

@@ -19,9 +19,9 @@ class SmallMark{
   SmallMark.fromJSON(Map<String, dynamic> json){
     if (json["available"]){
       this.available=true;
-      this.total=double.parse(json["total"]);
-      this.get=double.parse(json["get"]);
-      this.weight=double.parse(json["weight"]);
+      this.total=json["total"];
+      this.get=json["get"];
+      this.weight=json["weight"];
     }else{
       this.available=false;
     }
@@ -72,10 +72,10 @@ class Weight{
 
   Weight.fromJSON(Map<String, dynamic> json){
     if (json.containsKey("W")){
-      W=double.parse(json["W"]);
+      W=json["W"];
     }
-    CW=double.parse(json["CW"]);
-    SA=double.parse(json["SA"]);
+    CW=json["CW"];
+    SA=json["SA"];
   }
 
   Weight.blank();
@@ -109,7 +109,7 @@ class Course{
   String code;
   String block;
   String room;
-  String overallMark;
+  double overallMark;
 
 
   Course.fromJSON(Map<String, dynamic> json){

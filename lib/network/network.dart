@@ -5,10 +5,13 @@ import 'package:http/http.dart';
 import 'package:ta/model/User.dart';
 
 import '../firebaseMsg.dart';
+import 'package:flutter/foundation.dart';
 
-const String baseUrl = "http://192.168.1.22:1560/";
+
+const String baseUrl = kReleaseMode?"https://api.pegasis.site/yrdsb_ta/":"http://192.168.1.22:5004/";
 
 Future<String> regi(User user) async {
+  print(baseUrl);
   Response response = await post(baseUrl + "regi",
       body: jsonEncode({"user": user, "token": firebaseToken}));
 

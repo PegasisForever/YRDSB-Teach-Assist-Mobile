@@ -22,11 +22,16 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.7.3
+  flutter_native_splash: ^0.1.8+2
 
 flutter_icons:
   android: false
   ios: true
   image_path: "assets/icon/ios_launcher_icon.png"
+
+flutter_native_splash:
+  image: assets/icon/splash_icon.png
+  color: "03a9f4"
 
 flutter:
   uses-material-design: true
