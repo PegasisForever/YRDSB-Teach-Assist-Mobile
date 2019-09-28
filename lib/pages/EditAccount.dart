@@ -12,15 +12,9 @@ import 'package:ta/widgets/EditText.dart';
 import '../tools.dart';
 
 class EditAccount extends StatefulWidget {
-  EditAccount() {
-    this.user = User.blank();
-  }
+  EditAccount(this.user) ;
 
-  EditAccount.fromUser(User user) {
-    this.user = user.copy();
-  }
-
-  User user;
+  final User user;
 
   @override
   _EditAccountState createState() => _EditAccountState(user);
@@ -46,7 +40,6 @@ class _EditAccountState extends State<EditAccount> {
 
   @override
   Widget build(BuildContext context) {
-    adjustNavColor(context);
     var _oldUser = widget.user;
     return Scaffold(
         appBar: AppBar(

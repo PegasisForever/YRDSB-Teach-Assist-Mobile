@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         "/": (BuildContext context) => new SummaryPage(),
         "/login": (BuildContext context) => new LoginPage(),
         "/accounts_list": (BuildContext context) => new AccountsList(),
-        "/accounts_list/edit": (BuildContext context) => new EditAccount(),
+        "/accounts_list/edit": (BuildContext context) => new EditAccount(User.blank()),
       },
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

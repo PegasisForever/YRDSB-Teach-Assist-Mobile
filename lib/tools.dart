@@ -1,16 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-void adjustNavColor(BuildContext context){
-//  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-//      systemNavigationBarIconBrightness:
-//      Theme.of(context).brightness == Brightness.dark
-//          ? Brightness.light
-//          : Brightness.dark,
-//      systemNavigationBarDividerColor: Colors.black,
-//      systemNavigationBarColor: Theme.of(context).canvasColor));
-}
 
 class LifecycleEventHandler extends WidgetsBindingObserver {
   LifecycleEventHandler(this.resumeCallBack);
@@ -29,4 +18,22 @@ class LifecycleEventHandler extends WidgetsBindingObserver {
 void showSnackBar(BuildContext context, String text) {
   final snackBar = SnackBar(content: Text(text));
   Scaffold.of(context).showSnackBar(snackBar);
+}
+
+String getRoundString(dynamic num,int digit){
+  if (!(num is double)){
+    return num;
+  }
+
+  var str=num.toStringAsFixed(digit);
+  while (str[str.length-1]=="0"){
+    str=str.substring(0,str.length-1);
+
+    if (str[str.length-1]=="."){
+      str=str.substring(0,str.length-1);
+      break;
+    }
+  }
+
+  return str;
 }

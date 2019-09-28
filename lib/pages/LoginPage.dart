@@ -28,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    adjustNavColor(context);
     return Scaffold(
       body: Builder(
         builder: (BuildContext context){

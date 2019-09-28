@@ -3,8 +3,6 @@ import 'package:ta/model/User.dart';
 import 'package:ta/pages/EditAccount.dart';
 import 'package:ta/res/Strings.dart';
 
-import '../tools.dart';
-
 class AccountsList extends StatefulWidget {
   @override
   _AccountsListState createState() => _AccountsListState();
@@ -13,7 +11,6 @@ class AccountsList extends StatefulWidget {
 class _AccountsListState extends State<AccountsList> {
   @override
   Widget build(BuildContext context) {
-    adjustNavColor(context);
     return Scaffold(
       appBar: AppBar(
         brightness: Brightness.dark,
@@ -62,7 +59,7 @@ class _AccountsListState extends State<AccountsList> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => EditAccount.fromUser(user)),
+                  builder: (context) => EditAccount(user)),
             );
           },
         ),

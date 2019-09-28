@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:ta/dataStore.dart';
 
+import '../tools.dart';
+
 class SmallMark{
   bool available;
   double total;
@@ -14,6 +16,14 @@ class SmallMark{
 
   SmallMark.unavailable(){
     this.available=false;
+  }
+
+  get percent{
+    if (!available){
+      return "N/A";
+    }else{
+      return "${getRoundString((get/total*100),2)}%";
+    }
   }
 
   SmallMark.fromJSON(Map<String, dynamic> json){
@@ -111,6 +121,9 @@ class Course{
   String room;
   double overallMark;
 
+  get displayName{
+    return this.name == "" ? this.code : this.name;
+  }
 
   Course.fromJSON(Map<String, dynamic> json){
     startTime=DateTime.parse(json["start_time"]);

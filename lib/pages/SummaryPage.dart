@@ -8,8 +8,10 @@ import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:sprintf/sprintf.dart';
+import 'package:ta/res/Themes.dart';
 import '../tools.dart';
 import '../widgets/user_accounts_drawer_header.dart' as UADrawerHeader;
+import 'detailpage/DetailPage.dart';
 
 class SummaryPage extends StatefulWidget {
   SummaryPage() : super();
@@ -22,7 +24,7 @@ class _SummaryPageState extends State<SummaryPage>
     with AfterLayoutMixin<SummaryPage> {
   var _accountSelectorHeight = 0.0;
   var drawerHeaderOpened = false;
-  var _courses=getCourseListOf(currentUser.number);
+  var _courses = getCourseListOf(currentUser.number);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,6 @@ class _SummaryPageState extends State<SummaryPage>
       return Container();
     }
 
-    adjustNavColor(context);
     Strings.updateCurrentLanguage(context);
     return DefaultTabController(
       length: 2,
@@ -53,101 +54,105 @@ class _SummaryPageState extends State<SummaryPage>
           ),
         ),
         drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              UADrawerHeader.UserAccountsDrawerHeader(
-                isOpened: drawerHeaderOpened,
-                accountName: Text(
-                    currentUser.displayName == ""
-                        ? currentUser.number
-                        : currentUser.displayName,
-                    style: TextStyle(color: Colors.white)),
-                accountEmail: currentUser.displayName == ""
-                    ? null
-                    : Text(currentUser.number,
-                        style: TextStyle(color: Colors.white)),
-                currentAccountPicture: CircleAvatar(
-                  child: Text(
-                    (currentUser.displayName == ""
-                        ? currentUser.number.substring(7, 9)
-                        : currentUser.displayName.substring(0, 2)),
-                    style: TextStyle(fontSize: 40.0),
+          child: ScrollConfiguration(
+            behavior: DisableOverScroll(),
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                UADrawerHeader.UserAccountsDrawerHeader(
+                  isOpened: drawerHeaderOpened,
+                  accountName: Text(
+                      currentUser.displayName == ""
+                          ? currentUser.number
+                          : currentUser.displayName,
+                      style: TextStyle(color: Colors.white)),
+                  accountEmail: currentUser.displayName == ""
+                      ? null
+                      : Text(currentUser.number,
+                          style: TextStyle(color: Colors.white)),
+                  currentAccountPicture: CircleAvatar(
+                    child: Text(
+                      (currentUser.displayName == ""
+                          ? currentUser.number.substring(7, 9)
+                          : currentUser.displayName.substring(0, 2)),
+                      style: TextStyle(fontSize: 40.0),
+                    ),
+                  ),
+                  onDetailsPressed: () {
+                    setState(() {
+                      if (!drawerHeaderOpened) {
+                        _accountSelectorHeight = 64.0;
+                        userList.forEach((user) {
+                          if (user.number != currentUser.number) {
+                            if (user.displayName == "") {
+                              _accountSelectorHeight += 48;
+                            } else {
+                              _accountSelectorHeight += 64;
+                            }
+                          }
+                        });
+                      } else {
+                        _accountSelectorHeight = 0;
+                      }
+                      drawerHeaderOpened = !drawerHeaderOpened;
+                    });
+                  },
+                ),
+                AnimatedContainer(
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeInOutCubic,
+                  height: _accountSelectorHeight,
+                  child: Column(
+                    children: getAccountSelectorList(),
                   ),
                 ),
-                onDetailsPressed: () {
-                  setState(() {
-                    if (!drawerHeaderOpened) {
-                      _accountSelectorHeight = 64.0;
-                      userList.forEach((user) {
-                        if (user.number != currentUser.number) {
-                          if (user.displayName == "") {
-                            _accountSelectorHeight += 48;
-                          } else {
-                            _accountSelectorHeight += 64;
-                          }
-                        }
-                      });
-                    } else {
-                      _accountSelectorHeight = 0;
-                    }
-                    drawerHeaderOpened = !drawerHeaderOpened;
-                  });
-                },
-              ),
-              AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.easeInOutCubic,
-                height: _accountSelectorHeight,
-                child: Column(
-                  children: getAccountSelectorList(),
+                ListTile(
+                  title: Text(Strings.get("share_marks")),
+                  leading: Icon(Icons.share),
+                  onTap: () {},
                 ),
-              ),
-              ListTile(
-                title: Text(Strings.get("share_marks")),
-                leading: Icon(Icons.share),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text(Strings.get("archived_marks")),
-                leading: Icon(Icons.archive),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text(Strings.get("announcements")),
-                leading: Icon(Icons.notifications),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text(Strings.get("feedback")),
-                leading: Icon(Icons.message),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text(Strings.get("settings")),
-                leading: Icon(Icons.settings),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text(Strings.get("about")),
-                leading: Icon(Icons.info),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text(Strings.get("donate")),
-                leading: Icon(Icons.monetization_on),
-                onTap: () {},
-              )
-            ],
+                ListTile(
+                  title: Text(Strings.get("archived_marks")),
+                  leading: Icon(Icons.archive),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: Text(Strings.get("announcements")),
+                  leading: Icon(Icons.notifications),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: Text(Strings.get("feedback")),
+                  leading: Icon(Icons.message),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: Text(Strings.get("settings")),
+                  leading: Icon(Icons.settings),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: Text(Strings.get("about")),
+                  leading: Icon(Icons.info),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: Text(Strings.get("donate")),
+                  leading: Icon(Icons.monetization_on),
+                  onTap: () {},
+                )
+              ],
+            ),
           ),
         ),
         body: TabBarView(
           children: <Widget>[
             RefreshIndicator(
               onRefresh: () async {
-                saveCourseListOf(currentUser.number, await getMark(currentUser));
+                saveCourseListOf(
+                    currentUser.number, await getMark(currentUser));
                 setState(() {
-                  _courses= getCourseListOf(currentUser.number);
+                  _courses = getCourseListOf(currentUser.number);
                 });
               },
               child: ListView(
@@ -176,13 +181,20 @@ class _SummaryPageState extends State<SummaryPage>
       list.add(Card(
         clipBehavior: Clip.antiAlias,
         child: InkWell(
-          onTap: () {},
+          onTap: course.overallMark != null
+              ? () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DetailPage(course)),
+                  );
+                }
+              : null,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(course.name == "" ? course.code : course.name,
+                Text(course.displayName,
                     style: Theme.of(context).textTheme.title),
                 SizedBox(height: 4),
                 Text(infoStr.join("  -  "),
@@ -234,6 +246,7 @@ class _SummaryPageState extends State<SummaryPage>
           onTap: () {
             setState(() {
               setCurrentUser(user);
+              _courses = getCourseListOf(currentUser.number);
               drawerHeaderOpened = false;
               _accountSelectorHeight = 0;
             });

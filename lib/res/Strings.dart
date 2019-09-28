@@ -40,7 +40,9 @@ class Strings {
       "report_for_student":"Report for %s",
       "room_number":"Room %s",
       "marks_unavailable":"Marks unavailable",
-      "period_number":"Period %s"
+      "period_number":"Period %s",
+      "assignments":"Assignments",
+      "statics":"Statics",
     },
     "zh": {
       "login_your_account": "登录帐号：",
