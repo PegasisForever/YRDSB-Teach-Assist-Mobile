@@ -41,24 +41,14 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 28,
                   ),
-                  Theme.of(context).brightness == Brightness.light
-                      ? Image.asset(
-                    "assets/images/yrdsb_logo.png",
-                    height: 80,
-                  )
-                      : Image.asset(
-                    "assets/images/yrdsb_logo_dark.png",
-                    height: 80,
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
                   Image.asset(
-                    "assets/images/ta_logo.png",
-                    height: 40,
+                    "assets/images/app_logo.png",
+                    height: 130,
                   ),
+                  Center(child: Text("YRDSB",style: TextStyle(fontSize: 20),)),
+                  Center(child: Text("Teach Assist",style: TextStyle(fontSize: 20))),
                   SizedBox(
-                    height: 120,
+                    height: 80,
                   ),
                   Center(
                     widthFactor: 0,

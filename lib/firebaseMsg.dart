@@ -24,6 +24,5 @@ void initFirebaseMsg() {
   _firebaseMessaging.getToken().then((String token) {
     assert(token != null);
     firebaseToken = token;
-    print("Push Messaging token: $token");
   });
 }

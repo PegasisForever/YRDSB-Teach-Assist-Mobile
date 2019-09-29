@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ta/model/Mark.dart';
-import 'package:ta/pages/detailpage/SmallMarkChartDetail.dart';
+import 'package:ta/pages/detailpage/assignmentstab/SmallMarkChartDetail.dart';
 import 'package:ta/res/Strings.dart';
 
 import 'SmallMarkChart.dart';
 
 class MarksList extends StatefulWidget {
-  MarksList(this.course);
+  MarksList(this._course);
 
-  final Course course;
+  final Course _course;
 
   @override
-  _MarksListState createState() => _MarksListState(course);
+  _MarksListState createState() => _MarksListState(_course);
 }
 
 class _MarksListState extends State<MarksList> {
@@ -23,7 +23,8 @@ class _MarksListState extends State<MarksList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return _course.overallMark!=null?ListView.builder(
+      cacheExtent:double.maxFinite,
       itemCount: _course.assignments.length * 2 + 1,
       itemBuilder: (context, index) {
         if (index == 0) {
@@ -33,12 +34,13 @@ class _MarksListState extends State<MarksList> {
         }
         if (index.isOdd) {
           var assignment = _course.assignments[(index - 1) ~/ 2];
-
           return _MarksListTile(assignment);
         } else {
           return Divider();
         }
       },
+    ):Center(
+      child: Text(Strings.get("assignments_unavailable"),style: Theme.of(context).textTheme.subhead,),
     );
   }
 }

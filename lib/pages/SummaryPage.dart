@@ -24,7 +24,7 @@ class _SummaryPageState extends State<SummaryPage>
     with AfterLayoutMixin<SummaryPage> {
   var _accountSelectorHeight = 0.0;
   var drawerHeaderOpened = false;
-  var _courses = getCourseListOf(currentUser.number);
+  var _courses = userList.length != 0?getCourseListOf(currentUser.number):null;
 
   @override
   Widget build(BuildContext context) {
@@ -181,14 +181,12 @@ class _SummaryPageState extends State<SummaryPage>
       list.add(Card(
         clipBehavior: Clip.antiAlias,
         child: InkWell(
-          onTap: course.overallMark != null
-              ? () {
+          onTap:() {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => DetailPage(course)),
                   );
-                }
-              : null,
+                },
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(

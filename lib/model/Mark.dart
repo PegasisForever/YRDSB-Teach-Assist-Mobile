@@ -121,7 +121,7 @@ class Course{
   String room;
   double overallMark;
 
-  get displayName{
+  String get displayName{
     return this.name == "" ? this.code : this.name;
   }
 

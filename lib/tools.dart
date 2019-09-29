@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:ta/res/Strings.dart';
 
 class LifecycleEventHandler extends WidgetsBindingObserver {
   LifecycleEventHandler(this.resumeCallBack);
@@ -20,11 +21,7 @@ void showSnackBar(BuildContext context, String text) {
   Scaffold.of(context).showSnackBar(snackBar);
 }
 
-String getRoundString(dynamic num,int digit){
-  if (!(num is double)){
-    return num;
-  }
-
+String getRoundString(double num,int digit){
   var str=num.toStringAsFixed(digit);
   while (str[str.length-1]=="0"){
     str=str.substring(0,str.length-1);
@@ -36,4 +33,12 @@ String getRoundString(dynamic num,int digit){
   }
 
   return str;
+}
+
+String testBlank(String str){
+  if (str.isEmpty){
+    return Strings.get("unknown");
+  }else{
+    return str;
+  }
 }

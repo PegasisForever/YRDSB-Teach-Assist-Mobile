@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
-import 'package:ta/pages/detailpage/MarksList.dart';
+import 'package:ta/pages/detailpage/assignmentstab/MarksList.dart';
+import 'package:ta/pages/detailpage/staticstab/StaticsList.dart';
 import 'package:ta/res/Strings.dart';
+
+import 'abouttab/AboutTab.dart';
 
 class DetailPage extends StatefulWidget{
   DetailPage(this.course);
@@ -42,8 +45,8 @@ class _DetailPageState extends State<DetailPage> {
         body: TabBarView(
           children: [
             MarksList(_course),
-            Icon(Icons.data_usage),
-            Icon(Icons.info_outline),
+            StaticsList(_course),
+            AboutTab(_course),
           ],
         ),
       ),

@@ -8,7 +8,7 @@ import '../firebaseMsg.dart';
 import 'package:flutter/foundation.dart';
 
 
-const String baseUrl = kReleaseMode?"https://api.pegasis.site/yrdsb_ta/":"http://192.168.1.22:5004/";
+const String baseUrl = true?"https://api.pegasis.site/yrdsb_ta/":"http://192.168.1.22:5004/";
 
 Future<String> regi(User user) async {
   print(baseUrl);
