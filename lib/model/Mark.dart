@@ -6,17 +6,10 @@ import '../tools.dart';
 
 class SmallMark{
   bool available;
+  bool finished;
   double total;
   double get;
   double weight;
-
-  SmallMark(this.total,this.get,this.weight){
-    this.available=true;
-  }
-
-  SmallMark.unavailable(){
-    this.available=false;
-  }
 
   get percent{
     if (!available){
@@ -29,6 +22,7 @@ class SmallMark{
   SmallMark.fromJSON(Map<String, dynamic> json){
     if (json["available"]){
       this.available=true;
+      this.finished=json["finished"];
       this.total=json["total"];
       this.get=json["get"];
       this.weight=json["weight"];

@@ -76,21 +76,35 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
       bottomLabelPainter.layout(maxWidth: width, minWidth: width);
       bottomLabelPainter.paint(canvas, Offset(x, height - 12));
 
-      TextPainter(
-          text: TextSpan(
-              text: getRoundString(mark, 1),
-              style: TextStyle(fontSize: 16.0, color: Colors.grey)),
-          textDirection: TextDirection.ltr,
-          textAlign: TextAlign.center)
-        ..layout(maxWidth: width, minWidth: width)
-        ..paint(canvas, Offset(x, (height - 60) * (1 - mark / 100)))
-        ..text = TextSpan(
-            text: getRoundString(smallMark.get, 2) +
-                "/" +
-                getRoundString(smallMark.total, 2),
-            style: TextStyle(fontSize: 12.0, color: Colors.grey))
-        ..layout(maxWidth: width, minWidth: width)
-        ..paint(canvas, Offset(x, (height - 60) * (1 - mark / 100) + 16));
+      if (smallMark.finished){
+        TextPainter(
+            text: TextSpan(
+                text: getRoundString(mark, 1),
+                style: TextStyle(fontSize: 16.0, color: Colors.grey)),
+            textDirection: TextDirection.ltr,
+            textAlign: TextAlign.center)
+          ..layout(maxWidth: width, minWidth: width)
+          ..paint(canvas, Offset(x, (height - 60) * (1 - mark / 100)))
+
+          ..text = TextSpan(
+              text: getRoundString(smallMark.get, 2) +
+                  "/" +
+                  getRoundString(smallMark.total, 2),
+              style: TextStyle(fontSize: 12.0, color: Colors.grey))
+          ..layout(maxWidth: width, minWidth: width)
+          ..paint(canvas, Offset(x, (height - 60) * (1 - mark / 100) + 16));
+      }else{
+        TextPainter(
+            text: TextSpan(
+                text: "N",
+                style: TextStyle(fontSize: 16.0, color: Colors.red)),
+            textDirection: TextDirection.ltr,
+            textAlign: TextAlign.center)
+          ..layout(maxWidth: width, minWidth: width)
+          ..paint(canvas, Offset(x, height - 50));
+      }
+
+
     } else {
       TextPainter(
           text: TextSpan(

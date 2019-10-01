@@ -51,14 +51,26 @@ class _SmallMarkChartPainter extends CustomPainter {
               topRight: Radius.circular(5)),
           paint);
 
-      TextPainter(
-          text: TextSpan(
-              text: getRoundString(mark, 1),
-              style: TextStyle(fontSize: 16.0, color: Colors.grey)),
-          textDirection: TextDirection.ltr,
-          textAlign: TextAlign.center)
-        ..layout(maxWidth: width, minWidth: width)
-        ..paint(canvas, Offset(x, (height - 32) * (1 - mark / 100) - 2));
+      if (smallMark.finished){
+        TextPainter(
+            text: TextSpan(
+                text: getRoundString(mark, 1),
+                style: TextStyle(fontSize: 16.0, color: Colors.grey)),
+            textDirection: TextDirection.ltr,
+            textAlign: TextAlign.center)
+          ..layout(maxWidth: width, minWidth: width)
+          ..paint(canvas, Offset(x, (height - 32) * (1 - mark / 100) - 2));
+      }else{
+        TextPainter(
+            text: TextSpan(
+                text: "N",
+                style: TextStyle(fontSize: 16.0, color: Colors.red)),
+            textDirection: TextDirection.ltr,
+            textAlign: TextAlign.center)
+          ..layout(maxWidth: width, minWidth: width)
+          ..paint(canvas, Offset(x, (height - 32) - 2));
+      }
+
     } else {
       TextPainter(
           text: TextSpan(
