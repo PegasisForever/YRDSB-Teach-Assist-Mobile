@@ -24,18 +24,31 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'YRDSB Teach Assist',
       theme: ThemeData(
-          brightness: Brightness.light,
-          primaryColor: Colors.lightBlue,
-          accentColor: Color.fromARGB(255, 129, 212, 250)),
+        brightness: Brightness.light,
+        colorScheme: ColorScheme.light(
+            primary: const Color(0xff03a9f4),
+            primaryVariant: const Color(0xff007ac1),
+            secondary: const Color(0xff80d8ff),
+            secondaryVariant: const Color(0xff49a7cc),
+            onPrimary: Colors.white),
+        accentColor: const Color(0xff40c4ff),
+      ),
       darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: Colors.lightBlue,
-          accentColor: Color.fromARGB(255, 129, 212, 250)),
+        brightness: Brightness.dark,
+        colorScheme: ColorScheme.dark(
+            primary: const Color(0xff03a9f4),
+            primaryVariant: const Color(0xff007ac1),
+            secondary: const Color(0xff40c4ff),
+            secondaryVariant: const Color(0xff0094cc),
+            onPrimary: Colors.white),
+        accentColor: const Color(0xff40c4ff),
+        primarySwatch: Colors.lightBlue),
       routes: <String, WidgetBuilder>{
         "/": (BuildContext context) => new SummaryPage(),
         "/login": (BuildContext context) => new LoginPage(),
         "/accounts_list": (BuildContext context) => new AccountsList(),
-        "/accounts_list/edit": (BuildContext context) => new EditAccount(User.blank()),
+        "/accounts_list/edit": (BuildContext context) =>
+            new EditAccount(User.blank()),
       },
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

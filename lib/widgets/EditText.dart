@@ -9,7 +9,11 @@ class EditText extends StatefulWidget {
       this.isPassword,
       this.icon,
       this.expandable,
-      this.inputType});
+      this.inputType,
+      this.focusNode,
+      this.nextFocusNode,
+      this.textInputAction,
+      this.onSubmitted});
 
   final TextEditingController controller;
   final ErrorText errorText;
@@ -19,6 +23,10 @@ class EditText extends StatefulWidget {
   final IconData icon;
   final bool expandable;
   final TextInputType inputType;
+  final FocusNode focusNode;
+  final FocusNode nextFocusNode;
+  final TextInputAction textInputAction;
+  final ValueChanged<String> onSubmitted;
 
   @override
   _EditTextState createState() => _EditTextState();
@@ -29,29 +37,48 @@ class _EditTextState extends State<EditText> {
   ErrorText _errorText;
   String _hint;
   double _maxWidth;
-  final _focusNode = FocusNode();
+  FocusNode _focusNode;
   bool _clearBtnVisibility;
   Icon _icon;
   bool _expandable;
   TextInputType _inputType;
+  TextInputAction _textInputAction;
+  ValueChanged<String> _onSubmitted;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    _focusNode = widget.focusNode == null ? FocusNode() : widget.focusNode;
+    if (widget.onSubmitted!=null){
+      _onSubmitted=widget.onSubmitted;
+    }else if (widget.nextFocusNode!=null){
+      _onSubmitted=(s){
+        _changeFocusChange(context,_focusNode,widget.nextFocusNode);
+      };
+    }
     _controller = widget.controller;
-    _errorText = widget.errorText;
     _hint = widget.hint ?? "";
     _maxWidth = widget.maxWidth ?? double.infinity;
     _icon = widget.icon != null ? Icon(widget.icon) : null;
-    _expandable=widget.expandable == true;
-    _inputType=widget.inputType ?? TextInputType.text;
+    _expandable = widget.expandable == true;
+    _inputType = widget.inputType ?? TextInputType.text;
+    _textInputAction = widget.textInputAction == null
+        ? TextInputAction.unspecified
+        : widget.textInputAction;
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    _errorText = widget.errorText;
     _clearBtnVisibility = _controller?.text?.isNotEmpty ?? false;
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: _maxWidth),
       child: TextField(
+        textInputAction: _textInputAction,
+        onSubmitted: _onSubmitted,
         keyboardType: _inputType,
-        maxLines: _expandable?null:1,
+        maxLines: _expandable ? null : 1,
         obscureText: widget.isPassword ?? false,
         focusNode: _focusNode,
         controller: _controller,
@@ -67,8 +94,9 @@ class _EditTextState extends State<EditText> {
                 ? IconButton(
                     icon: Icon(Icons.clear),
                     onPressed: () {
-                      _controller.clear();
                       FocusScope.of(context).requestFocus(_focusNode);
+                      _controller.clear();
+
                       setState(() {
                         _clearBtnVisibility = false;
                       });
@@ -86,6 +114,11 @@ class _EditTextState extends State<EditText> {
   void dispose() {
     _focusNode.dispose();
     super.dispose();
+  }
+
+  _changeFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
   }
 }
 

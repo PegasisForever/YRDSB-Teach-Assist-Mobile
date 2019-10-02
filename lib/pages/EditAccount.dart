@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
@@ -24,6 +22,9 @@ class _EditAccountState extends State<EditAccount> {
   TextEditingController _aliasController;
   TextEditingController _studentNumberController;
   TextEditingController _passwordController;
+  final _aliasFocusNode = FocusNode();
+  final _studentNumberFocusNode = FocusNode();
+  final _passwordFocusNode = FocusNode();
   bool _isSaveLoading = false;
   bool _addNew;
   bool _receive;
@@ -43,12 +44,9 @@ class _EditAccountState extends State<EditAccount> {
     var _oldUser = widget.user;
     return Scaffold(
         appBar: AppBar(
-          brightness: Brightness.dark,
-          iconTheme: new IconThemeData(color: Colors.white),
           title: Text(_oldUser.number != ""
               ? Strings.get("edit") + " " + _oldUser.number
-              : Strings.get("add_a_new_account"),
-              style: TextStyle(color: Colors.white)),
+              : Strings.get("add_a_new_account")),
           actions: <Widget>[
             Builder(
               builder: (context) {
@@ -143,7 +141,8 @@ class _EditAccountState extends State<EditAccount> {
                       Padding(
                         padding: const EdgeInsets.all(6.0),
                         child: CircularProgressIndicator(
-                            backgroundColor: Theme.of(context).canvasColor),
+                          backgroundColor: Color(0x66FFFFFF),
+                          valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.onPrimary),),
                       )
                     ],
                   )
@@ -226,6 +225,9 @@ class _EditAccountState extends State<EditAccount> {
           padding: EdgeInsets.all(16.0),
           children: <Widget>[
             EditText(
+              textInputAction: TextInputAction.next,
+                focusNode: _aliasFocusNode,
+                nextFocusNode: _studentNumberFocusNode,
                 controller: _aliasController,
                 maxWidth: 400,
                 hint: Strings.get("alias_optional"),
@@ -233,6 +235,9 @@ class _EditAccountState extends State<EditAccount> {
                 icon: Icons.stars),
             SizedBox(height: 12),
             EditText(
+              textInputAction: TextInputAction.next,
+              focusNode: _studentNumberFocusNode,
+              nextFocusNode: _passwordFocusNode,
               controller: _studentNumberController,
               maxWidth: 400,
               hint: Strings.get("student_number"),
@@ -243,6 +248,8 @@ class _EditAccountState extends State<EditAccount> {
             ),
             SizedBox(height: 12),
             EditText(
+              textInputAction: TextInputAction.done,
+              focusNode: _passwordFocusNode,
               controller: _passwordController,
               maxWidth: 400,
               hint: Strings.get("password"),
@@ -257,6 +264,7 @@ class _EditAccountState extends State<EditAccount> {
                   ? Icons.notifications_active
                   : Icons.notifications_off),
               trailing: Switch(
+                activeColor: Theme.of(context).colorScheme.secondary,
                 value: _receive,
                 onChanged: (val) {
                   setState(() {

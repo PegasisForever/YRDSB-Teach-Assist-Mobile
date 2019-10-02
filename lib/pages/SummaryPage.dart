@@ -37,15 +37,11 @@ class _SummaryPageState extends State<SummaryPage>
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: new IconThemeData(color: Colors.white),
-          brightness: Brightness.dark,
           title: Text(
             sprintf(Strings.get("report_for_student"), [currentUser.getName()]),
             maxLines: 2,
-            style: TextStyle(color: Colors.white),
           ),
           bottom: TabBar(
-            labelColor: Colors.white,
             indicatorColor: Colors.white,
             tabs: <Widget>[
               Tab(text: Strings.get("summary")),
@@ -64,12 +60,10 @@ class _SummaryPageState extends State<SummaryPage>
                   accountName: Text(
                       currentUser.displayName == ""
                           ? currentUser.number
-                          : currentUser.displayName,
-                      style: TextStyle(color: Colors.white)),
+                          : currentUser.displayName),
                   accountEmail: currentUser.displayName == ""
                       ? null
-                      : Text(currentUser.number,
-                          style: TextStyle(color: Colors.white)),
+                      : Text(currentUser.number),
                   currentAccountPicture: CircleAvatar(
                     child: Text(
                       (currentUser.displayName == ""
@@ -207,7 +201,7 @@ class _SummaryPageState extends State<SummaryPage>
                         center: Text(course.overallMark.toString() + "%",
                             style: TextStyle(color: Colors.black)),
                         linearStrokeCap: LinearStrokeCap.roundAll,
-                        progressColor: Theme.of(context).accentColor,
+                        progressColor: Theme.of(context).colorScheme.secondary,
                       )
                     : LinearPercentIndicator(
                         lineHeight: 20.0,

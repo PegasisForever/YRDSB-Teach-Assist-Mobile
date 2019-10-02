@@ -20,6 +20,20 @@ class _AboutTabState extends State<AboutTab> {
 
   @override
   Widget build(BuildContext context) {
+    var courseInfoText =
+        Strings.get("course_about_name:") + testBlank(_course.name) + "\n";
+    courseInfoText +=
+        Strings.get("course_about_code:") + testBlank(_course.code) + "\n";
+    courseInfoText +=
+        Strings.get("course_about_period:") + testBlank(_course.block) + "\n";
+    courseInfoText +=
+        Strings.get("course_about_room:") + testBlank(_course.room) + "\n";
+    courseInfoText += Strings.get("course_about_starttime:") +
+        testBlank(DateFormat("yyyy-MM-dd").format(_course.startTime)) +
+        "\n";
+    courseInfoText += Strings.get("course_about_endtime:") +
+        testBlank(DateFormat("yyyy-MM-dd").format(_course.endTime));
+
     return ListView(
       padding: const EdgeInsets.all(16.0),
       children: <Widget>[
@@ -30,26 +44,32 @@ class _AboutTabState extends State<AboutTab> {
             style: Theme.of(context).textTheme.title,
           ),
         ),
-        SizedBox(height: 12,),
+        SizedBox(
+          height: 12,
+        ),
         Card(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(Strings.get("course_about_name:")+testBlank(_course.name)),
-                SizedBox(height: 6,),
-                Text(Strings.get("course_about_code:")+testBlank(_course.code)),
-                SizedBox(height: 6,),
-                Text(Strings.get("course_about_period:")+testBlank(_course.block)),
-                SizedBox(height: 6,),
-                Text(Strings.get("course_about_room:")+testBlank(_course.room)),
-                SizedBox(height: 6,),
-                Text(Strings.get("course_about_starttime:")+testBlank(DateFormat("yyyy-MM-dd").format(_course.startTime))),
-                SizedBox(height: 6,),
-                Text(Strings.get("course_about_endtime:")+testBlank(DateFormat("yyyy-MM-dd").format(_course.endTime))),
-              ],
+            padding: const EdgeInsets.fromLTRB(16,12,16,16),
+            child: SelectableText(
+              courseInfoText,
+              style: TextStyle(height: 1.7),
             ),
+//            child: Column(
+//              crossAxisAlignment: CrossAxisAlignment.start,
+//              children: <Widget>[
+//                SelectableText(Strings.get("course_about_name:")+testBlank(_course.name)),
+//                SizedBox(height: 6,),
+//                Text(Strings.get("course_about_code:")+testBlank(_course.code)),
+//                SizedBox(height: 6,),
+//                Text(Strings.get("course_about_period:")+testBlank(_course.block)),
+//                SizedBox(height: 6,),
+//                Text(Strings.get("course_about_room:")+testBlank(_course.room)),
+//                SizedBox(height: 6,),
+//                Text(Strings.get("course_about_starttime:")+testBlank(DateFormat("yyyy-MM-dd").format(_course.startTime))),
+//                SizedBox(height: 6,),
+//                Text(Strings.get("course_about_endtime:")+testBlank(DateFormat("yyyy-MM-dd").format(_course.endTime))),
+//              ],
+//            ),
           ),
         )
       ],

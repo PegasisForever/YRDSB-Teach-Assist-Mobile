@@ -13,10 +13,7 @@ class _AccountsListState extends State<AccountsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        brightness: Brightness.dark,
-        iconTheme: new IconThemeData(color: Colors.white),
-        title: Text(Strings.get("accounts_list"),
-          style: TextStyle(color: Colors.white),),
+        title: Text(Strings.get("accounts_list")),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),

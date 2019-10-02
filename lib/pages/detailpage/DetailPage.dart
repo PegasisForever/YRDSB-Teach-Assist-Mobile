@@ -27,13 +27,9 @@ class _DetailPageState extends State<DetailPage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: new IconThemeData(color: Colors.white),
-          brightness: Brightness.dark,
           title: Text(_course.displayName,
-            maxLines: 2,
-            style: TextStyle(color: Colors.white),),
+            maxLines: 2),
           bottom: TabBar(
-            labelColor: Colors.white,
             indicatorColor: Colors.white,
             tabs: [
               Tab(text: Strings.get("assignments")),

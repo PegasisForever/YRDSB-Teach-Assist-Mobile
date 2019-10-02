@@ -70,7 +70,7 @@ class _MarksListTileState extends State<_MarksListTile>
       children: <Widget>[
         Expanded(
           child:
-              Text(_assignment.name, style: Theme.of(context).textTheme.title),
+          SelectableText(_assignment.name, style: Theme.of(context).textTheme.title),
         ),
         Flexible(child: SmallMarkChart(_assignment))
       ],
@@ -78,7 +78,7 @@ class _MarksListTileState extends State<_MarksListTile>
     var detail = Column(
       key: Key("detail"),
       children: <Widget>[
-        Text(
+        SelectableText(
           _assignment.name,
           style: Theme.of(context).textTheme.title,
         ),

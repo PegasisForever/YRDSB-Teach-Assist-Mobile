@@ -31,6 +31,7 @@ class _StaticsListState extends State<StaticsList> {
 
   @override
   Widget build(BuildContext context) {
+    var isLight=Theme.of(context).brightness==Brightness.light;
     return _course.overallMark != null
         ? ListView(
             children: <Widget>[
@@ -38,13 +39,13 @@ class _StaticsListState extends State<StaticsList> {
               Divider(),
               _getPieChart(),
               Divider(),
-              _getChart("knowledge_understanding"),
+              _getChart("knowledge_understanding",isLight),
               Divider(),
-              _getChart("thinking"),
+              _getChart("thinking",isLight),
               Divider(),
-              _getChart("communication"),
+              _getChart("communication",isLight),
               Divider(),
-              _getChart("application"),
+              _getChart("application",isLight),
             ],
           )
         : Center(
@@ -112,14 +113,14 @@ class _StaticsListState extends State<StaticsList> {
             animationDuration: 500,
             percent: _course.overallMark / 100,
             linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: Theme.of(context).accentColor,
+            progressColor: Theme.of(context).colorScheme.secondary,
           )
         ],
       ),
     );
   }
 
-  Widget _getChart(String category) {
+  Widget _getChart(String category,bool isLight) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -138,36 +139,36 @@ class _StaticsListState extends State<StaticsList> {
           SizedBox(
             width: double.maxFinite,
             height: 200,
-            child: _getDefaultSplineChart(_getChartData(category)),
+            child: _getDefaultSplineChart(_getChartData(category,isLight)),
           ),
         ],
       ),
     );
   }
 
-  List<SplineSeries<Assignment, String>> _getChartData(String category) {
+  List<SplineSeries<Assignment, String>> _getChartData(String category,bool isLight) {
     ChartValueMapper<Assignment, num> yValueMapper;
     Color color;
     if (category == "knowledge_understanding") {
       yValueMapper = (Assignment assignment, _) => assignment.KU.available
           ? assignment.KU.get / assignment.KU.total * 100
           : null;
-      color = _Kcolor;
+      color = isLight?_Kcolor:_KPcolor;
     } else if (category == "thinking") {
       yValueMapper = (Assignment assignment, _) => assignment.T.available
           ? assignment.T.get / assignment.T.total * 100
           : null;
-      color = _Tcolor;
+      color = isLight?_Tcolor:_TPcolor;
     } else if (category == "communication") {
       yValueMapper = (Assignment assignment, _) => assignment.C.available
           ? assignment.C.get / assignment.C.total * 100
           : null;
-      color = _Ccolor;
+      color = isLight?_Ccolor:_CPcolor;
     } else if (category == "application") {
       yValueMapper = (Assignment assignment, _) => assignment.A.available
           ? assignment.A.get / assignment.A.total * 100
           : null;
-      color = _Acolor;
+      color = isLight?_Acolor:_APcolor;
     }
 
     return <SplineSeries<Assignment, String>>[
