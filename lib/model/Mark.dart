@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ta/dataStore.dart';
+import 'package:ta/res/Strings.dart';
 
 import '../tools.dart';
 
@@ -62,6 +63,43 @@ class Assignment{
     A=SmallMark.fromJSON(json["A"]);
     O=SmallMark.fromJSON(json["O"]);
     F=SmallMark.fromJSON(json["F"]);
+  }
+
+  get beautifulName{
+    if (name.isNotEmpty){
+      return name;
+    }else{
+      return Strings.get("untitled_assignment");
+    }
+  }
+
+  String getAverage(Weights weights){
+    var get=0.0;
+    var total=0.0;
+
+    if (KU.available && KU.finished){
+      get+=KU.get/KU.total*weights.KU.CW;
+      total+=weights.KU.CW;
+    }
+    if (T.available && T.finished){
+      get+=T.get/T.total*weights.T.CW;
+      total+=weights.T.CW;
+    }
+    if (C.available && C.finished){
+      get+=C.get/C.total*weights.C.CW;
+      total+=weights.C.CW;
+    }
+    if (A.available && A.finished){
+      get+=A.get/A.total*weights.A.CW;
+      total+=weights.A.CW;
+    }
+
+    if(total>0){
+      var avg=get/total;
+      return getRoundString(avg*100,1)+"%";
+    }else{
+      return null;
+    }
   }
 }
 

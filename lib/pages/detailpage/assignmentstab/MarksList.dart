@@ -34,7 +34,7 @@ class _MarksListState extends State<MarksList> {
         }
         if (index.isOdd) {
           var assignment = _course.assignments[(index - 1) ~/ 2];
-          return _MarksListTile(assignment);
+          return _MarksListTile(assignment,_course.weights);
         } else {
           return Divider();
         }
@@ -47,22 +47,26 @@ class _MarksListState extends State<MarksList> {
 
 class _MarksListTile extends StatefulWidget {
   final Assignment _assignment;
+  final Weights _weights;
 
-  _MarksListTile(this._assignment);
+  _MarksListTile(this._assignment,this._weights);
 
   @override
-  _MarksListTileState createState() => _MarksListTileState(_assignment);
+  _MarksListTileState createState() => _MarksListTileState(_assignment,_weights);
 }
 
 class _MarksListTileState extends State<_MarksListTile>
     with TickerProviderStateMixin {
   final Assignment _assignment;
+  final Weights _weights;
   var showDetail = false;
 
-  _MarksListTileState(this._assignment);
+  _MarksListTileState(this._assignment,this._weights);
 
   @override
   Widget build(BuildContext context) {
+    var avg=_assignment.getAverage(_weights);
+    var avgText=avg==null?SizedBox(width: 0,height: 0):Text(Strings.get("avg:")+_assignment.getAverage(_weights),style: TextStyle(fontSize: 16,color: Colors.grey));
     var summary = Row(
       key: Key("summary"),
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +74,14 @@ class _MarksListTileState extends State<_MarksListTile>
       children: <Widget>[
         Expanded(
           child:
-          SelectableText(_assignment.name, style: Theme.of(context).textTheme.title),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SelectableText(_assignment.beautifulName, style: Theme.of(context).textTheme.title),
+              SizedBox(height: 4,),
+              avgText
+            ],
+          ),
         ),
         Flexible(child: SmallMarkChart(_assignment))
       ],
@@ -79,10 +90,12 @@ class _MarksListTileState extends State<_MarksListTile>
       key: Key("detail"),
       children: <Widget>[
         SelectableText(
-          _assignment.name,
+          _assignment.beautifulName,
           style: Theme.of(context).textTheme.title,
         ),
-        SizedBox(height: 16,),
+        SizedBox(height: 4,),
+        avgText,
+        SizedBox(height: 12,),
         SmallMarkChartDetail(_assignment)
       ],
     );

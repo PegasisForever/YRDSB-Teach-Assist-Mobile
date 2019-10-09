@@ -56,7 +56,10 @@ class Strings {
       "communication":"Communication",
       "application":"Application",
       "overall":"Overall",
-
+      "average":"Average",
+      "avg:":"Avg: ",
+      "untitled_assignment":"Untitled Assignment",
+      "in_development":"In Development 🚧",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -111,6 +114,10 @@ class Strings {
       "communication":"交流",
       "application":"应用",
       "overall":"总分",
+      "average":"平均分",
+      "avg:":"平均：",
+      "untitled_assignment":"未命名作业",
+      "in_development":"正在开发 🚧",
     }
   };
 
