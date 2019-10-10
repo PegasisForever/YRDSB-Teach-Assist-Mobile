@@ -32,6 +32,11 @@ setCurrentUser(User user){
 }
 
 addUser(User newUser){
+  userList.forEach((user){
+    if (user.number==newUser.number){
+      return;
+    }
+  });
   userList.add(newUser);
   prefs.setString("users", jsonEncode(userList));
 }
