@@ -51,6 +51,7 @@ class MyApp extends StatelessWidget {
             new EditAccount(User.blank()),
       },
       localizationsDelegates: [
+        GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
