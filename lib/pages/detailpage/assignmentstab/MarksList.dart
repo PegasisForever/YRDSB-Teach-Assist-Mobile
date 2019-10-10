@@ -4,6 +4,7 @@ import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/SmallMarkChartDetail.dart';
 import 'package:ta/res/Strings.dart';
 
+import '../../../tools.dart';
 import 'SmallMarkChart.dart';
 
 class MarksList extends StatefulWidget {
@@ -67,6 +68,15 @@ class _MarksListTileState extends State<_MarksListTile>
   Widget build(BuildContext context) {
     var avg=_assignment.getAverage(_weights);
     var avgText=avg==null?SizedBox(width: 0,height: 0):Text(Strings.get("avg:")+_assignment.getAverage(_weights),style: TextStyle(fontSize: 16,color: Colors.grey));
+
+    bool noWeight=isZeroOrNull(_assignment.KU.weight) &&
+        isZeroOrNull(_assignment.T.weight) &&
+        isZeroOrNull(_assignment.C.weight) &&
+        isZeroOrNull(_assignment.A.weight) &&
+        isZeroOrNull(_assignment.F.weight) &&
+        isZeroOrNull(_assignment.O.weight);
+    var noWeightText=noWeight?Text(Strings.get("no_weight"),style: TextStyle(fontSize: 16,color: Colors.grey)):SizedBox(width: 0,height: 0);
+
     var summary = Row(
       key: Key("summary"),
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,9 +87,10 @@ class _MarksListTileState extends State<_MarksListTile>
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SelectableText(_assignment.beautifulName, style: Theme.of(context).textTheme.title),
+              Text(_assignment.beautifulName, style: Theme.of(context).textTheme.title),
               SizedBox(height: 4,),
-              avgText
+              avgText,
+              noWeightText
             ],
           ),
         ),
@@ -89,7 +100,7 @@ class _MarksListTileState extends State<_MarksListTile>
     var detail = Column(
       key: Key("detail"),
       children: <Widget>[
-        SelectableText(
+        Text(
           _assignment.beautifulName,
           style: Theme.of(context).textTheme.title,
         ),

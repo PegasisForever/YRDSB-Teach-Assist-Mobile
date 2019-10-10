@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
+import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
 class _SmallMarkChartDetailPainter extends CustomPainter {
@@ -30,21 +31,21 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
     var i = 0;
 
     _paintBar(
-        canvas, "K", _Kcolor, _assi.KU, barWidth * (i++), barWidth, height);
+        canvas,Strings.get("ku"), _Kcolor, _assi.KU, barWidth * (i++), barWidth, height);
     _paintBar(
-        canvas, "T", _Tcolor, _assi.T, barWidth * (i++), barWidth, height);
+        canvas, Strings.get("t"), _Tcolor, _assi.T, barWidth * (i++), barWidth, height);
     _paintBar(
-        canvas, "C", _Ccolor, _assi.C, barWidth * (i++), barWidth, height);
+        canvas, Strings.get("c"), _Ccolor, _assi.C, barWidth * (i++), barWidth, height);
     _paintBar(
-        canvas, "A", _Acolor, _assi.A, barWidth * (i++), barWidth, height);
+        canvas, Strings.get("a"), _Acolor, _assi.A, barWidth * (i++), barWidth, height);
 
     if (_assi.O.available) {
       _paintBar(
-          canvas, "O", _Ocolor, _assi.O, barWidth * (i++), barWidth, height);
+          canvas, Strings.get("o"), _Ocolor, _assi.O, barWidth * (i++), barWidth, height);
     }
     if (_assi.F.available) {
       _paintBar(
-          canvas, "F", _Fcolor, _assi.F, barWidth * (i++), barWidth, height);
+          canvas, Strings.get("f"), _Fcolor, _assi.F, barWidth * (i++), barWidth, height);
     }
   }
 
@@ -56,7 +57,7 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
         textDirection: TextDirection.ltr,
         textAlign: TextAlign.center)
       ..layout(maxWidth: width, minWidth: width)
-      ..paint(canvas, Offset(x, height - 30));
+      ..paint(canvas, Offset(x, height - 32));
 
     if (smallMark.available) {
       var mark = smallMark.get / smallMark.total * 100;
@@ -71,7 +72,7 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
           paint);
 
       bottomLabelPainter.text = TextSpan(
-          text: "W:" + getRoundString(smallMark.weight, 2),
+          text: Strings.get("w:") + getRoundString(smallMark.weight, 2),
           style: TextStyle(fontSize: 12.0, color: Colors.grey));
       bottomLabelPainter.layout(maxWidth: width, minWidth: width);
       bottomLabelPainter.paint(canvas, Offset(x, height - 12));

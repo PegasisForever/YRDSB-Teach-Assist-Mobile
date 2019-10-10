@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
+import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
 class _SmallMarkChartPainter extends CustomPainter {
@@ -14,13 +15,12 @@ class _SmallMarkChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var width = size.width;
     var height = size.height;
 
-    _paintBar(canvas, "K", _Kcolor, _assi.KU, 0, 40, height);
-    _paintBar(canvas, "T", _Tcolor, _assi.T, 40, 40, height);
-    _paintBar(canvas, "C", _Ccolor, _assi.C, 80, 40, height);
-    _paintBar(canvas, "A", _Acolor, _assi.A, 120, 40, height);
+    _paintBar(canvas, Strings.get("ku_single"), _Kcolor, _assi.KU, 0, 40, height);
+    _paintBar(canvas, Strings.get("t_single"), _Tcolor, _assi.T, 40, 40, height);
+    _paintBar(canvas, Strings.get("c_single"), _Ccolor, _assi.C, 80, 40, height);
+    _paintBar(canvas, Strings.get("a_single"), _Acolor, _assi.A, 120, 40, height);
   }
 
   void _paintBar(Canvas canvas, String text, Color color, SmallMark smallMark,

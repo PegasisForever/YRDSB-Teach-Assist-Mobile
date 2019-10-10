@@ -68,11 +68,11 @@ class _StaticsListState extends State<StaticsList> {
 
   List<PieSeries<_PieData, String>> _getPieSeries() {
     final List<_PieData> chartData = <_PieData>[
-      _PieData('A', _course.weights.A.CW, _course.weights.A.SA, _APcolor),
-      _PieData('C', _course.weights.C.CW, _course.weights.C.SA, _CPcolor),
-      _PieData('T', _course.weights.T.CW, _course.weights.T.SA, _TPcolor),
-      _PieData('K/U', _course.weights.KU.CW, _course.weights.KU.SA, _KPcolor),
-      _PieData('Final', _course.weights.F.CW, _course.weights.F.SA, _FPcolor),
+      _PieData(Strings.get("a"), _course.weights.A.CW, _course.weights.A.SA, _APcolor),
+      _PieData(Strings.get("c"), _course.weights.C.CW, _course.weights.C.SA, _CPcolor),
+      _PieData(Strings.get("t"), _course.weights.T.CW, _course.weights.T.SA, _TPcolor),
+      _PieData(Strings.get("ku"), _course.weights.KU.CW, _course.weights.KU.SA, _KPcolor),
+      _PieData(Strings.get("f"), _course.weights.F.CW, _course.weights.F.SA, _FPcolor),
     ];
     return <PieSeries<_PieData, String>>[
       PieSeries<_PieData, String>(
@@ -150,17 +150,17 @@ class _StaticsListState extends State<StaticsList> {
     ChartValueMapper<Assignment, num> yValueMapper;
     Color color;
     if (category == "knowledge_understanding") {
-      yValueMapper = (Assignment assignment, _) => assignment.KU.available & assignment.KU.finished
+      yValueMapper = (Assignment assignment, _) => assignment.KU.available && assignment.KU.finished
           ? assignment.KU.get / assignment.KU.total * 100
           : null;
       color = isLight?_Kcolor:_KPcolor;
     } else if (category == "thinking") {
-      yValueMapper = (Assignment assignment, _) => assignment.T.available & assignment.T.finished
+      yValueMapper = (Assignment assignment, _) => assignment.T.available && assignment.T.finished
           ? assignment.T.get / assignment.T.total * 100
           : null;
       color = isLight?_Tcolor:_TPcolor;
     } else if (category == "communication") {
-      yValueMapper = (Assignment assignment, _) => assignment.C.available & assignment.C.finished
+      yValueMapper = (Assignment assignment, _) => assignment.C.available && assignment.C.finished
           ? assignment.C.get / assignment.C.total * 100
           : null;
       color = isLight?_Ccolor:_CPcolor;

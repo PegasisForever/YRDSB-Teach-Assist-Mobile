@@ -42,3 +42,7 @@ String testBlank(String str){
     return str;
   }
 }
+
+bool isZeroOrNull(num n){
+  return n==0 || n==null;
+}
