@@ -150,22 +150,22 @@ class _StaticsListState extends State<StaticsList> {
     ChartValueMapper<Assignment, num> yValueMapper;
     Color color;
     if (category == "knowledge_understanding") {
-      yValueMapper = (Assignment assignment, _) => assignment.KU.available
+      yValueMapper = (Assignment assignment, _) => assignment.KU.available & assignment.KU.finished
           ? assignment.KU.get / assignment.KU.total * 100
           : null;
       color = isLight?_Kcolor:_KPcolor;
     } else if (category == "thinking") {
-      yValueMapper = (Assignment assignment, _) => assignment.T.available
+      yValueMapper = (Assignment assignment, _) => assignment.T.available & assignment.T.finished
           ? assignment.T.get / assignment.T.total * 100
           : null;
       color = isLight?_Tcolor:_TPcolor;
     } else if (category == "communication") {
-      yValueMapper = (Assignment assignment, _) => assignment.C.available
+      yValueMapper = (Assignment assignment, _) => assignment.C.available & assignment.C.finished
           ? assignment.C.get / assignment.C.total * 100
           : null;
       color = isLight?_Ccolor:_CPcolor;
     } else if (category == "application") {
-      yValueMapper = (Assignment assignment, _) => assignment.A.available
+      yValueMapper = (Assignment assignment, _) => assignment.A.available & assignment.A.finished
           ? assignment.A.get / assignment.A.total * 100
           : null;
       color = isLight?_Acolor:_APcolor;
