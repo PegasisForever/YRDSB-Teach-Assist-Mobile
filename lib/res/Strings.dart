@@ -72,7 +72,8 @@ class Strings {
       "avg:":"Avg: ",
       "untitled_assignment":"Untitled Assignment",
       "in_development":"In Development 🚧",
-
+      "dismiss":"Dismiss",
+      "tap_to_view_detail":"You can tap on an item to see its details",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -143,6 +144,8 @@ class Strings {
       "avg:":"平均：",
       "untitled_assignment":"未命名作业",
       "in_development":"正在开发 🚧",
+      "dismiss":"好的",
+      "tap_to_view_detail":"点击列表中的一项即可查看详情",
     }
   };
 
