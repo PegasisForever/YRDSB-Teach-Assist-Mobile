@@ -165,7 +165,7 @@ class _StaticsListState extends State<StaticsList> {
           : null;
       color = isLight?_Ccolor:_CPcolor;
     } else if (category == "application") {
-      yValueMapper = (Assignment assignment, _) => assignment.A.available & assignment.A.finished
+      yValueMapper = (Assignment assignment, _) => assignment.A.available && assignment.A.finished
           ? assignment.A.get / assignment.A.total * 100
           : null;
       color = isLight?_Acolor:_APcolor;
