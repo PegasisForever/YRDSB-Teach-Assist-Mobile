@@ -113,7 +113,7 @@ class _StaticsListState extends State<StaticsList> {
             animationDuration: 500,
             percent: _course.overallMark / 100,
             linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: Theme.of(context).colorScheme.secondary,
+            progressColor: Theme.of(context).colorScheme.primary,
           )
         ],
       ),

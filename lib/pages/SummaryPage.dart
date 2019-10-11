@@ -21,8 +21,9 @@ class SummaryPage extends StatefulWidget {
 
 class _SummaryPageState extends State<SummaryPage>
     with AfterLayoutMixin<SummaryPage> {
+  var _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   var _accountSelectorHeight = 0.0;
-  var drawerHeaderOpened = false;
+  var _drawerHeaderOpened = false;
   var _courses = userList.length != 0?getCourseListOf(currentUser.number):null;
 
   @override
@@ -55,7 +56,7 @@ class _SummaryPageState extends State<SummaryPage>
               padding: EdgeInsets.zero,
               children: <Widget>[
                 UADrawerHeader.UserAccountsDrawerHeader(
-                  isOpened: drawerHeaderOpened,
+                  isOpened: _drawerHeaderOpened,
                   accountName: Text(
                       currentUser.displayName == ""
                           ? currentUser.number
@@ -73,7 +74,7 @@ class _SummaryPageState extends State<SummaryPage>
                   ),
                   onDetailsPressed: () {
                     setState(() {
-                      if (!drawerHeaderOpened) {
+                      if (!_drawerHeaderOpened) {
                         _accountSelectorHeight = 64.0;
                         userList.forEach((user) {
                           if (user.number != currentUser.number) {
@@ -87,7 +88,7 @@ class _SummaryPageState extends State<SummaryPage>
                       } else {
                         _accountSelectorHeight = 0;
                       }
-                      drawerHeaderOpened = !drawerHeaderOpened;
+                      _drawerHeaderOpened = !_drawerHeaderOpened;
                     });
                   },
                 ),
@@ -141,6 +142,7 @@ class _SummaryPageState extends State<SummaryPage>
         body: TabBarView(
           children: <Widget>[
             RefreshIndicator(
+              key: _refreshIndicatorKey,
               onRefresh: () async {
                 saveCourseListOf(
                     currentUser.number, await getMark(currentUser));
@@ -263,7 +265,9 @@ class _SummaryPageState extends State<SummaryPage>
   void afterFirstLayout(BuildContext context) {
     if (userList.length == 0) {
       Navigator.pushReplacementNamed(context, "/login");
-    } else {}
+    } else {
+      _refreshIndicatorKey.currentState.show();
+    }
   }
 
   List<Widget> getAccountSelectorList() {
@@ -278,7 +282,7 @@ class _SummaryPageState extends State<SummaryPage>
             setState(() {
               setCurrentUser(user);
               _courses = getCourseListOf(currentUser.number);
-              drawerHeaderOpened = false;
+              _drawerHeaderOpened = false;
               _accountSelectorHeight = 0;
             });
             Navigator.pop(context);
@@ -292,7 +296,7 @@ class _SummaryPageState extends State<SummaryPage>
       dense: true,
       onTap: () {
         setState(() {
-          drawerHeaderOpened = false;
+          _drawerHeaderOpened = false;
           _accountSelectorHeight = 0;
         });
         Navigator.pushNamed(context, "/accounts_list");

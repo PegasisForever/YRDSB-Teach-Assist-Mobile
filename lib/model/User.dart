@@ -13,9 +13,9 @@ initUser() {
     userList.add(User.fromJson(user));
   }
 
-  var currenUserJSON = prefs.getString("currentuser");
-  if(currenUserJSON!=null){
-    currentUser=User.fromJson(jsonDecode(currenUserJSON));
+  var currentUserJSON = prefs.getString("currentuser");
+  if(currentUserJSON!=null){
+    currentUser=User.fromJson(jsonDecode(currentUserJSON));
   }else if(userList.length>0){
     setCurrentUser(userList[0]);
   }
