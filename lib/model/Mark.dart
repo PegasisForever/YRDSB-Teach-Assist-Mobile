@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ta/dataStore.dart';
+import 'package:ta/network/network.dart';
 import 'package:ta/prasers/ParsersCollection.dart';
 import 'package:ta/res/Strings.dart';
 
@@ -126,10 +127,11 @@ class Course{
 
 List<Course> getCourseListOf(String number){
   var json=jsonDecode(prefs.getString("$number-mark"));
-  var version=int.parse(prefs.getString("$number-mark-ver")??"1");
+  var version=prefs.getInt("$number-mark-ver")??1;
   return JSONCourseListParsers[version](json);
 }
 
 saveCourseListOf(String number,String json){
   prefs.setString("$number-mark", json);
+  prefs.setInt("$number-mark-ver", apiVersion);
 }

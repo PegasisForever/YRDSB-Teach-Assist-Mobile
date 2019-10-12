@@ -1,16 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 
 import '../firebaseMsg.dart';
 
-const String baseUrl = true?"https://api.pegasis.site/yrdsb_ta/":"http://192.168.1.22:5004/";
+const String baseUrl = kReleaseMode
+    ? "https://api.pegasis.site/yrdsb_ta/"
+    : "http://192.168.1.22:5004/";
+const int apiVersion = 2;
 
 Future<String> regi(User user) async {
   print(baseUrl);
   Response response = await post(baseUrl + "regi",
+      headers: {"api-version": apiVersion.toString()},
       body: jsonEncode({"user": user, "token": firebaseToken}));
 
   int statusCode = response.statusCode;
@@ -21,8 +27,9 @@ Future<String> regi(User user) async {
   return response.body;
 }
 
-Future<void> deregi(User user) async{
+Future<void> deregi(User user) async {
   Response response = await post(baseUrl + "deregi",
+      headers: {"api-version": apiVersion.toString()},
       body: jsonEncode({"user": user, "token": firebaseToken}));
 
   int statusCode = response.statusCode;
@@ -35,6 +42,7 @@ Future<void> deregi(User user) async{
 
 Future<String> getMark(User user) async {
   Response response = await post(baseUrl + "getmark",
+      headers: {"api-version": apiVersion.toString()},
       body: jsonEncode({"number": user.number, "password": user.password}));
 
   int statusCode = response.statusCode;
@@ -43,4 +51,8 @@ Future<String> getMark(User user) async {
   }
 
   return response.body;
+}
+
+Future<String> getAndSaveMark(User user) async {
+  saveCourseListOf(user.number, await getMark(currentUser));
 }

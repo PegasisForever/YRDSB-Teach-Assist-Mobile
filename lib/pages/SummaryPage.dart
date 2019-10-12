@@ -144,8 +144,7 @@ class _SummaryPageState extends State<SummaryPage>
             RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: () async {
-                saveCourseListOf(
-                    currentUser.number, await getMark(currentUser));
+                await getAndSaveMark(currentUser);
                 setState(() {
                   _courses = getCourseListOf(currentUser.number);
                   print("Manual refreshed");
