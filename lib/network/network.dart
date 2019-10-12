@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
+import 'package:ta/tools.dart';
 
 import '../firebaseMsg.dart';
 
@@ -24,7 +25,7 @@ Future<String> regi(User user) async {
     throw HttpException(statusCode.toString());
   }
 
-  return response.body;
+  return unGzip(response.bodyBytes);
 }
 
 Future<void> deregi(User user) async {
@@ -50,7 +51,7 @@ Future<String> getMark(User user) async {
     throw HttpException(statusCode.toString());
   }
 
-  return response.body;
+  return unGzip(response.bodyBytes);
 }
 
 Future<String> getAndSaveMark(User user) async {

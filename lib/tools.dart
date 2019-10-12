@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:typed_data';
+import 'package:archive/archive.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ta/res/Strings.dart';
@@ -45,4 +49,8 @@ String testBlank(String str){
 
 bool isZeroOrNull(num n){
   return n==0 || n==null;
+}
+
+String unGzip(Uint8List bytes){
+  return Utf8Decoder().convert(GZipDecoder().decodeBytes(bytes));
 }
