@@ -68,11 +68,11 @@ class _StaticsListState extends State<StaticsList> {
 
   List<PieSeries<_PieData, String>> _getPieSeries() {
     final List<_PieData> chartData = <_PieData>[
-      _PieData(Strings.get("a"), _course.weights.A.CW, _course.weights.A.SA, _APcolor),
-      _PieData(Strings.get("c"), _course.weights.C.CW, _course.weights.C.SA, _CPcolor),
-      _PieData(Strings.get("t"), _course.weights.T.CW, _course.weights.T.SA, _TPcolor),
-      _PieData(Strings.get("ku"), _course.weights.KU.CW, _course.weights.KU.SA, _KPcolor),
-      _PieData(Strings.get("f"), _course.weights.F.CW, _course.weights.F.SA, _FPcolor),
+      _PieData(Strings.get("a"), _course.weightTable.A.CW, _course.weightTable.A.SA, _APcolor),
+      _PieData(Strings.get("c"), _course.weightTable.C.CW, _course.weightTable.C.SA, _CPcolor),
+      _PieData(Strings.get("t"), _course.weightTable.T.CW, _course.weightTable.T.SA, _TPcolor),
+      _PieData(Strings.get("ku"), _course.weightTable.KU.CW, _course.weightTable.KU.SA, _KPcolor),
+      _PieData(Strings.get("f"), _course.weightTable.F.CW, _course.weightTable.F.SA, _FPcolor),
     ];
     return <PieSeries<_PieData, String>>[
       PieSeries<_PieData, String>(

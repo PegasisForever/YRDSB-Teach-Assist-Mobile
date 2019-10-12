@@ -56,7 +56,7 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
               if (index.isOdd) {
                 var assignment = _course.assignments[
                     _course.assignments.length - 1 - ((index - 1) ~/ 2)];
-                return _MarksListTile(assignment, _course.weights);
+                return _MarksListTile(assignment, _course.weightTable);
               } else {
                 return Divider();
               }
@@ -73,7 +73,7 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
 
 class _MarksListTile extends StatefulWidget {
   final Assignment _assignment;
-  final Weights _weights;
+  final WeightTable _weights;
 
   _MarksListTile(this._assignment, this._weights);
 
@@ -85,7 +85,7 @@ class _MarksListTile extends StatefulWidget {
 class _MarksListTileState extends State<_MarksListTile>
     with TickerProviderStateMixin {
   final Assignment _assignment;
-  final Weights _weights;
+  final WeightTable _weights;
   var showDetail = false;
 
   _MarksListTileState(this._assignment, this._weights);

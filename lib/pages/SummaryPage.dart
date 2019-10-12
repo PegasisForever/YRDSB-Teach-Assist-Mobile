@@ -148,6 +148,7 @@ class _SummaryPageState extends State<SummaryPage>
                     currentUser.number, await getMark(currentUser));
                 setState(() {
                   _courses = getCourseListOf(currentUser.number);
+                  print("Manual refreshed");
                 });
               },
               child: ListView(
