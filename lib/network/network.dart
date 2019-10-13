@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
+import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
 import '../firebaseMsg.dart';
@@ -18,7 +19,7 @@ Future<String> regi(User user) async {
   print(baseUrl);
   Response response = await post(baseUrl + "regi",
       headers: {"api-version": apiVersion.toString()},
-      body: jsonEncode({"user": user, "token": firebaseToken}));
+      body: jsonEncode({"user": user, "token": firebaseToken,"language":Strings.currentLanguage}));
 
   int statusCode = response.statusCode;
   if (statusCode != 200) {

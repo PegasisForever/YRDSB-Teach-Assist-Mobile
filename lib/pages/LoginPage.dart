@@ -86,7 +86,9 @@ class _LoginPageState extends State<LoginPage> {
                   icon: Icons.lock,
                   isPassword: true,
                   onSubmitted: (s) {
-                    _startLogin();
+                    if (!_isLoading){
+                      _startLogin(context);
+                    }
                   },
                 ),
                 ConstrainedBox(
@@ -101,7 +103,9 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                       RaisedButton(
                         child: Text(Strings.get("login").toUpperCase()),
-                        onPressed: !_isLoading ? _startLogin : null,
+                        onPressed: !_isLoading ? (){
+                          _startLogin(context);
+                        }: null,
                       )
                     ],
                   ),
@@ -117,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
     ));
   }
 
-  _startLogin() async {
+  _startLogin(BuildContext context) async {
     if (_studentNumberController.text == "") {
       setState(() {
         _studentNumberErrorText.text =

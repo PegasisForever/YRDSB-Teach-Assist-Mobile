@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Strings {
-  static var _currentLanguage;
+  static var currentLanguage;
   static var _strings = {
     "en": {
       "login_your_account": "Login Your Account:",
@@ -150,16 +150,16 @@ class Strings {
   };
 
   static updateCurrentLanguage(BuildContext context) {
-    _currentLanguage = Localizations.localeOf(context).languageCode;
+    currentLanguage = Localizations.localeOf(context).languageCode;
   }
 
   static String get(String id, [BuildContext context]) {
-    if (_currentLanguage == null) {
+    if (currentLanguage == null) {
       updateCurrentLanguage(context);
     }
-    var string = _strings[_currentLanguage][id];
+    var string = _strings[currentLanguage][id];
     if (string == null) {
-      print("Cannot find id:$id in $_currentLanguage");
+      print("Cannot find id:$id in $currentLanguage");
       string = get("unknown");
     }
     return string;
