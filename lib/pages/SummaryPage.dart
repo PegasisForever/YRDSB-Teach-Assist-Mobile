@@ -13,10 +13,16 @@ import '../widgets/user_accounts_drawer_header.dart' as UADrawerHeader;
 import 'detailpage/DetailPage.dart';
 
 class SummaryPage extends StatefulWidget {
+  var needRefresh=true;
+
   SummaryPage() : super();
 
+  SummaryPage.norefresh():super(){
+    needRefresh=false;
+  }
+
   @override
-  _SummaryPageState createState() => _SummaryPageState();
+  _SummaryPageState createState() => _SummaryPageState(needRefresh);
 }
 
 class _SummaryPageState extends State<SummaryPage>
@@ -25,6 +31,10 @@ class _SummaryPageState extends State<SummaryPage>
   var _accountSelectorHeight = 0.0;
   var _drawerHeaderOpened = false;
   var _courses = userList.length != 0?getCourseListOf(currentUser.number):null;
+  final _needRefresh;
+
+  _SummaryPageState(this._needRefresh);
+
 
   @override
   Widget build(BuildContext context) {
@@ -265,7 +275,7 @@ class _SummaryPageState extends State<SummaryPage>
   void afterFirstLayout(BuildContext context) {
     if (userList.length == 0) {
       Navigator.pushReplacementNamed(context, "/login");
-    } else {
+    } else if(_needRefresh) {
       _refreshIndicatorKey.currentState.show();
     }
   }

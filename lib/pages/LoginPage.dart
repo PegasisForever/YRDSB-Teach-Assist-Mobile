@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
+import 'package:ta/pages/SummaryPage.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/EditText.dart';
 
@@ -150,6 +151,11 @@ class _LoginPageState extends State<LoginPage> {
 
       saveCourseListOf(user.number, res);
 
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SummaryPage.norefresh()),
+      );
       Navigator.pushReplacementNamed(context, "/");
     } catch (e) {
       _handleError(e, context);
