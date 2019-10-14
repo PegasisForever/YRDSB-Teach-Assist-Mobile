@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:ta/model/Mark.dart';
@@ -9,33 +10,63 @@ import 'package:ta/model/User.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
-import '../firebaseMsg.dart';
+import '../firebase.dart';
 
 const String baseUrl = kReleaseMode
     ? "https://api.pegasis.site/yrdsb_ta/"
     : "http://192.168.1.22:5004/";
 const int apiVersion = 2;
 
+class HttpResponse{
+  String body="";
+  int statusCode=null;
+}
+
+Future<HttpResponse> _postWithMetric(String url,body) async{
+  final metric = FirebasePerformance.instance
+      .newHttpMetric(url, HttpMethod.Post);
+
+  await metric.start();
+
+  var res=HttpResponse();
+  try{
+    Response response = await post(baseUrl + "regi",
+        headers: {"api-version": apiVersion.toString()},
+        body: body);
+
+    res.statusCode=response.statusCode;
+    if(res.statusCode==200){
+      res.body=unGzip(response.bodyBytes);
+    }
+
+    metric
+      ..responsePayloadSize = response.contentLength
+      ..httpResponseCode = response.statusCode;
+  } finally{
+    await metric.stop();
+  }
+
+  return res;
+}
+
 Future<String> regi(User user) async {
   print(baseUrl);
-  Response response = await post(baseUrl + "regi",
-      headers: {"api-version": apiVersion.toString()},
-      body: jsonEncode({"user": user, "token": firebaseToken,"language":Strings.currentLanguage}));
+  var res = await _postWithMetric(baseUrl + "regi",
+      jsonEncode({"user": user, "token": firebaseToken,"language":Strings.currentLanguage}));
 
-  int statusCode = response.statusCode;
+  int statusCode = res.statusCode;
   if (statusCode != 200) {
     throw HttpException(statusCode.toString());
   }
 
-  return unGzip(response.bodyBytes);
+  return res.body;
 }
 
 Future<void> deregi(User user) async {
-  Response response = await post(baseUrl + "deregi",
-      headers: {"api-version": apiVersion.toString()},
-      body: jsonEncode({"user": user, "token": firebaseToken}));
+  var res = await _postWithMetric(baseUrl + "deregi",
+      jsonEncode({"user": user, "token": firebaseToken}));
 
-  int statusCode = response.statusCode;
+  int statusCode = res.statusCode;
   if (statusCode != 200) {
     throw HttpException(statusCode.toString());
   }
@@ -44,16 +75,15 @@ Future<void> deregi(User user) async {
 }
 
 Future<String> getMarkTimeLine(User user) async {
-  Response response = await post(baseUrl + "getmark_timeline",
-      headers: {"api-version": apiVersion.toString()},
-      body: jsonEncode({"number": user.number, "password": user.password}));
+  var res = await _postWithMetric(baseUrl + "getmark_timeline",
+      jsonEncode({"number": user.number, "password": user.password}));
 
-  int statusCode = response.statusCode;
+  int statusCode = res.statusCode;
   if (statusCode != 200) {
     throw HttpException(statusCode.toString());
   }
 
-  return unGzip(response.bodyBytes);
+  return res.body;
 }
 
 getAndSaveMarkTimeline(User user) async {

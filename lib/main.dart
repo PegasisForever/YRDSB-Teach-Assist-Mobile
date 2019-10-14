@@ -1,5 +1,3 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +8,7 @@ import 'package:ta/pages/LoginPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 
 import 'dataStore.dart';
-import 'firebaseMsg.dart';
+import 'firebase.dart';
 
 void main() async {
   initFirebaseMsg();
@@ -21,9 +19,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAnalyticsObserver observer =
-  FirebaseAnalyticsObserver(analytics: analytics);
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +51,6 @@ class MyApp extends StatelessWidget {
         "/accounts_list/edit": (BuildContext context) =>
             new EditAccount(User.blank()),
       },
-      navigatorObservers: [
-//        observer
-      ],
       localizationsDelegates: [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

@@ -13,7 +13,7 @@ class SummaryPage extends StatefulWidget {
 
   SummaryPage() : super();
 
-  SummaryPage.norefresh():super(){
+  SummaryPage.noRefresh():super(){
     needRefresh=false;
   }
 
@@ -22,7 +22,7 @@ class SummaryPage extends StatefulWidget {
 }
 
 class _SummaryPageState extends State<SummaryPage>
-    with AfterLayoutMixin<SummaryPage> {
+    with AfterLayoutMixin<SummaryPage>,RouteAware {
   final _needRefresh;
 
   _SummaryPageState(this._needRefresh);

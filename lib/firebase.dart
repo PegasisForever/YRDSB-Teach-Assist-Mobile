@@ -1,5 +1,8 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+//Firebase Cloud Messaging
 final _firebaseMessaging = FirebaseMessaging();
 var firebaseToken;
 
@@ -26,3 +29,5 @@ void initFirebaseMsg() {
     firebaseToken = token;
   });
 }
+
+//Firebase Analytics

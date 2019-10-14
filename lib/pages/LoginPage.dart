@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => SummaryPage.norefresh()),
+            builder: (context) => SummaryPage.noRefresh()),
       );
     } catch (e) {
       _handleError(e, context);
