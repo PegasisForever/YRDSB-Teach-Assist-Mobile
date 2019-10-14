@@ -56,12 +56,20 @@ Future<String> getMarkTimeLine(User user) async {
   return unGzip(response.bodyBytes);
 }
 
-Future<String> getAndSaveMarkTimeline(User user) async {
-  var strs=(await getMarkTimeLine(currentUser)).split("|||");
+getAndSaveMarkTimeline(User user) async {
+  var strs=(await getMarkTimeLine(user)).split("|||");
   var markStr=strs[0];
   var timelineStr=strs[1];
 
   saveCourseListOf(user.number, markStr);
   saveTimelineOf(user.number, timelineStr);
-  print(timelineStr);
+}
+
+regiAndSave(User user) async{
+  var strs=(await regi(user)).split("|||");
+  var markStr=strs[0];
+  var timelineStr=strs[1];
+
+  saveCourseListOf(user.number, markStr);
+  saveTimelineOf(user.number, timelineStr);
 }

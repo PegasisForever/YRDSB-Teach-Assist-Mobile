@@ -145,11 +145,9 @@ class _LoginPageState extends State<LoginPage> {
         User(_studentNumberController.text, _passwordController.text, true);
 
     try {
-      var res = await regi(user);
+      await regiAndSave(user);
       addUser(user);
       setCurrentUser(user);
-
-      saveCourseListOf(user.number, res);
 
       Navigator.push(
         context,

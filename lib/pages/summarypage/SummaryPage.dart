@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/summarypage/SummaryTab.dart';
+import 'package:ta/pages/summarypage/TimelineTab.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:sprintf/sprintf.dart';
 import 'SummaryPageDrawer.dart';
@@ -59,7 +60,7 @@ class _SummaryPageState extends State<SummaryPage>
         body: TabBarView(
           children: <Widget>[
             SummaryTab(needRefresh: _needRefresh),
-            Center(child: Text(Strings.get("in_development")))
+            TimelineTab()
           ],
         ),
       ),

@@ -196,13 +196,11 @@ class _EditAccountState extends State<EditAccount> {
 
                           try {
                             if (_addNew) {
-                              var res= await regi(user);
-                              saveCourseListOf(user.number, res);
+                              await regiAndSave(user);
                               addUser(user);
                             } else {
                               await deregi(_oldUser);
-                              var res= await regi(user);
-                              saveCourseListOf(user.number, res);
+                              await regiAndSave(user);
                               editUser(user, _oldUser.number);
                             }
 
