@@ -149,12 +149,11 @@ class _LoginPageState extends State<LoginPage> {
       addUser(user);
       setCurrentUser(user);
 
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => SummaryPage.norefresh()),
       );
-      Navigator.pushReplacementNamed(context, "/");
     } catch (e) {
       _handleError(e, context);
     }
