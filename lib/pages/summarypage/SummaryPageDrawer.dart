@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/res/Strings.dart';
