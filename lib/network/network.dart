@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:ta/model/Mark.dart';
+import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
@@ -42,8 +43,8 @@ Future<void> deregi(User user) async {
   return;
 }
 
-Future<String> getMark(User user) async {
-  Response response = await post(baseUrl + "getmark",
+Future<String> getMarkTimeLine(User user) async {
+  Response response = await post(baseUrl + "getmark_timeline",
       headers: {"api-version": apiVersion.toString()},
       body: jsonEncode({"number": user.number, "password": user.password}));
 
@@ -55,6 +56,12 @@ Future<String> getMark(User user) async {
   return unGzip(response.bodyBytes);
 }
 
-Future<String> getAndSaveMark(User user) async {
-  saveCourseListOf(user.number, await getMark(currentUser));
+Future<String> getAndSaveMarkTimeline(User user) async {
+  var strs=(await getMarkTimeLine(currentUser)).split("|||");
+  var markStr=strs[0];
+  var timelineStr=strs[1];
+
+  saveCourseListOf(user.number, markStr);
+  saveTimelineOf(user.number, timelineStr);
+  print(timelineStr);
 }

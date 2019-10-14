@@ -16,7 +16,7 @@ SmallMark _parseSmallMark(Map<String, dynamic> json) {
   return smallMark;
 }
 
-Assignment _parseAssignment(Map<String, dynamic> json) {
+Assignment parseAssignment(Map<String, dynamic> json) {
   var assignment = Assignment.blank();
 
   assignment.name = json["name"];
@@ -84,7 +84,7 @@ Course _parseCourse(Map<String, dynamic> json) {
   if (course.overallMark!=null){
     course.weightTable = _parseWeightTable(json["weight_table"]);
     for (Map<String, dynamic> assignment in json["assignments"]) {
-      course.assignments.add(_parseAssignment(assignment));
+      course.assignments.add(parseAssignment(assignment));
     }
   }
 

@@ -7,7 +7,7 @@ import 'package:ta/model/User.dart';
 import 'package:ta/pages/AccountsList.dart';
 import 'package:ta/pages/EditAccount.dart';
 import 'package:ta/pages/LoginPage.dart';
-import 'package:ta/pages/SummaryPage.dart';
+import 'package:ta/pages/summarypage/SummaryPage.dart';
 
 import 'dataStore.dart';
 import 'firebaseMsg.dart';

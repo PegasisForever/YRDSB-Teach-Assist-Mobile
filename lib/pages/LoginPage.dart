@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
-import 'package:ta/pages/SummaryPage.dart';
+import 'package:ta/pages/summarypage/SummaryPage.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/EditText.dart';
 
