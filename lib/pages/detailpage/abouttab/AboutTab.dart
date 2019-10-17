@@ -54,22 +54,6 @@ class _AboutTabState extends State<AboutTab> {
               courseInfoText,
               style: TextStyle(height: 1.7),
             ),
-//            child: Column(
-//              crossAxisAlignment: CrossAxisAlignment.start,
-//              children: <Widget>[
-//                SelectableText(Strings.get("course_about_name:")+testBlank(_course.name)),
-//                SizedBox(height: 6,),
-//                Text(Strings.get("course_about_code:")+testBlank(_course.code)),
-//                SizedBox(height: 6,),
-//                Text(Strings.get("course_about_period:")+testBlank(_course.block)),
-//                SizedBox(height: 6,),
-//                Text(Strings.get("course_about_room:")+testBlank(_course.room)),
-//                SizedBox(height: 6,),
-//                Text(Strings.get("course_about_starttime:")+testBlank(DateFormat("yyyy-MM-dd").format(_course.startTime))),
-//                SizedBox(height: 6,),
-//                Text(Strings.get("course_about_endtime:")+testBlank(DateFormat("yyyy-MM-dd").format(_course.endTime))),
-//              ],
-//            ),
           ),
         )
       ],

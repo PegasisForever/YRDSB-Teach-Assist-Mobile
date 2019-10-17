@@ -9,12 +9,12 @@ import 'package:sprintf/sprintf.dart';
 import 'SummaryPageDrawer.dart';
 
 class SummaryPage extends StatefulWidget {
-  var needRefresh=true;
+  var needRefresh = true;
 
   SummaryPage() : super();
 
-  SummaryPage.noRefresh():super(){
-    needRefresh=false;
+  SummaryPage.noRefresh() : super() {
+    needRefresh = false;
   }
 
   @override
@@ -22,11 +22,10 @@ class SummaryPage extends StatefulWidget {
 }
 
 class _SummaryPageState extends State<SummaryPage>
-    with AfterLayoutMixin<SummaryPage>,RouteAware {
+    with AfterLayoutMixin<SummaryPage>, RouteAware {
   final _needRefresh;
 
   _SummaryPageState(this._needRefresh);
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +38,7 @@ class _SummaryPageState extends State<SummaryPage>
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(
             sprintf(Strings.get("report_for_student"), [currentUser.getName()]),
@@ -52,7 +52,7 @@ class _SummaryPageState extends State<SummaryPage>
             ],
           ),
         ),
-        drawer: SummaryPageDrawer(onUserSelected: (user){
+        drawer: SummaryPageDrawer(onUserSelected: (user) {
           setState(() {
             setCurrentUser(user);
           });
@@ -66,7 +66,6 @@ class _SummaryPageState extends State<SummaryPage>
       ),
     );
   }
-
 
   @override
   void afterFirstLayout(BuildContext context) {

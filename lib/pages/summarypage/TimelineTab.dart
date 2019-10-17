@@ -14,7 +14,7 @@ class _TimelineTabState extends State<TimelineTab> {
   Widget build(BuildContext context) {
     var timeline=getTimelineOf(currentUser.number);
     return ListView(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: EdgeInsets.only(bottom: 8+getBottomPadding(context)),
       children: _getTimelineCards(timeline),
     );
   }

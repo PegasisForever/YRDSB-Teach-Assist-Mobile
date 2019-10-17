@@ -43,7 +43,7 @@ class _SummaryTabState extends State<SummaryTab>
         });
       },
       child: ListView(
-        padding: const EdgeInsets.only(bottom: 8),
+        padding: EdgeInsets.only(bottom: 8+getBottomPadding(context)),
         children: _getSummaryCards(courses),
       ),
     );

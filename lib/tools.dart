@@ -54,3 +54,8 @@ bool isZeroOrNull(num n){
 String unGzip(Uint8List bytes){
   return Utf8Decoder().convert(GZipDecoder().decodeBytes(bytes));
 }
+
+double getBottomPadding(BuildContext context){
+  var query=MediaQuery.of(context);
+  return query.padding.bottom+query.viewInsets.bottom;
+}
