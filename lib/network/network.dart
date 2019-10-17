@@ -30,7 +30,7 @@ Future<HttpResponse> _postWithMetric(String url,body) async{
 
   var res=HttpResponse();
   try{
-    Response response = await post(baseUrl + "regi",
+    Response response = await post(url,
         headers: {"api-version": apiVersion.toString()},
         body: body);
 
