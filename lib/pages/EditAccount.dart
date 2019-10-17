@@ -208,10 +208,11 @@ class _EditAccountState extends State<EditAccount> {
                           } catch (e) {
                             print(e);
                             _handleError(e, context);
+                          } finally{
+                            setState(() {
+                              _isSaveLoading = false;
+                            });
                           }
-                          setState(() {
-                            _isSaveLoading = false;
-                          });
                         },
                       )
                     : Container(width: 0.0, height: 0.0);

@@ -4,7 +4,7 @@ import 'package:ta/res/Strings.dart';
 import 'package:ta/res/Themes.dart';
 import '../../widgets/user_accounts_drawer_header.dart' as UADrawerHeader;
 
-class SummaryPageDrawer extends StatefulWidget{
+class SummaryPageDrawer extends StatefulWidget {
   SummaryPageDrawer({this.onUserSelected});
 
   final ValueChanged<User> onUserSelected;
@@ -16,13 +16,13 @@ class SummaryPageDrawer extends StatefulWidget{
 class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
   var _drawerHeaderOpened = false;
   var _accountSelectorHeight = 0.0;
-  ValueChanged<User> _onUserSelected=null;
+  ValueChanged<User> _onUserSelected = null;
 
   @override
   void initState() {
     super.initState();
 
-    _onUserSelected=widget.onUserSelected;
+    _onUserSelected = widget.onUserSelected;
   }
 
   @override
@@ -35,10 +35,9 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
           children: <Widget>[
             UADrawerHeader.UserAccountsDrawerHeader(
               isOpened: _drawerHeaderOpened,
-              accountName: Text(
-                  currentUser.displayName == ""
-                      ? currentUser.number
-                      : currentUser.displayName),
+              accountName: Text(currentUser.displayName == ""
+                  ? currentUser.number
+                  : currentUser.displayName),
               accountEmail: currentUser.displayName == ""
                   ? null
                   : Text(currentUser.number),
@@ -46,7 +45,9 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
                 child: Text(
                   (currentUser.displayName == ""
                       ? currentUser.number.substring(7, 9)
-                      : currentUser.displayName.substring(0, 2)),
+                      : (currentUser.displayName.length > 2
+                          ? currentUser.displayName.substring(0, 2)
+                          : currentUser.displayName)),
                   style: TextStyle(fontSize: 40.0),
                 ),
               ),

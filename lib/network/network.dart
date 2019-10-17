@@ -12,7 +12,7 @@ import 'package:ta/tools.dart';
 
 import '../firebase.dart';
 
-const String baseUrl = kReleaseMode
+const String baseUrl = true
     ? "https://api.pegasis.site/yrdsb_ta/"
     : "http://192.168.1.22:5004/";
 const int apiVersion = 2;
@@ -35,7 +35,7 @@ Future<HttpResponse> _postWithMetric(String url,body) async{
         body: body);
 
     res.statusCode=response.statusCode;
-    if(res.statusCode==200){
+    if(res.statusCode==200 && response.body!=""){
       res.body=unGzip(response.bodyBytes);
     }
 

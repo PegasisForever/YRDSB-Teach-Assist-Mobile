@@ -73,7 +73,7 @@ class Strings {
       "untitled_assignment":"Untitled Assignment",
       "in_development":"In Development 🚧",
       "dismiss":"Dismiss",
-      "tap_to_view_detail":"You can tap on an item to see its details",
+      "tap_to_view_detail":"You can tap on an item to view its details",
     },
     "zh": {
       "login_your_account": "登录帐号：",
