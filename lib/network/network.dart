@@ -12,7 +12,7 @@ import 'package:ta/tools.dart';
 
 import '../firebase.dart';
 
-const String baseUrl = true
+const String baseUrl = kReleaseMode
     ? "https://api.pegasis.site/yrdsb_ta/"
     : "http://192.168.1.22:5004/";
 const int apiVersion = 2;

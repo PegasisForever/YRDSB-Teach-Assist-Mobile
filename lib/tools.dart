@@ -4,6 +4,7 @@ import 'package:archive/archive.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ta/res/Strings.dart';
 
 class LifecycleEventHandler extends WidgetsBindingObserver {
@@ -58,4 +59,21 @@ String unGzip(Uint8List bytes){
 double getBottomPadding(BuildContext context){
   var query=MediaQuery.of(context);
   return query.padding.bottom+query.viewInsets.bottom;
+}
+
+void updateNavigationBarBrightness(BuildContext context){
+  var brightness=MediaQuery.of(context).platformBrightness;
+  print(brightness);
+  if (brightness==Brightness.light){
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+    print("set to light");
+  }else{
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    print("set to dark");
+  }
+}
+
+SystemUiOverlayStyle getSystemUiOverlayStyle(BuildContext context){
+  var brightness=MediaQuery.of(context).platformBrightness;
+  return brightness==Brightness.light?SystemUiOverlayStyle.light:SystemUiOverlayStyle.dark;
 }

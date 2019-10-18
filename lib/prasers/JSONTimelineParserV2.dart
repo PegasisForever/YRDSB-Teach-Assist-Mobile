@@ -4,7 +4,8 @@ import 'package:ta/prasers/JSONCourseListParserV2.dart';
 AssignmentAdded _parseAssignmentAdded(Map<String, dynamic> json) {
   var assignmentAdded = AssignmentAdded();
   assignmentAdded.courseName = json["course_name"];
-  assignmentAdded.assignmentName = json["assignment_name"];
+  assignmentAdded.assignment = parseAssignment(
+      json["assignment"]); //remember to change after updated
   assignmentAdded.assignmentAvg = json["assignment_avg"];
   assignmentAdded.overallBefore = json["overall_before"];
   assignmentAdded.overallAfter = json["overall_after"];

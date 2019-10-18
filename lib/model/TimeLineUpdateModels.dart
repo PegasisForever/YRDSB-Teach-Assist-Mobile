@@ -13,17 +13,17 @@ class TAUpdate{
 
 class AssignmentAdded extends TAUpdate{
   String courseName="";
-  String assignmentName="";
-  double assignmentAvg=null;
-  double overallBefore=null;
+  Assignment assignment;
+  double assignmentAvg;
+  double overallBefore;
   double overallAfter=0.0;
 }
 
 class AssignmentUpdated extends TAUpdate{
   String courseName="";
   String assignmentName="";
-  Assignment assignmentBefore=null;
-  Assignment assignmentAfter=null;
+  Assignment assignmentBefore;
+  Assignment assignmentAfter;
 }
 
 class CourseArchived extends TAUpdate{

@@ -59,7 +59,7 @@ class _TimelineTabState extends State<TimelineTab> {
               ],
             ),
             SizedBox(height: 8),
-            Text("New assignment: "+update.assignmentName,style: TextStyle(fontSize: 16)),
+            Text("New assignment: "+update.assignment.name,style: TextStyle(fontSize: 16)),
             update.overallBefore!=null?Padding(
               padding: EdgeInsets.only(top: 16,bottom: 8),
               child: Row(
