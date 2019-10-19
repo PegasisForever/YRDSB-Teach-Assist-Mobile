@@ -39,7 +39,6 @@ class _SummaryTabState extends State<SummaryTab>
         await getAndSaveMarkTimeline(currentUser);
         setState(() {
           courses = getCourseListOf(currentUser.number);
-          print("Manual refreshed");
         });
       },
       child: ListView(

@@ -140,7 +140,7 @@ class Strings {
       "w:":"权重:",
       "no_weight":"无权重",
       "overall":"课程总分",
-      "average":"平均",
+      "average":"平均分数",
       "avg:":"平均：",
       "untitled_assignment":"未命名作业",
       "in_development":"正在开发 🚧",
