@@ -50,7 +50,7 @@ class _StaticsListState extends State<StaticsList> {
           )
         : Center(
             child: Text(
-              Strings.get("statics_unavailable"),
+              Strings.get("statistics_unavailable"),
               style: Theme.of(context).textTheme.subhead,
             ),
           );

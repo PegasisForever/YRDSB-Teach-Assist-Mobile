@@ -33,7 +33,7 @@ class _DetailPageState extends State<DetailPage> {
             indicatorColor: Colors.white,
             tabs: [
               Tab(text: Strings.get("assignments")),
-              Tab(text: Strings.get("statics")),
+              Tab(text: Strings.get("statistics")),
               Tab(text: Strings.get("about")),
             ],
           ),
