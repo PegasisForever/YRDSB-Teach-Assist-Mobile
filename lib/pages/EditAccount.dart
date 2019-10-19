@@ -10,7 +10,7 @@ import 'package:ta/widgets/EditText.dart';
 import '../tools.dart';
 
 class EditAccount extends StatefulWidget {
-  EditAccount(this.user) ;
+  EditAccount(this.user);
 
   final User user;
 
@@ -142,7 +142,9 @@ class _EditAccountState extends State<EditAccount> {
                         padding: const EdgeInsets.all(6.0),
                         child: CircularProgressIndicator(
                           backgroundColor: Color(0x66FFFFFF),
-                          valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.onPrimary),),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              Theme.of(context).colorScheme.onPrimary),
+                        ),
                       )
                     ],
                   )
@@ -186,6 +188,15 @@ class _EditAccountState extends State<EditAccount> {
                             }
                           }
 
+                          if (_studentNumberController.text ==
+                                  _oldUser.number &&
+                              _passwordController.text == _oldUser.password &&
+                              _aliasController.text == _oldUser.displayName &&
+                              _receive == _oldUser.receiveNotification) {
+                            Navigator.pop(context);
+                            return;
+                          }
+
                           setState(() {
                             _isSaveLoading = true;
                           });
@@ -208,7 +219,7 @@ class _EditAccountState extends State<EditAccount> {
                           } catch (e) {
                             print(e);
                             _handleError(e, context);
-                          } finally{
+                          } finally {
                             setState(() {
                               _isSaveLoading = false;
                             });
@@ -224,7 +235,7 @@ class _EditAccountState extends State<EditAccount> {
           padding: EdgeInsets.all(16.0),
           children: <Widget>[
             EditText(
-              textInputAction: TextInputAction.next,
+                textInputAction: TextInputAction.next,
                 focusNode: _aliasFocusNode,
                 nextFocusNode: _studentNumberFocusNode,
                 controller: _aliasController,
