@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
+import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
 
 class StaticsList extends StatefulWidget {
   StaticsList(this._course);
@@ -107,13 +107,10 @@ class _StaticsListState extends State<StaticsList> {
             getRoundString(_course.overallMark, 2) + "%",
             style: TextStyle(fontSize: 60),
           ),
-          LinearPercentIndicator(
-            animation: false,
+          LPI.LinearProgressIndicator(
             lineHeight: 20.0,
-            animationDuration: 500,
-            percent: _course.overallMark / 100,
-            linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: Theme.of(context).colorScheme.primary,
+            value1: _course.overallMark / 100,
+            value1Color: Theme.of(context).colorScheme.primary,
           )
         ],
       ),
