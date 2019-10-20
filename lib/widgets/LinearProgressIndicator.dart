@@ -26,11 +26,15 @@ class LinearProgressIndicator extends StatefulWidget {
   _LinearProgressIndicatorState createState() => _LinearProgressIndicatorState();
 }
 
-class _LinearProgressIndicatorState extends State<LinearProgressIndicator> with SingleTickerProviderStateMixin {
+class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
+    with SingleTickerProviderStateMixin,AutomaticKeepAliveClientMixin {
   Animation<double> animation;
   AnimationController controller;
   double percent1 = 0;
   double percent2 = 0;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -41,6 +45,9 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator> with 
       ..addListener(() {
         setState(() {
           percent1 = widget.value1 * animation.value;
+          if (widget.value2 != null) {
+            percent2 = widget.value2 * animation.value;
+          }
         });
       });
     controller.forward();
@@ -49,7 +56,7 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator> with 
   @override
   void didUpdateWidget(LinearProgressIndicator oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.value1 != widget.value1) {
+    if (oldWidget.value1 != widget.value1 || oldWidget.value2 != widget.value2) {
       animation = CurvedAnimation(parent: controller, curve: Curves.easeInOutCubic);
       controller.forward(from: 0.0);
     }
@@ -57,6 +64,7 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator> with 
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       width: double.infinity,
       height: widget.lineHeight,
@@ -67,7 +75,7 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator> with 
             value1Color: widget.value1Color,
             value2Color: widget.value2Color,
             value1: percent1,
-            value2: widget.value2,
+            value2: percent2,
             text: widget.text,
             lineHeight: widget.lineHeight),
         child: widget.center != null
@@ -118,15 +126,19 @@ class _LPIPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeWidth = lineHeight
         ..strokeCap = StrokeCap.round;
+      print(_paintValue1.color.toString());
     }
 
-    if (value2 != null && value2 >0) {
+    if (value2 > 0) {
       _paintValue2 = Paint()
         ..color = value2Color
         ..style = PaintingStyle.stroke
         ..strokeWidth = lineHeight
         ..strokeCap = StrokeCap.round;
+      print(_paintValue2.color.toString());
     }
+
+
   }
 
   @override
@@ -142,6 +154,6 @@ class _LPIPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_LPIPainter oldDelegate) {
-    return oldDelegate.value1 != value1;
+    return oldDelegate.value1 != value1 || oldDelegate.value2 != value2;
   }
 }
