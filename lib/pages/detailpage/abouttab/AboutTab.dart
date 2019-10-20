@@ -13,13 +13,17 @@ class AboutTab extends StatefulWidget {
   _AboutTabState createState() => _AboutTabState(_course);
 }
 
-class _AboutTabState extends State<AboutTab> {
+class _AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin {
   final Course _course;
 
   _AboutTabState(this._course);
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     var courseInfoText =
         Strings.get("course_about_name:") + testBlank(_course.name) + "\n";
     courseInfoText +=

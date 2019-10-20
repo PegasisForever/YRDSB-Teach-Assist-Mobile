@@ -28,6 +28,7 @@ class _SummaryTabState extends State<SummaryTab>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var courses = getCourseListOf(currentUser.number);
 
     return RefreshIndicator(

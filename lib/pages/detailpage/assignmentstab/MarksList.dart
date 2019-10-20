@@ -83,7 +83,7 @@ class _MarksListTile extends StatefulWidget {
 }
 
 class _MarksListTileState extends State<_MarksListTile>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin  {
   final Assignment _assignment;
   final WeightTable _weights;
   var showDetail = false;
@@ -91,7 +91,11 @@ class _MarksListTileState extends State<_MarksListTile>
   _MarksListTileState(this._assignment, this._weights);
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     var avg = _assignment.getAverage(_weights);
     var avgText = avg == null
         ? SizedBox(width: 0, height: 0)

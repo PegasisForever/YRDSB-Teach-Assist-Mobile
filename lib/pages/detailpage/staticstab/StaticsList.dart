@@ -14,7 +14,7 @@ class StaticsList extends StatefulWidget {
   _StaticsListState createState() => _StaticsListState(_course);
 }
 
-class _StaticsListState extends State<StaticsList> {
+class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClientMixin {
   final Course _course;
   final Color _Kcolor = Color(0xffc49000);
   final Color _Tcolor = Color(0xff388e3c);
@@ -30,7 +30,11 @@ class _StaticsListState extends State<StaticsList> {
   _StaticsListState(this._course);
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     var isLight=Theme.of(context).brightness==Brightness.light;
     return _course.overallMark != null
         ? ListView(

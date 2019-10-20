@@ -9,9 +9,13 @@ class TimelineTab extends StatefulWidget{
   _TimelineTabState createState() => _TimelineTabState();
 }
 
-class _TimelineTabState extends State<TimelineTab> {
+class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClientMixin  {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var timeline=getTimelineOf(currentUser.number);
     return ListView(
       padding: EdgeInsets.only(bottom: 8+getBottomPadding(context)),
