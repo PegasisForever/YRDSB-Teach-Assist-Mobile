@@ -19,7 +19,7 @@ const int apiVersion = 2;
 
 class HttpResponse{
   String body="";
-  int statusCode=null;
+  int statusCode;
 }
 
 Future<HttpResponse> _postWithMetric(String url,body) async{

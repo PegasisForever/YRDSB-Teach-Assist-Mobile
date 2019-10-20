@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:ta/model/User.dart';
+import 'package:ta/packageinfo.dart';
+import 'package:ta/pages/AboutPage.dart';
 import 'package:ta/pages/AccountsList.dart';
 import 'package:ta/pages/EditAccount.dart';
 import 'package:ta/pages/LoginPage.dart';
@@ -17,6 +19,7 @@ void main() {
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
   runZoned<Future<void>>(() async {
+    await initPackageInfo();
     initFirebaseMsg();
     await initPref();
     initUser();
@@ -57,6 +60,7 @@ class MyApp extends StatelessWidget {
         "/accounts_list": (BuildContext context) => new AccountsList(),
         "/accounts_list/edit": (BuildContext context) =>
             new EditAccount(User.blank()),
+        "/about": (BuildContext context) => new AboutPage(),
       },
       localizationsDelegates: [
         GlobalCupertinoLocalizations.delegate,

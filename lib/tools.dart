@@ -77,3 +77,7 @@ SystemUiOverlayStyle getSystemUiOverlayStyle(BuildContext context){
   var brightness=MediaQuery.of(context).platformBrightness;
   return brightness==Brightness.light?SystemUiOverlayStyle.light:SystemUiOverlayStyle.dark;
 }
+
+bool isLightMode(BuildContext context){
+  return MediaQuery.of(context).platformBrightness==Brightness.light;
+}

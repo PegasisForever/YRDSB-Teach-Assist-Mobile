@@ -82,37 +82,33 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
             ListTile(
               title: Text(Strings.get("share_marks")),
               leading: Icon(Icons.share),
-              onTap: () {},
             ),
             ListTile(
               title: Text(Strings.get("archived_marks")),
               leading: Icon(Icons.archive),
-              onTap: () {},
             ),
             ListTile(
               title: Text(Strings.get("announcements")),
               leading: Icon(Icons.notifications),
-              onTap: () {},
             ),
             ListTile(
               title: Text(Strings.get("feedback")),
               leading: Icon(Icons.message),
-              onTap: () {},
             ),
             ListTile(
               title: Text(Strings.get("settings")),
               leading: Icon(Icons.settings),
-              onTap: () {},
             ),
             ListTile(
               title: Text(Strings.get("about")),
               leading: Icon(Icons.info),
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, "/about");
+              },
             ),
             ListTile(
               title: Text(Strings.get("donate")),
               leading: Icon(Icons.monetization_on),
-              onTap: () {},
             )
           ],
         ),
