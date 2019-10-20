@@ -103,6 +103,7 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
               title: Text(Strings.get("about")),
               leading: Icon(Icons.info),
               onTap: () {
+                Navigator.pop(context);
                 Navigator.pushNamed(context, "/about");
               },
             ),
