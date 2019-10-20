@@ -7,6 +7,7 @@ import 'package:ta/network/network.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/EditText.dart';
 
+import '../firebase.dart';
 import '../tools.dart';
 
 class EditAccount extends StatefulWidget {
@@ -268,25 +269,17 @@ class _EditAccountState extends State<EditAccount> {
               isPassword: true,
             ),
             SizedBox(height: 12),
-            ListTile(
+            supportsGooglePlay()?SwitchListTile(
               title: Text(Strings.get("receive_notifications")),
-              leading: Icon(_receive
+              value: _receive,
+              onChanged: (bool val) { setState(() { _receive = val; }); },
+              secondary: Icon(_receive
                   ? Icons.notifications_active
                   : Icons.notifications_off),
-              trailing: Switch(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                value: _receive,
-                onChanged: (val) {
-                  setState(() {
-                    _receive = val;
-                  });
-                },
-              ),
-              onTap: () {
-                setState(() {
-                  _receive = !_receive;
-                });
-              },
+            ):ListTile(
+              leading: Icon(Icons.info),
+              title: Text(Strings.get("no_google_play_warning_content")),
+              dense: true,
             )
           ],
         ));

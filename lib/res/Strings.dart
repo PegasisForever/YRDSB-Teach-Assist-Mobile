@@ -75,6 +75,10 @@ class Strings {
       "in_development":"In Development 🚧",
       "dismiss":"Dismiss",
       "tap_to_view_detail":"You can tap on an item to view its details",
+      "google_play_services":"Google Play Services",
+      "no_google_play_warning_content":"Google Play services is not supported by your device. "
+          "You will not be able to receive notifications.",
+      "ok":"OK",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -148,6 +152,10 @@ class Strings {
       "in_development":"正在开发 🚧",
       "dismiss":"好的",
       "tap_to_view_detail":"点击列表中的一项即可查看详情",
+      "google_play_services":"Google Play 服务框架",
+      "no_google_play_warning_content":"由于您的设备不支持Google Play服务框架，"
+          "您将无法收到通知。",
+      "ok":"OK",
     }
   };
 

@@ -25,9 +25,10 @@ void initFirebaseMsg() {
     print("Settings registered: $settings");
   });
   _firebaseMessaging.getToken().then((String token) {
-    assert(token != null);
     firebaseToken = token;
   });
 }
 
-//Firebase Analytics
+bool supportsGooglePlay(){
+  return firebaseToken!=null;
+}

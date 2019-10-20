@@ -6,6 +6,8 @@ import 'package:ta/pages/summarypage/SummaryTab.dart';
 import 'package:ta/pages/summarypage/TimelineTab.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:sprintf/sprintf.dart';
+import '../../dataStore.dart';
+import '../../firebase.dart';
 import 'SummaryPageDrawer.dart';
 
 class SummaryPage extends StatefulWidget {
@@ -71,6 +73,25 @@ class _SummaryPageState extends State<SummaryPage>
   void afterFirstLayout(BuildContext context) {
     if (userList.length == 0) {
       Navigator.pushReplacementNamed(context, "/login");
+    } else if(prefs.getBool("show_no_google_play_warning") ?? true && !supportsGooglePlay()) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(Strings.get("google_play_services")),
+              content: Text(Strings.get("no_google_play_warning_content")),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(Strings.get("ok").toUpperCase()),
+                  onPressed: () {
+                    prefs.setBool("show_no_google_play_warning",false);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+              contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
+            );
+          });
     }
   }
 }
