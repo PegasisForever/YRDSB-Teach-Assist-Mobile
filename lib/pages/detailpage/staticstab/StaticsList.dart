@@ -175,63 +175,62 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
       color = isLight ? _Acolor : _APcolor;
     } else if (category == "overall") {
       yValueMapper = (_, index) {
-        try {
-          var K = 0.0;
-          var Kn = 0.0;
-          var T = 0.0;
-          var Tn = 0.0;
-          var C = 0.0;
-          var Cn = 0.0;
-          var A = 0.0;
-          var An = 0.0;
-          for (var i = 0; i < index + 1; i++) {
-            var assi = _course.assignments[i];
-            if (assi.KU.available && assi.KU.finished) {
-              K += assi.KU.get * assi.KU.weight;
-              Kn += assi.KU.total * assi.KU.weight;
-            }
-            if (assi.T.available && assi.T.finished) {
-              T += assi.T.get * assi.T.weight;
-              Tn += assi.T.total * assi.T.weight;
-            }
-            if (assi.C.available && assi.C.finished) {
-              C += assi.C.get * assi.C.weight;
-              Cn += assi.C.total * assi.C.weight;
-            }
-            if (assi.A.available && assi.A.finished) {
-              A += assi.A.get * assi.A.weight;
-              An += assi.A.total * assi.A.weight;
-            }
+        var K = 0.0;
+        var Kn = 0.0;
+        var T = 0.0;
+        var Tn = 0.0;
+        var C = 0.0;
+        var Cn = 0.0;
+        var A = 0.0;
+        var An = 0.0;
+        for (var i = 0; i < index + 1; i++) {
+          var assi = _course.assignments[i];
+          if (assi.KU.available && assi.KU.finished) {
+            K += assi.KU.get * assi.KU.weight;
+            Kn += assi.KU.total * assi.KU.weight;
           }
-          var Ka = K / Kn;
-          var Ta = T / Tn;
-          var Ca = C / Cn;
-          var Aa = A / An;
-
-          var avg = 0.0;
-          var avgn = 0.0;
-          if (Ka >= 0.0) {
-            avg += Ka * _course.weightTable.KU.W;
-            avgn += _course.weightTable.KU.W;
+          if (assi.T.available && assi.T.finished) {
+            T += assi.T.get * assi.T.weight;
+            Tn += assi.T.total * assi.T.weight;
           }
-          if (Ta >= 0.0) {
-            avg += Ta * _course.weightTable.T.W;
-            avgn += _course.weightTable.T.W;
+          if (assi.C.available && assi.C.finished) {
+            C += assi.C.get * assi.C.weight;
+            Cn += assi.C.total * assi.C.weight;
           }
-          if (Ca >= 0.0) {
-            avg += Ca * _course.weightTable.C.W;
-            avgn += _course.weightTable.C.W;
+          if (assi.A.available && assi.A.finished) {
+            A += assi.A.get * assi.A.weight;
+            An += assi.A.total * assi.A.weight;
           }
-          if (Aa >= 0.0) {
-            avg += Aa * _course.weightTable.A.W;
-            avgn += _course.weightTable.A.W;
-          }
-
-          return avg / avgn * 100;
-        } catch (e) {
-          print(e);
         }
-        return null;
+        var Ka = K / Kn;
+        var Ta = T / Tn;
+        var Ca = C / Cn;
+        var Aa = A / An;
+
+        var avg = 0.0;
+        var avgn = 0.0;
+        if (Ka >= 0.0) {
+          avg += Ka * _course.weightTable.KU.W;
+          avgn += _course.weightTable.KU.W;
+        }
+        if (Ta >= 0.0) {
+          avg += Ta * _course.weightTable.T.W;
+          avgn += _course.weightTable.T.W;
+        }
+        if (Ca >= 0.0) {
+          avg += Ca * _course.weightTable.C.W;
+          avgn += _course.weightTable.C.W;
+        }
+        if (Aa >= 0.0) {
+          avg += Aa * _course.weightTable.A.W;
+          avgn += _course.weightTable.A.W;
+        }
+
+        if (avgn>0.0){
+          return avg / avgn * 100;
+        }else{
+          return null;
+        }
       };
       color = _FPcolor;
     }
