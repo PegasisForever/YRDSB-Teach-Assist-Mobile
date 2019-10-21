@@ -126,7 +126,6 @@ class _LPIPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeWidth = lineHeight
         ..strokeCap = StrokeCap.round;
-      print(_paintValue1.color.toString());
     }
 
     if (value2 > 0) {
@@ -135,7 +134,6 @@ class _LPIPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeWidth = lineHeight
         ..strokeCap = StrokeCap.round;
-      print(_paintValue2.color.toString());
     }
 
 

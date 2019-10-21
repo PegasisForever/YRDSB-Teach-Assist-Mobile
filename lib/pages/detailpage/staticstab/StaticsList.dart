@@ -16,16 +16,16 @@ class StaticsList extends StatefulWidget {
 
 class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClientMixin {
   final Course _course;
-  final Color _Kcolor = Color(0xffc49000);
-  final Color _Tcolor = Color(0xff388e3c);
-  final Color _Ccolor = Color(0xff3949ab);
-  final Color _Acolor = Color(0xffef6c00);
+  final Color _Kcolor = const Color(0xffc49000);
+  final Color _Tcolor = const Color(0xff388e3c);
+  final Color _Ccolor = const Color(0xff3949ab);
+  final Color _Acolor = const Color(0xffef6c00);
 
-  final Color _KPcolor = Color(0xffffeb3b);
-  final Color _TPcolor = Color(0xff8bc34a);
-  final Color _CPcolor = Color(0xff9fa8da);
-  final Color _APcolor = Color(0xffffb74d);
-  final Color _FPcolor = Color(0xff81d4fa);
+  final Color _KPcolor = const Color(0xffffeb3b);
+  final Color _TPcolor = const Color(0xff8bc34a);
+  final Color _CPcolor = const Color(0xff9fa8da);
+  final Color _APcolor = const Color(0xffffb74d);
+  final Color _FPcolor = const Color(0xff03a9f4);
 
   _StaticsListState(this._course);
 
@@ -35,21 +35,22 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    var isLight=Theme.of(context).brightness==Brightness.light;
+    var isLight = isLightMode(context);
     return _course.overallMark != null
         ? ListView(
             children: <Widget>[
               _getTermOverall(),
+              _getChart("overall", isLight),
               Divider(),
               _getPieChart(),
               Divider(),
-              _getChart("knowledge_understanding",isLight),
+              _getChart("knowledge_understanding", isLight),
               Divider(),
-              _getChart("thinking",isLight),
+              _getChart("thinking", isLight),
               Divider(),
-              _getChart("communication",isLight),
+              _getChart("communication", isLight),
               Divider(),
-              _getChart("application",isLight),
+              _getChart("application", isLight),
             ],
           )
         : Center(
@@ -80,27 +81,27 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
     ];
     return <PieSeries<_PieData, String>>[
       PieSeries<_PieData, String>(
-          explodeAll:true,
+          explodeAll: true,
           animationDuration: 0,
           dataSource: chartData,
-          pointColorMapper: (data, _) => data.get>0?data.color:Colors.grey,
+          pointColorMapper: (data, _) => data.get > 0 ? data.color : Colors.grey,
           xValueMapper: (data, _) => data.name,
           yValueMapper: (data, _) => data.weight,
           enableSmartLabels: false,
-          dataLabelMapper: (data, _) =>
-              data.name + "\n" + getRoundString(data.get, 2) + "%",
+          dataLabelMapper: (data, _) => data.name + "\n" + getRoundString(data.get, 2) + "%",
           startAngle: 90,
           endAngle: 90,
-          pointRadiusMapper: (data, _) => ((data.get)*0.7+20).toString() + "%",
+          pointRadiusMapper: (data, _) => ((data.get) * 0.7 + 20).toString() + "%",
           dataLabelSettings: DataLabelSettings(
-              isVisible: true, labelPosition: LabelPosition.outside,
+              isVisible: true,
+              labelPosition: LabelPosition.outside,
               labelIntersectAction: LabelIntersectAction.none))
     ];
   }
 
   Widget _getTermOverall() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Column(
         children: <Widget>[
           Text(
@@ -121,55 +122,118 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
     );
   }
 
-  Widget _getChart(String category,bool isLight) {
+  Widget _getChart(String category, bool isLight) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 4),
-            child: Text(
-              Strings.get(category),
-              style: Theme.of(context).textTheme.title,
+          if (category != "overall")
+            Padding(
+              padding: const EdgeInsets.only(left: 4),
+              child: Text(
+                Strings.get(category),
+                style: Theme.of(context).textTheme.title,
+              ),
             ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
+          if (category != "overall")
+            SizedBox(
+              height: 8,
+            ),
           SizedBox(
             width: double.maxFinite,
             height: 200,
-            child: _getDefaultSplineChart(_getChartData(category,isLight)),
+            child: _getDefaultSplineChart(_getChartData(category, isLight)),
           ),
         ],
       ),
     );
   }
 
-  List<SplineSeries<Assignment, String>> _getChartData(String category,bool isLight) {
+  List<SplineSeries<Assignment, String>> _getChartData(String category, bool isLight) {
     ChartValueMapper<Assignment, num> yValueMapper;
     Color color;
     if (category == "knowledge_understanding") {
       yValueMapper = (Assignment assignment, _) => assignment.KU.available && assignment.KU.finished
           ? assignment.KU.get / assignment.KU.total * 100
           : null;
-      color = isLight?_Kcolor:_KPcolor;
+      color = isLight ? _Kcolor : _KPcolor;
     } else if (category == "thinking") {
       yValueMapper = (Assignment assignment, _) => assignment.T.available && assignment.T.finished
           ? assignment.T.get / assignment.T.total * 100
           : null;
-      color = isLight?_Tcolor:_TPcolor;
+      color = isLight ? _Tcolor : _TPcolor;
     } else if (category == "communication") {
       yValueMapper = (Assignment assignment, _) => assignment.C.available && assignment.C.finished
           ? assignment.C.get / assignment.C.total * 100
           : null;
-      color = isLight?_Ccolor:_CPcolor;
+      color = isLight ? _Ccolor : _CPcolor;
     } else if (category == "application") {
       yValueMapper = (Assignment assignment, _) => assignment.A.available && assignment.A.finished
           ? assignment.A.get / assignment.A.total * 100
           : null;
-      color = isLight?_Acolor:_APcolor;
+      color = isLight ? _Acolor : _APcolor;
+    } else if (category == "overall") {
+      yValueMapper = (_, index) {
+        try {
+          var K = 0.0;
+          var Kn = 0.0;
+          var T = 0.0;
+          var Tn = 0.0;
+          var C = 0.0;
+          var Cn = 0.0;
+          var A = 0.0;
+          var An = 0.0;
+          for (var i = 0; i < index + 1; i++) {
+            var assi = _course.assignments[i];
+            if (assi.KU.available && assi.KU.finished) {
+              K += assi.KU.get * assi.KU.weight;
+              Kn += assi.KU.total * assi.KU.weight;
+            }
+            if (assi.T.available && assi.T.finished) {
+              T += assi.T.get * assi.T.weight;
+              Tn += assi.T.total * assi.T.weight;
+            }
+            if (assi.C.available && assi.C.finished) {
+              C += assi.C.get * assi.C.weight;
+              Cn += assi.C.total * assi.C.weight;
+            }
+            if (assi.A.available && assi.A.finished) {
+              A += assi.A.get * assi.A.weight;
+              An += assi.A.total * assi.A.weight;
+            }
+          }
+          var Ka = K / Kn;
+          var Ta = T / Tn;
+          var Ca = C / Cn;
+          var Aa = A / An;
+
+          var avg = 0.0;
+          var avgn = 0.0;
+          if (Ka >= 0.0) {
+            avg += Ka * _course.weightTable.KU.W;
+            avgn += _course.weightTable.KU.W;
+          }
+          if (Ta >= 0.0) {
+            avg += Ta * _course.weightTable.T.W;
+            avgn += _course.weightTable.T.W;
+          }
+          if (Ca >= 0.0) {
+            avg += Ca * _course.weightTable.C.W;
+            avgn += _course.weightTable.C.W;
+          }
+          if (Aa >= 0.0) {
+            avg += Aa * _course.weightTable.A.W;
+            avgn += _course.weightTable.A.W;
+          }
+
+          return avg / avgn * 100;
+        } catch (e) {
+          print(e);
+        }
+        return null;
+      };
+      color = _FPcolor;
     }
 
     return <SplineSeries<Assignment, String>>[
@@ -187,8 +251,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
     ];
   }
 
-  SfCartesianChart _getDefaultSplineChart(
-      List<SplineSeries<Assignment, String>> data) {
+  SfCartesianChart _getDefaultSplineChart(List<SplineSeries<Assignment, String>> data) {
     return SfCartesianChart(
       plotAreaBorderWidth: 0,
       primaryXAxis: CategoryAxis(isVisible: false),
@@ -200,8 +263,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
           maximumLabels: 5,
           majorTickLines: MajorTickLines(size: 0)),
       series: data,
-      tooltipBehavior:
-          TooltipBehavior(enable: true, opacity: 0.7, animationDuration: 0),
+      tooltipBehavior: TooltipBehavior(enable: true, opacity: 0.7, animationDuration: 0),
     );
   }
 }
