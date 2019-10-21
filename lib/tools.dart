@@ -81,3 +81,7 @@ SystemUiOverlayStyle getSystemUiOverlayStyle(BuildContext context){
 bool isLightMode(BuildContext context){
   return MediaQuery.of(context).platformBrightness==Brightness.light;
 }
+
+bool isSameDay(DateTime d1,DateTime d2){
+  return d1.year==d2.year && d1.month==d2.month && d1.day==d2.day;
+}
