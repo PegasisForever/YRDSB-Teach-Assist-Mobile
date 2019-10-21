@@ -1,11 +1,12 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sprintf/sprintf.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/summarypage/SummaryTab.dart';
 import 'package:ta/pages/summarypage/TimelineTab.dart';
 import 'package:ta/res/Strings.dart';
-import 'package:sprintf/sprintf.dart';
+
 import '../../dataStore.dart';
 import '../../firebase.dart';
 import 'SummaryPageDrawer.dart';

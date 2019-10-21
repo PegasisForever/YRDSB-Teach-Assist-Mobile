@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
-import 'package:intl/intl.dart';
 
 class AboutTab extends StatefulWidget {
   AboutTab(this._course);

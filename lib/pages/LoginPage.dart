@@ -1,9 +1,7 @@
 import 'dart:io';
 
-import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';

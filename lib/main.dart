@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter/material.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/packageinfo.dart';
 import 'package:ta/pages/AboutPage.dart';
