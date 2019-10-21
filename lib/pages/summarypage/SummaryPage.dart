@@ -73,7 +73,7 @@ class _SummaryPageState extends State<SummaryPage>
   void afterFirstLayout(BuildContext context) {
     if (userList.length == 0) {
       Navigator.pushReplacementNamed(context, "/login");
-    } else if(prefs.getBool("show_no_google_play_warning") ?? true && !supportsGooglePlay()) {
+    } else if(prefs.getBool("show_no_google_play_warning") ?? true && !supportsGooglePlay() && firebaseInited) {
       showDialog(
           context: context,
           builder: (context) {

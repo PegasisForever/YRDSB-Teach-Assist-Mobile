@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 //Firebase Cloud Messaging
 final _firebaseMessaging = FirebaseMessaging();
+var firebaseInited = false;
 var firebaseToken;
 
 void initFirebaseMsg() {
@@ -20,15 +21,15 @@ void initFirebaseMsg() {
   );
   _firebaseMessaging.requestNotificationPermissions(
       const IosNotificationSettings(sound: true, badge: true, alert: true));
-  _firebaseMessaging.onIosSettingsRegistered
-      .listen((IosNotificationSettings settings) {
+  _firebaseMessaging.onIosSettingsRegistered.listen((IosNotificationSettings settings) {
     print("Settings registered: $settings");
   });
   _firebaseMessaging.getToken().then((String token) {
+    firebaseInited = true;
     firebaseToken = token;
   });
 }
 
-bool supportsGooglePlay(){
-  return firebaseToken!=null;
+bool supportsGooglePlay() {
+  return firebaseToken != null;
 }
