@@ -36,12 +36,9 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
           children: <Widget>[
             UADrawerHeader.UserAccountsDrawerHeader(
               isOpened: _drawerHeaderOpened,
-              accountName: Text(currentUser.displayName == ""
-                  ? currentUser.number
-                  : currentUser.displayName),
-              accountEmail: currentUser.displayName == ""
-                  ? null
-                  : Text(currentUser.number),
+              accountName: Text(
+                  currentUser.displayName == "" ? currentUser.number : currentUser.displayName),
+              accountEmail: currentUser.displayName == "" ? null : Text(currentUser.number),
               currentAccountPicture: CircleAvatar(
                 child: Text(
                   (currentUser.displayName == ""
@@ -83,6 +80,18 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
             ListTile(
               title: Text(Strings.get("share_marks")),
               leading: Icon(Icons.share),
+            ),
+            ListTile(
+              title: Text(Strings.get("moodle")),
+              leading: Image.asset(
+                "assets/images/moodle_logo.png",
+                height: 28,
+                width: 28,
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/moodle");
+              },
             ),
             ListTile(
               title: Text(Strings.get("archived_marks")),

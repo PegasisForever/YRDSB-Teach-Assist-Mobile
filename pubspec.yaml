@@ -1,6 +1,6 @@
 name: ta
 description: YRDSB Teach Assist
-version: 1.2.6+10
+version: 1.2.7+11
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -24,6 +24,8 @@ dependencies:
   firebase_crashlytics: ^0.1.0+3
   package_info: ^0.4.0+9
   url_launcher: ^5.2.3
+  flutter_webview_plugin: ^0.3.8
+  clipboard_manager: ^0.0.1
 
 dev_dependencies:
   flutter_test:
