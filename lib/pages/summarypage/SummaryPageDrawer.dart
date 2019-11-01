@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/User.dart';
+import 'package:ta/pages/DonatePage.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/res/Themes.dart';
 
@@ -90,9 +91,8 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
                 width: 28,
               ),
               onTap: () {
-                openMoodlePage(context);
                 Navigator.pop(context);
-//                Navigator.pushNamed(context, "/moodle");
+                openMoodlePage(context);
               },
             ),
             ListTile(
@@ -122,6 +122,10 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
             ListTile(
               title: Text(Strings.get("donate")),
               leading: Icon(Icons.monetization_on),
+              onTap: (){
+                Navigator.pop(context);
+                openDonatePage(context);
+              },
             )
           ],
         ),
