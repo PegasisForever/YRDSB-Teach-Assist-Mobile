@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/EditAccount.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/widgets/BetterState.dart';
 
 class AccountsList extends StatefulWidget {
   @override
   _AccountsListState createState() => _AccountsListState();
 }
 
-class _AccountsListState extends State<AccountsList> {
+class _AccountsListState extends BetterState<AccountsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

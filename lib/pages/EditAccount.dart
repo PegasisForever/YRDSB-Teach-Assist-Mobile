@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/widgets/BetterState.dart';
 import 'package:ta/widgets/EditText.dart';
 
 import '../firebase.dart';
@@ -18,7 +19,7 @@ class EditAccount extends StatefulWidget {
   _EditAccountState createState() => _EditAccountState(user);
 }
 
-class _EditAccountState extends State<EditAccount> {
+class _EditAccountState extends BetterState<EditAccount> {
   TextEditingController _aliasController;
   TextEditingController _studentNumberController;
   TextEditingController _passwordController;

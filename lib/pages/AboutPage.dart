@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ta/packageinfo.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
+import 'package:ta/widgets/BetterState.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatefulWidget {
@@ -11,7 +12,7 @@ class AboutPage extends StatefulWidget {
   _AboutPageState createState() => _AboutPageState();
 }
 
-class _AboutPageState extends State<AboutPage> {
+class _AboutPageState extends BetterState<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

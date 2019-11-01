@@ -6,9 +6,11 @@ import 'package:ta/model/User.dart';
 import 'package:ta/pages/summarypage/SummaryTab.dart';
 import 'package:ta/pages/summarypage/TimelineTab.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/widgets/BetterState.dart';
 
 import '../../dataStore.dart';
 import '../../firebase.dart';
+import "../../tools.dart";
 import 'SummaryPageDrawer.dart';
 
 class SummaryPage extends StatefulWidget {
@@ -24,16 +26,15 @@ class SummaryPage extends StatefulWidget {
   _SummaryPageState createState() => _SummaryPageState(needRefresh);
 }
 
-class _SummaryPageState extends State<SummaryPage>
-    with AfterLayoutMixin<SummaryPage>, RouteAware {
+class _SummaryPageState extends BetterState<SummaryPage>
+    with AfterLayoutMixin<SummaryPage> {
   final _needRefresh;
 
   _SummaryPageState(this._needRefresh);
 
   @override
   Widget build(BuildContext context) {
-    Strings.updateCurrentLanguage(context);
-
+    super.build(context);
     if (userList.length == 0) {
       return Container();
     }

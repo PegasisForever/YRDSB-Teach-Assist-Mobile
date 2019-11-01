@@ -3,6 +3,7 @@ import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/MarksList.dart';
 import 'package:ta/pages/detailpage/staticstab/StaticsList.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/widgets/BetterState.dart';
 
 import 'abouttab/AboutTab.dart';
 
@@ -15,7 +16,7 @@ class DetailPage extends StatefulWidget{
   _DetailPageState createState() => _DetailPageState(course);
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _DetailPageState extends BetterState<DetailPage> {
 
   final Course _course;
 

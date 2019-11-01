@@ -6,6 +6,7 @@ import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/widgets/BetterState.dart';
 import 'package:ta/widgets/EditText.dart';
 
 import '../res/Themes.dart';
@@ -18,7 +19,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends BetterState<LoginPage> {
   final _studentNumberController = TextEditingController();
   final _passwordController = TextEditingController();
   final _studentNumberFocusNode = FocusNode();
