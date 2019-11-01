@@ -4,6 +4,7 @@ import 'package:ta/res/Strings.dart';
 import 'package:ta/res/Themes.dart';
 
 import '../../widgets/user_accounts_drawer_header.dart' as UADrawerHeader;
+import '../MoodlePage.dart';
 
 class SummaryPageDrawer extends StatefulWidget {
   SummaryPageDrawer({this.onUserSelected});
@@ -89,8 +90,9 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
                 width: 28,
               ),
               onTap: () {
+                openMoodlePage(context);
                 Navigator.pop(context);
-                Navigator.pushNamed(context, "/moodle");
+//                Navigator.pushNamed(context, "/moodle");
               },
             ),
             ListTile(

@@ -43,13 +43,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
-  clipboard_manager:
-    dependency: "direct main"
-    description:
-      name: clipboard_manager
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.4"
   collection:
     dependency: transitive
     description:
@@ -118,6 +111,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  flutter_custom_tabs:
+    dependency: "direct main"
+    description:
+      name: flutter_custom_tabs
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -149,13 +149,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_webview_plugin:
-    dependency: "direct main"
-    description:
-      name: flutter_webview_plugin
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.8"
   http:
     dependency: "direct main"
     description:
@@ -316,7 +309,7 @@ packages:
     source: hosted
     version: "1.1.6"
   url_launcher:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: url_launcher
       url: "https://pub.dartlang.org"
@@ -329,13 +322,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
-  webview_flutter:
-    dependency: "direct main"
-    description:
-      name: webview_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.15+1"
   xml:
     dependency: transitive
     description:
