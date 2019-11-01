@@ -4,6 +4,7 @@ import 'package:ta/pages/DonatePage.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/res/Themes.dart';
 
+import '../../tools.dart';
 import '../../widgets/user_accounts_drawer_header.dart' as UADrawerHeader;
 import '../MoodlePage.dart';
 
@@ -86,7 +87,8 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
             ListTile(
               title: Text(Strings.get("moodle")),
               leading: Image.asset(
-                "assets/images/moodle_logo.png",
+                isLightMode(context)?
+                "assets/images/moodle_logo.png":"assets/images/moodle_logo_ondark.png",
                 height: 28,
                 width: 28,
               ),
