@@ -10,7 +10,6 @@ import 'package:ta/widgets/BetterState.dart';
 
 import '../../dataStore.dart';
 import '../../firebase.dart';
-import "../../tools.dart";
 import 'SummaryPageDrawer.dart';
 
 class SummaryPage extends StatefulWidget {

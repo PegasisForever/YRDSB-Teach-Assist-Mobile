@@ -11,7 +11,6 @@ import 'package:ta/pages/AccountsList.dart';
 import 'package:ta/pages/EditAccount.dart';
 import 'package:ta/pages/LoginPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
-import 'package:ta/tools.dart';
 
 import 'dataStore.dart';
 import 'firebase.dart';
