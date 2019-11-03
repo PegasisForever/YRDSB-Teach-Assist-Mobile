@@ -21,6 +21,7 @@ Assignment _parseAssignment(Map<String, dynamic> json){
   var assignment=Assignment.blank();
 
   assignment.name=json["name"];
+  assignment.feedback="";
   if (json["time"]!=""){
     assignment.time=DateTime.parse(json["time"]);
   }
@@ -69,6 +70,7 @@ Course _parseCourse(Map<String, dynamic> json){
   course.block=json["block"];
   course.room=json["room"];
   course.overallMark=json["overall_mark"];
+  course.cached=false;
 
   Map<String, dynamic> markDetail=json["mark_detail"];
   if (markDetail.length==2){

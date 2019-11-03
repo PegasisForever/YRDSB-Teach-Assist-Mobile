@@ -37,6 +37,7 @@ class Assignment{
   SmallMark O;
   SmallMark F;
   String name;
+  String feedback;
   DateTime time;
 
   Assignment(this.KU,this.T,this.C,this.A,this.O,this.F,this.name,String date){
@@ -117,6 +118,7 @@ class Course{
   String block;
   String room;
   double overallMark;
+  bool cached;
 
   String get displayName{
     return this.name == "" ? this.code : this.name;

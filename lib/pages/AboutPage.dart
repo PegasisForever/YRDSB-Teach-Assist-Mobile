@@ -40,10 +40,7 @@ class _AboutPageState extends BetterState<AboutPage> {
             Center(
               child: Text(
                 packageInfo.version,
-                style: TextStyle(
-                    color: isLightMode(context)
-                        ? Colors.grey[600]
-                        : Colors.grey[400]),
+                style: TextStyle(color: isLightMode(context) ? Colors.grey[600] : Colors.grey[400]),
               ),
             ),
             SizedBox(
@@ -54,15 +51,14 @@ class _AboutPageState extends BetterState<AboutPage> {
                 textAlign: TextAlign.center,
                 text: TextSpan(children: [
                   TextSpan(
-                      text:
-                          "The next-gen Teach Assist client for YRDSB. Project link: ",
+                      text: Strings.get("project_description"),
                       style: Theme.of(context).textTheme.body1),
                   TextSpan(
                       text: "dev.pegasis.site/ta",
-                      recognizer: TapGestureRecognizer()..onTap = () {
-                        launch("https://dev.pegasis.site/ta");
-                        print("lunch");
-                      },
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          launch("https://dev.pegasis.site/ta");
+                        },
                       style: TextStyle(
                         color: Colors.blue,
                         decoration: TextDecoration.underline,

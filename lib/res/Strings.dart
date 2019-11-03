@@ -80,6 +80,8 @@ class Strings {
           "You will not be able to receive notifications.",
       "ok": "OK",
       "moodle": "Moodle",
+      "cached": "cached",
+      "project_description":"The next-gen Teach Assist client for YRDSB. Project link: ",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -158,6 +160,8 @@ class Strings {
           "您将无法收到通知。",
       "ok": "OK",
       "moodle": "Moodle",
+      "cached": "已缓存",
+      "project_description":"做最好用的Teach Assist客户端。项目网站：",
     }
   };
 
