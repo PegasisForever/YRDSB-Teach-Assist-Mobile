@@ -43,8 +43,7 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
                               onDismiss: () {
                                 setState(() {
                                   showTips = false;
-                                  prefs.setBool(
-                                      "show_tap_to_view_detail_tip", false);
+                                  prefs.setBool("show_tap_to_view_detail_tip", false);
                                 });
                               })
                           : SizedBox(
@@ -54,8 +53,8 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
                 );
               }
               if (index.isOdd) {
-                var assignment = _course.assignments[
-                    _course.assignments.length - 1 - ((index - 1) ~/ 2)];
+                var assignment =
+                    _course.assignments[_course.assignments.length - 1 - ((index - 1) ~/ 2)];
                 return _MarksListTile(assignment, _course.weightTable);
               } else {
                 return Divider();
@@ -78,12 +77,11 @@ class _MarksListTile extends StatefulWidget {
   _MarksListTile(this._assignment, this._weights);
 
   @override
-  _MarksListTileState createState() =>
-      _MarksListTileState(_assignment, _weights);
+  _MarksListTileState createState() => _MarksListTileState(_assignment, _weights);
 }
 
 class _MarksListTileState extends State<_MarksListTile>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin  {
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final Assignment _assignment;
   final WeightTable _weights;
   var showDetail = false;
@@ -108,10 +106,6 @@ class _MarksListTileState extends State<_MarksListTile>
         isZeroOrNull(_assignment.A.weight) &&
         isZeroOrNull(_assignment.F.weight) &&
         isZeroOrNull(_assignment.O.weight);
-    var noWeightText = noWeight
-        ? Text(Strings.get("no_weight"),
-            style: TextStyle(fontSize: 16, color: Colors.grey))
-        : SizedBox(width: 0, height: 0);
 
     var summary = Row(
       key: Key("summary"),
@@ -122,13 +116,15 @@ class _MarksListTileState extends State<_MarksListTile>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(_assignment.beautifulName,
-                  style: Theme.of(context).textTheme.title),
+              Text(_assignment.beautifulName, style: Theme.of(context).textTheme.title),
               SizedBox(
                 height: 4,
               ),
               avgText,
-              noWeightText
+              if (noWeight)
+                Text(Strings.get("no_weight"), style: TextStyle(fontSize: 16, color: Colors.grey)),
+              if (_assignment.feedback!="")
+                Text("Feedback avaliable", style: TextStyle(fontSize: 16, color: Colors.grey)),
             ],
           ),
         ),
@@ -146,6 +142,12 @@ class _MarksListTileState extends State<_MarksListTile>
           height: 4,
         ),
         avgText,
+        SizedBox(
+          height: 4,
+        ),
+        if (_assignment.feedback!="")
+          Text("Feedback: "+_assignment.feedback, style: TextStyle(fontSize: 16, color: isLightMode(context)?Colors.grey[800]:Colors.grey[200]),
+            textAlign: TextAlign.center,),
         SizedBox(
           height: 12,
         ),
@@ -166,8 +168,7 @@ class _MarksListTileState extends State<_MarksListTile>
           curve: Curves.easeInOutCubic,
           duration: Duration(milliseconds: 300),
           child: AnimatedSwitcher(
-              child: showDetail ? detail : summary,
-              duration: Duration(milliseconds: 300)),
+              child: showDetail ? detail : summary, duration: Duration(milliseconds: 300)),
         ),
       ),
     );
