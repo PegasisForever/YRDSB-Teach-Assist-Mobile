@@ -86,6 +86,16 @@ Future<String> getMarkTimeLine(User user) async {
   return res.body;
 }
 
+Future<void> sendFeedBack(String contactInfo,String feedback) async{
+  var res = await _postWithMetric(baseUrl + "feedback",
+      jsonEncode({"contact_info": contactInfo, "feedback": feedback}));
+
+  int statusCode = res.statusCode;
+  if (statusCode != 200) {
+    throw HttpException(statusCode.toString());
+  }
+}
+
 getAndSaveMarkTimeline(User user) async {
   var strs=(await getMarkTimeLine(user)).split("|||");
   var markStr=strs[0];

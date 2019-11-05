@@ -81,7 +81,11 @@ class Strings {
       "ok": "OK",
       "moodle": "Moodle",
       "cached": "cached",
-      "project_description":"The next-gen Teach Assist client for YRDSB. Project link: ",
+      "project_description": "The next-gen Teach Assist client for YRDSB. Project link: ",
+      "contact_info": "Contact Infomation",
+      "send_feedback": "Send Feedback",
+      "plz_fill_in_ur_contact_info": "Please fill in your contact infomation",
+      "plz_fill_in_ur_feedback": "Please fill in your feedback",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -161,7 +165,11 @@ class Strings {
       "ok": "OK",
       "moodle": "Moodle",
       "cached": "已缓存",
-      "project_description":"做最好用的Teach Assist客户端。项目网站：",
+      "project_description": "做最好用的Teach Assist客户端。项目网站：",
+      "contact_info": "联系方式",
+      "send_feedback": "提交反馈",
+      "plz_fill_in_ur_contact_info": "请输入联系方式",
+      "plz_fill_in_ur_feedback": "请输入您的反馈",
     }
   };
 

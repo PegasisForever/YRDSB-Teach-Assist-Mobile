@@ -81,10 +81,6 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
               ),
             ),
             ListTile(
-              title: Text(Strings.get("share_marks")),
-              leading: Icon(Icons.share),
-            ),
-            ListTile(
               title: Text(Strings.get("moodle")),
               leading: Image.asset(
                 isLightMode(context)?
@@ -102,12 +98,12 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
               leading: Icon(Icons.archive),
             ),
             ListTile(
-              title: Text(Strings.get("announcements")),
-              leading: Icon(Icons.notifications),
-            ),
-            ListTile(
               title: Text(Strings.get("feedback")),
               leading: Icon(Icons.message),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/feedback");
+              },
             ),
             ListTile(
               title: Text(Strings.get("settings")),

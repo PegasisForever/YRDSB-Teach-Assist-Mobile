@@ -9,6 +9,7 @@ import 'package:ta/packageinfo.dart';
 import 'package:ta/pages/AboutPage.dart';
 import 'package:ta/pages/AccountsList.dart';
 import 'package:ta/pages/EditAccount.dart';
+import 'package:ta/pages/FeedbackPage.dart';
 import 'package:ta/pages/LoginPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
         "/accounts_list": (BuildContext context) => new AccountsList(),
         "/accounts_list/edit": (BuildContext context) => new EditAccount(User.blank()),
         "/about": (BuildContext context) => new AboutPage(),
+        "/feedback": (BuildContext context) => new FeedbackPage(),
       },
       localizationsDelegates: [
         GlobalCupertinoLocalizations.delegate,

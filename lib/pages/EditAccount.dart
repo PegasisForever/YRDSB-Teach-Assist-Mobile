@@ -135,8 +135,8 @@ class _EditAccountState extends BetterState<EditAccount> {
                     : Container(width: 0.0, height: 0.0);
               },
             ),
-            _isSaveLoading
-                ? Stack(
+            if (_isSaveLoading)
+                Stack(
                     alignment: Alignment(0, 0),
                     children: <Widget>[
                       Padding(
@@ -148,8 +148,7 @@ class _EditAccountState extends BetterState<EditAccount> {
                         ),
                       )
                     ],
-                  )
-                : Container(width: 0.0, height: 0.0),
+                  ),
             Builder(
               builder: (context) {
                 return !_isSaveLoading
