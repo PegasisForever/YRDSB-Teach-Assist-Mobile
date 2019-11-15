@@ -1,18 +1,29 @@
-import 'package:ta/prasers/JSONCourseListParserV1.dart' as CourseListParserV1;
-import 'package:ta/prasers/JSONCourseListParserV2.dart' as CourseListParserV2;
-import 'package:ta/prasers/JSONCourseListParserV3.dart' as CourseListParserV3;
-import 'package:ta/prasers/JSONTimelineParserV2.dart' as TimelineParserV2;
-import 'package:ta/prasers/JSONTimelineParserV3.dart' as TimelineParserV3;
+import 'package:ta/model/Mark.dart';
+import 'package:ta/model/TimeLineUpdateModels.dart';
+import 'package:ta/prasers/JSONCourseListParserV4.dart' as CourseListParserV4;
+import 'package:ta/prasers/JSONTimelineParserV4.dart' as TimelineParserV4;
 
-import 'JSONTimelineParserV2.dart';
+var _JSONCourseListParsers = {4: CourseListParserV4.parseJSONCourseList};
 
-var JSONCourseListParsers={
-  1:CourseListParserV1.parseJSONCourseList,
-  2:CourseListParserV2.parseJSONCourseList,
-  3:CourseListParserV3.parseJSONCourseList
-};
+List<Course> parseCourseList(dynamic json) {
+  try {
+    var version = json["version"];
+    var data = json["data"];
+    return _JSONCourseListParsers[version](data);
+  } catch (e,trace) {
+    print(trace);
+    return List<Course>();
+  }
+}
 
-var JSONTimelineParsers={
-  2:TimelineParserV2.parseTimeline,
-  3:TimelineParserV3.parseTimeline
-};
+var _jsonTimelineParsers = {4: TimelineParserV4.parseTimeline};
+
+List<TAUpdate> parseTimeLine(dynamic json) {
+  try {
+    var version = json["version"];
+    var data = json["data"];
+    return _jsonTimelineParsers[version](data);
+  } catch (e) {
+    return List<TAUpdate>();
+  }
+}

@@ -58,10 +58,10 @@ class _SummaryTabState extends State<SummaryTab>
         availableCourseCount++;
       }
       var infoStr = [];
-      if (course.block != "") {
+      if (course.block != null) {
         infoStr.add(sprintf(Strings.get("period_number"), [course.block]));
       }
-      if (course.room != "") {
+      if (course.room != null) {
         infoStr.add(sprintf(Strings.get("room_number"), [course.room]));
       }
       list.add(Padding(
@@ -80,26 +80,29 @@ class _SummaryTabState extends State<SummaryTab>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Wrap(crossAxisAlignment: WrapCrossAlignment.center,
+                  Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       runAlignment: WrapAlignment.center,
                       spacing: 4,
                       runSpacing: 4,
                       children: <Widget>[
-                    Text(course.displayName, style: Theme.of(context).textTheme.title),
-                    if (course.cached)
-                      Container(
-                        padding: const EdgeInsets.all(1),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                        ),
-                        child: Text(Strings.get("cached"),
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      )
-                  ]),
+                        Text(course.displayName, style: Theme.of(context).textTheme.title),
+                        if (course.cached)
+                          Container(
+                            padding: const EdgeInsets.all(1),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                              borderRadius: BorderRadius.all(Radius.circular(4)),
+                            ),
+                            child: Text(
+                              Strings.get("cached"),
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          )
+                      ]),
                   SizedBox(height: 4),
-                  Text(infoStr.join("  -  "), style: Theme.of(context).textTheme.subhead),
+                  if (infoStr.length > 0)
+                    Text(infoStr.join("  -  "), style: Theme.of(context).textTheme.subhead),
                   SizedBox(height: 16),
                   course.overallMark != null
                       ? LPI.LinearProgressIndicator(

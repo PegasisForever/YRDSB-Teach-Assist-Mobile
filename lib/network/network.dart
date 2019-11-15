@@ -12,37 +12,33 @@ import 'package:ta/tools.dart';
 
 import '../firebase.dart';
 
-const String baseUrl = true
-    ? "https://api.pegasis.site/yrdsb_ta/"
-    : "http://192.168.1.22:5004/";
-const int apiVersion = 3;
+const String baseUrl = kReleaseMode ? "https://api.pegasis.site/yrdsb_ta/" : "http://192.168.1.22:5004/";
+const int apiVersion = 4;
 
-class HttpResponse{
-  String body="";
+class HttpResponse {
+  String body = "";
   int statusCode;
 }
 
-Future<HttpResponse> _postWithMetric(String url,body) async{
-  final metric = FirebasePerformance.instance
-      .newHttpMetric(url, HttpMethod.Post);
+Future<HttpResponse> _postWithMetric(String url, body) async {
+  final metric = FirebasePerformance.instance.newHttpMetric(url, HttpMethod.Post);
 
   await metric.start();
 
-  var res=HttpResponse();
-  try{
-    Response response = await post(url,
-        headers: {"api-version": apiVersion.toString()},
-        body: body);
+  var res = HttpResponse();
+  try {
+    Response response =
+        await post(url, headers: {"api-version": apiVersion.toString()}, body: body);
 
-    res.statusCode=response.statusCode;
-    if(res.statusCode==200 && response.body!=""){
-      res.body=unGzip(response.bodyBytes);
+    res.statusCode = response.statusCode;
+    if (res.statusCode == 200 && response.body != "") {
+      res.body = unGzip(response.bodyBytes);
     }
 
     metric
       ..responsePayloadSize = response.contentLength
       ..httpResponseCode = response.statusCode;
-  } finally{
+  } finally {
     await metric.stop();
   }
 
@@ -52,7 +48,7 @@ Future<HttpResponse> _postWithMetric(String url,body) async{
 Future<String> regi(User user) async {
   print(baseUrl);
   var res = await _postWithMetric(baseUrl + "regi",
-      jsonEncode({"user": user, "token": firebaseToken,"language":Strings.currentLanguage}));
+      jsonEncode({"user": user, "token": firebaseToken, "language": Strings.currentLanguage}));
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -64,7 +60,7 @@ Future<String> regi(User user) async {
 
 Future<void> deregi(User user) async {
   var res = await _postWithMetric(baseUrl + "deregi",
-      jsonEncode({"user": user, "token": firebaseToken}));
+      jsonEncode({"user": user, "token": firebaseToken, "language": Strings.currentLanguage}));
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -75,8 +71,8 @@ Future<void> deregi(User user) async {
 }
 
 Future<String> getMarkTimeLine(User user) async {
-  var res = await _postWithMetric(baseUrl + "getmark_timeline",
-      jsonEncode({"number": user.number, "password": user.password}));
+  var res = await _postWithMetric(
+      baseUrl + "getmark_timeline", jsonEncode({"number": user.number, "password": user.password}));
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -86,9 +82,9 @@ Future<String> getMarkTimeLine(User user) async {
   return res.body;
 }
 
-Future<void> sendFeedBack(String contactInfo,String feedback) async{
-  var res = await _postWithMetric(baseUrl + "feedback",
-      jsonEncode({"contact_info": contactInfo, "feedback": feedback}));
+Future<void> sendFeedBack(String contactInfo, String feedback) async {
+  var res = await _postWithMetric(
+      baseUrl + "feedback", jsonEncode({"contact_info": contactInfo, "feedback": feedback}));
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -97,19 +93,17 @@ Future<void> sendFeedBack(String contactInfo,String feedback) async{
 }
 
 getAndSaveMarkTimeline(User user) async {
-  var strs=(await getMarkTimeLine(user)).split("|||");
-  var markStr=strs[0];
-  var timelineStr=strs[1];
+  var res = await getMarkTimeLine(user);
+  var json = jsonDecode(res);
 
-  saveCourseListOf(user.number, markStr);
-  saveTimelineOf(user.number, timelineStr);
+  saveCourseListOf(user.number, json["course_list"]);
+  saveTimelineOf(user.number, json["time_line"]);
 }
 
-regiAndSave(User user) async{
-  var strs=(await regi(user)).split("|||");
-  var markStr=strs[0];
-  var timelineStr=strs[1];
+regiAndSave(User user) async {
+  var res = await regi(user);
+  var json = jsonDecode(res);
 
-  saveCourseListOf(user.number, markStr);
-  saveTimelineOf(user.number, timelineStr);
+  saveCourseListOf(user.number, json["course_list"]);
+  saveTimelineOf(user.number, json["time_line"]);
 }

@@ -33,10 +33,10 @@ class _AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin 
     courseInfoText +=
         Strings.get("course_about_room:") + testBlank(_course.room) + "\n";
     courseInfoText += Strings.get("course_about_starttime:") +
-        testBlank(DateFormat("yyyy-MM-dd").format(_course.startTime)) +
+        (_course.startTime!=null?DateFormat("yyyy-MM-dd").format(_course.startTime):Strings.get("unknown")) +
         "\n";
     courseInfoText += Strings.get("course_about_endtime:") +
-        testBlank(DateFormat("yyyy-MM-dd").format(_course.endTime));
+        (_course.endTime!=null?DateFormat("yyyy-MM-dd").format(_course.endTime):Strings.get("unknown"));
 
     return ListView(
       padding: const EdgeInsets.all(16.0),

@@ -12,7 +12,7 @@ class TAUpdate{
 }
 
 class AssignmentAdded extends TAUpdate{
-  String courseName="";
+  String courseName;
   Assignment assignment;
   double assignmentAvg;
   double overallBefore;
@@ -20,7 +20,7 @@ class AssignmentAdded extends TAUpdate{
 }
 
 class AssignmentUpdated extends TAUpdate{
-  String courseName="";
+  String courseName;
   String assignmentName="";
   Assignment assignmentBefore;
   Assignment assignmentAfter;
@@ -31,27 +31,20 @@ class CourseArchived extends TAUpdate{
 }
 
 class CourseAdded extends TAUpdate{
-  var courseName="";
-  var courseBlock="";
+  String courseName;
+  String courseBlock;
 }
 
 class CourseRemoved extends TAUpdate{
-  var courseName="";
-  var courseBlock="";
+  String courseName;
+  String courseBlock;
 }
 
 List<TAUpdate> getTimelineOf(String number){
-  var str=prefs.getString("$number-timeline");
-  if (str!=null){
-    var json=jsonDecode(str);
-    var version=prefs.getInt("$number-timeline-ver")??2;
-    return JSONTimelineParsers[version](json);
-  }else{
-    return List<TAUpdate>();
-  }
+  var json=jsonDecode(prefs.getString("$number-timeline"));
+  return parseTimeLine(json);
 }
 
-saveTimelineOf(String number,String json){
-  prefs.setString("$number-timeline", json);
-  prefs.setInt("$number-timeline-ver", apiVersion);
+saveTimelineOf(String number,Map<String, dynamic> json){
+  prefs.setString("$number-timeline", jsonEncode(json));
 }

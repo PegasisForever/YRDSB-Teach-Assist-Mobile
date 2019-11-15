@@ -1,11 +1,11 @@
 import 'package:ta/model/TimeLineUpdateModels.dart';
-import 'package:ta/prasers/JSONCourseListParserV2.dart';
+import 'package:ta/prasers/JSONCourseListParserV4.dart';
 
 AssignmentAdded _parseAssignmentAdded(Map<String, dynamic> json) {
   var assignmentAdded = AssignmentAdded();
   assignmentAdded.courseName = json["course_name"];
   assignmentAdded.assignment = parseAssignment(
-      json["assignment"]); //remember to change after updated
+      json["assignment"]);
   assignmentAdded.assignmentAvg = json["assignment_avg"];
   assignmentAdded.overallBefore = json["overall_before"];
   assignmentAdded.overallAfter = json["overall_after"];
@@ -19,7 +19,7 @@ AssignmentUpdated _parseAssignmentUpdated(Map<String, dynamic> json) {
   assignmentUpdated.courseName = json["course_name"];
   assignmentUpdated.assignmentName = json["assignment_name"];
   assignmentUpdated.assignmentBefore = parseAssignment(
-      json["assignment_before"]); //remember to change after updated
+      json["assignment_before"]);
   assignmentUpdated.assignmentAfter = parseAssignment(json["assignment_after"]);
   assignmentUpdated.time = DateTime.parse(json["time"]);
 

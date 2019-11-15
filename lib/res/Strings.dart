@@ -86,6 +86,7 @@ class Strings {
       "send_feedback": "Send Feedback",
       "plz_fill_in_ur_contact_info": "Please fill in your contact infomation",
       "plz_fill_in_ur_feedback": "Please fill in your feedback",
+      "unnamed_course": "Unamed Course",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -170,6 +171,7 @@ class Strings {
       "send_feedback": "提交反馈",
       "plz_fill_in_ur_contact_info": "请输入联系方式",
       "plz_fill_in_ur_feedback": "请输入您的反馈",
+      "unnamed_course": "未命名课程",
     }
   };
 

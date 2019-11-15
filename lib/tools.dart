@@ -42,7 +42,7 @@ String getRoundString(double num, int digit) {
 }
 
 String testBlank(String str) {
-  if (str.isEmpty) {
+  if (str==null || str.isEmpty) {
     return Strings.get("unknown");
   } else {
     return str;

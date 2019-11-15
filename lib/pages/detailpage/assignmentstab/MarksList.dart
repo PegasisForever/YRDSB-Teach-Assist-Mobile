@@ -116,14 +116,14 @@ class _MarksListTileState extends State<_MarksListTile>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(_assignment.beautifulName, style: Theme.of(context).textTheme.title),
+              Text(_assignment.displayName, style: Theme.of(context).textTheme.title),
               SizedBox(
                 height: 4,
               ),
               avgText,
               if (noWeight)
                 Text(Strings.get("no_weight"), style: TextStyle(fontSize: 16, color: Colors.grey)),
-              if (_assignment.feedback != "")
+              if (_assignment.feedback != null)
                 Text("Feedback avaliable", style: TextStyle(fontSize: 16, color: Colors.grey)),
             ],
           ),
@@ -135,7 +135,7 @@ class _MarksListTileState extends State<_MarksListTile>
       key: Key("detail"),
       children: <Widget>[
         Text(
-          _assignment.beautifulName,
+          _assignment.displayName,
           style: Theme.of(context).textTheme.title,
         ),
         SizedBox(
@@ -145,7 +145,7 @@ class _MarksListTileState extends State<_MarksListTile>
         SizedBox(
           height: 4,
         ),
-        if (_assignment.feedback != "")
+        if (_assignment.feedback != null)
           Text(
             "Feedback: " + _assignment.feedback,
             style: TextStyle(

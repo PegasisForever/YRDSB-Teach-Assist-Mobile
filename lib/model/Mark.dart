@@ -46,7 +46,7 @@ class Assignment{
 
   Assignment.blank();
 
-  get beautifulName{
+  get displayName{
     if (name.isNotEmpty){
       return name;
     }else{
@@ -73,6 +73,10 @@ class Assignment{
     if (A.available && A.finished){
       get+=A.get/A.total*weights.A.CW;
       total+=weights.A.CW;
+    }
+    if (O.available && O.finished){
+      get+=O.get/O.total*weights.O.CW;
+      total+=weights.O.CW;
     }
 
     if(total>0){
@@ -109,7 +113,7 @@ class WeightTable{
 
 
 class Course{
-  List<Assignment> assignments=List<Assignment>();
+  List<Assignment> assignments;
   WeightTable weightTable;
   DateTime startTime;
   DateTime endTime;
@@ -121,7 +125,13 @@ class Course{
   bool cached;
 
   String get displayName{
-    return this.name == "" ? this.code : this.name;
+    if (name!=null){
+      return name;
+    }else if(code !=null){
+      return code;
+    }else{
+      return Strings.get("unnamed_course");
+    }
   }
 
   Course.blank();
@@ -129,11 +139,9 @@ class Course{
 
 List<Course> getCourseListOf(String number){
   var json=jsonDecode(prefs.getString("$number-mark"));
-  var version=prefs.getInt("$number-mark-ver")??1;
-  return JSONCourseListParsers[version](json);
+  return parseCourseList(json);
 }
 
-saveCourseListOf(String number,String json){
-  prefs.setString("$number-mark", json);
-  prefs.setInt("$number-mark-ver", apiVersion);
+saveCourseListOf(String number,Map<String, dynamic> json){
+  prefs.setString("$number-mark", jsonEncode(json));
 }

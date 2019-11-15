@@ -20,30 +20,14 @@ Assignment parseAssignment(Map<String, dynamic> json) {
   var assignment = Assignment.blank();
 
   assignment.name = json["name"];
-  assignment.feedback="";
-  if (json["time"] != "") {
-    assignment.time = DateTime.parse(json["time"]);
-  } else {
-    assignment.time = null;
-  }
-  assignment.KU = json.containsKey("KU")
-      ? _parseSmallMark(json["KU"])
-      : SmallMark.unavailable();
-  assignment.T = json.containsKey("T")
-      ? _parseSmallMark(json["T"])
-      : SmallMark.unavailable();
-  assignment.C = json.containsKey("C")
-      ? _parseSmallMark(json["C"])
-      : SmallMark.unavailable();
-  assignment.A = json.containsKey("A")
-      ? _parseSmallMark(json["A"])
-      : SmallMark.unavailable();
-  assignment.O = json.containsKey("O")
-      ? _parseSmallMark(json["O"])
-      : SmallMark.unavailable();
-  assignment.F = json.containsKey("F")
-      ? _parseSmallMark(json["F"])
-      : SmallMark.unavailable();
+  assignment.feedback = json["feedback"];
+  assignment.time = json["time"] != null ? DateTime.parse(json["time"]) : null;
+  assignment.KU = json.containsKey("KU") ? _parseSmallMark(json["KU"]) : SmallMark.unavailable();
+  assignment.T = json.containsKey("T") ? _parseSmallMark(json["T"]) : SmallMark.unavailable();
+  assignment.C = json.containsKey("C") ? _parseSmallMark(json["C"]) : SmallMark.unavailable();
+  assignment.A = json.containsKey("A") ? _parseSmallMark(json["A"]) : SmallMark.unavailable();
+  assignment.O = json.containsKey("O") ? _parseSmallMark(json["O"]) : SmallMark.unavailable();
+  assignment.F = json.containsKey("F") ? _parseSmallMark(json["F"]) : SmallMark.unavailable();
 
   return assignment;
 }
@@ -74,17 +58,18 @@ WeightTable _parseWeightTable(Map<String, dynamic> json) {
 Course _parseCourse(Map<String, dynamic> json) {
   var course = Course.blank();
 
-  course.startTime = DateTime.parse(json["start_time"]);
-  course.endTime = DateTime.parse(json["end_time"]);
+  course.startTime = json["start_time"] != null ? DateTime.parse(json["start_time"]) : null;
+  course.endTime = json["end_time"] != null ? DateTime.parse(json["end_time"]) : null;
   course.name = json["name"];
   course.code = json["code"];
   course.block = json["block"];
   course.room = json["room"];
   course.overallMark = json["overall_mark"];
-  course.cached=false;
+  course.cached = json["cached"];
 
-  if (course.overallMark!=null){
+  if (course.overallMark != null) {
     course.weightTable = _parseWeightTable(json["weight_table"]);
+    course.assignments = List<Assignment>();
     for (Map<String, dynamic> assignment in json["assignments"]) {
       course.assignments.add(parseAssignment(assignment));
     }
