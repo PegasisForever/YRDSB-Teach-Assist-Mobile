@@ -11,7 +11,6 @@ import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
 class AssignmentSearchDelegate extends SearchDelegate {
-  final courseList = getCourseListOf(currentUser.number);
   List<String> history;
 
   @override
@@ -84,18 +83,19 @@ class AssignmentSearchDelegate extends SearchDelegate {
     }
 
     var listItems = List<Widget>();
-    courseList.forEach((course) {
+    getCourseListOf(currentUser.number).forEach((course) {
       var matchedItems = List<Widget>();
-      course.assignments.reversed.forEach((assignment) {
-        if (_isRelated(assignment.displayName, query)) {
-          matchedItems.add(MarksListTile(
-            assignment,
-            course.weightTable,
-            key: Key(assignment.hashCode.toString()),
-          ));
-          matchedItems.add(Divider());
-        }
-      });
+      if (course.assignments != null)
+        course.assignments.reversed.forEach((assignment) {
+          if (_isRelated(assignment.displayName, query)) {
+            matchedItems.add(MarksListTile(
+              assignment,
+              course.weightTable,
+              key: Key(assignment.hashCode.toString()),
+            ));
+            matchedItems.add(Divider());
+          }
+        });
       if (matchedItems.length > 0) matchedItems.removeLast();
 
       if (matchedItems.length > 0)
