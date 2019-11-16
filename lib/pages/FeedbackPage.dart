@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:ta/network/network.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/BetterState.dart';
 import 'package:ta/widgets/EditText.dart';
+
+import '../tools.dart';
 
 class FeedbackPage extends StatefulWidget {
   @override
@@ -23,41 +28,78 @@ class _FeedbackPageState extends BetterState<FeedbackPage> {
       appBar: AppBar(
         title: Text(Strings.get("send_feedback")),
         actions: <Widget>[
-          _isLoading
-              ? Stack(
-                  alignment: Alignment(0, 0),
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: CircularProgressIndicator(
-                        backgroundColor: Color(0x66FFFFFF),
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.onPrimary),
-                      ),
-                    )
-                  ],
-                )
-              : IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () {
-                    if (_contactInfoController.text.isEmpty) {
-                      setState(() {
-                        _contactErrorText.text = Strings.get("plz_fill_in_ur_contact_info");
-                      });
-                      return;
-                    }
-                    if (_feedbackController.text.isEmpty) {
-                      setState(() {
-                        _feedbackValid = false;
-                      });
-                      return;
-                    }
-
+          Builder(
+            builder: (context) {
+              return _isLoading
+                  ? Stack(
+                alignment: Alignment(0, 0),
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: CircularProgressIndicator(
+                      backgroundColor: Color(0x66FFFFFF),
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme
+                              .of(context)
+                              .colorScheme
+                              .onPrimary),
+                    ),
+                  )
+                ],
+              )
+                  : IconButton(
+                icon: Icon(Icons.send),
+                onPressed: () async {
+                  if (_contactInfoController.text.isEmpty) {
                     setState(() {
-                      _isLoading=true;
+                      _contactErrorText.text = Strings.get("plz_fill_in_ur_contact_info");
                     });
-                  },
-                )
+                    return;
+                  }
+                  if (_feedbackController.text.isEmpty) {
+                    setState(() {
+                      _feedbackValid = false;
+                    });
+                    return;
+                  }
+
+                  setState(() {
+                    _isLoading = true;
+                  });
+
+                  try {
+                    await sendFeedBack(_contactInfoController.text, _feedbackController.text);
+                    setState(() {
+                      _isLoading = false;
+                    });
+                    await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text(Strings.get("thank_you_for_giving_feedback")),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text(Strings.get("ok").toUpperCase()),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                            contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
+                          );
+                        });
+                    Navigator.pop(context);
+                  } catch (e) {
+                    _handleError(e, context);
+                  } finally {
+                    setState(() {
+                      _isLoading = false;
+                    });
+                  }
+                },
+              );
+            },
+          )
         ],
       ),
       body: Padding(
@@ -99,5 +141,31 @@ class _FeedbackPageState extends BetterState<FeedbackPage> {
         ),
       ),
     );
+  }
+
+  _handleError(Exception e, BuildContext context) {
+    if (e is SocketException) {
+      if (e.message == "Connection failed" || e.osError.message == "Connection refused") {
+        showSnackBar(context, Strings.get("connection_failed"));
+      } else {
+        showSnackBar(
+            context, Strings.get("error") + (e.message != "" ? e.message : e.osError.message));
+      }
+    } else if (e is HttpException) {
+      switch (e.message) {
+        case "500":
+          {
+            showSnackBar(context, Strings.get("server_internal_error"));
+            break;
+          }
+        default:
+          {
+            showSnackBar(context, Strings.get("error_code") + e.message);
+          }
+      }
+    } else {
+      print(e);
+      showSnackBar(context, Strings.get("error") + e.toString());
+    }
   }
 }

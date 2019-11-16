@@ -163,10 +163,11 @@ class _LoginPageState extends BetterState<LoginPage> {
 
   _handleError(Exception e, BuildContext context) {
     if (e is SocketException) {
-      if (e.message == "Connection failed") {
+      if (e.message == "Connection failed" || e.osError.message == "Connection refused") {
         showSnackBar(context, Strings.get("connection_failed"));
       } else {
-        showSnackBar(context, e.message);
+        showSnackBar(
+            context, Strings.get("error") + (e.message != "" ? e.message : e.osError.message));
       }
     } else if (e is HttpException) {
       switch (e.message) {
@@ -189,7 +190,7 @@ class _LoginPageState extends BetterState<LoginPage> {
           }
       }
     } else {
-      showSnackBar(context, e.toString());
+      showSnackBar(context, Strings.get("error") + e.toString());
     }
   }
 }
