@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/User.dart';
-import 'package:ta/pages/DonatePage.dart';
+import 'package:ta/pages/drawerpages/DonatePage.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/res/Themes.dart';
 
 import '../../tools.dart';
 import '../../widgets/user_accounts_drawer_header.dart' as UADrawerHeader;
-import '../MoodlePage.dart';
+import '../drawerpages/MoodlePage.dart';
 
 class SummaryPageDrawer extends StatefulWidget {
   SummaryPageDrawer({this.onUserSelected});
@@ -104,10 +104,6 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, "/feedback");
               },
-            ),
-            ListTile(
-              title: Text(Strings.get("settings")),
-              leading: Icon(Icons.settings),
             ),
             ListTile(
               title: Text(Strings.get("about")),

@@ -6,7 +6,7 @@ import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/BetterState.dart';
 import 'package:ta/widgets/EditText.dart';
 
-import '../tools.dart';
+import '../../tools.dart';
 
 class FeedbackPage extends StatefulWidget {
   @override

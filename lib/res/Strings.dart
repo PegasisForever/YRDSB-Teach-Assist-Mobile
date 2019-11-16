@@ -89,6 +89,10 @@ class Strings {
       "unnamed_course": "Unamed Course",
       "thank_you_for_giving_feedback": "Thank you for giving feedback!",
       "error": "Error: ",
+      "search": "Search",
+      "clear_all": "Clear All",
+      "no_results_found": "No results found",
+      "results_from": "Results from \"%s\"",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -176,6 +180,10 @@ class Strings {
       "unnamed_course": "未命名课程",
       "thank_you_for_giving_feedback": "感谢反馈！",
       "error": "错误：",
+      "search": "搜索",
+      "clear_all": "清空",
+      "no_results_found": "没有结果",
+      "results_from": "来自 “%s” 的结果",
     }
   };
 

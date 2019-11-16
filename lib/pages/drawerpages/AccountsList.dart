@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/User.dart';
-import 'package:ta/pages/EditAccount.dart';
+import 'package:ta/pages/drawerpages/EditAccount.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/BetterState.dart';
 

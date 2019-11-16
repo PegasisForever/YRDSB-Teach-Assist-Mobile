@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:ta/model/User.dart';
+import 'package:ta/pages/drawerpages/SearchPage.dart';
 import 'package:ta/pages/summarypage/SummaryTab.dart';
 import 'package:ta/pages/summarypage/TimelineTab.dart';
 import 'package:ta/res/Strings.dart';
@@ -47,6 +48,17 @@ class _SummaryPageState extends BetterState<SummaryPage>
             sprintf(Strings.get("report_for_student"), [currentUser.getName()]),
             maxLines: 2,
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: AssignmentSearchDelegate(),
+                );
+              },
+            )
+          ],
           bottom: TabBar(
             indicatorColor: Colors.white,
             tabs: <Widget>[

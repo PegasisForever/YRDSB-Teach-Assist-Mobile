@@ -6,11 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/packageinfo.dart';
-import 'package:ta/pages/AboutPage.dart';
-import 'package:ta/pages/AccountsList.dart';
-import 'package:ta/pages/EditAccount.dart';
-import 'package:ta/pages/FeedbackPage.dart';
 import 'package:ta/pages/LoginPage.dart';
+import 'package:ta/pages/drawerpages/AboutPage.dart';
+import 'package:ta/pages/drawerpages/AccountsList.dart';
+import 'package:ta/pages/drawerpages/EditAccount.dart';
+import 'package:ta/pages/drawerpages/FeedbackPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 
 import 'dataStore.dart';
