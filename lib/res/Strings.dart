@@ -93,6 +93,7 @@ class Strings {
       "clear_all": "Clear All",
       "no_results_found": "No results found",
       "results_from": "Results from \"%s\"",
+      "timeline_blank_text": "No updates yet",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -184,6 +185,7 @@ class Strings {
       "clear_all": "清空",
       "no_results_found": "没有结果",
       "results_from": "来自 “%s” 的结果",
+      "timeline_blank_text": "暂无动态",
     }
   };
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/model/User.dart';
+import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
 
@@ -18,9 +19,17 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
   Widget build(BuildContext context) {
     super.build(context);
     var timeline = getTimelineOf(currentUser.number);
-    return ListView(
+    return timeline.length > 0
+        ? ListView(
       padding: EdgeInsets.only(bottom: 8 + getBottomPadding(context)),
       children: _getTimelineCards(timeline),
+    )
+        : Center(
+      child: Text(Strings.get("timeline_blank_text"),
+        style: Theme
+            .of(context)
+            .textTheme
+            .subhead,),
     );
   }
 
@@ -33,21 +42,19 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
       if (update is AssignmentAdded) {
         if (sameDayContents.length == 0) {
           sameDayContents.add(_contentFromAssignmentAdded(update));
-          lastContentDate=update.time;
-        }else if(isSameDay(lastContentDate, update.time)){
+          lastContentDate = update.time;
+        } else if (isSameDay(lastContentDate, update.time)) {
           sameDayContents.add(_contentFromAssignmentAdded(update));
-        }else{
-          list.add(_cardOfDate(time: lastContentDate,
-          children: sameDayContents));
+        } else {
+          list.add(_cardOfDate(time: lastContentDate, children: sameDayContents));
           sameDayContents = List<Widget>();
           sameDayContents.add(_contentFromAssignmentAdded(update));
-          lastContentDate=update.time;
+          lastContentDate = update.time;
         }
       }
     });
-    if (sameDayContents.length!=0){
-      list.add(_cardOfDate(time: lastContentDate,
-          children: sameDayContents));
+    if (sameDayContents.length != 0) {
+      list.add(_cardOfDate(time: lastContentDate, children: sameDayContents));
     }
 
     return list;
@@ -63,7 +70,6 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
         contents.add(SizedBox(
           height: 4,
         ));
-
       }
     }
     return Padding(
