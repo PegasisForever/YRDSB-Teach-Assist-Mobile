@@ -34,10 +34,30 @@ class _SummaryTabState extends State<SummaryTab>
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: () async {
-        await getAndSaveMarkTimeline(currentUser);
-        setState(() {
-          courses = getCourseListOf(currentUser.number);
-        });
+        try {
+          await getAndSaveMarkTimeline(currentUser);
+          setState(() {
+            courses = getCourseListOf(currentUser.number);
+          });
+        } catch (e) {
+          if (e.message == "426")
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text(Strings.get("version_no_longer_supported")),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text(Strings.get("ok").toUpperCase()),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                    contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
+                  );
+                });
+        }
       },
       child: ListView(
         padding: EdgeInsets.only(bottom: 8 + getBottomPadding(context)),

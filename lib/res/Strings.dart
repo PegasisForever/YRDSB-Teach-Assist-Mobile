@@ -94,6 +94,7 @@ class Strings {
       "no_results_found": "No results found",
       "results_from": "Results from \"%s\"",
       "timeline_blank_text": "No updates yet",
+      "version_no_longer_supported": "Your APP version is no longer supported, please update.",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -186,6 +187,7 @@ class Strings {
       "no_results_found": "没有结果",
       "results_from": "来自 “%s” 的结果",
       "timeline_blank_text": "暂无动态",
+      "version_no_longer_supported": "您的APP版本已不受支持，请更新。",
     }
   };
 
