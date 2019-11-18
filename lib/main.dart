@@ -35,15 +35,16 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'YRDSB Teach Assist',
       theme: ThemeData(
-        brightness: Brightness.light,
-        colorScheme: ColorScheme.light(
-            primary: const Color(0xff03a9f4),
-            primaryVariant: const Color(0xff007ac1),
-            secondary: const Color(0xff80d8ff),
-            secondaryVariant: const Color(0xff49a7cc),
-            onPrimary: Colors.white),
-        accentColor: const Color(0xff40c4ff),
-      ),
+          brightness: Brightness.light,
+          colorScheme: ColorScheme.light(
+              primary: const Color(0xff03a9f4),
+              primaryVariant: const Color(0xff007ac1),
+              secondary: const Color(0xff80d8ff),
+              secondaryVariant: const Color(0xff49a7cc),
+              onPrimary: Colors.white),
+          accentColor: const Color(0xff40c4ff),
+          buttonTheme:
+          ButtonThemeData(colorScheme: ColorScheme.light(secondary: const Color(0xff03a9f4)))),
       darkTheme: ThemeData(
           brightness: Brightness.dark,
           colorScheme: ColorScheme.dark(
@@ -55,12 +56,12 @@ class MyApp extends StatelessWidget {
           accentColor: const Color(0xff40c4ff),
           primarySwatch: Colors.lightBlue),
       routes: <String, WidgetBuilder>{
-        "/": (BuildContext context) => new SummaryPage(),
-        "/login": (BuildContext context) => new LoginPage(),
-        "/accounts_list": (BuildContext context) => new AccountsList(),
-        "/accounts_list/edit": (BuildContext context) => new EditAccount(User.blank()),
-        "/about": (BuildContext context) => new AboutPage(),
-        "/feedback": (BuildContext context) => new FeedbackPage(),
+        "/": (BuildContext context) => SummaryPage(),
+        "/login": (BuildContext context) => LoginPage(),
+        "/accounts_list": (BuildContext context) => AccountsList(),
+        "/accounts_list/edit": (BuildContext context) => EditAccount(User.blank(), false),
+        "/about": (BuildContext context) => AboutPage(),
+        "/feedback": (BuildContext context) => FeedbackPage(),
       },
       localizationsDelegates: [
         GlobalCupertinoLocalizations.delegate,

@@ -57,7 +57,7 @@ class _AccountsListState extends BetterState<AccountsList> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => EditAccount(user)),
+                  builder: (context) => EditAccount(user, false)),
             );
           },
         ),

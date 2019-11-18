@@ -13,7 +13,8 @@ class EditText extends StatefulWidget {
       this.focusNode,
       this.nextFocusNode,
       this.textInputAction,
-      this.onSubmitted});
+        this.onSubmitted,
+        this.autoFocus = false});
 
   final TextEditingController controller;
   final ErrorText errorText;
@@ -27,6 +28,7 @@ class EditText extends StatefulWidget {
   final FocusNode nextFocusNode;
   final TextInputAction textInputAction;
   final ValueChanged<String> onSubmitted;
+  final bool autoFocus;
 
   @override
   _EditTextState createState() => _EditTextState();
@@ -75,6 +77,7 @@ class _EditTextState extends State<EditText> {
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: _maxWidth),
       child: TextField(
+        autofocus: widget.autoFocus,
         textInputAction: _textInputAction,
         onSubmitted: _onSubmitted,
         keyboardType: _inputType,
@@ -92,16 +95,16 @@ class _EditTextState extends State<EditText> {
             prefixIcon: _icon,
             suffixIcon: _clearBtnVisibility
                 ? IconButton(
-                    icon: Icon(Icons.clear),
-                    onPressed: () {
-                      FocusScope.of(context).requestFocus(_focusNode);
-                      _controller.clear();
+              icon: Icon(Icons.clear),
+              onPressed: () {
+                FocusScope.of(context).requestFocus(_focusNode);
+                _controller.clear();
 
-                      setState(() {
-                        _clearBtnVisibility = false;
-                      });
-                    },
-                  )
+                setState(() {
+                  _clearBtnVisibility = false;
+                });
+              },
+            )
                 : null,
             filled: true,
             labelText: _hint,

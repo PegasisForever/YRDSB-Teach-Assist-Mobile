@@ -11,12 +11,13 @@ import '../../firebase.dart';
 import '../../tools.dart';
 
 class EditAccount extends StatefulWidget {
-  EditAccount(this.user);
+  EditAccount(this.user, this.updatePassword);
 
   final User user;
+  final bool updatePassword;
 
   @override
-  _EditAccountState createState() => _EditAccountState(user);
+  _EditAccountState createState() => _EditAccountState(user, updatePassword);
 }
 
 class _EditAccountState extends BetterState<EditAccount> {
@@ -29,10 +30,13 @@ class _EditAccountState extends BetterState<EditAccount> {
   bool _isSaveLoading = false;
   bool _addNew;
   bool _receive;
+  bool _updatePassword;
   final _studentNumberErrorText = ErrorText(null);
   final _passwordErrorText = ErrorText(null);
 
-  _EditAccountState(User user) {
+  _EditAccountState(User user, bool updatePassword) {
+    print(updatePassword);
+    _updatePassword = updatePassword;
     _aliasController = TextEditingController(text: user.displayName);
     _studentNumberController = TextEditingController(text: user.number);
     _passwordController = TextEditingController(text: user.password);
@@ -258,6 +262,7 @@ class _EditAccountState extends BetterState<EditAccount> {
             ),
             SizedBox(height: 12),
             EditText(
+              autoFocus: _updatePassword,
               textInputAction: TextInputAction.done,
               focusNode: _passwordFocusNode,
               controller: _passwordController,

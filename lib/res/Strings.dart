@@ -95,6 +95,10 @@ class Strings {
       "results_from": "Results from \"%s\"",
       "timeline_blank_text": "No updates yet",
       "version_no_longer_supported": "Your APP version is no longer supported, please update.",
+      "ur_ta_pwd_has_changed": "Your TA Password Has Changed",
+      "u_need_to_update_your_password":
+      "You need to update your password in order to view up-to-date marks.",
+      "update_password": "Update Password",
     },
     "zh": {
       "login_your_account": "登录帐号：",

@@ -5,6 +5,7 @@ import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/pages/detailpage/DetailPage.dart';
+import 'package:ta/pages/drawerpages/EditAccount.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
 
@@ -40,23 +41,7 @@ class _SummaryTabState extends State<SummaryTab>
             courses = getCourseListOf(currentUser.number);
           });
         } catch (e) {
-          if (e.message == "426")
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text(Strings.get("version_no_longer_supported")),
-                    actions: <Widget>[
-                      FlatButton(
-                        child: Text(Strings.get("ok").toUpperCase()),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                    contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
-                  );
-                });
+          _handleError(e);
         }
       },
       child: ListView(
@@ -184,6 +169,54 @@ class _SummaryTabState extends State<SummaryTab>
   void afterFirstLayout(BuildContext context) {
     if (widget.needRefresh) {
       _refreshIndicatorKey.currentState.show();
+    }
+  }
+
+  void _handleError(e) {
+    if (e.message == "426") {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(Strings.get("version_no_longer_supported")),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(Strings.get("ok").toUpperCase()),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+              contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
+            );
+          });
+    } else if (e.message == "401") {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(Strings.get("ur_ta_pwd_has_changed")),
+              content: Text(Strings.get("u_need_to_update_your_password")),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(Strings.get("cancel").toUpperCase()),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                FlatButton(
+                    child: Text(Strings.get("update_password").toUpperCase()),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => EditAccount(currentUser, true)),
+                      );
+                    }),
+              ],
+              contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
+            );
+          });
     }
   }
 }
