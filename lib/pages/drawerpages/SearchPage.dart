@@ -24,7 +24,11 @@ class AssignmentSearchDelegate extends SearchDelegate {
       IconButton(
         icon: Icon(Icons.clear),
         onPressed: () {
-          query = '';
+          if (query == "") {
+            close(context, "");
+          } else {
+            query = "";
+          }
         },
       ),
     ];
@@ -128,11 +132,11 @@ bool _isRelated(String str, String query) {
   var loweredStr = str.toLowerCase();
   var keywords = query.toLowerCase().split(" ");
   for (var keyword in keywords) {
-    if (loweredStr.indexOf(keyword) >= 0) {
-      return true;
+    if (loweredStr.indexOf(keyword) == -1) {
+      return false;
     }
   }
-  return false;
+  return true;
 }
 
 class _SearchHistoryList extends StatefulWidget {

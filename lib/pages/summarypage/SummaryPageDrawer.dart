@@ -20,7 +20,7 @@ class SummaryPageDrawer extends StatefulWidget {
 class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
   var _drawerHeaderOpened = false;
   var _accountSelectorHeight = 0.0;
-  ValueChanged<User> _onUserSelected = null;
+  ValueChanged<User> _onUserSelected;
 
   @override
   void initState() {
