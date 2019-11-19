@@ -31,29 +31,64 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
     var i = 0;
 
     _paintBar(
-        canvas,Strings.get("ku"), _Kcolor, _assi.KU, barWidth * (i++), barWidth, height);
+        canvas,
+        Strings.get("ku"),
+        _Kcolor,
+        _assi.KU,
+        barWidth * (i++),
+        barWidth,
+        height);
     _paintBar(
-        canvas, Strings.get("t"), _Tcolor, _assi.T, barWidth * (i++), barWidth, height);
+        canvas,
+        Strings.get("t"),
+        _Tcolor,
+        _assi.T,
+        barWidth * (i++),
+        barWidth,
+        height);
     _paintBar(
-        canvas, Strings.get("c"), _Ccolor, _assi.C, barWidth * (i++), barWidth, height);
+        canvas,
+        Strings.get("c"),
+        _Ccolor,
+        _assi.C,
+        barWidth * (i++),
+        barWidth,
+        height);
     _paintBar(
-        canvas, Strings.get("a"), _Acolor, _assi.A, barWidth * (i++), barWidth, height);
+        canvas,
+        Strings.get("a"),
+        _Acolor,
+        _assi.A,
+        barWidth * (i++),
+        barWidth,
+        height);
 
     if (_assi.O.available) {
       _paintBar(
-          canvas, Strings.get("o"), _Ocolor, _assi.O, barWidth * (i++), barWidth, height);
+          canvas,
+          Strings.get("o"),
+          _Ocolor,
+          _assi.O,
+          barWidth * (i++),
+          barWidth,
+          height);
     }
     if (_assi.F.available) {
       _paintBar(
-          canvas, Strings.get("f"), _Fcolor, _assi.F, barWidth * (i++), barWidth, height);
+          canvas,
+          Strings.get("f"),
+          _Fcolor,
+          _assi.F,
+          barWidth * (i++),
+          barWidth,
+          height);
     }
   }
 
-  void _paintBar(Canvas canvas, String text, Color color, SmallMark smallMark,
-      double x, double width, double height) {
+  void _paintBar(Canvas canvas, String text, Color color, SmallMark smallMark, double x,
+      double width, double height) {
     var bottomLabelPainter = TextPainter(
-        text: TextSpan(
-            text: text, style: TextStyle(fontSize: 16.0, color: Colors.grey)),
+        text: TextSpan(text: text, style: TextStyle(fontSize: 16.0, color: Colors.grey)),
         textDirection: TextDirection.ltr,
         textAlign: TextAlign.center)
       ..layout(maxWidth: width, minWidth: width)
@@ -66,8 +101,8 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
         ..color = color
         ..isAntiAlias = true;
       canvas.drawRRect(
-          RRect.fromLTRBAndCorners(7 + x, (height - 66) * (1 - mark / 100) + 33,
-              width - 7 + x, height - 33,
+          RRect.fromLTRBAndCorners(
+              7 + x, (height - 66) * (1 - mark / 100) + 33, width - 7 + x, height - 33,
               topLeft: Radius.circular(5), topRight: Radius.circular(5)),
           paint);
 
@@ -77,7 +112,7 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
       bottomLabelPainter.layout(maxWidth: width, minWidth: width);
       bottomLabelPainter.paint(canvas, Offset(x, height - 12));
 
-      if (smallMark.finished){
+      if (smallMark.finished) {
         TextPainter(
             text: TextSpan(
                 text: getRoundString(mark, 1),
@@ -86,31 +121,22 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
             textAlign: TextAlign.center)
           ..layout(maxWidth: width, minWidth: width)
           ..paint(canvas, Offset(x, (height - 60) * (1 - mark / 100)))
-
           ..text = TextSpan(
-              text: getRoundString(smallMark.get, 2) +
-                  "/" +
-                  getRoundString(smallMark.total, 2),
+              text: getRoundString(smallMark.get, 2) + "/" + getRoundString(smallMark.total, 2),
               style: TextStyle(fontSize: 12.0, color: Colors.grey))
           ..layout(maxWidth: width, minWidth: width)
           ..paint(canvas, Offset(x, (height - 60) * (1 - mark / 100) + 16));
-      }else{
+      } else {
         TextPainter(
-            text: TextSpan(
-                text: "N",
-                style: TextStyle(fontSize: 16.0, color: Colors.red)),
+            text: TextSpan(text: "N", style: TextStyle(fontSize: 16.0, color: Colors.red)),
             textDirection: TextDirection.ltr,
             textAlign: TextAlign.center)
           ..layout(maxWidth: width, minWidth: width)
           ..paint(canvas, Offset(x, height - 50));
       }
-
-
     } else {
       TextPainter(
-          text: TextSpan(
-              text: "N/A",
-              style: TextStyle(fontSize: 16.0, color: Colors.grey)),
+          text: TextSpan(text: "N/A", style: TextStyle(fontSize: 16.0, color: Colors.grey)),
           textDirection: TextDirection.ltr,
           textAlign: TextAlign.center)
         ..layout(maxWidth: width, minWidth: width)
@@ -124,13 +150,14 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
 
 class SmallMarkChartDetail extends StatelessWidget {
   final Assignment _assi;
+  final double height;
 
-  SmallMarkChartDetail(this._assi);
+  SmallMarkChartDetail(this._assi, {this.height = 220});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 220,
+      height: height,
       width: double.maxFinite,
       child: CustomPaint(
         painter: _SmallMarkChartDetailPainter(_assi),

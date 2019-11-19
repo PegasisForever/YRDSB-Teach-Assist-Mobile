@@ -4,12 +4,12 @@ import 'package:ta/widgets/BetterState.dart';
 
 import '../../../CustomIcons.dart';
 
-class WhatIfPage extends StatefulWidget {
+class WhatIfWelcomePage extends StatefulWidget {
   @override
-  _WhatIfPageState createState() => _WhatIfPageState();
+  _WhatIfWelcomePageState createState() => _WhatIfWelcomePageState();
 }
 
-class _WhatIfPageState extends BetterState<WhatIfPage> {
+class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

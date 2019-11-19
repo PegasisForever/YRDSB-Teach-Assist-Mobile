@@ -51,9 +51,7 @@ class _LoginPageState extends BetterState<LoginPage> {
                   "YRDSB",
                   style: TextStyle(fontSize: 20),
                 )),
-                Center(
-                    child:
-                        Text("Teach Assist", style: TextStyle(fontSize: 20))),
+                Center(child: Text("Teach Assist", style: TextStyle(fontSize: 20))),
                 SizedBox(
                   height: 80,
                 ),
@@ -72,8 +70,7 @@ class _LoginPageState extends BetterState<LoginPage> {
                   hint: Strings.get("student_number"),
                   errorText: _studentNumberErrorText,
                   icon: Icons.account_circle,
-                  inputType: TextInputType.numberWithOptions(
-                      signed: false, decimal: false),
+                  inputType: TextInputType.numberWithOptions(signed: false, decimal: false),
                 ),
                 SizedBox(height: 12),
                 EditText(
@@ -86,7 +83,7 @@ class _LoginPageState extends BetterState<LoginPage> {
                   icon: Icons.lock,
                   isPassword: true,
                   onSubmitted: (s) {
-                    if (!_isLoading){
+                    if (!_isLoading) {
                       _startLogin(context);
                     }
                   },
@@ -102,10 +99,16 @@ class _LoginPageState extends BetterState<LoginPage> {
                               fallbackHeight: 0,
                             ),
                       RaisedButton(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .secondary,
                         child: Text(Strings.get("login").toUpperCase()),
-                        onPressed: !_isLoading ? (){
+                        onPressed: !_isLoading
+                            ? () {
                           _startLogin(context);
-                        }: null,
+                        }
+                            : null,
                       )
                     ],
                   ),
@@ -124,8 +127,7 @@ class _LoginPageState extends BetterState<LoginPage> {
   _startLogin(BuildContext context) async {
     if (_studentNumberController.text == "") {
       setState(() {
-        _studentNumberErrorText.text =
-            Strings.get("plz_fill_in_ur_student_number");
+        _studentNumberErrorText.text = Strings.get("plz_fill_in_ur_student_number");
       });
       return;
     }
@@ -140,8 +142,7 @@ class _LoginPageState extends BetterState<LoginPage> {
       _isLoading = true;
     });
 
-    var user =
-        User(_studentNumberController.text, _passwordController.text, true);
+    var user = User(_studentNumberController.text, _passwordController.text, true);
 
     try {
       await regiAndSave(user);
@@ -150,8 +151,7 @@ class _LoginPageState extends BetterState<LoginPage> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-            builder: (context) => SummaryPage.noRefresh()),
+        MaterialPageRoute(builder: (context) => SummaryPage.noRefresh()),
       );
     } catch (e) {
       _handleError(e, context);
@@ -174,8 +174,7 @@ class _LoginPageState extends BetterState<LoginPage> {
         case "401":
           {
             setState(() {
-              _passwordErrorText.text =
-                  Strings.get("student_number_or_password_incorrect");
+              _passwordErrorText.text = Strings.get("student_number_or_password_incorrect");
             });
             break;
           }

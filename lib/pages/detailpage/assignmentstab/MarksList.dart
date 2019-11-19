@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
+import 'package:ta/pages/detailpage/whatifpage/EditAssignmentDialog.dart';
 import 'package:ta/res/Strings.dart';
 
 import 'MarksListTile.dart';
@@ -33,9 +34,15 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
                   key: Key("add-btn"),
                   firstChild: Center(
                     child: FlatButton.icon(
-                        onPressed: () {}, icon: Icon(Icons.add), label: Text("New Assignment")),
+                        onPressed: () {
+                          ShowAddAssignment(context, course);
+                        },
+                        icon: Icon(Icons.add),
+                        label: Text("New Assignment")),
                   ),
-                  secondChild: Container(height: 1,),
+                  secondChild: Container(
+                    height: 1,
+                  ),
                   crossFadeState: whatIfMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                   duration: const Duration(milliseconds: 300),
                   firstCurve: Curves.easeInOutCubic,
@@ -62,5 +69,11 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
               style: Theme.of(context).textTheme.subhead,
             ),
           );
+  }
+
+  ShowAddAssignment(BuildContext context, Course course) {
+    showDialog(context: context, builder: (context) {
+      return EditAssignmentDialog(course);
+    });
   }
 }

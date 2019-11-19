@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:ta/dataStore.dart';
-import 'package:ta/network/network.dart';
 import 'package:ta/prasers/ParsersCollection.dart';
 import 'package:ta/res/Strings.dart';
 
@@ -41,7 +40,9 @@ class Assignment{
   DateTime time;
 
   Assignment(this.KU,this.T,this.C,this.A,this.O,this.F,this.name,String date){
-    this.time=DateTime.parse(date);
+    if (date != null) {
+      this.time = DateTime.parse(date);
+    }
   }
 
   Assignment.blank();

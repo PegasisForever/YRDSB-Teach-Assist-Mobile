@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
               secondaryVariant: const Color(0xff49a7cc),
               onPrimary: Colors.white),
           accentColor: const Color(0xff40c4ff),
+          toggleableActiveColor: const Color(0xff03a9f4),
           buttonTheme:
           ButtonThemeData(colorScheme: ColorScheme.light(secondary: const Color(0xff03a9f4)))),
       darkTheme: ThemeData(
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
               secondaryVariant: const Color(0xff0094cc),
               onPrimary: Colors.white),
           accentColor: const Color(0xff40c4ff),
+          toggleableActiveColor: const Color(0xff40c4ff),
           primarySwatch: Colors.lightBlue),
       routes: <String, WidgetBuilder>{
         "/": (BuildContext context) => SummaryPage(),
