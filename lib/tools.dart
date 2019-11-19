@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
@@ -95,4 +96,8 @@ bool isLightMode(BuildContext context) {
 
 bool isSameDay(DateTime d1, DateTime d2) {
   return d1.year == d2.year && d1.month == d2.month && d1.day == d2.day;
+}
+
+bool isAndroid() {
+  return Platform.isAndroid;
 }

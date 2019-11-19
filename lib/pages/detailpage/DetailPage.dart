@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/MarksList.dart';
 import 'package:ta/pages/detailpage/staticstab/StaticsList.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/BetterState.dart';
 
+import '../../CustomIcons.dart';
 import 'abouttab/AboutTab.dart';
 
-class DetailPage extends StatefulWidget{
+class DetailPage extends StatefulWidget {
   DetailPage(this.course);
 
   final Course course;
@@ -17,8 +19,8 @@ class DetailPage extends StatefulWidget{
 }
 
 class _DetailPageState extends BetterState<DetailPage> {
-
   final Course _course;
+  var whatIfMode = false;
 
   _DetailPageState(this._course);
 
@@ -28,8 +30,21 @@ class _DetailPageState extends BetterState<DetailPage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(_course.displayName,
-            maxLines: 2),
+          title: Text(_course.displayName, maxLines: 2),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(whatIfMode ? CustomIcons.lightbulb_filled : Icons.lightbulb_outline),
+              onPressed: () {
+//                Navigator.push(
+//                  context,
+//                  MaterialPageRoute(builder: (context) => WhatIfPage()),
+//                );
+                setState(() {
+                  whatIfMode = !whatIfMode;
+                });
+              },
+            )
+          ],
           bottom: TabBar(
             indicatorColor: Colors.white,
             tabs: [
@@ -39,11 +54,38 @@ class _DetailPageState extends BetterState<DetailPage> {
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            MarksList(_course),
-            StaticsList(_course),
-            AboutTab(_course),
+        body: Column(
+          children: <Widget>[
+            Flexible(
+              flex: 0,
+              child: AnimatedCrossFade(
+                key: Key("add-btn"),
+                firstChild: Container(
+                  color: Colors.amber,
+                  child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("What If Mode Activated", style: TextStyle(color: Colors
+                            .black)),
+                      )),
+                ),
+                secondChild: Container(),
+                crossFadeState: whatIfMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                duration: const Duration(milliseconds: 300),
+                firstCurve: Curves.easeInOutCubic,
+                secondCurve: Curves.easeInOutCubic,
+                sizeCurve: Curves.easeInOutCubic,
+              ),
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  MarksList(_course, whatIfMode),
+                  StaticsList(_course),
+                  AboutTab(_course),
+                ],
+              ),
+            )
           ],
         ),
       ),
