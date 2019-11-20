@@ -102,8 +102,11 @@ class _LoginPageState extends BetterState<LoginPage> {
                         color: Theme
                             .of(context)
                             .colorScheme
-                            .secondary,
-                        child: Text(Strings.get("login").toUpperCase()),
+                            .primary,
+                        child: Text(
+                          Strings.get("login").toUpperCase(),
+                          style: TextStyle(color: Colors.white),
+                        ),
                         onPressed: !_isLoading
                             ? () {
                           _startLogin(context);
