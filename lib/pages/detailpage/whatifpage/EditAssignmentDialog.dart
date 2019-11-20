@@ -19,7 +19,7 @@ class EditAssignmentDialog extends StatefulWidget {
 
 class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
   Assignment assignment;
-  var isAdvanced = true;
+  var isAdvanced = false;
   var _titleController = TextEditingController();
 
   @override

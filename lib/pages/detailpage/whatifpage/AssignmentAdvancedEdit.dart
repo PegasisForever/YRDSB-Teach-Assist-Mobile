@@ -30,8 +30,9 @@ class AdvancedEditState extends State<AdvancedEdit> {
             Tab(text: Strings.get("o")),
           ],
         ),
+
         SizedBox(
-          height: 200,
+          height: 192,
           child: TabBarView(
             children: <Widget>[
               _SmallMarkAdvancedEdit(
@@ -76,7 +77,8 @@ class AdvancedEditState extends State<AdvancedEdit> {
               ),
             ],
           ),
-        )
+          ),
+
       ],
     );
   }
