@@ -65,7 +65,7 @@ class _StickSliderState extends State<StickSlider> {
             if (_timer != null && _timer != timer) _timer.cancel();
             _timer = timer;
             if (_stickValue != null) {
-              widget.onDelta(_stickValue * widget.speed / 4);
+              widget.onDelta(powWithSign(_stickValue * widget.speed, 2));
             }
           });
         }
