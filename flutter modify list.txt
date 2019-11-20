@@ -1,0 +1,14 @@
+flutter/packages/flutter/lib/src/material/slider.dart
+Line 638
++ //Force resolve all gestures
++ class SliderGestureRecognizer extends HorizontalDragGestureRecognizer{
++   @override
++   void addPointer(PointerEvent event) {
++     super.addPointer(event);
++     resolve(GestureDisposition.accepted);
++   }
++ }
+
+Line 676
+- _drag = HorizontalDragGestureRecognizer()
++ _drag = SliderGestureRecognizer()
