@@ -37,13 +37,10 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
                 onDismiss: () {
                   setState(() {
                     showTips = false;
-                    prefs.setBool(
-                        "show_tap_to_view_detail_tip", false);
+                    prefs.setBool("show_tap_to_view_detail_tip", false);
                   });
                 }),
-            secondChild: SizedBox(
-              height: 1,
-            ),
+            secondChild: SizedBox(),
             crossFadeState: showTips ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             duration: const Duration(milliseconds: 300),
             firstCurve: Curves.easeInOutCubic,
@@ -53,22 +50,25 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
         } else if (index == 1) {
           return AnimatedCrossFade(
             key: Key("add-btn"),
-            firstChild: Center(
-              child: FlatButton.icon(
-                  onPressed: () async {
-                    var newAssi = await showAddAssignment(context, course);
-                    if (newAssi != null) {
-                      course.assignments.add(newAssi);
-                      widget._updateCourse(course);
-                      AnimatedList.of(context).insertItem(1);
-                    }
-                  },
-                  icon: Icon(Icons.add),
-                  label: Text("New Assignment")),
+            firstChild: Column(
+              children: <Widget>[
+                Center(
+                  child: FlatButton.icon(
+                      onPressed: () async {
+                        var newAssi = await showAddAssignment(context, course);
+                        if (newAssi != null) {
+                          course.assignments.add(newAssi);
+                          widget._updateCourse(course);
+                          AnimatedList.of(context).insertItem(1);
+                        }
+                      },
+                      icon: Icon(Icons.add),
+                      label: Text("New Assignment")),
+                ),
+                Divider()
+              ],
             ),
-            secondChild: SizedBox(
-              height: 1,
-            ),
+            secondChild: SizedBox(),
             crossFadeState: whatIfMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             duration: const Duration(milliseconds: 300),
             firstCurve: Curves.easeInOutCubic,
@@ -83,9 +83,14 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
             key: Key(assi.hashCode.toString()),
             axis: Axis.vertical,
             sizeFactor: animation,
-            child: MarksListTile(
-              assi,
-              course.weightTable,
+            child: Column(
+              children: <Widget>[
+                MarksListTile(
+                  assi,
+                  course.weightTable,
+                ),
+                if (assiIndex != 0) Divider()
+              ],
             ));
       },
     );
