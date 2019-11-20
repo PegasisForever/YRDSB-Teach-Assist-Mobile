@@ -10,8 +10,9 @@ import 'AssignmentSimpleEdit.dart';
 
 class EditAssignmentDialog extends StatefulWidget {
   final Course course;
+  final Assignment assignment;
 
-  EditAssignmentDialog(this.course);
+  EditAssignmentDialog({this.course, this.assignment});
 
   @override
   _EditAssignmentDialogState createState() => _EditAssignmentDialogState();
@@ -21,6 +22,12 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
   Assignment assignment;
   var isAdvanced = false;
   var _titleController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    assignment = widget.assignment;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +156,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.of(context).pop(assignment);
                         },
                       )
                     ],

@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/MarksList.dart';
 import 'package:ta/pages/detailpage/staticstab/StaticsList.dart';
+import 'package:ta/pages/detailpage/whatifpage/EditAssignmentDialog.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/BetterState.dart';
 
@@ -19,10 +20,16 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends BetterState<DetailPage> {
-  final Course _course;
+  Course _course;
   var whatIfMode = false;
 
   _DetailPageState(this._course);
+
+  updateCourse(course) {
+    setState(() {
+      _course = course;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +69,26 @@ class _DetailPageState extends BetterState<DetailPage> {
                 key: Key("add-btn"),
                 firstChild: Container(
                   color: Colors.amber,
-                  child: Center(
-                      child: Padding(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("What If Mode Activated", style: TextStyle(color: Colors
-                            .black)),
-                      )),
+                        child:
+                        Text("What If Mode Activated", style: TextStyle(color: Colors.black)),
+                      ),
+                      FlatButton.icon(
+                          onPressed: () async {
+                            var newAssi = await showAddAssignment(context, _course);
+                            if (newAssi != null) {
+                              setState(() {
+                                _course.assignments.add(newAssi);
+                              });
+                            }
+                          },
+                          icon: Icon(Icons.add),
+                          label: Text("New Assignment")),
+                    ],
+                  ),
                 ),
                 secondChild: Container(),
                 crossFadeState: whatIfMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
@@ -80,7 +101,7 @@ class _DetailPageState extends BetterState<DetailPage> {
             Expanded(
               child: TabBarView(
                 children: [
-                  MarksList(_course, whatIfMode),
+                  MarksList(_course, whatIfMode, updateCourse),
                   StaticsList(_course),
                   AboutTab(_course),
                 ],
@@ -90,5 +111,14 @@ class _DetailPageState extends BetterState<DetailPage> {
         ),
       ),
     );
+  }
+
+  Future<Assignment> showAddAssignment(BuildContext context, Course course,
+      {Assignment assignment}) async {
+    return await showDialog<Assignment>(
+        context: context,
+        builder: (context) {
+          return EditAssignmentDialog(course: course, assignment: assignment);
+        });
   }
 }

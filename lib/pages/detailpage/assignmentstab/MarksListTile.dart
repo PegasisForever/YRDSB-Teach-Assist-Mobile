@@ -11,20 +11,19 @@ class MarksListTile extends StatefulWidget {
   final WeightTable _weights;
   final Key key;
 
-  MarksListTile(this._assignment, this._weights, {this.key});
+  MarksListTile(this._assignment, this._weights, {this.key}) :super(key: key);
 
   @override
-  MarksListTileState createState() => MarksListTileState(_assignment, _weights, key);
+  MarksListTileState createState() => MarksListTileState(_assignment, _weights);
 }
 
 class MarksListTileState extends State<MarksListTile>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final Assignment _assignment;
   final WeightTable _weights;
-  final Key key;
   var showDetail = false;
 
-  MarksListTileState(this._assignment, this._weights, this.key);
+  MarksListTileState(this._assignment, this._weights);
 
   @override
   bool get wantKeepAlive => true;
@@ -105,7 +104,6 @@ class MarksListTileState extends State<MarksListTile>
     );
 
     return InkWell(
-      key: key,
       onTap: () {
         setState(() {
           showDetail = !showDetail;
