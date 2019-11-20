@@ -42,6 +42,7 @@ class Assignment {
   String name;
   String feedback;
   DateTime time;
+  bool edited;
 
   Assignment(this.KU, this.T, this.C, this.A, this.O, this.F, this.name, String date) {
     if (date != null) {

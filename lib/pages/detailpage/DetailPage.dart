@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ta/model/Mark.dart';
+import 'package:ta/model/User.dart';
 import 'package:ta/pages/detailpage/assignmentstab/MarksList.dart';
 import 'package:ta/pages/detailpage/staticstab/StaticsList.dart';
 import 'package:ta/res/Strings.dart';
@@ -47,6 +48,15 @@ class _DetailPageState extends BetterState<DetailPage> {
 //                );
                 setState(() {
                   whatIfMode = !whatIfMode;
+                  if (!whatIfMode) {
+                    var originalCourses = getCourseListOf(currentUser.number);
+                    originalCourses.forEach((originalCourse) {
+                      if (originalCourse.displayName == _course.displayName) {
+                        _course = originalCourse;
+                        return;
+                      }
+                    });
+                  }
                 });
               },
             )

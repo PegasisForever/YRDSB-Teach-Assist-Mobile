@@ -103,20 +103,23 @@ class MarksListTileState extends State<MarksListTile>
       ),
     );
 
-    return InkWell(
-      onTap: () {
-        setState(() {
-          showDetail = !showDetail;
-        });
-      },
-      child: AnimatedCrossFade(
-        firstChild: summary,
-        secondChild: detail,
-        crossFadeState: showDetail ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-        duration: const Duration(milliseconds: 300),
-        firstCurve: Curves.easeInOutCubic,
-        secondCurve: Curves.easeInOutCubic,
-        sizeCurve: Curves.easeInOutCubic,
+    return Container(
+      color: _assignment.edited == true ? Colors.amber.withAlpha(40) : null,
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            showDetail = !showDetail;
+          });
+        },
+        child: AnimatedCrossFade(
+          firstChild: summary,
+          secondChild: detail,
+          crossFadeState: showDetail ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+          duration: const Duration(milliseconds: 300),
+          firstCurve: Curves.easeInOutCubic,
+          secondCurve: Curves.easeInOutCubic,
+          sizeCurve: Curves.easeInOutCubic,
+        ),
       ),
     );
   }

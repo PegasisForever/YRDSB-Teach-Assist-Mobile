@@ -11,11 +11,10 @@ class StaticsList extends StatefulWidget {
   final Course _course;
 
   @override
-  _StaticsListState createState() => _StaticsListState(_course);
+  _StaticsListState createState() => _StaticsListState();
 }
 
 class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClientMixin {
-  final Course _course;
   final Color _Kcolor = const Color(0xffc49000);
   final Color _Tcolor = const Color(0xff388e3c);
   final Color _Ccolor = const Color(0xff3949ab);
@@ -27,14 +26,14 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
   final Color _APcolor = const Color(0xffffb74d);
   final Color _FPcolor = const Color(0xff03a9f4);
 
-  _StaticsListState(this._course);
+  _StaticsListState();
 
   @override
   bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    var _course = widget._course;
     var isLight = isLightMode(context);
     return _course.overallMark != null
         ? ListView(
@@ -72,6 +71,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
   }
 
   List<PieSeries<_PieData, String>> _getPieSeries() {
+    var _course = widget._course;
     final List<_PieData> chartData = <_PieData>[
       _PieData(Strings.get("a"), _course.weightTable.A.CW, _course.weightTable.A.SA, _APcolor),
       _PieData(Strings.get("c"), _course.weightTable.C.CW, _course.weightTable.C.SA, _CPcolor),
@@ -100,6 +100,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
   }
 
   Widget _getTermOverall() {
+    var _course = widget._course;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Column(
@@ -151,6 +152,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
   }
 
   List<SplineSeries<Assignment, String>> _getChartData(String category, bool isLight) {
+    var _course = widget._course;
     ChartValueMapper<Assignment, num> yValueMapper;
     Color color;
     if (category == "knowledge_understanding") {

@@ -41,7 +41,8 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
           SmallMark.unavailable(),
           SmallMark.unavailable(),
           "Untitled Assignment",
-          null);
+          null)
+        ..edited = true;
       _titleController.text = assignment.name;
     }
 
@@ -65,11 +66,16 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                       assignment.name,
                       style: Theme.of(context).textTheme.title,
                     ),
-                    SizedBox(height: 4,),
-                    Text(Strings.get("average:") +
-                        ((avg != null) ? (getRoundString(avg, 1) + "%") : "N/A"),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                        Strings.get("average:") +
+                            ((avg != null) ? (getRoundString(avg, 1) + "%") : "N/A"),
                         style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    SizedBox(height: 4,),
+                    SizedBox(
+                      height: 4,
+                    ),
                     SmallMarkChartDetail(
                       assignment,
                       height: 170,
