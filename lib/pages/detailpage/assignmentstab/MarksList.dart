@@ -1,10 +1,8 @@
-import 'package:declarative_animated_list/declarative_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/whatifpage/EditAssignmentDialog.dart';
-import 'package:ta/res/Strings.dart';
 
 import 'MarksListTile.dart';
 
@@ -26,32 +24,9 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     var whatIfMode = widget._whatIfMode;
     var course = widget._course;
-    return DeclarativeList(
-        items: course.assignments.reversed.toList(),
-        itemBuilder: (context, assi, index, animation) {
-          return SizeTransition(
-              key: Key(assi.hashCode.toString()),
-              axis: Axis.vertical,
-              sizeFactor: animation,
-              child: MarksListTile(
-                assi,
-                course.weightTable,
-              ));
-        },
-        removeBuilder: (context, assi, index, animation) {
-          return SizeTransition(
-              key: Key(assi.hashCode.toString() + "r"),
-              axis: Axis.vertical,
-              sizeFactor: animation,
-              child: MarksListTile(
-                assi,
-                course.weightTable,
-              ));
-        });
-    return course.overallMark != null
-        ? ListView.builder(
-      itemCount: course.assignments.length + 1,
-      itemBuilder: (context, index) {
+    return AnimatedList(
+      initialItemCount: course.assignments.length + 1,
+      itemBuilder: (context, index, animation) {
         if (index == 0) {
           return AnimatedCrossFade(
             key: Key("add-btn"),
@@ -62,12 +37,13 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
                     if (newAssi != null) {
                       course.assignments.add(newAssi);
                       widget._updateCourse(course);
+                      AnimatedList.of(context).insertItem(1);
                     }
                   },
                   icon: Icon(Icons.add),
                   label: Text("New Assignment")),
             ),
-            secondChild: Container(
+            secondChild: SizedBox(
               height: 1,
             ),
             crossFadeState: whatIfMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
@@ -80,18 +56,15 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
 
         var assiIndex = course.assignments.length - index;
         var assi = course.assignments[assiIndex];
-        return MarksListTile(
-          assi,
-          course.weightTable,
-          key: Key(assi.hashCode.toString()),
-        );
+        return SizeTransition(
+            key: Key(assi.hashCode.toString()),
+            axis: Axis.vertical,
+            sizeFactor: animation,
+            child: MarksListTile(
+              assi,
+              course.weightTable,
+            ));
       },
-    )
-        : Center(
-      child: Text(
-        Strings.get("assignments_unavailable"),
-        style: Theme.of(context).textTheme.subhead,
-      ),
     );
   }
 
