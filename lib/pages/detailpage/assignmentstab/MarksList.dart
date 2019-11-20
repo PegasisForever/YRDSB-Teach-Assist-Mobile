@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
+import 'package:ta/pages/detailpage/assignmentstab/TipsCard.dart';
 import 'package:ta/pages/detailpage/whatifpage/EditAssignmentDialog.dart';
+import 'package:ta/res/Strings.dart';
 
 import 'MarksListTile.dart';
 
@@ -25,9 +27,30 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
     var whatIfMode = widget._whatIfMode;
     var course = widget._course;
     return AnimatedList(
-      initialItemCount: course.assignments.length + 1,
+      initialItemCount: course.assignments.length + 2,
       itemBuilder: (context, index, animation) {
         if (index == 0) {
+          return AnimatedCrossFade(
+            key: Key("tip"),
+            firstChild: TipsCard(
+                text: Strings.get("tap_to_view_detail"),
+                onDismiss: () {
+                  setState(() {
+                    showTips = false;
+                    prefs.setBool(
+                        "show_tap_to_view_detail_tip", false);
+                  });
+                }),
+            secondChild: SizedBox(
+              height: 1,
+            ),
+            crossFadeState: showTips ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+            duration: const Duration(milliseconds: 300),
+            firstCurve: Curves.easeInOutCubic,
+            secondCurve: Curves.easeInOutCubic,
+            sizeCurve: Curves.easeInOutCubic,
+          );
+        } else if (index == 1) {
           return AnimatedCrossFade(
             key: Key("add-btn"),
             firstChild: Center(
@@ -54,7 +77,7 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
           );
         }
 
-        var assiIndex = course.assignments.length - index;
+        var assiIndex = course.assignments.length - index + 1;
         var assi = course.assignments[assiIndex];
         return SizeTransition(
             key: Key(assi.hashCode.toString()),
