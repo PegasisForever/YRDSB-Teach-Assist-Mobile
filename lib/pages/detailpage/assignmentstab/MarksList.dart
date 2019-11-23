@@ -99,7 +99,8 @@ class _MarksListState extends State<MarksList>
         builder: (context) {
           return AlertDialog(
             title: Text("Remove Assignment \"${assignment.displayName}\"?"),
-            content: Text("It will be restored after disabling what if mode."),
+            content: assignment.added != true ? Text(
+                "It will be restored after disabling what if mode.") : null,
             actions: <Widget>[
               FlatButton(
                 child: Text("Cancel"),

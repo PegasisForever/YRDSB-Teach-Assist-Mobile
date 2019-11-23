@@ -65,6 +65,7 @@ class Assignment {
   String feedback;
   DateTime time;
   bool edited;
+  bool added;
   bool expanded;
 
   Assignment(this.KU, this.T, this.C, this.A, this.O, this.F, this.name, String date) {

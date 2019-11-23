@@ -43,7 +43,8 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
           SmallMark.unavailable(),
           SmallMark.unavailable(),
           "Untitled Assignment",
-          null);
+          null)
+        ..added = true;
     }
 
     assignment.edited = true;
