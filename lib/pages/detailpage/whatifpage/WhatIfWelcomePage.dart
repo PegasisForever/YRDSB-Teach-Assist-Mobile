@@ -26,8 +26,9 @@ class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
               ),
             ),
             Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: ListView(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shrinkWrap: true,
                 children: <Widget>[
                   Icon(CustomIcons.lightbulb_shine, size: 64, color: Colors.amber),
                   SizedBox(
@@ -35,33 +36,49 @@ class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
                   ),
                   Text(
                     "What If .....",
+                    textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                   ),
-                  SizedBox(height: 12,),
-                  Text("I got a new mark?", style: TextStyle(fontSize: 22)),
-                  SizedBox(height: 6,),
-                  Text("Teacher updated my mark?", style: TextStyle(fontSize: 22)),
-                  SizedBox(height: 150,),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Text("I got a new mark?",
+                      textAlign: TextAlign.center, style: TextStyle(fontSize: 22)),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  Text("Teacher updated my mark?",
+                      textAlign: TextAlign.center, style: TextStyle(fontSize: 22)),
+                  SizedBox(
+                    height: 150,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Text(
                       "In What If Mode, you can edit your assignment without any limitation and see how does it affect your course overall.",
-                      style: TextStyle(fontSize: 16), textAlign: TextAlign.center,),
-                  ),
-                  SizedBox(height: 12,),
-                  FlatButton(
-                    color: Theme
-                        .of(context)
-                        .colorScheme
-                        .primary,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                      child: Text("Enable What If Mode", style: TextStyle(fontSize: 20
-                          , fontWeight: FontWeight.normal, color: Colors.white)),
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.center,
                     ),
-                    onPressed: () {
-                      Navigator.pop(context, true);
-                    },
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Center(
+                    child: FlatButton(
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .primary,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                        child: Text("Enable What If Mode",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.normal, color: Colors.white)),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
+                    ),
                   )
                 ],
               ),
