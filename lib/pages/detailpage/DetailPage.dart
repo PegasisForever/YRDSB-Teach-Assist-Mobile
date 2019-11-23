@@ -44,29 +44,31 @@ class _DetailPageState extends BetterState<DetailPage> {
           actions: <Widget>[
             IconButton(
               icon: Icon(whatIfMode ? CustomIcons.lightbulb_filled : Icons.lightbulb_outline),
-              onPressed: () {
+              onPressed: () async {
                 if (showWhatIfTips) {
-                  Navigator.push(
+                  var isEnableWhatIf = await Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => WhatIfWelcomePage()),
                   );
+                  if (isEnableWhatIf != true) {
+                    return;
+                  }
                   showWhatIfTips = false;
                   prefs.setBool("show_what_if_tip", false);
-                } else {
-                  setState(() {
-                    whatIfMode = !whatIfMode;
-                    if (!whatIfMode) {
-                      var originalCourses = getCourseListOf(currentUser.number);
-                      originalCourses.forEach((originalCourse) {
-                        if (originalCourse.displayName == _course.displayName) {
-                          //course in this detail page
-                          _course = originalCourse;
-                          return;
-                        }
-                      });
-                    }
-                  });
                 }
+                setState(() {
+                  whatIfMode = !whatIfMode;
+                  if (!whatIfMode) {
+                    var originalCourses = getCourseListOf(currentUser.number);
+                    originalCourses.forEach((originalCourse) {
+                      if (originalCourse.displayName == _course.displayName) {
+                        //course in this detail page
+                        _course = originalCourse;
+                        return;
+                      }
+                    });
+                  }
+                });
               },
             )
           ],

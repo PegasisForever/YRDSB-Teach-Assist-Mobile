@@ -37,36 +37,32 @@ class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
                     "What If .....",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                   ),
-                  SizedBox(
-                    height: 150,
+                  SizedBox(height: 12,),
+                  Text("I got a new mark?", style: TextStyle(fontSize: 22)),
+                  SizedBox(height: 6,),
+                  Text("Teacher updated my mark?", style: TextStyle(fontSize: 22)),
+                  SizedBox(height: 150,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Text(
+                      "In What If Mode, you can edit your assignment without any limitation and see how does it affect your course overall.",
+                      style: TextStyle(fontSize: 16), textAlign: TextAlign.center,),
                   ),
-                  FlatButton.icon(
-                    label: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: Text(
-                        "I got a new mark",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal),
-                      ),
+                  SizedBox(height: 12,),
+                  FlatButton(
+                    color: Theme
+                        .of(context)
+                        .colorScheme
+                        .primary,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                      child: Text("Enable What If Mode", style: TextStyle(fontSize: 20
+                          , fontWeight: FontWeight.normal, color: Colors.white)),
                     ),
-                    icon: Icon(Icons.add_to_photos),
-                    onPressed: () {},
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  FlatButton.icon(
-                    label: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: Text(
-                        "Teacher updated my mark",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                    icon: Icon(Icons.edit),
-                    onPressed: () {},
-                  ),
+                    onPressed: () {
+                      Navigator.pop(context, true);
+                    },
+                  )
                 ],
               ),
             )
