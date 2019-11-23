@@ -42,6 +42,7 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
                   });
                 }),
             secondChild: SizedBox(
+              height: 0.5,
               width: double.infinity,
             ),
             crossFadeState: showTips ? CrossFadeState.showFirst : CrossFadeState.showSecond,
@@ -71,6 +72,7 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
               ],
             ),
             secondChild: SizedBox(
+              height: 0.5,
               width: double.infinity,
             ),
             crossFadeState: whatIfMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,

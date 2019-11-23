@@ -57,6 +57,8 @@ class Assignment {
   String feedback;
   DateTime time;
   bool edited;
+  bool expanded;
+
   Assignment(this.KU, this.T, this.C, this.A, this.O, this.F, this.name, String date) {
     if (date != null) {
       this.time = DateTime.parse(date);

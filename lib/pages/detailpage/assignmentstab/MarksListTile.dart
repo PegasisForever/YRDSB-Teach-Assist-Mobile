@@ -11,7 +11,7 @@ class MarksListTile extends StatefulWidget {
   final WeightTable _weights;
   final Key key;
 
-  MarksListTile(this._assignment, this._weights, {this.key}) :super(key: key);
+  MarksListTile(this._assignment, this._weights, {this.key}) : super(key: key);
 
   @override
   MarksListTileState createState() => MarksListTileState(_assignment, _weights);
@@ -104,18 +104,22 @@ class MarksListTileState extends State<MarksListTile>
     );
 
     return Container(
-      color: _assignment.edited == true ? Colors.amber
-          .withAlpha(40) : null,
+      color: _assignment.edited == true ? Colors.amber.withAlpha(40) : null,
       child: InkWell(
         onTap: () {
           setState(() {
-            showDetail = !showDetail;
+            if (_assignment.expanded == true) {
+              _assignment.expanded = false;
+            } else {
+              _assignment.expanded = true;
+            }
           });
         },
         child: AnimatedCrossFade(
           firstChild: summary,
           secondChild: detail,
-          crossFadeState: showDetail ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+          crossFadeState:
+          _assignment.expanded == true ? CrossFadeState.showSecond : CrossFadeState.showFirst,
           duration: const Duration(milliseconds: 300),
           firstCurve: Curves.easeInOutCubic,
           secondCurve: Curves.easeInOutCubic,
