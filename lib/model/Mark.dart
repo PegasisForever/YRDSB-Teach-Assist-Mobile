@@ -153,13 +153,11 @@ class Assignment {
         name == other.name &&
         feedback == other.feedback &&
         time == other.time &&
-        edited == other.edited &&
-        added == other.added;
+        edited == other.edited;
   }
 
   @override
-  int get hashCode =>
-      hash2(hash4(hash4(hash4(name, feedback, time, edited), KU, T, C), A, O, F), added);
+  int get hashCode => hash4(hash4(hash4(name, feedback, time, edited), KU, T, C), A, O, F);
 }
 
 class Weight {
