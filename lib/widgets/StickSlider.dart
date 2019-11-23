@@ -6,7 +6,7 @@ import 'package:ta/tools.dart';
 class StickSlider extends StatefulWidget {
   final double speed;
   final ValueChanged<double> onDelta;
-  bool enabled;
+  final bool enabled;
 
   StickSlider({this.speed = 1, this.onDelta, this.enabled = true});
 
@@ -16,6 +16,7 @@ class StickSlider extends StatefulWidget {
 
 class _StickSliderState extends State<StickSlider> {
   static ThemeData _themeData;
+  static ThemeData _darkThemeData;
   double _stickValue;
   Timer _timer;
 
@@ -33,10 +34,28 @@ class _StickSliderState extends State<StickSlider> {
   @override
   Widget build(BuildContext context) {
     if (_themeData == null) {
+      _darkThemeData = Theme.of(context).copyWith(
+          sliderTheme: SliderThemeData(
+              disabledActiveTrackColor: Colors.grey[500],
+              disabledInactiveTrackColor: Colors.grey[500],
+              disabledThumbColor: Colors.grey[600],
+              activeTrackColor: Theme
+                  .of(context)
+                  .colorScheme
+                  .secondary,
+              inactiveTrackColor: Theme
+                  .of(context)
+                  .colorScheme
+                  .secondary,
+              thumbColor: Theme
+                  .of(context)
+                  .colorScheme
+                  .primary));
       _themeData = Theme.of(context).copyWith(
           sliderTheme: SliderThemeData(
-              disabledActiveTrackColor: Colors.grey,
-              disabledInactiveTrackColor: Colors.grey,
+              disabledActiveTrackColor: Colors.grey[400],
+              disabledInactiveTrackColor: Colors.grey[400],
+              disabledThumbColor: Colors.grey[500],
               activeTrackColor: Theme
                   .of(context)
                   .colorScheme
@@ -52,7 +71,7 @@ class _StickSliderState extends State<StickSlider> {
     }
 
     return Theme(
-      data: _themeData,
+      data: isLightMode(context) ? _themeData : _darkThemeData,
       child: Slider(
         value: _stickValue != null ? _stickValue : 0,
         min: -1,
@@ -85,13 +104,13 @@ class _StickSliderState extends State<StickSlider> {
 }
 
 class StickSliderTile extends StatefulWidget {
-  String label;
-  double labelWidth;
-  double max;
-  double min;
-  double value;
-  ValueChanged<double> onChanged;
-  bool enabled;
+  final String label;
+  final double labelWidth;
+  final double max;
+  final double min;
+  final double value;
+  final ValueChanged<double> onChanged;
+  final bool enabled;
 
   StickSliderTile({this.labelWidth,
     this.label,
@@ -159,6 +178,7 @@ class _StickSliderTileState extends State<StickSliderTile> {
             width: 100,
             child: StickSlider(
               enabled: widget.enabled,
+              speed: cap((widget.max - widget.min) / 120, 0.3, 1),
               onDelta: (d) {
                 _value += d;
                 if (_value < widget.min) {

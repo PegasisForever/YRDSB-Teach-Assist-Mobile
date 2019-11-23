@@ -142,7 +142,7 @@ class _SmallMarkAdvancedEditState extends State<_SmallMarkAdvancedEdit> {
           enabled: mark.available,
           value: mark.total,
           min: mark.get ?? 0,
-          max: 500,
+          max: 100,
           label: "Total",
           labelWidth: 60,
           onChanged: (value) {
@@ -156,7 +156,7 @@ class _SmallMarkAdvancedEditState extends State<_SmallMarkAdvancedEdit> {
           enabled: mark.available,
           value: mark.weight,
           min: 0,
-          max: 100,
+          max: 50,
           label: "Weight",
           labelWidth: 60,
           onChanged: (value) {

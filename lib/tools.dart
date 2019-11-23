@@ -106,3 +106,13 @@ bool isAndroid() {
 double powWithSign(double a, double b) {
   return pow(a, b) * ((a < 0) ? -1 : 1);
 }
+
+double cap(double number, double min, double max) {
+  if (number > max) {
+    return max;
+  } else if (number < min) {
+    return min;
+  } else {
+    return number;
+  }
+}

@@ -50,6 +50,7 @@ class SimpleEditState extends State<SimpleEdit> {
           enabled: available,
           value: avgWeight ?? 0,
           min: 0,
+          max: 50,
           label: "Weight",
           labelWidth: 60,
           onChanged: (value) {
