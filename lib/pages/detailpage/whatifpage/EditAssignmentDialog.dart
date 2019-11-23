@@ -22,11 +22,13 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
   Assignment assignment;
   var isAdvanced = false;
   var _titleController = TextEditingController();
+  bool isAdd;
 
   @override
   void initState() {
     super.initState();
-    assignment = widget.assignment;
+    assignment = widget.assignment?.copy();
+    isAdd = assignment == null;
   }
 
   @override
@@ -41,10 +43,11 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
           SmallMark.unavailable(),
           SmallMark.unavailable(),
           "Untitled Assignment",
-          null)
-        ..edited = true;
-      _titleController.text = assignment.name;
+          null);
     }
+
+    assignment.edited = true;
+    _titleController.text = assignment.name;
 
     var avg = assignment.getAverage(course.weightTable);
 
@@ -158,7 +161,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                             .colorScheme
                             .primary,
                         child: Text(
-                          "Add",
+                          isAdd ? "Add" : "Save",
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () {

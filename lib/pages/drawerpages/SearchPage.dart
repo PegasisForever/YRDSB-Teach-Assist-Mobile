@@ -95,6 +95,7 @@ class AssignmentSearchDelegate extends SearchDelegate {
             matchedItems.add(MarksListTile(
               assignment,
               course.weightTable,
+              false,
               key: Key(assignment.hashCode.toString()),
             ));
             matchedItems.add(Divider());

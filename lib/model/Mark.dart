@@ -32,6 +32,14 @@ class SmallMark {
 
   SmallMark.blank();
 
+  SmallMark copy() =>
+      SmallMark.blank()
+        ..available = available
+        ..finished = finished
+        ..total = total
+        ..get = get
+        ..weight = weight;
+
   @override
   bool operator ==(other) {
     return (other is SmallMark) &&
@@ -143,6 +151,20 @@ class Assignment {
     return KU.available || T.available || C.available || A.available || O.available;
   }
 
+  Assignment copy() =>
+      Assignment.blank()
+        ..KU = KU.copy()
+        ..T = T.copy()
+        ..C = C.copy()
+        ..A = A.copy()
+        ..O = O.copy()
+        ..F = F.copy()
+        ..name = name
+        ..feedback = feedback
+        ..time = time
+        ..edited = edited
+        ..expanded = expanded;
+
   @override
   bool operator ==(other) {
     return (other is Assignment) &&
@@ -173,6 +195,12 @@ class Weight {
 
   Weight.blank();
 
+  Weight copy() =>
+      Weight.blank()
+        ..W = W
+        ..CW = CW
+        ..SA = SA;
+
   @override
   bool operator ==(other) {
     return (other is Weight) && W == other.W && CW == other.CW && SA == other.SA;
@@ -191,6 +219,15 @@ class WeightTable {
   Weight F;
 
   WeightTable.blank();
+
+  WeightTable copy() =>
+      WeightTable.blank()
+        ..KU = KU.copy()
+        ..T = T.copy()
+        ..C = C.copy()
+        ..A = A.copy()
+        ..O = O.copy()
+        ..F = F.copy();
 
   @override
   bool operator ==(other) {

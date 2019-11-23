@@ -35,6 +35,8 @@ class _StickSliderState extends State<StickSlider> {
     if (_themeData == null) {
       _themeData = Theme.of(context).copyWith(
           sliderTheme: SliderThemeData(
+              disabledActiveTrackColor: Colors.grey,
+              disabledInactiveTrackColor: Colors.grey,
               activeTrackColor: Theme
                   .of(context)
                   .colorScheme

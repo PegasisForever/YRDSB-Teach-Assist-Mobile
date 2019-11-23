@@ -30,7 +30,6 @@ class AdvancedEditState extends State<AdvancedEdit> {
             Tab(text: Strings.get("o")),
           ],
         ),
-
         SizedBox(
           height: 192,
           child: TabBarView(

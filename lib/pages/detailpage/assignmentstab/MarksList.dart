@@ -57,14 +57,7 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
               children: <Widget>[
                 Center(
                   child: FlatButton.icon(
-                      onPressed: () async {
-                        var newAssi = await showAddAssignment(context, course);
-                        if (newAssi != null) {
-                          course.assignments.add(newAssi);
-                          widget._updateCourse(course);
-                          AnimatedList.of(context).insertItem(1);
-                        }
-                      },
+                      onPressed: () => addAssignment(context),
                       icon: Icon(Icons.add),
                       label: Text("New Assignment")),
                 ),
@@ -87,17 +80,67 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
         return MarksListTile(
           assignment,
           course.weightTable,
+          whatIfMode,
+          editAssignment: editAssignment,
+          removeAssignment: removeAssignment,
         );
       },
     );
   }
 
-  Future<Assignment> showAddAssignment(BuildContext context, Course course,
-      {Assignment assignment}) async {
-    return await showDialog<Assignment>(
+  removeAssignment(Assignment assignment) async {
+    await showDialog<Assignment>(
         context: context,
         builder: (context) {
-          return EditAssignmentDialog(course: course, assignment: assignment);
+          return AlertDialog(
+            title: Text("Remove Assignment \"${assignment.displayName}\"?"),
+            content: Text("It will be restored after disabling what if mode."),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Cancel"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              FlatButton(
+                child: Text("Remove"),
+                onPressed: () {
+                  widget._course.assignments.remove(assignment);
+                  widget._updateCourse(widget._course);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
         });
+  }
+
+  editAssignment(BuildContext context, Assignment assignment) async {
+    var index = widget._course.assignments.indexOf(assignment);
+    var newAssignment = await showDialog<Assignment>(
+        context: context,
+        builder: (context) {
+          return EditAssignmentDialog(
+            course: widget._course,
+            assignment: assignment,
+          );
+        });
+    if (newAssignment != null) {
+      widget._course.assignments.removeAt(index);
+      widget._course.assignments.insert(index, newAssignment);
+      widget._updateCourse(widget._course);
+    }
+  }
+
+  addAssignment(BuildContext context) async {
+    var newAssignment = await showDialog<Assignment>(
+        context: context,
+        builder: (context) {
+          return EditAssignmentDialog(course: widget._course);
+        });
+    if (newAssignment != null) {
+      widget._course.assignments.add(newAssignment);
+      widget._updateCourse(widget._course);
+    }
   }
 }

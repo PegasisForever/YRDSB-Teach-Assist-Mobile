@@ -10,8 +10,13 @@ class MarksListTile extends StatefulWidget {
   final Assignment _assignment;
   final WeightTable _weights;
   final Key key;
+  final bool whatIfMode;
+  final Function editAssignment;
+  final Function removeAssignment;
 
-  MarksListTile(this._assignment, this._weights, {this.key}) : super(key: key);
+  MarksListTile(this._assignment, this._weights, this.whatIfMode,
+      {this.key, this.editAssignment, this.removeAssignment})
+      : super(key: key);
 
   @override
   MarksListTileState createState() => MarksListTileState(_assignment, _weights);
@@ -73,10 +78,44 @@ class MarksListTileState extends State<MarksListTile>
       ),
     );
     var detail = Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: Column(
         key: Key("detail"),
         children: <Widget>[
+          AnimatedCrossFade(
+            firstChild: SizedBox(
+              height: 16,
+              width: double.infinity,
+            ),
+            secondChild: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FlatButton.icon(
+                  label: Text("Edit"),
+                  icon: Icon(Icons.edit),
+                  textColor: isLightMode(context) ? Colors.grey[700] : Colors.grey[300],
+                  onPressed: () {
+                    widget.editAssignment(context, _assignment);
+                  },
+                ),
+                SizedBox(width: 24,),
+                FlatButton.icon(
+                  label: Text("Delete"),
+                  icon: Icon(Icons.delete),
+                  textColor: isLightMode(context) ? Colors.grey[700] : Colors.grey[300],
+                  onPressed: () {
+                    widget.removeAssignment(_assignment);
+                  },
+                ),
+              ],
+            ),
+            crossFadeState:
+            widget.whatIfMode == true ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 300),
+            firstCurve: Curves.easeInOutCubic,
+            secondCurve: Curves.easeInOutCubic,
+            sizeCurve: Curves.easeInOutCubic,
+          ),
           Text(
             _assignment.displayName,
             style: Theme.of(context).textTheme.title,
