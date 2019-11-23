@@ -20,11 +20,16 @@ class MarksList extends StatefulWidget {
   _MarksListState createState() => _MarksListState();
 }
 
-class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
+class _MarksListState extends State<MarksList>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   var showTips = prefs.getBool("show_tap_to_view_detail_tip") ?? true;
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     var whatIfMode = widget._whatIfMode;
     var course = widget._course;
     return BetterAnimatedList(

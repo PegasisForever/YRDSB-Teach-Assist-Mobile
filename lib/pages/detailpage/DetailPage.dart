@@ -106,7 +106,7 @@ class _DetailPageState extends BetterState<DetailPage> {
               child: TabBarView(
                 children: [
                   MarksList(_course, whatIfMode, updateCourse),
-                  StaticsList(_course),
+                  StaticsList(_course, whatIfMode),
                   AboutTab(_course),
                 ],
               ),

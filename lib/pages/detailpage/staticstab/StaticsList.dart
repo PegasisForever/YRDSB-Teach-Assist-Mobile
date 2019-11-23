@@ -3,12 +3,14 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
+import 'package:ta/widgets/CrossFade.dart';
 import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
 
 class StaticsList extends StatefulWidget {
-  StaticsList(this._course);
+  StaticsList(this._course, this._whatIfMode);
 
   final Course _course;
+  final bool _whatIfMode;
 
   @override
   _StaticsListState createState() => _StaticsListState();
@@ -33,31 +35,32 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var _course = widget._course;
     var isLight = isLightMode(context);
     return _course.overallMark != null
         ? ListView(
-            children: <Widget>[
-              _getTermOverall(),
-              _getChart("overall", isLight),
-              Divider(),
-              _getPieChart(),
-              Divider(),
-              _getChart("knowledge_understanding", isLight),
-              Divider(),
-              _getChart("thinking", isLight),
-              Divider(),
-              _getChart("communication", isLight),
-              Divider(),
-              _getChart("application", isLight),
-            ],
-          )
+      children: <Widget>[
+        _getTermOverall(),
+        _getChart("overall", isLight),
+        Divider(),
+        _getPieChart(),
+        Divider(),
+        _getChart("knowledge_understanding", isLight),
+        Divider(),
+        _getChart("thinking", isLight),
+        Divider(),
+        _getChart("communication", isLight),
+        Divider(),
+        _getChart("application", isLight),
+      ],
+    )
         : Center(
-            child: Text(
-              Strings.get("statistics_unavailable"),
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          );
+      child: Text(
+        Strings.get("statistics_unavailable"),
+        style: Theme.of(context).textTheme.subhead,
+      ),
+    );
   }
 
   Widget _getPieChart() {
@@ -72,12 +75,26 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
 
   List<PieSeries<_PieData, String>> _getPieSeries() {
     var _course = widget._course;
-    final List<_PieData> chartData = <_PieData>[
-      _PieData(Strings.get("a"), _course.weightTable.A.CW, _course.weightTable.A.SA, _APcolor),
-      _PieData(Strings.get("c"), _course.weightTable.C.CW, _course.weightTable.C.SA, _CPcolor),
-      _PieData(Strings.get("t"), _course.weightTable.T.CW, _course.weightTable.T.SA, _TPcolor),
-      _PieData(Strings.get("ku"), _course.weightTable.KU.CW, _course.weightTable.KU.SA, _KPcolor),
-      _PieData(Strings.get("f"), _course.weightTable.F.CW, _course.weightTable.F.SA, _FPcolor),
+    var analysis = widget._whatIfMode ? _course.getCourseAnalysis() : null;
+    final List<_PieData> chartData = widget._whatIfMode
+        ? [
+      _PieData(Strings.get("a"), _course.weightTable.A.CW, analysis.aSA, _APcolor),
+      _PieData(Strings.get("c"), _course.weightTable.C.CW, analysis.cSA, _CPcolor),
+      _PieData(Strings.get("t"), _course.weightTable.T.CW, analysis.tSA, _TPcolor),
+      _PieData(Strings.get("ku"), _course.weightTable.KU.CW, analysis.kuSA, _KPcolor),
+      _PieData(Strings.get("f"), _course.weightTable.F.CW, analysis.fSA, _FPcolor),
+    ]
+        : [
+      _PieData(
+          Strings.get("a"), _course.weightTable.A.CW, _course.weightTable.A.SA, _APcolor),
+      _PieData(
+          Strings.get("c"), _course.weightTable.C.CW, _course.weightTable.C.SA, _CPcolor),
+      _PieData(
+          Strings.get("t"), _course.weightTable.T.CW, _course.weightTable.T.SA, _TPcolor),
+      _PieData(
+          Strings.get("ku"), _course.weightTable.KU.CW, _course.weightTable.KU.SA, _KPcolor),
+      _PieData(
+          Strings.get("f"), _course.weightTable.F.CW, _course.weightTable.F.SA, _FPcolor),
     ];
     return <PieSeries<_PieData, String>>[
       PieSeries<_PieData, String>(
@@ -88,7 +105,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
           xValueMapper: (data, _) => data.name,
           yValueMapper: (data, _) => data.weight,
           enableSmartLabels: false,
-          dataLabelMapper: (data, _) => data.name + "\n" + getRoundString(data.get, 2) + "%",
+          dataLabelMapper: (data, _) => data.name + "\n" + getRoundString(data.get, 1) + "%",
           startAngle: 90,
           endAngle: 90,
           pointRadiusMapper: (data, _) => ((data.get) * 0.7 + 20).toString() + "%",
@@ -101,6 +118,10 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
 
   Widget _getTermOverall() {
     var _course = widget._course;
+    var newOverall = _course
+        .getCourseAnalysis()
+        .overallList
+        .last;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Column(
@@ -109,14 +130,64 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
             Strings.get("overall"),
             style: Theme.of(context).textTheme.title,
           ),
-          Text(
-            getRoundString(_course.overallMark, 2) + "%",
-            style: TextStyle(fontSize: 60),
+          CrossFade(
+            showFirst: !widget._whatIfMode,
+            firstChild: Center(
+              child: Text(
+                getRoundString(_course.overallMark, 2) + "%",
+                style: TextStyle(fontSize: 60),
+              ),
+            ),
+            secondChild: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  getRoundString(_course.overallMark, 1) + "%",
+                  style: TextStyle(fontSize: 45),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Icon(Icons.arrow_forward, size: 32),
+                ),
+                Text(
+                  getRoundString(newOverall, 1) + "%",
+                  style: TextStyle(fontSize: 45),
+                ),
+              ],
+            ),
           ),
-          LPI.LinearProgressIndicator(
+          widget._whatIfMode
+              ? (_course.overallMark > newOverall
+              ? LPI.LinearProgressIndicator(
+            key: Key("a"),
+            lineHeight: 20.0,
+            value1: newOverall / 100,
+            value2: _course.overallMark / 100,
+            value1Color: Theme
+                .of(context)
+                .colorScheme
+                .primary,
+            value2Color: Colors.red[400],
+          )
+              : LPI.LinearProgressIndicator(
+            key: Key("b"),
             lineHeight: 20.0,
             value1: _course.overallMark / 100,
-            value1Color: Theme.of(context).colorScheme.primary,
+            value2: newOverall / 100,
+            value1Color: Theme
+                .of(context)
+                .colorScheme
+                .primary,
+            value2Color: Colors.green,
+          ))
+              : LPI.LinearProgressIndicator(
+            key: Key("c"),
+            lineHeight: 20.0,
+            value1: _course.overallMark / 100,
+            value1Color: Theme
+                .of(context)
+                .colorScheme
+                .primary,
           )
         ],
       ),
@@ -176,63 +247,11 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
           : null;
       color = isLight ? _Acolor : _APcolor;
     } else if (category == "overall") {
+      var overallList = _course
+          .getCourseAnalysis()
+          .overallList;
       yValueMapper = (_, index) {
-        var K = 0.0;
-        var Kn = 0.0;
-        var T = 0.0;
-        var Tn = 0.0;
-        var C = 0.0;
-        var Cn = 0.0;
-        var A = 0.0;
-        var An = 0.0;
-        for (var i = 0; i < index + 1; i++) {
-          var assi = _course.assignments[i];
-          if (assi.KU.available && assi.KU.finished) {
-            K += assi.KU.get * assi.KU.weight;
-            Kn += assi.KU.total * assi.KU.weight;
-          }
-          if (assi.T.available && assi.T.finished) {
-            T += assi.T.get * assi.T.weight;
-            Tn += assi.T.total * assi.T.weight;
-          }
-          if (assi.C.available && assi.C.finished) {
-            C += assi.C.get * assi.C.weight;
-            Cn += assi.C.total * assi.C.weight;
-          }
-          if (assi.A.available && assi.A.finished) {
-            A += assi.A.get * assi.A.weight;
-            An += assi.A.total * assi.A.weight;
-          }
-        }
-        var Ka = K / Kn;
-        var Ta = T / Tn;
-        var Ca = C / Cn;
-        var Aa = A / An;
-
-        var avg = 0.0;
-        var avgn = 0.0;
-        if (Ka >= 0.0) {
-          avg += Ka * _course.weightTable.KU.W;
-          avgn += _course.weightTable.KU.W;
-        }
-        if (Ta >= 0.0) {
-          avg += Ta * _course.weightTable.T.W;
-          avgn += _course.weightTable.T.W;
-        }
-        if (Ca >= 0.0) {
-          avg += Ca * _course.weightTable.C.W;
-          avgn += _course.weightTable.C.W;
-        }
-        if (Aa >= 0.0) {
-          avg += Aa * _course.weightTable.A.W;
-          avgn += _course.weightTable.A.W;
-        }
-
-        if (avgn>0.0){
-          return avg / avgn * 100;
-        }else{
-          return null;
-        }
+        return overallList[index];
       };
       color = _FPcolor;
     }

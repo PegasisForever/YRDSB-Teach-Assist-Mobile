@@ -268,6 +268,91 @@ class Course {
 
   Course.blank();
 
+  CourseAnalysis getCourseAnalysis() {
+    var analysis = CourseAnalysis.blank();
+
+    var i = 0;
+    var K = 0.0;
+    var Kn = 0.0;
+    var T = 0.0;
+    var Tn = 0.0;
+    var C = 0.0;
+    var Cn = 0.0;
+    var A = 0.0;
+    var An = 0.0;
+    var O = 0.0;
+    var On = 0.0;
+
+    assignments.forEach((assi) {
+      if (assi.KU.available && assi.KU.finished) {
+        K += assi.KU.get * assi.KU.weight;
+        Kn += assi.KU.total * assi.KU.weight;
+      }
+      if (assi.T.available && assi.T.finished) {
+        T += assi.T.get * assi.T.weight;
+        Tn += assi.T.total * assi.T.weight;
+      }
+      if (assi.C.available && assi.C.finished) {
+        C += assi.C.get * assi.C.weight;
+        Cn += assi.C.total * assi.C.weight;
+      }
+      if (assi.A.available && assi.A.finished) {
+        A += assi.A.get * assi.A.weight;
+        An += assi.A.total * assi.A.weight;
+      }
+      if (assi.O.available && assi.O.finished) {
+        O += assi.O.get * assi.O.weight;
+        On += assi.O.total * assi.O.weight;
+      }
+
+      var Ka = K / Kn;
+      var Ta = T / Tn;
+      var Ca = C / Cn;
+      var Aa = A / An;
+      var Oa = O / On;
+      var avg = 0.0;
+      var avgn = 0.0;
+      if (Ka >= 0.0) {
+        avg += Ka * weightTable.KU.W;
+        avgn += weightTable.KU.W;
+      }
+      if (Ta >= 0.0) {
+        avg += Ta * weightTable.T.W;
+        avgn += weightTable.T.W;
+      }
+      if (Ca >= 0.0) {
+        avg += Ca * weightTable.C.W;
+        avgn += weightTable.C.W;
+      }
+      if (Aa >= 0.0) {
+        avg += Aa * weightTable.A.W;
+        avgn += weightTable.A.W;
+      }
+      if (Oa >= 0.0) {
+        avg += Oa * weightTable.O.W;
+        avgn += weightTable.O.W;
+      }
+
+      if (i == assignments.length - 1) {
+        analysis.kuSA = Ka >= 0 ? Ka * 100 : 0;
+        analysis.tSA = Ta >= 0 ? Ta * 100 : 0;
+        analysis.cSA = Ca >= 0 ? Ca * 100 : 0;
+        analysis.aSA = Aa >= 0 ? Aa * 100 : 0;
+        analysis.oSA = Oa >= 0 ? Oa * 100 : 0;
+        analysis.fSA = 0;
+      }
+      if (avgn > 0.0) {
+        analysis.overallList.add(avg / avgn * 100);
+      } else {
+        analysis.overallList.add(null);
+      }
+
+      i++;
+    });
+
+    return analysis;
+  }
+
   @override
   bool operator ==(other) {
     return (other is Course) &&
@@ -291,6 +376,18 @@ class Course {
           room,
           overallMark,
           cached);
+}
+
+class CourseAnalysis {
+  var overallList = List<double>();
+  double kuSA;
+  double tSA;
+  double cSA;
+  double aSA;
+  double oSA;
+  double fSA;
+
+  CourseAnalysis.blank();
 }
 
 List<Course> getCourseListOf(String number) {

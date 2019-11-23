@@ -20,7 +20,8 @@ class LinearProgressIndicator extends StatefulWidget {
       this.text,
       this.animationDuration = 0,
       this.lineHeight,
-      this.center});
+        this.center,
+        key}) :super(key: key);
 
   @override
   _LinearProgressIndicatorState createState() => _LinearProgressIndicatorState();
