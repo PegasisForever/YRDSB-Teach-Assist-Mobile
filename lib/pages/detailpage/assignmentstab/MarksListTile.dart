@@ -104,7 +104,8 @@ class MarksListTileState extends State<MarksListTile>
     );
 
     return Container(
-      color: _assignment.edited == true ? Colors.amber.withAlpha(40) : null,
+      color: _assignment.edited == true ? Colors.amber
+          .withAlpha(40) : null,
       child: InkWell(
         onTap: () {
           setState(() {

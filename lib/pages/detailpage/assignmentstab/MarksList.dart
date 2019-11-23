@@ -5,6 +5,7 @@ import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/TipsCard.dart';
 import 'package:ta/pages/detailpage/whatifpage/EditAssignmentDialog.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/widgets/BetterAnimatedList.dart';
 
 import 'MarksListTile.dart';
 
@@ -26,11 +27,11 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     var whatIfMode = widget._whatIfMode;
     var course = widget._course;
-    return AnimatedList(
-      initialItemCount: course.assignments.length + 2,
-      itemBuilder: (context, index, animation) {
-        if (index == 0) {
-          return AnimatedCrossFade(
+    return BetterAnimatedList(
+      list: course.assignments.reversed.toList(),
+      header: Column(
+        children: <Widget>[
+          AnimatedCrossFade(
             key: Key("tip"),
             firstChild: TipsCard(
                 text: Strings.get("tap_to_view_detail"),
@@ -40,15 +41,16 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
                     prefs.setBool("show_tap_to_view_detail_tip", false);
                   });
                 }),
-            secondChild: SizedBox(),
+            secondChild: SizedBox(
+              width: double.infinity,
+            ),
             crossFadeState: showTips ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             duration: const Duration(milliseconds: 300),
             firstCurve: Curves.easeInOutCubic,
             secondCurve: Curves.easeInOutCubic,
             sizeCurve: Curves.easeInOutCubic,
-          );
-        } else if (index == 1) {
-          return AnimatedCrossFade(
+          ),
+          AnimatedCrossFade(
             key: Key("add-btn"),
             firstChild: Column(
               children: <Widget>[
@@ -68,30 +70,22 @@ class _MarksListState extends State<MarksList> with TickerProviderStateMixin {
                 Divider()
               ],
             ),
-            secondChild: SizedBox(),
+            secondChild: SizedBox(
+              width: double.infinity,
+            ),
             crossFadeState: whatIfMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             duration: const Duration(milliseconds: 300),
             firstCurve: Curves.easeInOutCubic,
             secondCurve: Curves.easeInOutCubic,
             sizeCurve: Curves.easeInOutCubic,
-          );
-        }
-
-        var assiIndex = course.assignments.length - index + 1;
-        var assi = course.assignments[assiIndex];
-        return SizeTransition(
-            key: Key(assi.hashCode.toString()),
-            axis: Axis.vertical,
-            sizeFactor: animation,
-            child: Column(
-              children: <Widget>[
-                MarksListTile(
-                  assi,
-                  course.weightTable,
-                ),
-                if (assiIndex != 0) Divider()
-              ],
-            ));
+          )
+        ],
+      ),
+      itemBuilder: (context, assignment) {
+        return MarksListTile(
+          assignment,
+          course.weightTable,
+        );
       },
     );
   }

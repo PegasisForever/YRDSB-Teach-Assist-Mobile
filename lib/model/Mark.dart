@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:quiver/core.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/prasers/ParsersCollection.dart';
 import 'package:ta/res/Strings.dart';
@@ -30,6 +31,19 @@ class SmallMark {
   }
 
   SmallMark.blank();
+
+  @override
+  bool operator ==(other) {
+    return (other is SmallMark) &&
+        available == other.available &&
+        finished == other.finished &&
+        total == other.total &&
+        get == other.get &&
+        weight == other.weight;
+  }
+
+  @override
+  int get hashCode => hash4(available, finished, weight, hash2(total, get));
 }
 
 class Assignment {
@@ -43,7 +57,6 @@ class Assignment {
   String feedback;
   DateTime time;
   bool edited;
-
   Assignment(this.KU, this.T, this.C, this.A, this.O, this.F, this.name, String date) {
     if (date != null) {
       this.time = DateTime.parse(date);
@@ -127,6 +140,26 @@ class Assignment {
   bool isAvailable() {
     return KU.available || T.available || C.available || A.available || O.available;
   }
+
+  @override
+  bool operator ==(other) {
+    return (other is Assignment) &&
+        KU == other.KU &&
+        T == other.T &&
+        C == other.C &&
+        A == other.A &&
+        O == other.O &&
+        F == other.F &&
+        name == other.name &&
+        feedback == other.feedback &&
+        time == other.time &&
+        edited == other.edited &&
+        added == other.added;
+  }
+
+  @override
+  int get hashCode =>
+      hash2(hash4(hash4(hash4(name, feedback, time, edited), KU, T, C), A, O, F), added);
 }
 
 class Weight {
@@ -139,6 +172,14 @@ class Weight {
   Weight.f(this.CW, this.SA);
 
   Weight.blank();
+
+  @override
+  bool operator ==(other) {
+    return (other is Weight) && W == other.W && CW == other.CW && SA == other.SA;
+  }
+
+  @override
+  int get hashCode => hash3(W, CW, SA);
 }
 
 class WeightTable {
@@ -150,6 +191,20 @@ class WeightTable {
   Weight F;
 
   WeightTable.blank();
+
+  @override
+  bool operator ==(other) {
+    return (other is WeightTable) &&
+        KU == other.KU &&
+        T == other.T &&
+        C == other.C &&
+        A == other.A &&
+        O == other.O &&
+        F == other.F;
+  }
+
+  @override
+  int get hashCode => hash3(hash4(KU, T, C, A), O, F);
 }
 
 class Course {
@@ -175,6 +230,30 @@ class Course {
   }
 
   Course.blank();
+
+  @override
+  bool operator ==(other) {
+    return (other is Course) &&
+        hashObjects(assignments) == hashObjects(other.assignments) &&
+        weightTable == other.weightTable &&
+        startTime == other.startTime &&
+        endTime == other.endTime &&
+        name == other.name &&
+        code == other.code &&
+        block == other.block &&
+        room == other.room &&
+        overallMark == other.overallMark &&
+        cached == cached;
+  }
+
+  @override
+  int get hashCode =>
+      hash4(
+          hash4(
+              hash4(hashObjects(assignments), weightTable, startTime, endTime), name, code, block),
+          room,
+          overallMark,
+          cached);
 }
 
 List<Course> getCourseListOf(String number) {
