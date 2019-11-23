@@ -71,7 +71,7 @@ class _SmallMarkChartPainter extends CustomPainter {
             textDirection: TextDirection.ltr,
             textAlign: TextAlign.center)
           ..layout(maxWidth: width, minWidth: width)
-          ..paint(canvas, Offset(x, (height - 32) * (1 - mark / 100) - 2));
+          ..paint(canvas, Offset(x, (height - 40) * (1 - mark / 100) - 2));
       } else {
         TextPainter(
             text: TextSpan(
