@@ -5,6 +5,7 @@ import 'package:ta/packageinfo.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatefulWidget {
@@ -24,9 +25,12 @@ class _AboutPageState extends BetterState<AboutPage> {
           shrinkWrap: true,
           padding: EdgeInsets.symmetric(horizontal: 24),
           children: <Widget>[
-            Image.asset(
-              "assets/images/app_logo.png",
+            FadeInImage(
+              placeholder: MemoryImage(kTransparentImage),
+              image: AssetImage("assets/images/app_logo.png"),
               height: 130,
+              width: 130,
+              fadeInDuration: const Duration(milliseconds: 100),
             ),
             Center(
               child: Text(
