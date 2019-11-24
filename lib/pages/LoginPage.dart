@@ -109,6 +109,7 @@ class _LoginPageState extends BetterState<LoginPage> {
                         ),
                         onPressed: !_isLoading
                             ? () {
+                          FocusScope.of(context).unfocus();
                           _startLogin(context);
                         }
                             : null,

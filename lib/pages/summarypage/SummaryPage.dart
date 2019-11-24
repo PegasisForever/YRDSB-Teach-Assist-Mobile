@@ -41,6 +41,7 @@ class _SummaryPageState extends BetterState<SummaryPage>
 
     return DefaultTabController(
       length: 2,
+      initialIndex: Config.firstPage,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
