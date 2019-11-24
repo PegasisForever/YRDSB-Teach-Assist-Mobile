@@ -44,7 +44,8 @@ class _AboutPageState extends BetterState<AboutPage> {
             Center(
               child: Text(
                 packageInfo.version,
-                style: TextStyle(color: isLightMode(context) ? Colors.grey[600] : Colors.grey[400]),
+                style: TextStyle(
+                    color: isLightMode(context: context) ? Colors.grey[600] : Colors.grey[400]),
               ),
             ),
             SizedBox(

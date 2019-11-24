@@ -71,7 +71,7 @@ class _StickSliderState extends State<StickSlider> {
     }
 
     return Theme(
-      data: isLightMode(context) ? _themeData : _darkThemeData,
+      data: isLightMode(context: context) ? _themeData : _darkThemeData,
       child: Slider(
         value: _stickValue != null ? _stickValue : 0,
         min: -1,

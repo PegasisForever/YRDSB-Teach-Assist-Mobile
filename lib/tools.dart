@@ -86,13 +86,18 @@ void updateNavigationBarBrightness({BuildContext context}) {
   }
 }
 
+bool isLightMode({BuildContext context}) {
+  if (context != null) {
+    currentBrightness = MediaQuery
+        .of(context)
+        .platformBrightness;
+  }
+  return currentBrightness == Brightness.light;
+}
+
 SystemUiOverlayStyle getSystemUiOverlayStyle(BuildContext context) {
   var brightness = MediaQuery.of(context).platformBrightness;
   return brightness == Brightness.light ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark;
-}
-
-bool isLightMode(BuildContext context) {
-  return MediaQuery.of(context).platformBrightness == Brightness.light;
 }
 
 bool isSameDay(DateTime d1, DateTime d2) {

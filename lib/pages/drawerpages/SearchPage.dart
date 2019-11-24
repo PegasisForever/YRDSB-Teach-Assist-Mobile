@@ -15,7 +15,7 @@ class AssignmentSearchDelegate extends SearchDelegate {
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    return isLightMode(context) ? super.appBarTheme(context) : Theme.of(context);
+    return isLightMode(context: context) ? super.appBarTheme(context) : Theme.of(context);
   }
 
   @override
@@ -106,7 +106,7 @@ class AssignmentSearchDelegate extends SearchDelegate {
       if (matchedItems.length > 0)
         listItems.add(StickyHeader(
           header: Container(
-            color: isLightMode(context) ? Colors.grey[200] : Colors.grey[800],
+            color: isLightMode(context: context) ? Colors.grey[200] : Colors.grey[800],
             padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
             alignment: Alignment.centerLeft,
             child: Text(sprintf(Strings.get("results_from"), [course.displayName])),

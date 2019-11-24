@@ -12,11 +12,10 @@ class WhatIfWelcomePage extends StatefulWidget {
 }
 
 class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
-
   @override
   void initState() {
     super.initState();
-    FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(!isLightMode());
   }
 
   @override
