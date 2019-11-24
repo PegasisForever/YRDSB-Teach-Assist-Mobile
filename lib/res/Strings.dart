@@ -245,7 +245,7 @@ class Strings {
     if (currentLanguage == null) {
       updateCurrentLanguage(context);
     }
-    var string = _strings["zh"][id];
+    var string = _strings[currentLanguage][id];
     if (string == null) {
       print("Cannot find id:$id in $currentLanguage");
       string = get("unknown");
