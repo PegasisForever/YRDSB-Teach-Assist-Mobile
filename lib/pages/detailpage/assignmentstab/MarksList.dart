@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sprintf/sprintf.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/TipsCard.dart';
@@ -64,7 +65,7 @@ class _MarksListState extends State<MarksList>
                   child: FlatButton.icon(
                       onPressed: () => addAssignment(context),
                       icon: Icon(Icons.add),
-                      label: Text("New Assignment")),
+                      label: Text(Strings.get("new_assignment"))),
                 ),
                 Divider()
               ],
@@ -98,18 +99,17 @@ class _MarksListState extends State<MarksList>
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Remove Assignment \"${assignment.displayName}\"?"),
-            content: assignment.added != true ? Text(
-                "It will be restored after disabling what if mode.") : null,
+            title: Text(sprintf(Strings.get("remove_assignment"), [assignment.displayName])),
+            content: assignment.added != true ? Text(Strings.get("it_will_be_restored")) : null,
             actions: <Widget>[
               FlatButton(
-                child: Text("Cancel"),
+                child: Text(Strings.get("cancel")),
                 onPressed: () {
                   Navigator.pop(context);
                 },
               ),
               FlatButton(
-                child: Text("Remove"),
+                child: Text(Strings.get("remove")),
                 onPressed: () {
                   widget._course.assignments.remove(assignment);
                   widget._updateCourse(widget._course);

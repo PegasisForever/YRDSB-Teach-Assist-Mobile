@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
+import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/StickSlider.dart';
 
 class SimpleEdit extends StatefulWidget {
@@ -28,7 +29,7 @@ class SimpleEditState extends State<SimpleEdit> {
           value: avg ?? 0,
           min: 0,
           max: 100,
-          label: "Average",
+          label: Strings.get("average_short"),
           labelWidth: 60,
           onChanged: (value) {
             widget.assignment
@@ -51,7 +52,7 @@ class SimpleEditState extends State<SimpleEdit> {
           value: avgWeight ?? 0,
           min: 0,
           max: 50,
-          label: "Weight",
+          label: Strings.get("weight"),
           labelWidth: 60,
           onChanged: (value) {
             widget.assignment

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Strings {
   static var currentLanguage;
-  static var _strings = {
+  static const _strings = {
     "en": {
       "login_your_account": "Login Your Account:",
       "student_number": "Student Number",
@@ -100,6 +100,25 @@ class Strings {
       "u_need_to_update_your_password":
       "You need to update your password in order to view up-to-date marks.",
       "update_password": "Update Password",
+      "what_if...": "What if .....",
+      "i_got_a_new_mark": "I got a new mark?",
+      "teacher_updated_my_mark": "Teacher updated my mark?",
+      "what_if_description": "In What If Mode, you can edit your assignment without any limitation and see how does it affect your course overall.",
+      "enable_what_if_mode": "Enable What If Mode",
+      "what_if_mode_activated": "What If Mode Activated",
+      "new_assignment": "New Assignment",
+      "feedback:": "Feedback: ",
+      "remove_assignment": "Remove Assignment \"%s\"?",
+      "it_will_be_restored": "It will be restored after disabling what if mode.",
+      "assignment_title": "Assignment Title",
+      "average_short": "Average",
+      "advanced_mode": "Advanced Mode",
+      "add": "Add",
+      "save": "Save",
+      "weight": "Weight",
+      "available": "Available",
+      "get": "Get",
+      "total": "Total",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -194,6 +213,25 @@ class Strings {
       "results_from": "来自 “%s” 的结果",
       "timeline_blank_text": "暂无动态",
       "version_no_longer_supported": "您的APP版本已不受支持，请更新。",
+      "what_if...": "如果 .....",
+      "i_got_a_new_mark": "新的成绩发布了？",
+      "teacher_updated_my_mark": "老师更新了成绩？",
+      "what_if_description": "在编辑模式下，你可以随意更改你的每一项得分，并详细了解它如何影响你的课程总分。",
+      "enable_what_if_mode": "启用编辑模式",
+      "what_if_mode_activated": "编辑模式已启用",
+      "new_assignment": "添加作业",
+      "feedback:": "反馈：",
+      "remove_assignment": "确认移除作业“%s”？",
+      "it_will_be_restored": "关闭编辑模式后此作业会重新出现。",
+      "assignment_title": "作业标题",
+      "average_short": "平均分",
+      "advanced_mode": "高级模式",
+      "add": "添加",
+      "save": "保存",
+      "weight": "权重",
+      "available": "可用",
+      "get": "得分",
+      "total": "总分",
     }
   };
 
@@ -205,7 +243,7 @@ class Strings {
     if (currentLanguage == null) {
       updateCurrentLanguage(context);
     }
-    var string = _strings[currentLanguage][id];
+    var string = _strings["zh"][id];
     if (string == null) {
       print("Cannot find id:$id in $currentLanguage");
       string = get("unknown");

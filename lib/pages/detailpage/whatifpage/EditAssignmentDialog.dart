@@ -42,7 +42,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
           getTemplateSmallMark(),
           SmallMark.unavailable(),
           SmallMark.unavailable(),
-          "Untitled Assignment",
+          Strings.get("untitled_assignment"),
           null)
         ..added = true;
     }
@@ -97,7 +97,8 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                     padding: const EdgeInsets.fromLTRB(4, 0, 4, 4),
                     child: TextField(
                       controller: _titleController,
-                      decoration: InputDecoration(labelText: "Assignment Title", filled: true),
+                      decoration: InputDecoration(
+                          labelText: Strings.get("assignment_title"), filled: true),
                       onChanged: (text) {
                         setState(() {
                           assignment.name = text;
@@ -110,7 +111,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                     child: Column(
                       children: <Widget>[
                         SwitchListTile(
-                          title: Text("Advanced Mode"),
+                          title: Text(Strings.get("advanced_mode")),
                           value: isAdvanced,
                           onChanged: (value) {
                             setState(() {
@@ -151,7 +152,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                   ButtonBar(
                     children: <Widget>[
                       FlatButton(
-                        child: Text("Cancel"),
+                        child: Text(Strings.get("cancel")),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -162,7 +163,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                             .colorScheme
                             .primary,
                         child: Text(
-                          isAdd ? "Add" : "Save",
+                          isAdd ? Strings.get("add") : Strings.get("save"),
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () {

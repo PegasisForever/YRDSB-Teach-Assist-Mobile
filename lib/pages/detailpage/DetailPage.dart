@@ -92,7 +92,8 @@ class _DetailPageState extends BetterState<DetailPage> {
                   child: Center(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("What If Mode Activated", style: TextStyle(color: Colors
+                        child: Text(
+                            Strings.get("what_if_mode_activated"), style: TextStyle(color: Colors
                             .black)),
                       )),
                 ),

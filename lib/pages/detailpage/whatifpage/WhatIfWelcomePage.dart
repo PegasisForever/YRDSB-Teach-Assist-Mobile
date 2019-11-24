@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
 
@@ -35,19 +36,19 @@ class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
                     height: 20,
                   ),
                   Text(
-                    "What If .....",
+                    Strings.get("what_if..."),
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                   ),
                   SizedBox(
                     height: 12,
                   ),
-                  Text("I got a new mark?",
+                  Text(Strings.get("i_got_a_new_mark"),
                       textAlign: TextAlign.center, style: TextStyle(fontSize: 22)),
                   SizedBox(
                     height: 6,
                   ),
-                  Text("Teacher updated my mark?",
+                  Text(Strings.get("teacher_updated_my_mark"),
                       textAlign: TextAlign.center, style: TextStyle(fontSize: 22)),
                   SizedBox(
                     height: 150,
@@ -55,7 +56,7 @@ class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Text(
-                      "In What If Mode, you can edit your assignment without any limitation and see how does it affect your course overall.",
+                      Strings.get("what_if_description"),
                       style: TextStyle(fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
@@ -71,7 +72,7 @@ class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
                           .primary,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                        child: Text("Enable What If Mode",
+                        child: Text(Strings.get("enable_what_if_mode"),
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.normal, color: Colors.white)),
                       ),

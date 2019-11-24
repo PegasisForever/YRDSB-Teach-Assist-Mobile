@@ -91,7 +91,7 @@ class MarksListTileState extends State<MarksListTile>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 FlatButton.icon(
-                  label: Text("Edit"),
+                  label: Text(Strings.get("edit")),
                   icon: Icon(Icons.edit),
                   textColor: isLightMode(context) ? Colors.grey[700] : Colors.grey[300],
                   onPressed: () {
@@ -100,7 +100,7 @@ class MarksListTileState extends State<MarksListTile>
                 ),
                 SizedBox(width: 24,),
                 FlatButton.icon(
-                  label: Text("Delete"),
+                  label: Text(Strings.get("remove")),
                   icon: Icon(Icons.delete),
                   textColor: isLightMode(context) ? Colors.grey[700] : Colors.grey[300],
                   onPressed: () {
@@ -129,7 +129,7 @@ class MarksListTileState extends State<MarksListTile>
           ),
           if (_assignment.feedback != null)
             Text(
-              "Feedback: " + _assignment.feedback,
+              Strings.get("feedback:") + _assignment.feedback,
               style: TextStyle(
                   fontSize: 16, color: isLightMode(context) ? Colors.grey[800] : Colors.grey[200]),
               textAlign: TextAlign.center,

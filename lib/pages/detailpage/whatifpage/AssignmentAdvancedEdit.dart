@@ -76,8 +76,7 @@ class AdvancedEditState extends State<AdvancedEdit> {
               ),
             ],
           ),
-          ),
-
+        ),
       ],
     );
   }
@@ -109,7 +108,7 @@ class _SmallMarkAdvancedEditState extends State<_SmallMarkAdvancedEdit> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                "Enabled",
+                Strings.get("available"),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
               Checkbox(
@@ -129,7 +128,7 @@ class _SmallMarkAdvancedEditState extends State<_SmallMarkAdvancedEdit> {
           value: mark.get,
           min: 0,
           max: mark.total ?? 100,
-          label: "Get",
+          label: Strings.get("get"),
           labelWidth: 60,
           onChanged: (value) {
             setState(() {
@@ -143,7 +142,7 @@ class _SmallMarkAdvancedEditState extends State<_SmallMarkAdvancedEdit> {
           value: mark.total,
           min: mark.get ?? 0,
           max: 100,
-          label: "Total",
+          label: Strings.get("total"),
           labelWidth: 60,
           onChanged: (value) {
             setState(() {
@@ -157,7 +156,7 @@ class _SmallMarkAdvancedEditState extends State<_SmallMarkAdvancedEdit> {
           value: mark.weight,
           min: 0,
           max: 50,
-          label: "Weight",
+          label: Strings.get("weight"),
           labelWidth: 60,
           onChanged: (value) {
             setState(() {
