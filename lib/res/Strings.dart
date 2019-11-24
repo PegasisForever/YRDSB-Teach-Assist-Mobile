@@ -221,7 +221,7 @@ class Strings {
       "what_if_mode_activated": "编辑模式已启用",
       "new_assignment": "添加作业",
       "feedback:": "反馈：",
-      "remove_assignment": "确认移除作业“%s”？",
+      "remove_assignment": "确认移除作业 “%s”？",
       "it_will_be_restored": "关闭编辑模式后此作业会重新出现。",
       "assignment_title": "作业标题",
       "average_short": "平均分",
