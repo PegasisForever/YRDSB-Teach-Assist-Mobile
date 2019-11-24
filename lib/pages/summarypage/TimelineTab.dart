@@ -134,11 +134,11 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Text(
-                          getRoundString(update.overallBefore, 1) + "%",
+                          num2Str(update.overallBefore) + "%",
                           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                         ),
                         Icon(Icons.arrow_forward, size: 32),
-                        Text(getRoundString(update.overallAfter, 1) + "%",
+                        Text(num2Str(update.overallAfter) + "%",
                             style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                       ],
                     ),

@@ -40,7 +40,7 @@ class MarksListTileState extends State<MarksListTile>
     var avg = _assignment.getAverage(_weights);
     var avgText = avg == null
         ? SizedBox(width: 0, height: 0)
-        : Text(Strings.get("avg:") + getRoundString(avg, 1) + "%",
+        : Text(Strings.get("avg:") + num2Str(avg) + "%",
             style: TextStyle(fontSize: 16, color: Colors.grey));
 
     bool noWeight = isZeroOrNull(_assignment.KU.weight) &&

@@ -22,6 +22,10 @@ class AdvancedEditState extends State<AdvancedEdit> {
         TabBar(
           isScrollable: true,
           labelColor: Theme.of(context).colorScheme.primary,
+          indicatorColor: Theme
+              .of(context)
+              .colorScheme
+              .primary,
           tabs: [
             Tab(text: Strings.get("ku")),
             Tab(text: Strings.get("t")),

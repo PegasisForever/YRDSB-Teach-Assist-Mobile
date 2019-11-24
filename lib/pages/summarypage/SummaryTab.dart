@@ -114,7 +114,7 @@ class _SummaryTabState extends State<SummaryTab>
                           lineHeight: 20.0,
                           animationDuration: 700,
                           value1: course.overallMark / 100,
-                          center: Text(course.overallMark.toString() + "%",
+                    center: Text(num2Str(course.overallMark) + "%",
                               style: TextStyle(color: Colors.black)),
                           value1Color: Theme.of(context).colorScheme.secondary,
                         )
@@ -148,7 +148,7 @@ class _SummaryTabState extends State<SummaryTab>
                   style: Theme.of(context).textTheme.title,
                 ),
                 Text(
-                  getRoundString(avg, 1) + "%",
+                  num2Str(avg) + "%",
                   style: TextStyle(fontSize: 60),
                 ),
                 LPI.LinearProgressIndicator(

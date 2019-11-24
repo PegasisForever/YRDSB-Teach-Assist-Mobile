@@ -75,7 +75,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                     ),
                     Text(
                         Strings.get("average:") +
-                            ((avg != null) ? (getRoundString(avg, 1) + "%") : "N/A"),
+                            ((avg != null) ? (num2Str(avg) + "%") : "N/A"),
                         style: TextStyle(fontSize: 16, color: Colors.grey)),
                     SizedBox(
                       height: 4,

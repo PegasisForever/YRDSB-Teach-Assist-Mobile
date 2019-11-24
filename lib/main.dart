@@ -13,6 +13,7 @@ import 'package:ta/pages/drawerpages/AboutPage.dart';
 import 'package:ta/pages/drawerpages/AccountsList.dart';
 import 'package:ta/pages/drawerpages/EditAccount.dart';
 import 'package:ta/pages/drawerpages/FeedbackPage.dart';
+import 'package:ta/pages/settingspage/SettingsPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 
 import 'dataStore.dart';
@@ -22,43 +23,73 @@ void main() {
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
   runZoned<Future<void>>(() async {
-    await initPackageInfo();
+    initPackageInfo();
     initFirebaseMsg();
     await initPref();
     initUser();
 
-    runApp(MyApp());
+    runApp(App());
   }, onError: Crashlytics.instance.recordError);
 }
 
-class MyApp extends StatelessWidget {
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
+
+  static Function updateBrightness;
+  static Function updateColor;
+}
+
+class _AppState extends State<App> {
+  _updateBrightness(int v) {
+    setState(() {
+      Config.darkMode = v;
+    });
+  }
+
+  _updateColor(MaterialColor color) {
+    setState(() {
+      Config.primaryColor = color;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    App.updateBrightness = _updateBrightness;
+    App.updateColor = _updateColor;
+  }
+
   @override
   Widget build(BuildContext context) {
+    var color = Config.primaryColor;
+    ThemeData lightTheme;
+    ThemeData darkTheme;
+    switch (Config.darkMode) {
+      case 0:
+        {
+          lightTheme = getLightTheme(color);
+          darkTheme = getLightTheme(color);
+        }
+        break;
+      case 1:
+        {
+          lightTheme = getLightTheme(color);
+          darkTheme = getDarkTheme(color);
+        }
+        break;
+      case 2:
+        {
+          lightTheme = getDarkTheme(color);
+          darkTheme = getDarkTheme(color);
+        }
+        break;
+    }
+
     return new MaterialApp(
       title: 'YRDSB Teach Assist',
-      theme: ThemeData(
-          brightness: Brightness.light,
-          colorScheme: ColorScheme.light(
-              primary: const Color(0xff03a9f4),
-              primaryVariant: const Color(0xff007ac1),
-              secondary: const Color(0xff80d8ff),
-              secondaryVariant: const Color(0xff49a7cc),
-              onPrimary: Colors.white),
-          accentColor: const Color(0xff40c4ff),
-          toggleableActiveColor: const Color(0xff03a9f4),
-          buttonTheme:
-          ButtonThemeData(colorScheme: ColorScheme.light(secondary: const Color(0xff03a9f4)))),
-      darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          colorScheme: ColorScheme.dark(
-              primary: const Color(0xff03a9f4),
-              primaryVariant: const Color(0xff007ac1),
-              secondary: const Color(0xff40c4ff),
-              secondaryVariant: const Color(0xff0094cc),
-              onPrimary: Colors.white),
-          accentColor: const Color(0xff40c4ff),
-          toggleableActiveColor: const Color(0xff40c4ff),
-          primarySwatch: Colors.lightBlue),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       routes: <String, WidgetBuilder>{
         "/": (BuildContext context) => SummaryPage(),
         "/login": (BuildContext context) => LoginPage(),
@@ -68,6 +99,7 @@ class MyApp extends StatelessWidget {
         "/feedback": (BuildContext context) => FeedbackPage(),
         "/whatif_welcome": (BuildContext context) => WhatIfWelcomePage(),
         "/archived_course": (BuildContext context) => ArchivedCoursesPage(),
+        "/settings": (BuildContext context) => SettingsPage(),
       },
       localizationsDelegates: [
         GlobalCupertinoLocalizations.delegate,
@@ -76,5 +108,32 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: [const Locale('en'), const Locale.fromSubtags(languageCode: 'zh')],
     );
+  }
+
+  ThemeData getLightTheme(MaterialColor color) {
+    return ThemeData(
+        brightness: Brightness.light,
+        colorScheme:
+        ColorScheme.light(primary: color, secondary: color[200]),
+        accentColor: color,
+        primaryColor: color,
+        primaryColorDark: color[700],
+        toggleableActiveColor: color,
+        appBarTheme: AppBarTheme(color: color),
+        textSelectionColor: color[200],
+        textSelectionHandleColor: color,
+        buttonTheme: ButtonThemeData(colorScheme: ColorScheme.light(secondary: color)));
+  }
+
+  ThemeData getDarkTheme(MaterialColor color) {
+    return ThemeData(
+        brightness: Brightness.dark,
+        colorScheme:
+        ColorScheme.dark(primary: color, secondary: color[300]),
+        accentColor: color,
+        toggleableActiveColor: color[300],
+        textSelectionColor: color,
+        textSelectionHandleColor: color[300],
+        primarySwatch: color);
   }
 }

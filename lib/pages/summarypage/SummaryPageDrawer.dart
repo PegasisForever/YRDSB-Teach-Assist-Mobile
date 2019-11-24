@@ -110,6 +110,14 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
               },
             ),
             ListTile(
+              title: Text(Strings.get("settings")),
+              leading: Icon(Icons.settings),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/settings");
+              },
+            ),
+            ListTile(
               title: Text(Strings.get("about")),
               leading: Icon(Icons.info),
               onTap: () {

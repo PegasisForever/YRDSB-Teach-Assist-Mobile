@@ -10,6 +10,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:ta/res/Strings.dart';
 
+import 'dataStore.dart';
+
 class LifecycleEventHandler extends WidgetsBindingObserver {
   LifecycleEventHandler(this.resumeCallBack);
 
@@ -43,6 +45,10 @@ String getRoundString(double num, int digit) {
   return str;
 }
 
+String num2Str(double num) {
+  return Config.showMoreDecimal ? num.toStringAsFixed(2) : getRoundString(num, 1);
+}
+
 String testBlank(String str) {
   if (str == null || str.isEmpty) {
     return Strings.get("unknown");
@@ -64,20 +70,10 @@ double getBottomPadding(BuildContext context) {
   return query.padding.bottom + query.viewInsets.bottom;
 }
 
-Brightness currentBrightness;
+Brightness currentBrightness = Brightness.light;
 
 void updateNavigationBarBrightness({BuildContext context}) {
-  Brightness brightness;
-  if (context != null) {
-    brightness = MediaQuery.of(context).platformBrightness;
-    currentBrightness = brightness;
-  } else if (currentBrightness != null) {
-    brightness = currentBrightness;
-  } else {
-    return;
-  }
-  currentBrightness = brightness;
-  if (brightness == Brightness.light) {
+  if (isLightMode(context: context)) {
     FlutterStatusbarcolor.setNavigationBarColor(Colors.white);
     FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
   } else {
@@ -92,7 +88,14 @@ bool isLightMode({BuildContext context}) {
         .of(context)
         .platformBrightness ?? currentBrightness;
   }
-  return currentBrightness == Brightness.light;
+  switch (Config.darkMode) {
+    case 0:
+      return true;
+    case 1:
+      return currentBrightness == Brightness.light;
+    case 2:
+      return false;
+  }
 }
 
 SystemUiOverlayStyle getSystemUiOverlayStyle(BuildContext context) {
@@ -120,4 +123,8 @@ double cap(double number, double min, double max) {
   } else {
     return number;
   }
+}
+
+MaterialColor getPrimary() {
+  return Config.primaryColor;
 }

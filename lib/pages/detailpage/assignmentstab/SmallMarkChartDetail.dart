@@ -115,7 +115,7 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
       if (smallMark.finished) {
         TextPainter(
             text: TextSpan(
-                text: getRoundString(mark, 1),
+                text: num2Str(mark),
                 style: TextStyle(fontSize: 16.0, color: Colors.grey)),
             textDirection: TextDirection.ltr,
             textAlign: TextAlign.center)
