@@ -132,7 +132,7 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
             textDirection: TextDirection.ltr,
             textAlign: TextAlign.center)
           ..layout(maxWidth: width, minWidth: width)
-          ..paint(canvas, Offset(x, height - 50));
+          ..paint(canvas, Offset(x, height - 54));
       }
     } else {
       TextPainter(
@@ -140,7 +140,7 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
           textDirection: TextDirection.ltr,
           textAlign: TextAlign.center)
         ..layout(maxWidth: width, minWidth: width)
-        ..paint(canvas, Offset(x, height - 50));
+        ..paint(canvas, Offset(x, height - 54));
     }
   }
 

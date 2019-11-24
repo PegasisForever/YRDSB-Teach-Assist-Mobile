@@ -149,7 +149,11 @@ class Assignment {
   }
 
   bool isAvailable() {
-    return KU.available || T.available || C.available || A.available || O.available;
+    return (KU.available && KU.finished) ||
+        (T.available && T.finished) ||
+        (C.available && C.finished) ||
+        (A.available && A.finished) ||
+        (O.available && O.finished);
   }
 
   Assignment copy() =>

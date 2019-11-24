@@ -105,6 +105,7 @@ class _SmallMarkAdvancedEditState extends State<_SmallMarkAdvancedEdit> {
         InkWell(
           onTap: () {
             setState(() {
+              mark.finished = true;
               mark.available = !mark.available;
               widget.onChanged(mark);
             });
@@ -119,9 +120,10 @@ class _SmallMarkAdvancedEditState extends State<_SmallMarkAdvancedEdit> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
                 Checkbox(
-                  value: mark.available,
+                  value: mark.available && mark.finished,
                   onChanged: (v) {
                     setState(() {
+                      mark.finished = true;
                       mark.available = v;
                       widget.onChanged(mark);
                     });
@@ -132,7 +134,7 @@ class _SmallMarkAdvancedEditState extends State<_SmallMarkAdvancedEdit> {
           ),
         ),
         StickSliderTile(
-          enabled: mark.available,
+          enabled: mark.available && mark.finished,
           value: mark.get,
           min: 0,
           max: mark.total ?? 100,
@@ -146,7 +148,7 @@ class _SmallMarkAdvancedEditState extends State<_SmallMarkAdvancedEdit> {
           },
         ),
         StickSliderTile(
-          enabled: mark.available,
+          enabled: mark.available && mark.finished,
           value: mark.total,
           min: mark.get ?? 0,
           max: 100,
@@ -160,7 +162,7 @@ class _SmallMarkAdvancedEditState extends State<_SmallMarkAdvancedEdit> {
           },
         ),
         StickSliderTile(
-          enabled: mark.available,
+          enabled: mark.available && mark.finished,
           value: mark.weight,
           min: 0,
           max: 50,
