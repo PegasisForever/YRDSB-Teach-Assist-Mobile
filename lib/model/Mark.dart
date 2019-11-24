@@ -290,24 +290,24 @@ class Course {
 
     assignments.forEach((assi) {
       if (assi.KU.available && assi.KU.finished) {
-        K += assi.KU.get * assi.KU.weight;
-        Kn += assi.KU.total * assi.KU.weight;
+        K += assi.KU.get / assi.KU.total * assi.KU.weight;
+        Kn += assi.KU.weight;
       }
       if (assi.T.available && assi.T.finished) {
-        T += assi.T.get * assi.T.weight;
-        Tn += assi.T.total * assi.T.weight;
+        T += assi.T.get / assi.T.total * assi.T.weight;
+        Tn += assi.T.weight;
       }
       if (assi.C.available && assi.C.finished) {
-        C += assi.C.get * assi.C.weight;
-        Cn += assi.C.total * assi.C.weight;
+        C += assi.C.get / assi.C.total * assi.C.weight;
+        Cn += assi.C.weight;
       }
       if (assi.A.available && assi.A.finished) {
-        A += assi.A.get * assi.A.weight;
-        An += assi.A.total * assi.A.weight;
+        A += assi.A.get / assi.A.total * assi.A.weight;
+        An += assi.A.weight;
       }
       if (assi.O.available && assi.O.finished) {
-        O += assi.O.get * assi.O.weight;
-        On += assi.O.total * assi.O.weight;
+        O += assi.O.get / assi.O.total * assi.O.weight;
+        On += assi.O.weight;
       }
 
       var Ka = K / Kn;
