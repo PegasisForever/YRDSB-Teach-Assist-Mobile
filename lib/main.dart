@@ -7,6 +7,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/packageinfo.dart';
 import 'package:ta/pages/LoginPage.dart';
+import 'package:ta/pages/archivedpage/ArchivedCoursesPage.dart';
+import 'package:ta/pages/detailpage/whatifpage/WhatIfWelcomePage.dart';
 import 'package:ta/pages/drawerpages/AboutPage.dart';
 import 'package:ta/pages/drawerpages/AccountsList.dart';
 import 'package:ta/pages/drawerpages/EditAccount.dart';
@@ -64,6 +66,8 @@ class MyApp extends StatelessWidget {
         "/accounts_list/edit": (BuildContext context) => EditAccount(User.blank(), false),
         "/about": (BuildContext context) => AboutPage(),
         "/feedback": (BuildContext context) => FeedbackPage(),
+        "/whatif_welcome": (BuildContext context) => WhatIfWelcomePage(),
+        "/archived_course": (BuildContext context) => ArchivedCoursesPage(),
       },
       localizationsDelegates: [
         GlobalCupertinoLocalizations.delegate,

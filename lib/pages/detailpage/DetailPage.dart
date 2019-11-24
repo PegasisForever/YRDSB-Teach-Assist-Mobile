@@ -5,7 +5,6 @@ import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/detailpage/assignmentstab/MarksList.dart';
 import 'package:ta/pages/detailpage/staticstab/StaticsList.dart';
-import 'package:ta/pages/detailpage/whatifpage/WhatIfWelcomePage.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/BetterState.dart';
 
@@ -45,11 +44,8 @@ class _DetailPageState extends BetterState<DetailPage> {
             IconButton(
               icon: Icon(whatIfMode ? CustomIcons.lightbulb_filled : Icons.lightbulb_outline),
               onPressed: () async {
-                if (true) {
-                  var isEnableWhatIf = await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => WhatIfWelcomePage()),
-                  );
+                if (showWhatIfTips) {
+                  var isEnableWhatIf = await Navigator.pushNamed(context, "/whatif_welcome");
                   if (isEnableWhatIf != true) {
                     return;
                   }

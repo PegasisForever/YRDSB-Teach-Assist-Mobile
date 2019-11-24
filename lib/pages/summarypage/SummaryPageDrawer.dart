@@ -96,6 +96,10 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
             ListTile(
               title: Text(Strings.get("archived_marks")),
               leading: Icon(Icons.archive),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, "/archived_course");
+              },
             ),
             ListTile(
               title: Text(Strings.get("feedback")),
