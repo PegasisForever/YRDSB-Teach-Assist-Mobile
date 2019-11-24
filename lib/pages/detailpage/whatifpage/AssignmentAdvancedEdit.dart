@@ -102,25 +102,33 @@ class _SmallMarkAdvancedEditState extends State<_SmallMarkAdvancedEdit> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                Strings.get("available"),
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-              Checkbox(
-                value: mark.available,
-                onChanged: (v) {
-                  setState(() {
-                    mark.available = v;
-                    widget.onChanged(mark);
-                  });
-                },
-              )
-            ],
+        InkWell(
+          onTap: () {
+            setState(() {
+              mark.available = !mark.available;
+              widget.onChanged(mark);
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  Strings.get("available"),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                Checkbox(
+                  value: mark.available,
+                  onChanged: (v) {
+                    setState(() {
+                      mark.available = v;
+                      widget.onChanged(mark);
+                    });
+                  },
+                )
+              ],
+            ),
           ),
         ),
         StickSliderTile(
