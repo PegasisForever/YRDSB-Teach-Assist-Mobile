@@ -21,14 +21,15 @@ class LinearProgressIndicator extends StatefulWidget {
       this.animationDuration = 0,
       this.lineHeight,
         this.center,
-        key}) :super(key: key);
+        key})
+      : super(key: key);
 
   @override
   _LinearProgressIndicatorState createState() => _LinearProgressIndicatorState();
 }
 
 class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
-    with SingleTickerProviderStateMixin,AutomaticKeepAliveClientMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   Animation<double> animation;
   AnimationController controller;
   double percent1 = 0;
@@ -57,7 +58,8 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
   @override
   void didUpdateWidget(LinearProgressIndicator oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.value1 != widget.value1 || oldWidget.value2 != widget.value2 ||
+    if (oldWidget.value1 != widget.value1 ||
+        oldWidget.value2 != widget.value2 ||
         oldWidget.value1Color != widget.value1Color ||
         oldWidget.value2Color != widget.value2Color) {
       animation = CurvedAnimation(parent: controller, curve: Curves.easeInOutCubic);
@@ -138,8 +140,6 @@ class _LPIPainter extends CustomPainter {
         ..strokeWidth = lineHeight
         ..strokeCap = StrokeCap.round;
     }
-
-
   }
 
   @override

@@ -70,6 +70,7 @@ class _SummaryTabState extends State<SummaryTab>
         infoStr.add(sprintf(Strings.get("room_number"), [course.room]));
       }
       list.add(Padding(
+        key: Key(course.displayName),
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: Card(
           clipBehavior: Clip.antiAlias,
@@ -111,19 +112,19 @@ class _SummaryTabState extends State<SummaryTab>
                   SizedBox(height: 16),
                   course.overallMark != null
                       ? LPI.LinearProgressIndicator(
-                          lineHeight: 20.0,
-                          animationDuration: 700,
-                          value1: course.overallMark / 100,
+                    lineHeight: 20.0,
+                    animationDuration: 700,
+                    value1: course.overallMark / 100,
                     center: Text(num2Str(course.overallMark) + "%",
-                              style: TextStyle(color: Colors.black)),
-                          value1Color: Theme.of(context).colorScheme.secondary,
-                        )
+                        style: TextStyle(color: Colors.black)),
+                    value1Color: Theme.of(context).colorScheme.secondary,
+                  )
                       : LPI.LinearProgressIndicator(
-                          lineHeight: 20.0,
-                          value1: 0,
-                          center: Text(Strings.get("marks_unavailable"),
-                              style: TextStyle(color: Colors.black)),
-                        ),
+                    lineHeight: 20.0,
+                    value1: 0,
+                    center: Text(Strings.get("marks_unavailable"),
+                        style: TextStyle(color: Colors.black)),
+                  ),
                 ],
               ),
             ),

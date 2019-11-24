@@ -100,6 +100,7 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
 
   Widget _contentFromAssignmentAdded(AssignmentAdded update) {
     return Column(
+      key: Key(update.hashCode.toString()),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Row(
@@ -126,41 +127,41 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
         ),
         update.overallBefore != null
             ? Padding(
-                padding: EdgeInsets.only(top: 16, bottom: 8),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Text(
-                          num2Str(update.overallBefore) + "%",
-                          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                        ),
-                        Icon(Icons.arrow_forward, size: 32),
-                        Text(num2Str(update.overallAfter) + "%",
-                            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    update.overallBefore > update.overallAfter
-                        ? LPI.LinearProgressIndicator(
-                            lineHeight: 20.0,
-                            value1: update.overallAfter / 100,
-                            value2: update.overallBefore / 100,
-                            value1Color: Theme.of(context).colorScheme.secondary,
-                            value2Color: Colors.red[400],
-                          )
-                        : LPI.LinearProgressIndicator(
-                            lineHeight: 20.0,
-                            value1: update.overallBefore / 100,
-                            value2: update.overallAfter / 100,
-                            value1Color: Theme.of(context).colorScheme.secondary,
-                            value2Color: Colors.green,
-                          ),
-                  ],
-                ),
+          padding: EdgeInsets.only(top: 16, bottom: 8),
+          child: Column(
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text(
+                    num2Str(update.overallBefore) + "%",
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                  Icon(Icons.arrow_forward, size: 32),
+                  Text(num2Str(update.overallAfter) + "%",
+                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                ],
+              ),
+              SizedBox(height: 8),
+              update.overallBefore > update.overallAfter
+                  ? LPI.LinearProgressIndicator(
+                lineHeight: 20.0,
+                value1: update.overallAfter / 100,
+                value2: update.overallBefore / 100,
+                value1Color: Theme.of(context).colorScheme.secondary,
+                value2Color: Colors.red[400],
               )
+                  : LPI.LinearProgressIndicator(
+                lineHeight: 20.0,
+                value1: update.overallBefore / 100,
+                value2: update.overallAfter / 100,
+                value1Color: Theme.of(context).colorScheme.secondary,
+                value2Color: Colors.green,
+              ),
+            ],
+          ),
+        )
             : SizedBox(width: 0, height: 0)
       ],
     );
