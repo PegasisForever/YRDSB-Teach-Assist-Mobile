@@ -69,7 +69,8 @@ class MarksListTileState extends State<MarksListTile>
                   Text(Strings.get("no_weight"),
                       style: TextStyle(fontSize: 16, color: Colors.grey)),
                 if (_assignment.feedback != null)
-                  Text("Feedback avaliable", style: TextStyle(fontSize: 16, color: Colors.grey)),
+                  Text(Strings.get("feedback_available"),
+                      style: TextStyle(fontSize: 16, color: Colors.grey)),
               ],
             ),
           ),

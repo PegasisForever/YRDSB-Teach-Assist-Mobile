@@ -102,7 +102,7 @@ class Strings {
       "update_password": "Update Password",
       "what_if...": "What if .....",
       "i_got_a_new_mark": "I got a new mark?",
-      "teacher_updated_my_mark": "Teacher updated my mark?",
+      "teacher_updated_my_mark": "Teacher edited my mark?",
       "what_if_description": "In What If Mode, you can edit your assignment without any limitation and see how does it affect your course overall.",
       "enable_what_if_mode": "Enable What If Mode",
       "what_if_mode_activated": "What If Mode Activated",
@@ -119,6 +119,7 @@ class Strings {
       "available": "Available",
       "get": "Get",
       "total": "Total",
+      "feedback_available": "Feedback available",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -215,8 +216,8 @@ class Strings {
       "version_no_longer_supported": "您的APP版本已不受支持，请更新。",
       "what_if...": "如果 .....",
       "i_got_a_new_mark": "新的成绩发布了？",
-      "teacher_updated_my_mark": "老师更新了成绩？",
-      "what_if_description": "在编辑模式下，你可以随意更改你的每一项得分，并详细了解它如何影响你的课程总分。",
+      "teacher_updated_my_mark": "老师给我加分了？",
+      "what_if_description": "在编辑模式下，你可以随意更改你的每一项得分，并了解它如何影响你的课程总分。",
       "enable_what_if_mode": "启用编辑模式",
       "what_if_mode_activated": "编辑模式已启用",
       "new_assignment": "添加作业",
@@ -232,6 +233,7 @@ class Strings {
       "available": "可用",
       "get": "得分",
       "total": "总分",
+      "feedback_available": "老师提供反馈",
     }
   };
 
