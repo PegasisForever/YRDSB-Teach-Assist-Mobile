@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
@@ -11,6 +12,19 @@ class WhatIfWelcomePage extends StatefulWidget {
 }
 
 class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

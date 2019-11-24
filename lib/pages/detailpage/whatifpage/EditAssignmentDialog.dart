@@ -29,11 +29,6 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
     super.initState();
     assignment = widget.assignment?.copy();
     isAdd = assignment == null;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var course = widget.course;
     if (assignment == null) {
       assignment = Assignment(
           getTemplateSmallMark(),
@@ -49,7 +44,11 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
 
     assignment.edited = true;
     _titleController.text = assignment.name;
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    var course = widget.course;
     var avg = assignment.getAverage(course.weightTable);
 
     return Dialog(
