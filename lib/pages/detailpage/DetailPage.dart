@@ -41,32 +41,33 @@ class _DetailPageState extends BetterState<DetailPage> {
         appBar: AppBar(
           title: Text(_course.displayName, maxLines: 2),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(whatIfMode ? CustomIcons.lightbulb_filled : Icons.lightbulb_outline),
-              onPressed: () async {
-                if (showWhatIfTips) {
-                  var isEnableWhatIf = await Navigator.pushNamed(context, "/whatif_welcome");
-                  if (isEnableWhatIf != true) {
-                    return;
+            if (_course.overallMark != null)
+              IconButton(
+                icon: Icon(whatIfMode ? CustomIcons.lightbulb_filled : Icons.lightbulb_outline),
+                onPressed: () async {
+                  if (showWhatIfTips) {
+                    var isEnableWhatIf = await Navigator.pushNamed(context, "/whatif_welcome");
+                    if (isEnableWhatIf != true) {
+                      return;
+                    }
+                    showWhatIfTips = false;
+                    prefs.setBool("show_what_if_tip", false);
                   }
-                  showWhatIfTips = false;
-                  prefs.setBool("show_what_if_tip", false);
-                }
-                setState(() {
-                  whatIfMode = !whatIfMode;
-                  if (!whatIfMode) {
-                    var originalCourses = getCourseListOf(currentUser.number);
-                    originalCourses.forEach((originalCourse) {
-                      if (originalCourse.displayName == _course.displayName) {
-                        //course in this detail page
-                        _course = originalCourse;
-                        return;
-                      }
-                    });
-                  }
-                });
-              },
-            )
+                  setState(() {
+                    whatIfMode = !whatIfMode;
+                    if (!whatIfMode) {
+                      var originalCourses = getCourseListOf(currentUser.number);
+                      originalCourses.forEach((originalCourse) {
+                        if (originalCourse.displayName == _course.displayName) {
+                          //course in this detail page
+                          _course = originalCourse;
+                          return;
+                        }
+                      });
+                    }
+                  });
+                },
+              )
           ],
           bottom: TabBar(
             indicatorColor: Colors.white,
@@ -88,9 +89,8 @@ class _DetailPageState extends BetterState<DetailPage> {
                   child: Center(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            Strings.get("what_if_mode_activated"), style: TextStyle(color: Colors
-                            .black)),
+                        child: Text(Strings.get("what_if_mode_activated"),
+                            style: TextStyle(color: Colors.black)),
                       )),
                 ),
                 secondChild: Container(),

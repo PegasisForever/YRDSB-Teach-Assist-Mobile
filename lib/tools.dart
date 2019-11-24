@@ -90,7 +90,7 @@ bool isLightMode({BuildContext context}) {
   if (context != null) {
     currentBrightness = MediaQuery
         .of(context)
-        .platformBrightness;
+        .platformBrightness ?? currentBrightness;
   }
   return currentBrightness == Brightness.light;
 }

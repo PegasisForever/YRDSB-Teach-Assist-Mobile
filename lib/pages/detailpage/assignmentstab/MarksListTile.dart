@@ -94,19 +94,29 @@ class MarksListTileState extends State<MarksListTile>
                 FlatButton.icon(
                   label: Text(Strings.get("edit")),
                   icon: Icon(Icons.edit),
+                  disabledTextColor:
+                  isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
                   textColor: isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
-                  onPressed: () {
+                  onPressed: _assignment.expanded == true
+                      ? () {
                     widget.editAssignment(context, _assignment);
-                  },
+                  }
+                      : null,
                 ),
-                SizedBox(width: 24,),
+                SizedBox(
+                  width: 24,
+                ),
                 FlatButton.icon(
                   label: Text(Strings.get("remove")),
                   icon: Icon(Icons.delete),
+                  disabledTextColor:
+                  isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
                   textColor: isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
-                  onPressed: () {
+                  onPressed: _assignment.expanded == true
+                      ? () {
                     widget.removeAssignment(_assignment);
-                  },
+                  }
+                      : null,
                 ),
               ],
             ),

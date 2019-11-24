@@ -33,64 +33,79 @@ class _MarksListState extends State<MarksList>
     super.build(context);
     var whatIfMode = widget._whatIfMode;
     var course = widget._course;
-    return BetterAnimatedList(
-      list: course.assignments.reversed.toList(),
-      header: Column(
-        children: <Widget>[
-          AnimatedCrossFade(
-            key: Key("tip"),
-            firstChild: TipsCard(
-                text: Strings.get("tap_to_view_detail"),
-                onDismiss: () {
-                  setState(() {
-                    showTips = false;
-                    prefs.setBool("show_tap_to_view_detail_tip", false);
-                  });
-                }),
-            secondChild: SizedBox(
-              height: 0.5,
-              width: double.infinity,
+    return Stack(
+      children: <Widget>[
+        if (course.overallMark == null || course.assignments.length == 0)
+          Center(
+            child: Text(
+              Strings.get("assignments_unavailable"),
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .subhead,
             ),
-            crossFadeState: showTips ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-            duration: const Duration(milliseconds: 300),
-            firstCurve: Curves.easeInOutCubic,
-            secondCurve: Curves.easeInOutCubic,
-            sizeCurve: Curves.easeInOutCubic,
           ),
-          AnimatedCrossFade(
-            key: Key("add-btn"),
-            firstChild: Column(
+        if (course.assignments != null)
+          BetterAnimatedList(
+            list: course.assignments.reversed.toList(),
+            header: Column(
               children: <Widget>[
-                Center(
-                  child: FlatButton.icon(
-                      onPressed: () => addAssignment(context),
-                      icon: Icon(Icons.add),
-                      label: Text(Strings.get("new_assignment"))),
+                AnimatedCrossFade(
+                  key: Key("tip"),
+                  firstChild: TipsCard(
+                      text: Strings.get("tap_to_view_detail"),
+                      onDismiss: () {
+                        setState(() {
+                          showTips = false;
+                          prefs.setBool("show_tap_to_view_detail_tip", false);
+                        });
+                      }),
+                  secondChild: SizedBox(
+                    height: 0.5,
+                    width: double.infinity,
+                  ),
+                  crossFadeState: showTips ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                  duration: const Duration(milliseconds: 300),
+                  firstCurve: Curves.easeInOutCubic,
+                  secondCurve: Curves.easeInOutCubic,
+                  sizeCurve: Curves.easeInOutCubic,
                 ),
-                Divider()
+                AnimatedCrossFade(
+                  key: Key("add-btn"),
+                  firstChild: Column(
+                    children: <Widget>[
+                      Center(
+                        child: FlatButton.icon(
+                            onPressed: () => addAssignment(context),
+                            icon: Icon(Icons.add),
+                            label: Text(Strings.get("new_assignment"))),
+                      ),
+                      Divider()
+                    ],
+                  ),
+                  secondChild: SizedBox(
+                    height: 0.5,
+                    width: double.infinity,
+                  ),
+                  crossFadeState: whatIfMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                  duration: const Duration(milliseconds: 300),
+                  firstCurve: Curves.easeInOutCubic,
+                  secondCurve: Curves.easeInOutCubic,
+                  sizeCurve: Curves.easeInOutCubic,
+                )
               ],
             ),
-            secondChild: SizedBox(
-              height: 0.5,
-              width: double.infinity,
-            ),
-            crossFadeState: whatIfMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-            duration: const Duration(milliseconds: 300),
-            firstCurve: Curves.easeInOutCubic,
-            secondCurve: Curves.easeInOutCubic,
-            sizeCurve: Curves.easeInOutCubic,
+            itemBuilder: (context, assignment) {
+              return MarksListTile(
+                assignment,
+                course.weightTable,
+                whatIfMode,
+                editAssignment: editAssignment,
+                removeAssignment: removeAssignment,
+              );
+            },
           )
-        ],
-      ),
-      itemBuilder: (context, assignment) {
-        return MarksListTile(
-          assignment,
-          course.weightTable,
-          whatIfMode,
-          editAssignment: editAssignment,
-          removeAssignment: removeAssignment,
-        );
-      },
+      ],
     );
   }
 

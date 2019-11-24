@@ -38,7 +38,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
     super.build(context);
     var _course = widget._course;
     var isLight = isLightMode(context: context);
-    return _course.overallMark != null
+    return (_course.overallMark != null && _course.assignments.length > 0)
         ? ListView(
       children: <Widget>[
         _getTermOverall(),
