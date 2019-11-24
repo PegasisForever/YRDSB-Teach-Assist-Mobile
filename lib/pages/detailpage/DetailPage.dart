@@ -7,6 +7,7 @@ import 'package:ta/pages/detailpage/assignmentstab/MarksList.dart';
 import 'package:ta/pages/detailpage/staticstab/StaticsList.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/BetterState.dart';
+import 'package:ta/widgets/CrossFade.dart';
 
 import '../../CustomIcons.dart';
 import 'abouttab/AboutTab.dart';
@@ -82,7 +83,7 @@ class _DetailPageState extends BetterState<DetailPage> {
           children: <Widget>[
             Flexible(
               flex: 0,
-              child: AnimatedCrossFade(
+              child: CrossFade(
                 key: Key("add-btn"),
                 firstChild: Container(
                   color: Colors.amber,
@@ -94,11 +95,7 @@ class _DetailPageState extends BetterState<DetailPage> {
                       )),
                 ),
                 secondChild: Container(),
-                crossFadeState: whatIfMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                duration: const Duration(milliseconds: 300),
-                firstCurve: Curves.easeInOutCubic,
-                secondCurve: Curves.easeInOutCubic,
-                sizeCurve: Curves.easeInOutCubic,
+                showFirst: whatIfMode,
               ),
             ),
             Expanded(

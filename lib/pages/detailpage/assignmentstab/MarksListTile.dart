@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/widgets/CrossFade.dart';
 
 import '../../../tools.dart';
 import 'SmallMarkChart.dart';
@@ -83,7 +84,7 @@ class MarksListTileState extends State<MarksListTile>
       child: Column(
         key: Key("detail"),
         children: <Widget>[
-          AnimatedCrossFade(
+          CrossFade(
             firstChild: SizedBox(
               height: 16,
               width: double.infinity,
@@ -120,12 +121,7 @@ class MarksListTileState extends State<MarksListTile>
                 ),
               ],
             ),
-            crossFadeState:
-            widget.whatIfMode == true ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-            duration: const Duration(milliseconds: 300),
-            firstCurve: Curves.easeInOutCubic,
-            secondCurve: Curves.easeInOutCubic,
-            sizeCurve: Curves.easeInOutCubic,
+            showFirst: widget.whatIfMode != true,
           ),
           Text(
             _assignment.displayName,
@@ -166,15 +162,10 @@ class MarksListTileState extends State<MarksListTile>
             }
           });
         },
-        child: AnimatedCrossFade(
+        child: CrossFade(
           firstChild: summary,
           secondChild: detail,
-          crossFadeState:
-          _assignment.expanded == true ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-          duration: const Duration(milliseconds: 300),
-          firstCurve: Curves.easeInOutCubic,
-          secondCurve: Curves.easeInOutCubic,
-          sizeCurve: Curves.easeInOutCubic,
+          showFirst: _assignment.expanded != true,
         ),
       ),
     );

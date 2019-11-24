@@ -7,6 +7,7 @@ import 'package:ta/pages/detailpage/assignmentstab/TipsCard.dart';
 import 'package:ta/pages/detailpage/whatifpage/EditAssignmentDialog.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/BetterAnimatedList.dart';
+import 'package:ta/widgets/CrossFade.dart';
 
 import 'MarksListTile.dart';
 
@@ -50,7 +51,7 @@ class _MarksListState extends State<MarksList>
             list: course.assignments.reversed.toList(),
             header: Column(
               children: <Widget>[
-                AnimatedCrossFade(
+                CrossFade(
                   key: Key("tip"),
                   firstChild: TipsCard(
                       text: Strings.get("tap_to_view_detail"),
@@ -64,13 +65,9 @@ class _MarksListState extends State<MarksList>
                     height: 0.5,
                     width: double.infinity,
                   ),
-                  crossFadeState: showTips ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                  duration: const Duration(milliseconds: 300),
-                  firstCurve: Curves.easeInOutCubic,
-                  secondCurve: Curves.easeInOutCubic,
-                  sizeCurve: Curves.easeInOutCubic,
+                    showFirst: showTips
                 ),
-                AnimatedCrossFade(
+                CrossFade(
                   key: Key("add-btn"),
                   firstChild: Column(
                     children: <Widget>[
@@ -87,11 +84,7 @@ class _MarksListState extends State<MarksList>
                     height: 0.5,
                     width: double.infinity,
                   ),
-                  crossFadeState: whatIfMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                  duration: const Duration(milliseconds: 300),
-                  firstCurve: Curves.easeInOutCubic,
-                  secondCurve: Curves.easeInOutCubic,
-                  sizeCurve: Curves.easeInOutCubic,
+                    showFirst: whatIfMode
                 )
               ],
             ),

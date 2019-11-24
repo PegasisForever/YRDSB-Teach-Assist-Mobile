@@ -4,6 +4,7 @@ import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/SmallMarkChartDetail.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
+import 'package:ta/widgets/CrossFade.dart';
 
 import 'AssignmentAdvancedEdit.dart';
 import 'AssignmentSimpleEdit.dart';
@@ -118,7 +119,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                             });
                           },
                         ),
-                        AnimatedCrossFade(
+                        CrossFade(
                           firstChild: SimpleEdit(
                             weights: course.weightTable,
                             assignment: assignment,
@@ -135,12 +136,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                                   assignment = assi;
                                 });
                               }),
-                          crossFadeState:
-                              isAdvanced ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-                          duration: const Duration(milliseconds: 300),
-                          firstCurve: Curves.easeInOutCubic,
-                          secondCurve: Curves.easeInOutCubic,
-                          sizeCurve: Curves.easeInOutCubic,
+                          showFirst: !isAdvanced,
                         ),
                         SizedBox(
                           height: 8,
