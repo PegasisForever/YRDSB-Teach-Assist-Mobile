@@ -120,6 +120,16 @@ class Strings {
       "get": "Get",
       "total": "Total",
       "feedback_available": "Feedback available",
+      "no_archived_courses": "No archived courses.",
+      "manage_accounts_alt": "Manage accounts",
+      "dark_mode": "Dark Mode",
+      "force_light": "Force light mode",
+      "follow_system": "Follow system",
+      "force_dark": "Force dark mode",
+      "primary_color": "Primary color",
+      "default_first_page": "Default first page",
+      "show_more_decimal_places": "Show more decimal places",
+      "select_a_primary_color": "Select a Primary Color"
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -234,6 +244,16 @@ class Strings {
       "get": "得分",
       "total": "总分",
       "feedback_available": "老师提供反馈",
+      "no_archived_courses": "没有已归档的课程",
+      "manage_accounts_alt": "管理账户",
+      "dark_mode": "深色模式",
+      "force_light": "始终使用浅色模式",
+      "follow_system": "跟随系统",
+      "force_dark": "始终使用深色模式",
+      "primary_color": "主色调",
+      "default_first_page": "默认首页",
+      "show_more_decimal_places": "显示更多小数位数",
+      "select_a_primary_color": "请选择一个主色调"
     }
   };
 

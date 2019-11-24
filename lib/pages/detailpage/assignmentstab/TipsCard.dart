@@ -22,7 +22,7 @@ class TipsCard extends StatelessWidget {
               ),
               Expanded(child: Text(text)),
               FlatButton(
-                child: Text(Strings.get("dismiss")),
+                child: Text(Strings.get("dismiss").toUpperCase()),
                 onPressed: onDismiss,
               )
             ],

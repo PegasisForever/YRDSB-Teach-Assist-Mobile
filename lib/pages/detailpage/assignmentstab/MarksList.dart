@@ -111,13 +111,13 @@ class _MarksListState extends State<MarksList>
             content: assignment.added != true ? Text(Strings.get("it_will_be_restored")) : null,
             actions: <Widget>[
               FlatButton(
-                child: Text(Strings.get("cancel")),
+                child: Text(Strings.get("cancel").toUpperCase()),
                 onPressed: () {
                   Navigator.pop(context);
                 },
               ),
               FlatButton(
-                child: Text(Strings.get("remove")),
+                child: Text(Strings.get("remove").toUpperCase()),
                 onPressed: () {
                   widget._course.assignments.remove(assignment);
                   widget._updateCourse(widget._course);

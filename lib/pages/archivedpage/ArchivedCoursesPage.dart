@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ta/res/Strings.dart';
 
 class ArchivedCoursesPage extends StatefulWidget {
   @override
@@ -10,10 +11,13 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Archived Courses"),
+        title: Text(Strings.get("archived_marks")),
       ),
       body: Center(
-        child: Text("No archived courses."),
+        child: Text(Strings.get("no_archived_courses"), style: Theme
+            .of(context)
+            .textTheme
+            .subhead,),
       ),
     );
   }

@@ -122,6 +122,7 @@ class _AppState extends State<App> {
         appBarTheme: AppBarTheme(color: color),
         textSelectionColor: color[200],
         textSelectionHandleColor: color,
+        cursorColor: color,
         buttonTheme: ButtonThemeData(colorScheme: ColorScheme.light(secondary: color)));
   }
 
@@ -134,6 +135,7 @@ class _AppState extends State<App> {
         toggleableActiveColor: color[300],
         textSelectionColor: color,
         textSelectionHandleColor: color[300],
+        cursorColor: color,
         primarySwatch: color);
   }
 }

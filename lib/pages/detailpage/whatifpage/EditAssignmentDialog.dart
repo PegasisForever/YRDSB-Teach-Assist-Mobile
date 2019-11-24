@@ -147,7 +147,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                   ButtonBar(
                     children: <Widget>[
                       FlatButton(
-                        child: Text(Strings.get("cancel")),
+                        child: Text(Strings.get("cancel").toUpperCase()),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -158,7 +158,8 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                             .colorScheme
                             .primary,
                         child: Text(
-                          isAdd ? Strings.get("add") : Strings.get("save"),
+                          isAdd ? Strings.get("add").toUpperCase() : Strings.get("save")
+                              .toUpperCase(),
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () {

@@ -20,7 +20,7 @@ class _SelectColorDialogState extends State<SelectColorDialog> {
     });
 
     return AlertDialog(
-      title: Text("Select a primary color"),
+      title: Text(Strings.get("select_a_primary_color")),
       contentPadding: EdgeInsets.only(top: 16, left: 16, right: 16),
       content: Center(
         heightFactor: 1,
@@ -32,7 +32,7 @@ class _SelectColorDialogState extends State<SelectColorDialog> {
       ),
       actions: <Widget>[
         FlatButton(
-          child: Text(Strings.get("cancel")),
+          child: Text(Strings.get("cancel").toUpperCase()),
           onPressed: () {
             Navigator.pop(context);
           },

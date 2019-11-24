@@ -19,14 +19,14 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         children: <Widget>[
           ListTile(
-            title: Text("Manage Accounts"),
+            title: Text(Strings.get("manage_accounts_alt")),
             leading: Icon(Icons.account_circle),
             onTap: () {
               Navigator.pushNamed(context, "/accounts_list");
             },
           ),
           ListTile(
-            title: Text("Dark mode"),
+            title: Text(Strings.get("dark_mode")),
             leading: Icon(Icons.brightness_4),
             trailing: DropdownButton<int>(
                 value: Config.darkMode,
@@ -36,20 +36,20 @@ class _SettingsPageState extends State<SettingsPage> {
                 items: [
                   DropdownMenuItem(
                     value: 0,
-                    child: Text("Force light mode"),
+                    child: Text(Strings.get("force_light")),
                   ),
                   DropdownMenuItem(
                     value: 1,
-                    child: Text("Follow system"),
+                    child: Text(Strings.get("follow_system")),
                   ),
                   DropdownMenuItem(
                     value: 2,
-                    child: Text("Force dark mode"),
+                    child: Text(Strings.get("force_dark")),
                   ),
                 ]),
           ),
           ListTile(
-            title: Text("Primary color"),
+            title: Text(Strings.get("primary_color")),
             leading: Icon(Icons.color_lens),
             trailing: Container(
               width: 24.0,
@@ -68,7 +68,7 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           ListTile(
-            title: Text("Default first page"),
+            title: Text(Strings.get("default_first_page")),
             leading: Icon(Icons.home),
             trailing: DropdownButton<int>(
                 value: Config.firstPage,
@@ -80,16 +80,16 @@ class _SettingsPageState extends State<SettingsPage> {
                 items: [
                   DropdownMenuItem(
                     value: 0,
-                    child: Text("Summary"),
+                    child: Text(Strings.get("summary")),
                   ),
                   DropdownMenuItem(
                     value: 1,
-                    child: Text("Time Line"),
+                    child: Text(Strings.get("time_line")),
                   ),
                 ]),
           ),
           ListTile(
-            title: Text("Show more decimal places"),
+            title: Text(Strings.get("show_more_decimal_places")),
             leading: Icon(Icons.exposure_plus_2),
             trailing: Switch(
               value: Config.showMoreDecimal,

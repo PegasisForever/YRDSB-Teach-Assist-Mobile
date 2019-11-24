@@ -93,7 +93,7 @@ class MarksListTileState extends State<MarksListTile>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 FlatButton.icon(
-                  label: Text(Strings.get("edit")),
+                  label: Text(Strings.get("edit").toUpperCase()),
                   icon: Icon(Icons.edit),
                   disabledTextColor:
                   isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
@@ -108,7 +108,7 @@ class MarksListTileState extends State<MarksListTile>
                   width: 24,
                 ),
                 FlatButton.icon(
-                  label: Text(Strings.get("remove")),
+                  label: Text(Strings.get("remove").toUpperCase()),
                   icon: Icon(Icons.delete),
                   disabledTextColor:
                   isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],

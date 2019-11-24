@@ -190,7 +190,7 @@ class __SearchHistoryListState extends State<_SearchHistoryList> {
         child: FlatButton.icon(
             onPressed: onClearHistory,
             icon: Icon(Icons.clear_all),
-            label: Text(Strings.get("clear_all"))),
+            label: Text(Strings.get("clear_all").toUpperCase())),
       ));
     }
 
