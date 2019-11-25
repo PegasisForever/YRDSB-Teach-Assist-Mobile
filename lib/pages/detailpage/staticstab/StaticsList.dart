@@ -58,7 +58,10 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
         : Center(
       child: Text(
         Strings.get("statistics_unavailable"),
-        style: Theme.of(context).textTheme.subhead,
+        style: Theme
+            .of(context)
+            .textTheme
+            .subhead,
       ),
     );
   }
@@ -110,6 +113,8 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
           endAngle: 90,
           pointRadiusMapper: (data, _) => ((data.get) * 0.7 + 20).toString() + "%",
           dataLabelSettings: DataLabelSettings(
+              textStyle: ChartTextStyle(
+                  color: isLightMode(context: context) ? Colors.black : Colors.white),
               isVisible: true,
               labelPosition: ChartDataLabelPosition.outside,
               labelIntersectAction: LabelIntersectAction.none))
@@ -260,13 +265,19 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
       SplineSeries<Assignment, String>(
         animationDuration: 1,
         color: color,
+        markerSettings: MarkerSettings(
+          isVisible: true,
+          color: Theme
+              .of(context)
+              .canvasColor,
+          borderWidth: 3,
+        ),
         enableTooltip: true,
         splineType: SplineType.monotonic,
         dataSource: _course.assignments,
         emptyPointSettings: EmptyPointSettings(mode: EmptyPointMode.drop),
         xValueMapper: (Assignment assignment, _) => assignment.name,
         yValueMapper: yValueMapper,
-        markerSettings: MarkerSettings(isVisible: true),
         name: Strings.get(category),
       )
     ];

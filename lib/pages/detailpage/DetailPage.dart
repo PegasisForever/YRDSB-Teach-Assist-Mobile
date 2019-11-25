@@ -9,7 +9,7 @@ import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/BetterState.dart';
 import 'package:ta/widgets/CrossFade.dart';
 
-import '../../CustomIcons.dart';
+import '../../res/CustomIcons.dart';
 import 'abouttab/AboutTab.dart';
 
 class DetailPage extends StatefulWidget {
