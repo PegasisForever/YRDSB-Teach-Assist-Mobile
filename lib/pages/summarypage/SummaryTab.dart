@@ -94,8 +94,18 @@ class _SummaryTabState extends State<SummaryTab>
                       runSpacing: 4,
                       children: <Widget>[
                         Text(course.displayName, style: Theme.of(context).textTheme.title),
-                        if (course.overallMark != null && course.overallMark >= 95)
-                          Icon(CustomIcons.fire, color: Colors.orange, size: 20,),
+                        if (course.overallMark != null && course.overallMark >= 90)
+                          (course.overallMark < 99)
+                              ? Icon(
+                            CustomIcons.fire,
+                            color: Colors.orange,
+                            size: 20,
+                          )
+                              : Icon(
+                            CustomIcons.diamond,
+                            color: Colors.lightBlue,
+                            size: 17,
+                          ),
                         if (course.cached)
                           Container(
                             padding: const EdgeInsets.all(1),
@@ -120,7 +130,10 @@ class _SummaryTabState extends State<SummaryTab>
                     value1: course.overallMark / 100,
                     center: Text(num2Str(course.overallMark) + "%",
                         style: TextStyle(color: Colors.black)),
-                    value1Color: Theme.of(context).colorScheme.secondary,
+                    value1Color: Theme
+                        .of(context)
+                        .colorScheme
+                        .secondary,
                   )
                       : LPI.LinearProgressIndicator(
                     lineHeight: 20.0,
