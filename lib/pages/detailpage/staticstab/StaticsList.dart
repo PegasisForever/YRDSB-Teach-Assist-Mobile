@@ -111,7 +111,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
           pointRadiusMapper: (data, _) => ((data.get) * 0.7 + 20).toString() + "%",
           dataLabelSettings: DataLabelSettings(
               isVisible: true,
-              labelPosition: LabelPosition.outside,
+              labelPosition: ChartDataLabelPosition.outside,
               labelIntersectAction: LabelIntersectAction.none))
     ];
   }
@@ -256,11 +256,12 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
       color = _FPcolor;
     }
 
-    return <SplineSeries<Assignment, String>>[
+    return [
       SplineSeries<Assignment, String>(
         animationDuration: 1,
         color: color,
         enableTooltip: true,
+        splineType: SplineType.monotonic,
         dataSource: _course.assignments,
         emptyPointSettings: EmptyPointSettings(mode: EmptyPointMode.drop),
         xValueMapper: (Assignment assignment, _) => assignment.name,
@@ -277,7 +278,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
       primaryXAxis: CategoryAxis(isVisible: false),
       primaryYAxis: NumericAxis(
           minimum: 0,
-          maximum: 110,
+          maximum: 105,
           axisLine: AxisLine(width: 0),
           labelFormat: '{value}%',
           maximumLabels: 5,

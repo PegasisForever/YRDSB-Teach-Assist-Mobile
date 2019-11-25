@@ -4,6 +4,8 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:syncfusion_flutter_core/core.dart';
+import 'package:ta/licence.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/packageinfo.dart';
 import 'package:ta/pages/LoginPage.dart';
@@ -23,6 +25,7 @@ void main() {
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
   runZoned<Future<void>>(() async {
+    SyncfusionLicense.registerLicense(syncfusionCommunityLicenceKey);
     initPackageInfo();
     initFirebaseMsg();
     await initPref();

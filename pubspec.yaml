@@ -8,25 +8,25 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_messaging: ^5.1.6
-  shared_preferences: ^0.5.3+4
-  after_layout: ^1.0.7
+  firebase_messaging: ^6.0.1
+  shared_preferences: ^0.5.4+5
+  after_layout: ^1.0.7+2
   flutter_localizations:
     sdk: flutter
   flutter_cupertino_localizations: ^1.0.1
   http: ^0.12.0+2
   sprintf: ^4.0.2
-  syncfusion_flutter_charts: ^1.0.0-beta.4
+  syncfusion_flutter_charts: ^17.3.26
   flutter_selectable_text: ^0.3.1
-  firebase_analytics: ^5.0.2
-  intl: 0.15.8
-  firebase_performance: ^0.3.0+5
-  firebase_crashlytics: ^0.1.0+3
-  package_info: ^0.4.0+9
+  firebase_analytics: ^5.0.6
+  intl: ^0.15.8
+  firebase_performance: ^0.3.1+4
+  firebase_crashlytics: ^0.1.1+2
+  package_info: ^0.4.0+10
   flutter_custom_tabs: ^0.6.0
-  flutter_statusbarcolor: ^0.2.2
-  sticky_headers: ^0.1.8
-  quiver: any
+  flutter_statusbarcolor: ^0.2.3
+  sticky_headers: ^0.1.8+1
+  quiver: ^2.0.5
   transparent_image: ^1.0.0
 
 dev_dependencies:
