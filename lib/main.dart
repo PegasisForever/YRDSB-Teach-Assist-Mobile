@@ -25,7 +25,7 @@ void main() {
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
   runZoned<Future<void>>(() async {
-    SyncfusionLicense.registerLicense(syncfusionCommunityLicenceKey);
+    SyncfusionLicense.registerLicense(SyncfusionCommunityLicenceKey);
     initPackageInfo();
     initFirebaseMsg();
     await initPref();
@@ -115,30 +115,54 @@ class _AppState extends State<App> {
 
   ThemeData getLightTheme(MaterialColor color) {
     return ThemeData(
-        brightness: Brightness.light,
-        colorScheme:
-        ColorScheme.light(primary: color, secondary: color[200]),
-        accentColor: color,
-        primaryColor: color,
-        primaryColorDark: color[700],
-        toggleableActiveColor: color,
-        appBarTheme: AppBarTheme(color: color),
-        textSelectionColor: color[200],
-        textSelectionHandleColor: color,
-        cursorColor: color,
-        buttonTheme: ButtonThemeData(colorScheme: ColorScheme.light(secondary: color)));
+      brightness: Brightness.light,
+      colorScheme: ColorScheme.light(
+        primary: color,
+        secondary: color[200],
+      ),
+      accentColor: color,
+      primaryColor: color,
+      primaryColorDark: color[700],
+      toggleableActiveColor: color,
+      appBarTheme: AppBarTheme(color: color),
+      textSelectionColor: color[200],
+      textSelectionHandleColor: color,
+      cursorColor: color,
+      buttonTheme: ButtonThemeData(
+        colorScheme: ColorScheme.light(secondary: color),
+      ),
+      sliderTheme: SliderThemeData(
+        disabledActiveTrackColor: Colors.grey[400],
+        disabledInactiveTrackColor: Colors.grey[400],
+        disabledThumbColor: Colors.grey[500],
+        activeTrackColor: color[200],
+        inactiveTrackColor: color[200],
+        thumbColor: color,
+      ),
+    );
   }
 
   ThemeData getDarkTheme(MaterialColor color) {
     return ThemeData(
-        brightness: Brightness.dark,
-        colorScheme:
-        ColorScheme.dark(primary: color, secondary: color[300]),
-        accentColor: color,
-        toggleableActiveColor: color[300],
-        textSelectionColor: color,
-        textSelectionHandleColor: color[300],
-        cursorColor: color,
-        primarySwatch: color);
+      brightness: Brightness.dark,
+      colorScheme: ColorScheme.dark(
+        primary: color,
+        secondary: color[300],
+      ),
+      accentColor: color,
+      toggleableActiveColor: color[300],
+      textSelectionColor: color,
+      textSelectionHandleColor: color[300],
+      cursorColor: color,
+      primarySwatch: color,
+      sliderTheme: SliderThemeData(
+        disabledActiveTrackColor: Colors.grey[500],
+        disabledInactiveTrackColor: Colors.grey[500],
+        disabledThumbColor: Colors.grey[600],
+        activeTrackColor: color[300],
+        inactiveTrackColor: color[300],
+        thumbColor: color,
+      ),
+    );
   }
 }

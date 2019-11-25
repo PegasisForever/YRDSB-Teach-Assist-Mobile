@@ -15,8 +15,6 @@ class StickSlider extends StatefulWidget {
 }
 
 class _StickSliderState extends State<StickSlider> {
-  static ThemeData _themeData;
-  static ThemeData _darkThemeData;
   double _stickValue;
   Timer _timer;
 
@@ -33,72 +31,32 @@ class _StickSliderState extends State<StickSlider> {
 
   @override
   Widget build(BuildContext context) {
-    if (_themeData == null) {
-      _darkThemeData = Theme.of(context).copyWith(
-          sliderTheme: SliderThemeData(
-              disabledActiveTrackColor: Colors.grey[500],
-              disabledInactiveTrackColor: Colors.grey[500],
-              disabledThumbColor: Colors.grey[600],
-              activeTrackColor: Theme
-                  .of(context)
-                  .colorScheme
-                  .secondary,
-              inactiveTrackColor: Theme
-                  .of(context)
-                  .colorScheme
-                  .secondary,
-              thumbColor: Theme
-                  .of(context)
-                  .colorScheme
-                  .primary));
-      _themeData = Theme.of(context).copyWith(
-          sliderTheme: SliderThemeData(
-              disabledActiveTrackColor: Colors.grey[400],
-              disabledInactiveTrackColor: Colors.grey[400],
-              disabledThumbColor: Colors.grey[500],
-              activeTrackColor: Theme
-                  .of(context)
-                  .colorScheme
-                  .secondary,
-              inactiveTrackColor: Theme
-                  .of(context)
-                  .colorScheme
-                  .secondary,
-              thumbColor: Theme
-                  .of(context)
-                  .colorScheme
-                  .primary));
-    }
+    return Slider(
+      value: _stickValue != null ? _stickValue : 0,
+      min: -1,
+      max: 1,
+      onChanged: widget.enabled
+          ? (v) {
+        setState(() {
+          _stickValue = v;
+        });
 
-    return Theme(
-      data: isLightMode(context: context) ? _themeData : _darkThemeData,
-      child: Slider(
-        value: _stickValue != null ? _stickValue : 0,
-        min: -1,
-        max: 1,
-        onChanged: widget.enabled
-            ? (v) {
-          setState(() {
-            _stickValue = v;
-          });
+        Timer.periodic(Duration(milliseconds: 16), (timer) {
+          if (_timer != null && _timer != timer) _timer.cancel();
+          _timer = timer;
+          if (_stickValue != null) {
+            widget.onDelta(powWithSign(_stickValue * widget.speed, 2));
+          }
+        });
+      }
+          : null,
+      onChangeEnd: (v) {
+        setState(() {
+          _stickValue = null;
+        });
 
-          Timer.periodic(Duration(milliseconds: 16), (timer) {
-            if (_timer != null && _timer != timer) _timer.cancel();
-            _timer = timer;
-            if (_stickValue != null) {
-              widget.onDelta(powWithSign(_stickValue * widget.speed, 2));
-            }
-          });
-        }
-            : null,
-        onChangeEnd: (v) {
-          setState(() {
-            _stickValue = null;
-          });
-
-          if (_timer != null) _timer.cancel();
-        },
-      ),
+        if (_timer != null) _timer.cancel();
+      },
     );
   }
 }
