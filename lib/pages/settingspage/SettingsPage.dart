@@ -3,6 +3,7 @@ import 'package:ta/dataStore.dart';
 import 'package:ta/main.dart';
 import 'package:ta/pages/settingspage/SelectColorDialog.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/tools.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -104,6 +105,19 @@ class _SettingsPageState extends State<SettingsPage> {
                 Config.showMoreDecimal = !Config.showMoreDecimal;
               });
             },
+          ),
+          Builder(
+              builder: (context) {
+                return ListTile(
+                  title: Text(Strings.get("reset_all_tips")),
+                  leading: Icon(Icons.assistant),
+                  onTap: () {
+                    prefs.setBool("show_what_if_tip", true);
+                    prefs.setBool("show_tap_to_view_detail_tip", true);
+                    showSnackBar(context, Strings.get("tips_reset"));
+                  },
+                );
+              }
           )
         ],
       ),

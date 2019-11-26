@@ -129,7 +129,9 @@ class Strings {
       "primary_color": "Primary color",
       "default_first_page": "Default first page",
       "show_more_decimal_places": "Show more decimal places",
-      "select_a_primary_color": "Select a Primary Color"
+      "select_a_primary_color": "Select a Primary Color",
+      "reset_all_tips": "Reset all tips",
+      "tips_reset": "Tips reset"
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -253,7 +255,9 @@ class Strings {
       "primary_color": "主色调",
       "default_first_page": "默认首页",
       "show_more_decimal_places": "显示更多小数位数",
-      "select_a_primary_color": "请选择一个主色调"
+      "select_a_primary_color": "请选择一个主色调",
+      "reset_all_tips": "重置所有提示",
+      "tips_reset": "提示已重置"
     }
   };
 
