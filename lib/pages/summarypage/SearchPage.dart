@@ -98,7 +98,6 @@ class AssignmentSearchDelegate extends SearchDelegate {
               false,
               key: Key(assignment.hashCode.toString()),
             ));
-            matchedItems.add(Divider());
           }
         });
       if (matchedItems.length > 0) matchedItems.removeLast();

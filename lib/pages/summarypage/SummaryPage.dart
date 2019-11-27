@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:ta/model/User.dart';
-import 'package:ta/pages/drawerpages/SearchPage.dart';
+import 'package:ta/pages/summarypage/SearchPage.dart';
 import 'package:ta/pages/summarypage/SummaryTab.dart';
 import 'package:ta/pages/summarypage/TimelineTab.dart';
 import 'package:ta/res/Strings.dart';
