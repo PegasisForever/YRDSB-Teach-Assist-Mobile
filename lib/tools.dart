@@ -45,8 +45,14 @@ String getRoundString(double num, int digit) {
   return str;
 }
 
-String num2Str(double num) {
-  return Config.showMoreDecimal ? num.toStringAsFixed(2) : getRoundString(num, 1);
+String num2Str(num num) {
+  var n = num.toDouble();
+  return Config.showMoreDecimal ? n.toStringAsFixed(2) : getRoundString(n, 1);
+}
+
+double num2Round(num num) {
+  var factor = Config.showMoreDecimal ? 100 : 10;
+  return (num * factor).roundToDouble() / factor;
 }
 
 String testBlank(String str) {

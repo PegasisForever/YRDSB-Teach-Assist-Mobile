@@ -108,7 +108,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
           xValueMapper: (data, _) => data.name,
           yValueMapper: (data, _) => data.weight,
           enableSmartLabels: false,
-          dataLabelMapper: (data, _) => data.name + "\n" + getRoundString(data.get, 1) + "%",
+          dataLabelMapper: (data, _) => data.name + "\n" + num2Str(data.get) + "%",
           startAngle: 90,
           endAngle: 90,
           pointRadiusMapper: (data, _) => ((data.get) * 0.7 + 20).toString() + "%",
@@ -139,7 +139,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
             showFirst: !widget._whatIfMode,
             firstChild: Center(
               child: Text(
-                getRoundString(_course.overallMark, 2) + "%",
+                num2Str(_course.overallMark) + "%",
                 style: TextStyle(fontSize: 60),
               ),
             ),
@@ -147,16 +147,16 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  getRoundString(_course.overallMark, 1) + "%",
-                  style: TextStyle(fontSize: 45),
+                  num2Str(_course.overallMark) + "%",
+                  style: TextStyle(fontSize: 40),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Icon(Icons.arrow_forward, size: 32),
                 ),
                 Text(
-                  getRoundString(newOverall, 1) + "%",
-                  style: TextStyle(fontSize: 45),
+                  num2Str(newOverall) + "%",
+                  style: TextStyle(fontSize: 40),
                 ),
               ],
             ),
@@ -233,22 +233,22 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
     Color color;
     if (category == "knowledge_understanding") {
       yValueMapper = (Assignment assignment, _) => assignment.KU.available && assignment.KU.finished
-          ? assignment.KU.get / assignment.KU.total * 100
+          ? num2Round(assignment.KU.get / assignment.KU.total * 100)
           : null;
       color = isLight ? _Kcolor : _KPcolor;
     } else if (category == "thinking") {
       yValueMapper = (Assignment assignment, _) => assignment.T.available && assignment.T.finished
-          ? assignment.T.get / assignment.T.total * 100
+          ? num2Round(assignment.T.get / assignment.T.total * 100)
           : null;
       color = isLight ? _Tcolor : _TPcolor;
     } else if (category == "communication") {
       yValueMapper = (Assignment assignment, _) => assignment.C.available && assignment.C.finished
-          ? assignment.C.get / assignment.C.total * 100
+          ? num2Round(assignment.C.get / assignment.C.total * 100)
           : null;
       color = isLight ? _Ccolor : _CPcolor;
     } else if (category == "application") {
       yValueMapper = (Assignment assignment, _) => assignment.A.available && assignment.A.finished
-          ? assignment.A.get / assignment.A.total * 100
+          ? num2Round(assignment.A.get / assignment.A.total * 100)
           : null;
       color = isLight ? _Acolor : _APcolor;
     } else if (category == "overall") {
@@ -256,7 +256,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
           .getCourseAnalysis()
           .overallList;
       yValueMapper = (_, index) {
-        return overallList[index];
+        return num2Round(overallList[index]);
       };
       color = _FPcolor;
     }
@@ -295,7 +295,10 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
           maximumLabels: 5,
           majorTickLines: MajorTickLines(size: 0)),
       series: data,
-      tooltipBehavior: TooltipBehavior(enable: true, opacity: 0.7, animationDuration: 0),
+      tooltipBehavior: TooltipBehavior(
+        enable: true,
+        animationDuration: 0,
+      ),
     );
   }
 }
