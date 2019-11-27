@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="site.pegasis.yrdsb.ta"
+        android:name="io.flutter.app.FlutterApplication"
         android:label="YRDSB Teach Assist"
         android:icon="@mipmap/ic_launcher">
         <meta-data
