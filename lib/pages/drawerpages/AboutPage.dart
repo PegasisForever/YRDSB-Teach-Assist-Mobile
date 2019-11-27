@@ -52,6 +52,11 @@ class _AboutPageState extends BetterState<AboutPage> {
               height: 30,
             ),
             Center(
+              child: Text(
+                  "Developed by students for students."
+              ),
+            ),
+            Center(
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(children: [
