@@ -52,61 +52,50 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
     var course = widget.course;
     var avg = assignment.getAverage(course.weightTable);
 
-    return Dialog(
-      child: DefaultTabController(
-        length: 5,
-        initialIndex: 0,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Flexible(
-              flex: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
+    return SingleChildScrollView(
+      child: Dialog(
+        child: DefaultTabController(
+          length: 5,
+          initialIndex: 0,
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       assignment.name,
-                      style: Theme.of(context).textTheme.title,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .title,
                     ),
-                    SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                        Strings.get("average:") +
-                            ((avg != null) ? (num2Str(avg) + "%") : "N/A"),
+                    SizedBox(height: 4),
+                    Text(Strings.get("average:") + ((avg != null) ? (num2Str(avg) + "%") : "N/A"),
                         style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    SizedBox(
-                      height: 4,
-                    ),
+                    SizedBox(height: 8),
                     SmallMarkChartDetail(
                       assignment,
                       height: 170,
                     ),
-                  ],
-                ),
-              ),
-            ),
-            Flexible(
-              child: ListView(
-                shrinkWrap: true,
-                padding: const EdgeInsets.fromLTRB(12, 4, 12, 0),
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(4, 0, 4, 4),
-                    child: TextField(
+                    SizedBox(height: 16),
+                    TextField(
                       controller: _titleController,
-                      decoration: InputDecoration(
-                          labelText: Strings.get("assignment_title"), filled: true),
+                      decoration:
+                      InputDecoration(labelText: Strings.get("assignment_title"), filled: true),
                       onChanged: (text) {
                         setState(() {
                           assignment.name = text;
                         });
                       },
                     ),
+                  ],
                   ),
-                  Card(
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Card(
                     clipBehavior: Clip.antiAlias,
                     child: Column(
                       children: <Widget>[
@@ -144,34 +133,32 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                       ],
                     ),
                   ),
-                  ButtonBar(
-                    children: <Widget>[
-                      FlatButton(
-                        child: Text(Strings.get("cancel").toUpperCase()),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      RaisedButton(
-                        color: Theme
-                            .of(context)
-                            .colorScheme
-                            .primary,
-                        child: Text(
-                          isAdd ? Strings.get("add").toUpperCase() : Strings.get("save")
-                              .toUpperCase(),
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop(assignment);
-                        },
-                      )
-                    ],
+              ),
+              ButtonBar(
+                children: <Widget>[
+                  FlatButton(
+                    child: Text(Strings.get("cancel").toUpperCase()),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  RaisedButton(
+                    color: Theme
+                        .of(context)
+                        .colorScheme
+                        .primary,
+                    child: Text(
+                      isAdd ? Strings.get("add").toUpperCase() : Strings.get("save").toUpperCase(),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(assignment);
+                    },
                   )
                 ],
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
