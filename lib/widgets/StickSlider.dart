@@ -69,6 +69,7 @@ class StickSliderTile extends StatefulWidget {
   final double value;
   final ValueChanged<double> onChanged;
   final bool enabled;
+  final FocusNode focusNode;
 
   StickSliderTile({this.labelWidth,
     this.label,
@@ -76,7 +77,8 @@ class StickSliderTile extends StatefulWidget {
     this.max = 1000,
     this.min = 0,
     this.value,
-    this.onChanged});
+    this.onChanged,
+    this.focusNode});
 
   @override
   _StickSliderTileState createState() => _StickSliderTileState();
@@ -86,12 +88,14 @@ class _StickSliderTileState extends State<StickSliderTile> {
   var _numberTextController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    _numberTextController.text = getRoundString(widget.value, 2);
+  }
+
+  @override
   Widget build(BuildContext context) {
     var _value = widget.value;
-    var rounded = getRoundString(_value, 1);
-    if (_numberTextController.text != rounded) {
-      _numberTextController.text = getRoundString(_value, 1);
-    }
 
     return Row(
       children: <Widget>[
@@ -114,9 +118,16 @@ class _StickSliderTileState extends State<StickSliderTile> {
             constraints: BoxConstraints(maxWidth: 35),
             child: TextField(
               enabled: widget.enabled,
+              focusNode: widget.focusNode,
               controller: _numberTextController,
               textAlign: TextAlign.center,
               keyboardType: TextInputType.numberWithOptions(signed: widget.min < 0, decimal: true),
+              onChanged: (str) {
+                var value = double.tryParse(str);
+                if (value != null && value <= widget.max && value >= widget.min) {
+                  widget.onChanged(value);
+                }
+              },
               onSubmitted: (str) {
                 var value = double.tryParse(str);
                 if (value != null && value <= widget.max && value >= widget.min) {
@@ -149,6 +160,7 @@ class _StickSliderTileState extends State<StickSliderTile> {
                 var str = rounded.toString();
                 if (str != _numberTextController.text) {
                   widget.onChanged(rounded.toDouble());
+                  _numberTextController.text = str;
                 }
               },
             ),
