@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ta/tools.dart';
 
 class LinearProgressIndicator extends StatefulWidget {
   final Color backgroundColor;
@@ -11,8 +12,7 @@ class LinearProgressIndicator extends StatefulWidget {
   final double lineHeight;
   final Widget center;
 
-  LinearProgressIndicator(
-      {this.backgroundColor = const Color(0xFFB8C7CB),
+  LinearProgressIndicator({this.backgroundColor,
       this.value1Color,
       this.value2Color,
       this.value1,
@@ -76,7 +76,8 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: CustomPaint(
         painter: _LPIPainter(
-            backgroundColor: widget.backgroundColor,
+            backgroundColor: widget.backgroundColor ??
+                (isLightMode(context: context) ? Colors.grey[300] : Colors.grey[700]),
             value1Color: widget.value1Color,
             value2Color: widget.value2Color,
             value1: percent1,
