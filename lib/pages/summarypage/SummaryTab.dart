@@ -1,12 +1,11 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:sprintf/sprintf.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/pages/detailpage/DetailPage.dart';
 import 'package:ta/pages/drawerpages/EditAccount.dart';
-import 'package:ta/res/CustomIcons.dart';
+import 'package:ta/pages/summarypage/CourseCard.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
 
@@ -23,7 +22,8 @@ class SummaryTab extends StatefulWidget {
 
 class _SummaryTabState extends State<SummaryTab>
     with AfterLayoutMixin<SummaryTab>, AutomaticKeepAliveClientMixin {
-  var _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
+  var _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  var courses = getCourseListOf(currentUser.number);
 
   @override
   bool get wantKeepAlive => true;
@@ -31,7 +31,6 @@ class _SummaryTabState extends State<SummaryTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    var courses = getCourseListOf(currentUser.number);
 
     return RefreshIndicator(
       key: _refreshIndicatorKey,
@@ -63,89 +62,16 @@ class _SummaryTabState extends State<SummaryTab>
         total += course.overallMark;
         availableCourseCount++;
       }
-      var infoStr = [];
-      if (course.block != null) {
-        infoStr.add(sprintf(Strings.get("period_number"), [course.block]));
-      }
-      if (course.room != null) {
-        infoStr.add(sprintf(Strings.get("room_number"), [course.room]));
-      }
-      list.add(Padding(
-        key: Key(course.displayName),
-        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DetailPage(course)),
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      runAlignment: WrapAlignment.center,
-                      spacing: 4,
-                      runSpacing: 4,
-                      children: <Widget>[
-                        Text(course.displayName, style: Theme.of(context).textTheme.title),
-                        if (course.overallMark != null && course.overallMark >= 90)
-                          (course.overallMark < 99)
-                              ? Icon(
-                            CustomIcons.fire,
-                            color: Colors.orange,
-                            size: 20,
-                          )
-                              : Icon(
-                            CustomIcons.diamond,
-                            color: Colors.lightBlue,
-                            size: 17,
-                          ),
-                        if (course.cached)
-                          Container(
-                            padding: const EdgeInsets.all(1),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey, width: 1),
-                              borderRadius: BorderRadius.all(Radius.circular(4)),
-                            ),
-                            child: Text(
-                              Strings.get("cached"),
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          )
-                      ]),
-                  SizedBox(height: 4),
-                  if (infoStr.length > 0)
-                    Text(infoStr.join("  -  "), style: Theme.of(context).textTheme.subhead),
-                  SizedBox(height: 16),
-                  course.overallMark != null
-                      ? LPI.LinearProgressIndicator(
-                    lineHeight: 20.0,
-                    animationDuration: 700,
-                    value1: course.overallMark / 100,
-                    center: Text(num2Str(course.overallMark) + "%",
-                        style: TextStyle(color: Colors.black)),
-                    value1Color: Theme
-                        .of(context)
-                        .colorScheme
-                        .secondary,
-                  )
-                      : LPI.LinearProgressIndicator(
-                    lineHeight: 20.0,
-                    value1: 0,
-                    center: Text(Strings.get("marks_unavailable"),
-                        style: TextStyle(color: Colors.black)),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+
+      list.add(CourseCard(
+        course: course,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailPage(course)),
+          );
+        },
       ));
     });
 

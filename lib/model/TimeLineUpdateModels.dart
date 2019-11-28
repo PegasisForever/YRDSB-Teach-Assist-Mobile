@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 import 'package:ta/model/Mark.dart';
-import 'package:ta/network/network.dart';
 import 'package:ta/prasers/ParsersCollection.dart';
 
 import '../dataStore.dart';
@@ -41,7 +40,7 @@ class CourseRemoved extends TAUpdate{
 }
 
 List<TAUpdate> getTimelineOf(String number){
-  var json=jsonDecode(prefs.getString("$number-timeline"));
+  var json = jsonDecode(prefs.getString("$number-timeline") ?? "[]");
   return parseTimeLine(json);
 }
 

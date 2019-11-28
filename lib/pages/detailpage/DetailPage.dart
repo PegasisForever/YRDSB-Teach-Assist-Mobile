@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
-import 'package:ta/model/User.dart';
 import 'package:ta/pages/detailpage/assignmentstab/MarksList.dart';
 import 'package:ta/pages/detailpage/staticstab/StaticsList.dart';
 import 'package:ta/res/Strings.dart';
@@ -23,10 +22,11 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends BetterState<DetailPage> {
   Course _course;
+  Course _originalCourse;
   var whatIfMode = false;
   var showWhatIfTips = prefs.getBool("show_what_if_tip") ?? true;
 
-  _DetailPageState(this._course);
+  _DetailPageState(this._course) :_originalCourse=_course.copy();
 
   updateCourse(course) {
     setState(() {
@@ -57,14 +57,7 @@ class _DetailPageState extends BetterState<DetailPage> {
                   setState(() {
                     whatIfMode = !whatIfMode;
                     if (!whatIfMode) {
-                      var originalCourses = getCourseListOf(currentUser.number);
-                      originalCourses.forEach((originalCourse) {
-                        if (originalCourse.displayName == _course.displayName) {
-                          //course in this detail page
-                          _course = originalCourse;
-                          return;
-                        }
-                      });
+                      _course = _originalCourse.copy();
                     }
                   });
                 },

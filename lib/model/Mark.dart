@@ -273,6 +273,29 @@ class Course {
 
   Course.blank();
 
+  Course copy() {
+    var course = Course.blank()
+      ..startTime = startTime
+      ..endTime = endTime
+      ..name = name
+      ..code = code
+      ..block = block
+      ..room = room
+      ..overallMark = overallMark
+      ..cached = cached;
+
+    if (overallMark != null) {
+      course.assignments = List<Assignment>();
+      assignments.forEach((assignment) {
+        course.assignments.add(assignment.copy());
+      });
+      course.weightTable = weightTable.copy();
+    }
+
+    return course;
+  }
+
+
   CourseAnalysis getCourseAnalysis() {
     var analysis = CourseAnalysis.blank();
 
@@ -396,7 +419,7 @@ class CourseAnalysis {
 }
 
 List<Course> getCourseListOf(String number) {
-  var json = jsonDecode(prefs.getString("$number-mark"));
+  var json = jsonDecode(prefs.getString("$number-mark") ?? "[]");
   return parseCourseList(json);
 }
 
@@ -405,7 +428,7 @@ saveCourseListOf(String number, Map<String, dynamic> json) {
 }
 
 List<Course> getArchivedCourseListOf(String number) {
-  var json = jsonDecode(prefs.getString("$number-archived"));
+  var json = jsonDecode(prefs.getString("$number-archived") ?? "[]");
   return parseCourseList(json);
 }
 
