@@ -3,6 +3,7 @@ import 'package:ta/model/User.dart';
 import 'package:ta/pages/drawerpages/DonatePage.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/res/Themes.dart';
+import 'package:ta/widgets/CrossFade.dart';
 
 import '../../tools.dart';
 import '../../widgets/user_accounts_drawer_header.dart' as UADrawerHeader;
@@ -19,7 +20,6 @@ class SummaryPageDrawer extends StatefulWidget {
 
 class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
   var _drawerHeaderOpened = false;
-  var _accountSelectorHeight = 0.0;
   ValueChanged<User> _onUserSelected;
 
   @override
@@ -54,31 +54,16 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
               ),
               onDetailsPressed: () {
                 setState(() {
-                  if (!_drawerHeaderOpened) {
-                    _accountSelectorHeight = 64.0;
-                    userList.forEach((user) {
-                      if (user.number != currentUser.number) {
-                        if (user.displayName == "") {
-                          _accountSelectorHeight += 48;
-                        } else {
-                          _accountSelectorHeight += 64;
-                        }
-                      }
-                    });
-                  } else {
-                    _accountSelectorHeight = 0;
-                  }
                   _drawerHeaderOpened = !_drawerHeaderOpened;
                 });
               },
             ),
-            AnimatedContainer(
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeInOutCubic,
-              height: _accountSelectorHeight,
-              child: Column(
+            CrossFade(
+              firstChild: Column(
                 children: getAccountSelectorList(),
               ),
+              secondChild: Container(),
+              showFirst: _drawerHeaderOpened,
             ),
             ListTile(
               title: Text(Strings.get("moodle")),
@@ -151,7 +136,6 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
             _onUserSelected(user);
             setState(() {
               _drawerHeaderOpened = false;
-              _accountSelectorHeight = 0;
             });
             Navigator.pop(context);
           },
@@ -165,7 +149,6 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
       onTap: () {
         setState(() {
           _drawerHeaderOpened = false;
-          _accountSelectorHeight = 0;
         });
         Navigator.pushNamed(context, "/accounts_list");
       },
