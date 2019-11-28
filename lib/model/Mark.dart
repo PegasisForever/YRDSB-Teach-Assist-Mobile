@@ -403,3 +403,12 @@ List<Course> getCourseListOf(String number) {
 saveCourseListOf(String number, Map<String, dynamic> json) {
   prefs.setString("$number-mark", jsonEncode(json));
 }
+
+List<Course> getArchivedCourseListOf(String number) {
+  var json = jsonDecode(prefs.getString("$number-archived"));
+  return parseCourseList(json);
+}
+
+saveArchivedCourseListOf(String number, Map<String, dynamic> json) {
+  prefs.setString("$number-archived", jsonEncode(json));
+}

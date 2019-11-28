@@ -10,7 +10,7 @@ List<Course> parseCourseList(dynamic json) {
     var version = json["version"];
     var data = json["data"];
     return _JSONCourseListParsers[version](data);
-  } catch (e,trace) {
+  } catch (e) {
     return List<Course>();
   }
 }

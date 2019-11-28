@@ -83,6 +83,18 @@ Future<String> getMarkTimeLine(User user) async {
   return res.body;
 }
 
+Future<String> getArchived(User user) async {
+  var res = await _postWithMetric(
+      baseUrl + "getarchived", jsonEncode({"number": user.number, "password": user.password}));
+
+  int statusCode = res.statusCode;
+  if (statusCode != 200) {
+    throw HttpException(statusCode.toString());
+  }
+
+  return res.body;
+}
+
 Future<void> sendFeedBack(String contactInfo, String feedback) async {
   var res = await _postWithMetric(
       baseUrl + "feedback", jsonEncode({"contact_info": contactInfo, "feedback": feedback}));
@@ -99,6 +111,13 @@ getAndSaveMarkTimeline(User user) async {
 
   saveCourseListOf(user.number, json["course_list"]);
   saveTimelineOf(user.number, json["time_line"]);
+}
+
+getAndSaveArchived(User user) async {
+  var res = await getArchived(user);
+  var json = jsonDecode(res);
+
+  saveArchivedCourseListOf(user.number, json);
 }
 
 regiAndSave(User user) async {
