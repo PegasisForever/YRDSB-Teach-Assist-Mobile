@@ -303,7 +303,6 @@ class Course {
     return course;
   }
 
-
   CourseAnalysis getCourseAnalysis() {
     var analysis = CourseAnalysis.blank();
 
@@ -318,6 +317,8 @@ class Course {
     var An = 0.0;
     var O = 0.0;
     var On = 0.0;
+    var F = 0.0;
+    var Fn = 0.0;
 
     assignments.forEach((assi) {
       if (assi.KU.available && assi.KU.finished) {
@@ -340,12 +341,17 @@ class Course {
         O += assi.O.get / assi.O.total * assi.O.weight;
         On += assi.O.weight;
       }
+      if (assi.F.available && assi.F.finished) {
+        F += assi.F.get / assi.F.total * assi.F.weight;
+        Fn += assi.F.weight;
+      }
 
       var Ka = K / Kn;
       var Ta = T / Tn;
       var Ca = C / Cn;
       var Aa = A / An;
       var Oa = O / On;
+      var Fa = F / Fn;
       var avg = 0.0;
       var avgn = 0.0;
       if (Ka >= 0.0) {
@@ -368,6 +374,10 @@ class Course {
         avg += Oa * weightTable.O.W;
         avgn += weightTable.O.W;
       }
+      if (Fa >= 0.0) {
+        avg += Fa * weightTable.F.W;
+        avgn += weightTable.F.W;
+      }
 
       if (i == assignments.length - 1) {
         analysis.kuSA = Ka >= 0 ? Ka * 100 : 0;
@@ -375,7 +385,7 @@ class Course {
         analysis.cSA = Ca >= 0 ? Ca * 100 : 0;
         analysis.aSA = Aa >= 0 ? Aa * 100 : 0;
         analysis.oSA = Oa >= 0 ? Oa * 100 : 0;
-        analysis.fSA = 0;
+        analysis.fSA = Fa >= 0 ? Fa * 100 : 0;
       }
       if (avgn > 0.0) {
         analysis.overallList.add(avg / avgn * 100);

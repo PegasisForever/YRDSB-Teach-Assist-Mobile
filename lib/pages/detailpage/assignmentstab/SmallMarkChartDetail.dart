@@ -6,12 +6,12 @@ import 'package:ta/tools.dart';
 
 class _SmallMarkChartDetailPainter extends CustomPainter {
   final Assignment _assi;
-  final Color _Kcolor = Color(0xffffeb3b);
-  final Color _Tcolor = Color(0xff8bc34a);
-  final Color _Ccolor = Color(0xff9fa8da);
-  final Color _Acolor = Color(0xffffb74d);
-  final Color _Ocolor = Color(0xff90a4ae);
-  final Color _Fcolor = Color(0xff81d4fa);
+  final Color _Kcolor = const Color(0xffffeb3b);
+  final Color _Tcolor = const Color(0xff8bc34a);
+  final Color _Ccolor = const Color(0xff9fa8da);
+  final Color _Acolor = const Color(0xffffb74d);
+  final Color _Ocolor = const Color(0xff90a4ae);
+  final Color _Fcolor = const Color(0xff81d4fa);
 
   _SmallMarkChartDetailPainter(this._assi);
 

@@ -26,7 +26,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
   final Color _TPcolor = const Color(0xff8bc34a);
   final Color _CPcolor = const Color(0xff9fa8da);
   final Color _APcolor = const Color(0xffffb74d);
-  final Color _FPcolor = const Color(0xff03a9f4);
+  final Color _FPcolor = const Color(0xff81d4fa);
   final Color _OPcolor = Colors.blueGrey[300];
 
   _StaticsListState();

@@ -7,11 +7,12 @@ import 'package:ta/tools.dart';
 class _SmallMarkChartPainter extends CustomPainter {
   final Assignment _assi;
   final bool _drawKTCA;
-  final Color _Kcolor = Color(0xffffeb3b);
-  final Color _Tcolor = Color(0xff8bc34a);
-  final Color _Ccolor = Color(0xff9fa8da);
-  final Color _Acolor = Color(0xffffb74d);
-  final Color _Ocolor = Color(0xff90a4ae);
+  final Color _Kcolor = const Color(0xffffeb3b);
+  final Color _Tcolor = const Color(0xff8bc34a);
+  final Color _Ccolor = const Color(0xff9fa8da);
+  final Color _Acolor = const Color(0xffffb74d);
+  final Color _Fcolor = const Color(0xff81d4fa);
+  final Color _Ocolor = const Color(0xff90a4ae);
 
   _SmallMarkChartPainter(this._assi, this._drawKTCA);
 
@@ -50,6 +51,15 @@ class _SmallMarkChartPainter extends CustomPainter {
           _Acolor,
           _assi.A,
           120,
+          40,
+          height);
+    } else if (_assi.F.available) {
+      _paintBar(
+          canvas,
+          Strings.get("f_single"),
+          _Fcolor,
+          _assi.F,
+          15,
           40,
           height);
     } else {
@@ -129,7 +139,7 @@ class SmallMarkChart extends StatelessWidget {
   Widget build(BuildContext context) {
     var KTCAAvailable =
         _assi.KU.available || _assi.T.available || _assi.C.available || _assi.A.available;
-    var drawKTCA = KTCAAvailable || !_assi.O.available;
+    var drawKTCA = KTCAAvailable || (!_assi.O.available && !_assi.F.available);
     return Container(
       height: 100,
       width: drawKTCA ? 160 : 70,
