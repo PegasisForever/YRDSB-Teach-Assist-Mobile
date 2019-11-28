@@ -23,7 +23,8 @@ class SummaryTab extends StatefulWidget {
 class _SummaryTabState extends State<SummaryTab>
     with AfterLayoutMixin<SummaryTab>, AutomaticKeepAliveClientMixin {
   var _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var courses = getCourseListOf(currentUser.number);
+  List<Course> courses;
+  String userNumber;
 
   @override
   bool get wantKeepAlive => true;
@@ -31,6 +32,10 @@ class _SummaryTabState extends State<SummaryTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    if (userNumber != currentUser.number) {
+      userNumber = currentUser.number;
+      courses = getCourseListOf(userNumber);
+    }
 
     return RefreshIndicator(
       key: _refreshIndicatorKey,
@@ -68,8 +73,7 @@ class _SummaryTabState extends State<SummaryTab>
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => DetailPage(course)),
+            MaterialPageRoute(builder: (context) => DetailPage(course)),
           );
         },
       ));

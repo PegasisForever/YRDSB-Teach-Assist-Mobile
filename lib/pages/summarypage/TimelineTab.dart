@@ -12,24 +12,33 @@ class TimelineTab extends StatefulWidget {
 }
 
 class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClientMixin {
+  List<TAUpdate> timeline;
+  String userNumber;
+
   @override
   bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    var timeline = getTimelineOf(currentUser.number);
+    if (userNumber != currentUser.number) {
+      userNumber = currentUser.number;
+      timeline = getTimelineOf(currentUser.number);
+    }
+
     return timeline.length > 0
         ? ListView(
       padding: EdgeInsets.only(bottom: 8 + getBottomPadding(context)),
       children: _getTimelineCards(timeline),
     )
         : Center(
-      child: Text(Strings.get("timeline_blank_text"),
+      child: Text(
+        Strings.get("timeline_blank_text"),
         style: Theme
             .of(context)
             .textTheme
-            .subhead,),
+            .subhead,
+      ),
     );
   }
 
@@ -149,14 +158,20 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
                 lineHeight: 20.0,
                 value1: update.overallAfter / 100,
                 value2: update.overallBefore / 100,
-                value1Color: Theme.of(context).colorScheme.secondary,
+                value1Color: Theme
+                    .of(context)
+                    .colorScheme
+                    .secondary,
                 value2Color: Colors.red[400],
               )
                   : LPI.LinearProgressIndicator(
                 lineHeight: 20.0,
                 value1: update.overallBefore / 100,
                 value2: update.overallAfter / 100,
-                value1Color: Theme.of(context).colorScheme.secondary,
+                value1Color: Theme
+                    .of(context)
+                    .colorScheme
+                    .secondary,
                 value2Color: Colors.green,
               ),
             ],
