@@ -35,7 +35,6 @@ class _EditAccountState extends BetterState<EditAccount> {
   final _passwordErrorText = ErrorText(null);
 
   _EditAccountState(User user, bool updatePassword) {
-    print(updatePassword);
     _updatePassword = updatePassword;
     _aliasController = TextEditingController(text: user.displayName);
     _studentNumberController = TextEditingController(text: user.number);
@@ -221,7 +220,6 @@ class _EditAccountState extends BetterState<EditAccount> {
 
                             Navigator.pop(context);
                           } catch (e) {
-                            print(e);
                             _handleError(e, context);
                           } finally {
                             setState(() {

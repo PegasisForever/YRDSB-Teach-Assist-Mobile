@@ -48,7 +48,6 @@ Future<HttpResponse> _postWithMetric(String url, body) async {
 }
 
 Future<String> regi(User user) async {
-  print(baseUrl);
   var res = await _postWithMetric(baseUrl + "regi",
       jsonEncode({"user": user, "token": firebaseToken, "language": Strings.currentLanguage}));
 

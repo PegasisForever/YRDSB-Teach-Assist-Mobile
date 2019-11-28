@@ -164,7 +164,6 @@ class _FeedbackPageState extends BetterState<FeedbackPage> {
           }
       }
     } else {
-      print(e);
       showSnackBar(context, Strings.get("error") + e.toString());
     }
   }
