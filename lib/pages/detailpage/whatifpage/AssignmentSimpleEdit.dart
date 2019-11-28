@@ -38,10 +38,12 @@ class SimpleEditState extends State<SimpleEdit> {
               ..C.total = 100
               ..A.total = 100
               ..O.total = 100
+              ..F.total = 100
               ..KU.get = value
               ..T.get = value
               ..C.get = value
               ..A.get = value
+              ..F.get = value
               ..O.get = value;
 
             widget.onChanged(widget.assignment);
@@ -60,7 +62,8 @@ class SimpleEditState extends State<SimpleEdit> {
               ..T.weight = value
               ..C.weight = value
               ..A.weight = value
-              ..O.weight = value;
+              ..O.weight = value
+              ..F.weight = value;
             widget.onChanged(widget.assignment);
           },
         )

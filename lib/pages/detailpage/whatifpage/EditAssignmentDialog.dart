@@ -60,7 +60,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
     return SingleChildScrollView(
       child: Dialog(
         child: DefaultTabController(
-          length: 5,
+          length: 6,
           initialIndex: 0,
           child: Column(
             children: <Widget>[

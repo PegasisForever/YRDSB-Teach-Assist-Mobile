@@ -108,6 +108,10 @@ class Assignment {
       get += O.get / O.total * weights.O.CW * O.weight;
       total += weights.O.CW * O.weight;
     }
+    if (F.available && F.finished) {
+      get += F.get / F.total * weights.F.CW * F.weight;
+      total += weights.F.CW * F.weight;
+    }
 
     if (total > 0) {
       var avg = get / total;
@@ -138,6 +142,10 @@ class Assignment {
     }
     if (O.available && O.finished) {
       weight += O.weight;
+      count++;
+    }
+    if (F.available && F.finished) {
+      weight += F.weight;
       count++;
     }
 

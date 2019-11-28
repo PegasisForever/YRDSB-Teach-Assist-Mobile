@@ -32,6 +32,7 @@ class AdvancedEditState extends State<AdvancedEdit> {
             Tab(text: Strings.get("c")),
             Tab(text: Strings.get("a")),
             Tab(text: Strings.get("o")),
+            Tab(text: Strings.get("f")),
           ],
         ),
         SizedBox(
@@ -75,6 +76,14 @@ class AdvancedEditState extends State<AdvancedEdit> {
                 smallMark: assi.O,
                 onChanged: (mark) {
                   assi.O = mark;
+                  widget.onChanged(assi);
+                },
+              ),
+              _SmallMarkAdvancedEdit(
+                category: "f",
+                smallMark: assi.F,
+                onChanged: (mark) {
+                  assi.F = mark;
                   widget.onChanged(assi);
                 },
               ),
