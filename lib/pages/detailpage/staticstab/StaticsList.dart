@@ -27,6 +27,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
   final Color _CPcolor = const Color(0xff9fa8da);
   final Color _APcolor = const Color(0xffffb74d);
   final Color _FPcolor = const Color(0xff03a9f4);
+  final Color _OPcolor = Colors.blueGrey[300];
 
   _StaticsListState();
 
@@ -81,6 +82,8 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
     var analysis = widget._whatIfMode ? _course.getCourseAnalysis() : null;
     final List<_PieData> chartData = widget._whatIfMode
         ? [
+      if (_course.weightTable.O.CW > 0)
+        _PieData(Strings.get("o"), _course.weightTable.O.CW, analysis.oSA, _OPcolor),
       _PieData(Strings.get("a"), _course.weightTable.A.CW, analysis.aSA, _APcolor),
       _PieData(Strings.get("c"), _course.weightTable.C.CW, analysis.cSA, _CPcolor),
       _PieData(Strings.get("t"), _course.weightTable.T.CW, analysis.tSA, _TPcolor),
@@ -88,6 +91,9 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
       _PieData(Strings.get("f"), _course.weightTable.F.CW, analysis.fSA, _FPcolor),
     ]
         : [
+      if (_course.weightTable.O.CW > 0)
+        _PieData(
+            Strings.get("o"), _course.weightTable.O.CW, _course.weightTable.O.SA, _OPcolor),
       _PieData(
           Strings.get("a"), _course.weightTable.A.CW, _course.weightTable.A.SA, _APcolor),
       _PieData(

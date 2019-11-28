@@ -51,6 +51,7 @@ String num2Str(num num) {
 }
 
 double num2Round(num num) {
+  if (num == null) return null;
   var factor = Config.showMoreDecimal ? 100 : 10;
   return (num * factor).roundToDouble() / factor;
 }
