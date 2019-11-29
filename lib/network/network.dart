@@ -14,7 +14,7 @@ import '../firebase.dart';
 const String baseUrl = true
     ? "https://api.pegasis.site/yrdsb_ta/"
     : "http://192.168.1.22:5004/";
-const int apiVersion = 4;
+const int apiVersion = 5;
 
 class HttpResponse {
   String body = "";

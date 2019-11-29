@@ -46,8 +46,13 @@ String getRoundString(double num, int digit) {
 }
 
 String num2Str(num num) {
-  var n = num.toDouble();
-  return Config.showMoreDecimal ? n.toStringAsFixed(2) : getRoundString(n, 1);
+  if (num == null) return null;
+  if (!num.isNaN) {
+    var n = num.toDouble();
+    return Config.showMoreDecimal ? n.toStringAsFixed(2) : getRoundString(n, 1);
+  } else {
+    return "NaN";
+  }
 }
 
 double num2Round(num num) {

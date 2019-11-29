@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:ta/model/Mark.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/model/User.dart';
+import 'package:ta/pages/summarypage/timelinecontents/getUpdateWidget.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
-import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
 
 class TimelineTab extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class TimelineTab extends StatefulWidget {
 
 class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClientMixin {
   List<TAUpdate> timeline;
+  Map<String, WeightTable> weightTableMap;
   String userNumber;
 
   @override
@@ -24,6 +26,11 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
     if (userNumber != currentUser.number) {
       userNumber = currentUser.number;
       timeline = getTimelineOf(currentUser.number);
+      var courses = getCourseListOf(userNumber);
+      weightTableMap = Map();
+      courses.forEach((course) {
+        weightTableMap[course.displayName] = course.weightTable;
+      });
     }
 
     return timeline.length > 0
@@ -48,21 +55,21 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
     DateTime lastContentDate;
 
     timeline.reversed.forEach((update) {
-      if (update is AssignmentAdded) {
-        if (sameDayContents.length == 0) {
-          sameDayContents.add(_contentFromAssignmentAdded(update));
-          lastContentDate = update.time;
-        } else if (isSameDay(lastContentDate, update.time)) {
-          sameDayContents.add(_contentFromAssignmentAdded(update));
-        } else {
-          list.add(_cardOfDate(time: lastContentDate, children: sameDayContents));
-          sameDayContents = List<Widget>();
-          sameDayContents.add(_contentFromAssignmentAdded(update));
-          lastContentDate = update.time;
-        }
+      if (sameDayContents.length == 0) {
+        sameDayContents.add(getUpdateWidget(update, weightTableMap));
+        lastContentDate = update.time;
+      } else if (isSameDay(lastContentDate, update.time)) {
+        sameDayContents.add(getUpdateWidget(update, weightTableMap));
+      } else {
+        sameDayContents.removeWhere((item) => item == null);
+        list.add(_cardOfDate(time: lastContentDate, children: sameDayContents));
+        sameDayContents = List<Widget>();
+        sameDayContents.add(getUpdateWidget(update, weightTableMap));
+        lastContentDate = update.time;
       }
     });
     if (sameDayContents.length != 0) {
+      sameDayContents.removeWhere((item) => item == null);
       list.add(_cardOfDate(time: lastContentDate, children: sameDayContents));
     }
 
@@ -104,81 +111,6 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
           ),
         ],
       ),
-    );
-  }
-
-  Widget _contentFromAssignmentAdded(AssignmentAdded update) {
-    return Column(
-      key: Key(update.hashCode.toString()),
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              Icons.note_add,
-              size: 32,
-              color: Colors.green,
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(update.courseName),
-                  Text(update.assignment.name, style: Theme.of(context).textTheme.title),
-                ],
-              ),
-            )
-          ],
-        ),
-        update.overallBefore != null
-            ? Padding(
-          padding: EdgeInsets.only(top: 16, bottom: 8),
-          child: Column(
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text(
-                    num2Str(update.overallBefore) + "%",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                  Icon(Icons.arrow_forward, size: 32),
-                  Text(num2Str(update.overallAfter) + "%",
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-                ],
-              ),
-              SizedBox(height: 8),
-              update.overallBefore > update.overallAfter
-                  ? LPI.LinearProgressIndicator(
-                lineHeight: 20.0,
-                value1: update.overallAfter / 100,
-                value2: update.overallBefore / 100,
-                value1Color: Theme
-                    .of(context)
-                    .colorScheme
-                    .secondary,
-                value2Color: Colors.red[400],
-              )
-                  : LPI.LinearProgressIndicator(
-                lineHeight: 20.0,
-                value1: update.overallBefore / 100,
-                value2: update.overallAfter / 100,
-                value1Color: Theme
-                    .of(context)
-                    .colorScheme
-                    .secondary,
-                value2Color: Colors.green,
-              ),
-            ],
-          ),
-        )
-            : SizedBox(width: 0, height: 0)
-      ],
     );
   }
 }
