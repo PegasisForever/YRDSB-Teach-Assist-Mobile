@@ -47,50 +47,48 @@ class AssignmentAddedWidget extends StatelessWidget {
           height: 8,
         ),
         ExpandableSmallMarkChart(update.assignment),
-        SizedBox(
-          height: 8,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: (update.overallBefore != null && update.overallBefore != update.overallAfter)
-              ? Column(
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Text(
-                          num2Str(update.overallBefore) + "%",
-                          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                        ),
-                        Icon(Icons.arrow_forward, size: 32),
-                        Text(num2Str(update.overallAfter) + "%",
-                            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    update.overallBefore > update.overallAfter
-                        ? LPI.LinearProgressIndicator(
-                            lineHeight: 20.0,
-                            value1: update.overallAfter / 100,
-                            value2: update.overallBefore / 100,
-                            value1Color: Theme.of(context).colorScheme.secondary,
-                            value2Color: Colors.red[400],
-                          )
-                        : LPI.LinearProgressIndicator(
-                            lineHeight: 20.0,
-                            value1: update.overallBefore / 100,
-                            value2: update.overallAfter / 100,
-                            value1Color: Theme.of(context).colorScheme.secondary,
-                            value2Color: Colors.green,
-                          ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                  ],
-                )
-              : Container(),
-        ),
+        (update.overallBefore != null && update.overallBefore != update.overallAfter)
+            ? Column(
+          children: <Widget>[
+            SizedBox(height: 8),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(
+                  num2Str(update.overallBefore) + "%",
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+                Icon(Icons.arrow_forward, size: 32),
+                Text(num2Str(update.overallAfter) + "%",
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+              ],
+            ),
+            SizedBox(height: 8),
+            update.overallBefore > update.overallAfter
+                ? LPI.LinearProgressIndicator(
+              lineHeight: 20.0,
+              value1: update.overallAfter / 100,
+              value2: update.overallBefore / 100,
+              value1Color: Theme
+                  .of(context)
+                  .colorScheme
+                  .secondary,
+              value2Color: Colors.red[400],
+            )
+                : LPI.LinearProgressIndicator(
+              lineHeight: 20.0,
+              value1: update.overallBefore / 100,
+              value2: update.overallAfter / 100,
+              value1Color: Theme
+                  .of(context)
+                  .colorScheme
+                  .secondary,
+              value2Color: Colors.green,
+            ),
+          ],
+        )
+            : Container(),
       ],
     );
   }

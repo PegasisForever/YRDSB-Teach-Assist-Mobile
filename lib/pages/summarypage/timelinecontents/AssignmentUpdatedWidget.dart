@@ -39,7 +39,6 @@ class AssignmentUpdatedWidget extends StatelessWidget {
         getDiscText(),
         SizedBox(height: 8),
         ExpandableSmallMarkChart(update.assignmentAfter),
-        SizedBox(height: 8),
       ],
     );
   }

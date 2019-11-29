@@ -140,3 +140,9 @@ double cap(double number, double min, double max) {
 MaterialColor getPrimary() {
   return Config.primaryColor;
 }
+
+addIfNotNull(List list, dynamic item) {
+  if (item != null) {
+    list.add(item);
+  }
+}

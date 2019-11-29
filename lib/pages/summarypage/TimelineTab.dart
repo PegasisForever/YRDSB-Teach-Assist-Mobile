@@ -56,20 +56,18 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
 
     timeline.reversed.forEach((update) {
       if (sameDayContents.length == 0) {
-        sameDayContents.add(getUpdateWidget(update, weightTableMap));
+        addIfNotNull(sameDayContents, getUpdateWidget(update, weightTableMap));
         lastContentDate = update.time;
       } else if (isSameDay(lastContentDate, update.time)) {
-        sameDayContents.add(getUpdateWidget(update, weightTableMap));
+        addIfNotNull(sameDayContents, getUpdateWidget(update, weightTableMap));
       } else {
-        sameDayContents.removeWhere((item) => item == null);
         list.add(_cardOfDate(time: lastContentDate, children: sameDayContents));
         sameDayContents = List<Widget>();
-        sameDayContents.add(getUpdateWidget(update, weightTableMap));
+        addIfNotNull(sameDayContents, getUpdateWidget(update, weightTableMap));
         lastContentDate = update.time;
       }
     });
     if (sameDayContents.length != 0) {
-      sameDayContents.removeWhere((item) => item == null);
       list.add(_cardOfDate(time: lastContentDate, children: sameDayContents));
     }
 
@@ -79,13 +77,11 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
   Widget _cardOfDate({List<Widget> children, DateTime time}) {
     var contents = List<Widget>();
     for (var i = 0; i < children.length; i++) {
-      var widget = children[i];
-      contents.add(widget);
+      contents.add(children[i]);
       if (i != children.length - 1) {
+        contents.add(SizedBox(height: 4));
         contents.add(Divider());
-        contents.add(SizedBox(
-          height: 4,
-        ));
+        contents.add(SizedBox(height: 4));
       }
     }
     return Padding(
