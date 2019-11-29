@@ -12,14 +12,11 @@ Uses [Flutter framework](https://flutter.dev/) to achieve cross platform support
 
 It doesn't fetch data from official TA website, but from [Fetch TA Data](https://github.com/PegasisForever/Fetch-TA-Data) server, which fetches data from official TA periodically.
 
-`My YRDSB Teach Assist` <-----> `Fetch TA Data` <-----> [Official TA Website](https://ta.yrdsb.ca/yrdsb/index.php)
+`My YRDSB Teach Assist APP` <-----> `Fetch TA Data` <-----> [Official TA Website](https://ta.yrdsb.ca/yrdsb/index.php)
 
-The server I wrote also provides a public API which you can get JSON-formatted data from someone's TA. Here is the [API documentation](). I built a web version of TA using this public API: [YRDSB Teach Assist Web](https://github.com/PegasisForever/YRDSB-Teach-Assist-Web).
+## Key Features
 
-The server acts as a "compatibility layer" allows me to update TA-fetching-algorithm without updating my app. Also, it allows me to fetches data from official TA periodically and send notifications (Using FCM).
-
-## Key Features:
-
+- Beautiful UIs and Animations
 - Notifications
 - Add, Edit and Remove assessments (What If Mode)
 - Time Line
