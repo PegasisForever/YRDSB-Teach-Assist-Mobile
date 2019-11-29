@@ -16,6 +16,13 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
   List<TAUpdate> timeline;
   Map<String, WeightTable> weightTableMap;
   String userNumber;
+  ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   bool get wantKeepAlive => true;
@@ -31,10 +38,12 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
       courses.forEach((course) {
         weightTableMap[course.displayName] = course.weightTable;
       });
+      scrollToTop();
     }
 
     return timeline.length > 0
         ? ListView(
+      controller: _scrollController,
       padding: EdgeInsets.only(bottom: 8 + getBottomPadding(context)),
       children: _getTimelineCards(timeline),
     )
@@ -46,6 +55,14 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
             .textTheme
             .subhead,
       ),
+    );
+  }
+
+  scrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: Duration(milliseconds: 1),
+      curve: Curves.easeInOutCubic,
     );
   }
 
