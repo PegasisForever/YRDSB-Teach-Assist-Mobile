@@ -23,9 +23,15 @@ class _ExpandableSmallMarkChartState extends State<ExpandableSmallMarkChart> {
         firstChild: Center(
           heightFactor: 1,
           widthFactor: double.infinity,
-          child: SmallMarkChart(widget.assignment),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: SmallMarkChart(widget.assignment),
+          ),
         ),
-        secondChild: SmallMarkChartDetail(widget.assignment),
+        secondChild: Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: SmallMarkChartDetail(widget.assignment),
+        ),
         showFirst: !expanded,
       ),
       onTap: () {

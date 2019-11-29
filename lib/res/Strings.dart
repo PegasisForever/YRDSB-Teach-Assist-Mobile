@@ -134,6 +134,9 @@ class Strings {
       "reset_all_tips": "Reset all tips",
       "tips_reset": "Tips reset",
       "developed_by_students_for_students": "Developed by students for students.",
+      "u_got_avg_in_this_assi": "You got average %s%% in this new assessment.",
+      "ur_new_avg_of_this_assi": "Your new average of this assessment is %s%%.",
+      "ur_avg_of_this_assi_changed": "Your average of this assessment changed from %s%% to %s%%.",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -262,6 +265,9 @@ class Strings {
       "reset_all_tips": "重置所有提示",
       "tips_reset": "提示已重置",
       "developed_by_students_for_students": "Developed by students for students.",
+      "u_got_avg_in_this_assi": "你在这项作业中获得了平均%s分。",
+      "ur_new_avg_of_this_assi": "这项作业的新平均分是%s分。",
+      "ur_avg_of_this_assi_changed": "这项作业的平均分从%s分更改到了%s分。",
     }
   };
 

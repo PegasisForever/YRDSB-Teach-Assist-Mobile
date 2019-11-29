@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sprintf/sprintf.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/pages/summarypage/timelinecontents/ExpandableSmallMarkChart.dart';
 import 'package:ta/pages/summarypage/timelinecontents/UpdateWidgetTitle.dart';
+import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
 class AssignmentUpdatedWidget extends StatelessWidget {
@@ -46,9 +48,12 @@ class AssignmentUpdatedWidget extends StatelessWidget {
     if (averageAfter != null && averageAfter != "NaN") {
       var str = "";
       if (averageBefore == null || averageBefore == "NaN") {
-        str = "Your new average of this assessment is $averageAfter%.";
+        str = sprintf(Strings.get("ur_new_avg_of_this_assi"), [averageAfter]);
       } else {
-        str = "Your average of this assessment changed from $averageBefore% to $averageAfter%.";
+        str = sprintf(
+          Strings.get("ur_avg_of_this_assi_changed"),
+          [averageBefore, averageAfter],
+        );
       }
       return Text(
         str,

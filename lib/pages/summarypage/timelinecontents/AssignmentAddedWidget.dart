@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sprintf/sprintf.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/pages/summarypage/timelinecontents/ExpandableSmallMarkChart.dart';
 import 'package:ta/pages/summarypage/timelinecontents/UpdateWidgetTitle.dart';
+import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
 
@@ -37,7 +39,7 @@ class AssignmentAddedWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: Text(
-              "You got average $average% in this new assessment.",
+              sprintf(Strings.get("u_got_avg_in_this_assi"), [average]),
               style: TextStyle(fontSize: 16),
             ),
           ),
