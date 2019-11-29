@@ -1,10 +1,7 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
-import 'package:ta/model/User.dart';
-import 'package:ta/network/network.dart';
 import 'package:ta/pages/detailpage/DetailPage.dart';
-import 'package:ta/pages/drawerpages/EditAccount.dart';
 import 'package:ta/pages/summarypage/CourseCard.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
@@ -12,9 +9,11 @@ import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
 import '../../tools.dart';
 
 class SummaryTab extends StatefulWidget {
-  SummaryTab({this.needRefresh});
+  SummaryTab({this.courses, this.onRefresh, this.needRefresh});
 
-  final needRefresh;
+  final List<Course> courses;
+  final bool needRefresh;
+  final RefreshCallback onRefresh;
 
   @override
   _SummaryTabState createState() => _SummaryTabState();
@@ -23,8 +22,6 @@ class SummaryTab extends StatefulWidget {
 class _SummaryTabState extends State<SummaryTab>
     with AfterLayoutMixin<SummaryTab>, AutomaticKeepAliveClientMixin {
   var _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  List<Course> courses;
-  String userNumber;
 
   @override
   bool get wantKeepAlive => true;
@@ -32,26 +29,12 @@ class _SummaryTabState extends State<SummaryTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if (userNumber != currentUser.number) {
-      userNumber = currentUser.number;
-      courses = getCourseListOf(userNumber);
-    }
-
     return RefreshIndicator(
       key: _refreshIndicatorKey,
-      onRefresh: () async {
-        try {
-          await getAndSaveMarkTimeline(currentUser);
-          setState(() {
-            courses = getCourseListOf(currentUser.number);
-          });
-        } catch (e) {
-          _handleError(e);
-        }
-      },
+      onRefresh: widget.onRefresh,
       child: ListView(
         padding: EdgeInsets.only(bottom: 8 + getBottomPadding(context)),
-        children: _getSummaryCards(courses),
+        children: _getSummaryCards(widget.courses),
       ),
     );
   }
@@ -102,7 +85,7 @@ class _SummaryTabState extends State<SummaryTab>
                   animationDuration: 700,
                   lineHeight: 20.0,
                   value1: avg / 100,
-                  value1Color: Theme.of(context).colorScheme.primary,
+                  value1Color: primaryColorOf(context),
                 ),
               ],
             ),
@@ -116,54 +99,6 @@ class _SummaryTabState extends State<SummaryTab>
   void afterFirstLayout(BuildContext context) {
     if (widget.needRefresh) {
       _refreshIndicatorKey.currentState.show();
-    }
-  }
-
-  void _handleError(e) {
-    if (e.message == "426") {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text(Strings.get("version_no_longer_supported")),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text(Strings.get("ok").toUpperCase()),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-              contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
-            );
-          });
-    } else if (e.message == "401") {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text(Strings.get("ur_ta_pwd_has_changed")),
-              content: Text(Strings.get("u_need_to_update_your_password")),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text(Strings.get("cancel").toUpperCase()),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                FlatButton(
-                    child: Text(Strings.get("update_password").toUpperCase()),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => EditAccount(currentUser, true)),
-                      );
-                    }),
-              ],
-              contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
-            );
-          });
     }
   }
 }

@@ -2,27 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
-import 'package:ta/model/User.dart';
 import 'package:ta/pages/summarypage/timelinecontents/getUpdateWidget.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
 class TimelineTab extends StatefulWidget {
+  TimelineTab({this.timeline, this.courses});
+
+  final List<TAUpdate> timeline;
+  final List<Course> courses;
+
   @override
   _TimelineTabState createState() => _TimelineTabState();
 }
 
 class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClientMixin {
-  List<TAUpdate> timeline;
   Map<String, WeightTable> weightTableMap;
-  String userNumber;
-  ScrollController _scrollController = ScrollController();
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
 
   @override
   bool get wantKeepAlive => true;
@@ -30,22 +25,15 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if (userNumber != currentUser.number) {
-      userNumber = currentUser.number;
-      timeline = getTimelineOf(currentUser.number);
-      var courses = getCourseListOf(userNumber);
-      weightTableMap = Map();
-      courses.forEach((course) {
-        weightTableMap[course.displayName] = course.weightTable;
-      });
-      scrollToTop();
-    }
+    weightTableMap = Map();
+    widget.courses.forEach((course) {
+      weightTableMap[course.displayName] = course.weightTable;
+    });
 
-    return timeline.length > 0
+    return widget.timeline.length > 0
         ? ListView(
-      controller: _scrollController,
       padding: EdgeInsets.only(bottom: 8 + getBottomPadding(context)),
-      children: _getTimelineCards(timeline),
+      children: _getTimelineCards(widget.timeline),
     )
         : Center(
       child: Text(
@@ -55,14 +43,6 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
             .textTheme
             .subhead,
       ),
-    );
-  }
-
-  scrollToTop() {
-    _scrollController.animateTo(
-      0,
-      duration: Duration(milliseconds: 1),
-      curve: Curves.easeInOutCubic,
     );
   }
 

@@ -26,7 +26,6 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
   final Color _TPcolor = const Color(0xff8bc34a);
   final Color _CPcolor = const Color(0xff9fa8da);
   final Color _APcolor = const Color(0xffffb74d);
-  final Color _FPcolor = const Color(0xff81d4fa);
   final Color _OPcolor = Colors.blueGrey[300];
 
   _StaticsListState();
@@ -88,7 +87,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
       _PieData(Strings.get("c"), _course.weightTable.C.CW, analysis.cSA, _CPcolor),
       _PieData(Strings.get("t"), _course.weightTable.T.CW, analysis.tSA, _TPcolor),
       _PieData(Strings.get("ku"), _course.weightTable.KU.CW, analysis.kuSA, _KPcolor),
-      _PieData(Strings.get("f"), _course.weightTable.F.CW, analysis.fSA, _FPcolor),
+      _PieData(Strings.get("f"), _course.weightTable.F.CW, analysis.fSA, primaryColorOf(context)),
     ]
         : [
       if (_course.weightTable.O.CW > 0)
@@ -103,7 +102,8 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
       _PieData(
           Strings.get("ku"), _course.weightTable.KU.CW, _course.weightTable.KU.SA, _KPcolor),
       _PieData(
-          Strings.get("f"), _course.weightTable.F.CW, _course.weightTable.F.SA, _FPcolor),
+          Strings.get("f"), _course.weightTable.F.CW, _course.weightTable.F.SA,
+          primaryColorOf(context)),
     ];
     return <PieSeries<_PieData, String>>[
       PieSeries<_PieData, String>(
@@ -264,7 +264,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
       yValueMapper = (_, index) {
         return num2Round(overallList[index]);
       };
-      color = _FPcolor;
+      color = primaryColorOf(context);
     }
 
     return [

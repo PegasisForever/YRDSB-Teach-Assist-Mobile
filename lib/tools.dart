@@ -146,3 +146,10 @@ addIfNotNull(List list, dynamic item) {
     list.add(item);
   }
 }
+
+Color primaryColorOf(BuildContext context) {
+  return Theme
+      .of(context)
+      .colorScheme
+      .primary;
+}

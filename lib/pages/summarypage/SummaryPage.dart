@@ -2,7 +2,11 @@ import 'package:after_layout/after_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
+import 'package:ta/model/Mark.dart';
+import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/model/User.dart';
+import 'package:ta/network/network.dart';
+import 'package:ta/pages/drawerpages/EditAccount.dart';
 import 'package:ta/pages/summarypage/SearchPage.dart';
 import 'package:ta/pages/summarypage/SummaryTab.dart';
 import 'package:ta/pages/summarypage/TimelineTab.dart';
@@ -26,17 +30,31 @@ class SummaryPage extends StatefulWidget {
   _SummaryPageState createState() => _SummaryPageState(needRefresh);
 }
 
-class _SummaryPageState extends BetterState<SummaryPage>
-    with AfterLayoutMixin<SummaryPage> {
+class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<SummaryPage> {
   final _needRefresh;
+  List<Course> courses;
+  List<TAUpdate> timeline;
+  String number;
 
   _SummaryPageState(this._needRefresh);
+
+  @override
+  void initState() {
+    super.initState();
+    number = currentUser.number;
+    readData();
+  }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
     if (userList.length == 0) {
       return Container();
+    }
+
+    if (number != currentUser.number) {
+      number = currentUser.number;
+      readData();
     }
 
     return DefaultTabController(
@@ -62,10 +80,7 @@ class _SummaryPageState extends BetterState<SummaryPage>
           ],
           bottom: TabBar(
             indicatorColor: Colors.white,
-            tabs: <Widget>[
-              Tab(text: Strings.get("summary")),
-              Tab(text: Strings.get("time_line"))
-            ],
+            tabs: <Widget>[Tab(text: Strings.get("summary")), Tab(text: Strings.get("time_line"))],
           ),
         ),
         drawer: SummaryPageDrawer(onUserSelected: (user) {
@@ -75,8 +90,15 @@ class _SummaryPageState extends BetterState<SummaryPage>
         }),
         body: TabBarView(
           children: <Widget>[
-            SummaryTab(needRefresh: _needRefresh),
-            TimelineTab()
+            SummaryTab(
+              courses: courses,
+              needRefresh: _needRefresh,
+              onRefresh: onRefresh,
+            ),
+            TimelineTab(
+              courses: courses,
+              timeline: timeline,
+            ),
           ],
         ),
       ),
@@ -84,10 +106,11 @@ class _SummaryPageState extends BetterState<SummaryPage>
   }
 
   @override
-  void afterFirstLayout(BuildContext context) {
+  afterFirstLayout(BuildContext context) {
     if (userList.length == 0) {
       Navigator.pushReplacementNamed(context, "/login");
-    } else if(prefs.getBool("show_no_google_play_warning") ?? true && !supportsGooglePlay() && firebaseInited) {
+    } else if (prefs.getBool("show_no_google_play_warning") ??
+        true && !supportsGooglePlay() && firebaseInited) {
       showDialog(
           context: context,
           builder: (context) {
@@ -98,10 +121,74 @@ class _SummaryPageState extends BetterState<SummaryPage>
                 FlatButton(
                   child: Text(Strings.get("ok").toUpperCase()),
                   onPressed: () {
-                    prefs.setBool("show_no_google_play_warning",false);
+                    prefs.setBool("show_no_google_play_warning", false);
                     Navigator.pop(context);
                   },
                 ),
+              ],
+              contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
+            );
+          });
+    }
+  }
+
+  readData() {
+    courses = getCourseListOf(currentUser.number);
+    timeline = getTimelineOf(currentUser.number);
+  }
+
+  Future<void> onRefresh() async {
+    try {
+      await getAndSaveMarkTimeline(currentUser);
+      setState(() {
+        readData();
+      });
+    } catch (e) {
+      handleError(e);
+    }
+  }
+
+  handleError(e) {
+    if (e.message == "426") {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(Strings.get("version_no_longer_supported")),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(Strings.get("ok").toUpperCase()),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+              contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
+            );
+          });
+    } else if (e.message == "401") {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(Strings.get("ur_ta_pwd_has_changed")),
+              content: Text(Strings.get("u_need_to_update_your_password")),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(Strings.get("cancel").toUpperCase()),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                FlatButton(
+                    child: Text(Strings.get("update_password").toUpperCase()),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => EditAccount(currentUser, true)),
+                      );
+                    }),
               ],
               contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
             );

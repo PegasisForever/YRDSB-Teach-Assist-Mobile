@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/StickSlider.dart';
 
 class AdvancedEdit extends StatefulWidget {
@@ -21,7 +22,7 @@ class AdvancedEditState extends State<AdvancedEdit> {
       children: <Widget>[
         TabBar(
           isScrollable: true,
-          labelColor: Theme.of(context).colorScheme.primary,
+          labelColor: primaryColorOf(context),
           indicatorColor: Theme
               .of(context)
               .colorScheme
