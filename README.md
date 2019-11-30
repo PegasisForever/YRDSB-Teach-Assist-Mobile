@@ -2,7 +2,7 @@
 
 One of the three programs in the project. Other two: [Fetch TA Data](https://github.com/PegasisForever/Fetch-TA-Data), [YRDSB Teach Assist Web](https://github.com/PegasisForever/YRDSB-Teach-Assist-Web).
 
-This is an unofficial YRDSB Teach Assist mobile app for checking marks, you can get it from [Google Play]() and [App Store](). 
+This is an unofficial YRDSB Teach Assist mobile app for checking marks, you can get it from [Google Play]() and [App Store](). (not yet)
 
 Made by a grade 11 student in MCI.
 
@@ -31,6 +31,8 @@ It doesn't fetch data from official TA website, but from [Fetch TA Data](https:/
 3. (Optional) Follow `flutter modify list.txt` to change the source code of Flutter.
 
 ## Support Me
+
+I spent hundreds of hours on this project, consider buy me a cup of coffee?
 
 Donate: [patreon](https://www.patreon.com/yrdsbta)
 
