@@ -26,7 +26,7 @@ class _DetailPageState extends BetterState<DetailPage> {
   var whatIfMode = false;
   var showWhatIfTips = prefs.getBool("show_what_if_tip") ?? true;
 
-  _DetailPageState(this._course) :_originalCourse=_course.copy();
+  _DetailPageState(Course course) :_course=course.copy(),_originalCourse=course.copy();
 
   updateCourse(course) {
     setState(() {
