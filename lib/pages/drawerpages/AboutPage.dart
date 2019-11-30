@@ -84,7 +84,7 @@ class _AboutPageState extends BetterState<AboutPage> {
               },
               textColor: isLightMode(context: context) ? Colors.grey[800] : Colors.grey[300],
               icon: Icon(Icons.chrome_reader_mode),
-              label: Text("Privacy Policy"),
+              label: Text(Strings.get("privacy_policy")),
             ),
             Center(
               child: Text(

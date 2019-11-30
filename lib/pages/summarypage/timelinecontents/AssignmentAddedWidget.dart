@@ -34,7 +34,9 @@ class AssignmentAddedWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: Text(
-              sprintf(Strings.get("u_got_avg_in_this_assi"), [num2Str(update.assignmentAvg)]),
+              update.assignmentAvg != 100
+                  ? sprintf(Strings.get("u_got_avg_in_this_assi"), [num2Str(update.assignmentAvg)])
+                  : Strings.get("u_got_full_in_this_assi"),
               style: TextStyle(fontSize: 16),
             ),
           ),
