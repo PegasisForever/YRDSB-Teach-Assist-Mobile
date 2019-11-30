@@ -136,7 +136,9 @@ class Strings {
       "developed_by_students_for_students": "Developed by students for students.",
       "u_got_avg_in_this_assi": "You got average %s%% in this new assessment.",
       "ur_new_avg_of_this_assi": "Your new average of this assessment is %s%%.",
-      "ur_avg_of_this_assi_changed": "Your average of this assessment changed from %s%% to %s%%.",
+      "ur_avg_of_this_assi_dropped": "Your average of this assessment dropped from %s%% to %s%%.",
+      "ur_avg_of_this_assi_increased": "Your average of this assessment increased from %s%% to %s%%.",
+      "ur_avg_of_this_assi_didnt_change": "Your average of this assessment didn't change.",
     },
     "zh": {
       "login_your_account": "登录帐号：",

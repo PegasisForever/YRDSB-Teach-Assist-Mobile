@@ -17,18 +17,12 @@ class TimelineTab extends StatefulWidget {
 }
 
 class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClientMixin {
-  Map<String, WeightTable> weightTableMap;
-
   @override
   bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    weightTableMap = Map();
-    widget.courses.forEach((course) {
-      weightTableMap[course.displayName] = course.weightTable;
-    });
 
     return widget.timeline.length > 0
         ? ListView(
@@ -53,14 +47,14 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
 
     timeline.reversed.forEach((update) {
       if (sameDayContents.length == 0) {
-        addIfNotNull(sameDayContents, getUpdateWidget(update, weightTableMap));
+        addIfNotNull(sameDayContents, getUpdateWidget(update));
         lastContentDate = update.time;
       } else if (isSameDay(lastContentDate, update.time)) {
-        addIfNotNull(sameDayContents, getUpdateWidget(update, weightTableMap));
+        addIfNotNull(sameDayContents, getUpdateWidget(update));
       } else {
         list.add(_cardOfDate(time: lastContentDate, children: sameDayContents));
         sameDayContents = List<Widget>();
-        addIfNotNull(sameDayContents, getUpdateWidget(update, weightTableMap));
+        addIfNotNull(sameDayContents, getUpdateWidget(update));
         lastContentDate = update.time;
       }
     });

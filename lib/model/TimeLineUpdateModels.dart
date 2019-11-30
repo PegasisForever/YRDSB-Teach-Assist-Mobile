@@ -22,7 +22,11 @@ class AssignmentUpdated extends TAUpdate{
   String courseName;
   String assignmentName="";
   Assignment assignmentBefore;
+  double assignmentAvgBefore;
+  double overallBefore;
   Assignment assignmentAfter;
+  double assignmentAvgAfter;
+  double overallAfter;
 }
 
 class CourseArchived extends TAUpdate{

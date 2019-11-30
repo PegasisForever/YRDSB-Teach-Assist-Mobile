@@ -5,11 +5,11 @@ import 'package:ta/pages/summarypage/timelinecontents/AssignmentUpdatedWidget.da
 import 'package:ta/pages/summarypage/timelinecontents/CourseAddedWidget.dart';
 import 'package:ta/pages/summarypage/timelinecontents/CourseRemovedWidget.dart';
 
-Widget getUpdateWidget(TAUpdate update, Map weightTableMap) {
+Widget getUpdateWidget(TAUpdate update) {
   if (update is AssignmentAdded) {
-    return AssignmentAddedWidget(update, weightTableMap);
+    return AssignmentAddedWidget(update);
   } else if (update is AssignmentUpdated) {
-    return AssignmentUpdatedWidget(update, weightTableMap);
+    return AssignmentUpdatedWidget(update);
   } else if (update is CourseAdded) {
     return CourseAddedWidget(update);
   } else if (update is CourseRemoved) {

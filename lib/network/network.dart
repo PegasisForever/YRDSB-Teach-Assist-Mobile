@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_performance/firebase_performance.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
@@ -11,10 +12,10 @@ import 'package:ta/tools.dart';
 
 import '../firebase.dart';
 
-const String baseUrl = true
+const String baseUrl = kReleaseMode
     ? "https://api.pegasis.site/yrdsb_ta/"
     : "http://192.168.1.22:5004/";
-const int apiVersion = 5;
+const int apiVersion = 6;
 
 class HttpResponse {
   String body = "";
