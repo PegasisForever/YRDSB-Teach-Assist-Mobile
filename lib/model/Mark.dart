@@ -161,7 +161,17 @@ class Assignment {
         (T.available && T.finished) ||
         (C.available && C.finished) ||
         (A.available && A.finished) ||
-        (O.available && O.finished);
+        (O.available && O.finished) ||
+        (F.available && F.finished);
+  }
+
+  bool isNoWeight(){
+    return (KU.weight==0 || !KU.available) &&
+        (T.weight==0 || !T.available) &&
+        (C.weight==0 || !C.available) &&
+        (A.weight==0 || !A.available) &&
+        (O.weight==0 || !O.available) &&
+        (F.weight==0 || !F.available);
   }
 
   Assignment copy() =>

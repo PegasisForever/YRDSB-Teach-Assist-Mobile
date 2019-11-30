@@ -43,12 +43,7 @@ class MarksListTileState extends State<MarksListTile>
         : Text(Strings.get("avg:") + num2Str(avg) + "%",
             style: TextStyle(fontSize: 16, color: Colors.grey));
 
-    bool noWeight = isZeroOrNull(_assignment.KU.weight) &&
-        isZeroOrNull(_assignment.T.weight) &&
-        isZeroOrNull(_assignment.C.weight) &&
-        isZeroOrNull(_assignment.A.weight) &&
-        isZeroOrNull(_assignment.F.weight) &&
-        isZeroOrNull(_assignment.O.weight);
+    bool noWeight = _assignment.isNoWeight();
 
     var summary = Padding(
       padding: const EdgeInsets.all(16.0),
