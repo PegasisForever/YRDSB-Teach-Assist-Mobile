@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:ta/tools.dart';
 
-void openMoodlePage(BuildContext context) async {
+void openCustomTab(BuildContext context,String url) async {
   await launch(
-    "https://moodle2.yrdsb.ca/",
+    url,
     option: new CustomTabsOption(
       toolbarColor: primaryColorOf(context),
       enableDefaultShare: false,

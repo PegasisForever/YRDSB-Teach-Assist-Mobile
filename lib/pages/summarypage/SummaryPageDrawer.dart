@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/User.dart';
-import 'package:ta/pages/drawerpages/DonatePage.dart';
+import 'package:ta/pages/drawerpages/OpenCustomTab.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/res/Themes.dart';
 import 'package:ta/widgets/CrossFade.dart';
 
 import '../../tools.dart';
 import '../../widgets/user_accounts_drawer_header.dart' as UADrawerHeader;
-import '../drawerpages/MoodlePage.dart';
 
 class SummaryPageDrawer extends StatefulWidget {
   SummaryPageDrawer({this.onUserSelected});
@@ -75,7 +74,7 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
               ),
               onTap: () {
                 Navigator.pop(context);
-                openMoodlePage(context);
+                openCustomTab(context, "https://moodle2.yrdsb.ca/");
               },
             ),
             ListTile(
@@ -115,7 +114,7 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
               leading: Icon(Icons.monetization_on),
               onTap: (){
                 Navigator.pop(context);
-                openDonatePage(context);
+                openCustomTab(context, "https://www.patreon.com/yrdsbta");
               },
             )
           ],
