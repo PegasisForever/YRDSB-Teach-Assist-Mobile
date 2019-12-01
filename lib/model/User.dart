@@ -3,7 +3,7 @@ import 'dart:convert';
 import '../dataStore.dart';
 
 List<User> userList = [];
-User currentUser=null;
+User currentUser;
 
 initUser() {
   var usersJSON = prefs.getString("users") ?? "[]";

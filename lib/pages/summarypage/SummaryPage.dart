@@ -39,13 +39,6 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
   _SummaryPageState(this._needRefresh);
 
   @override
-  void initState() {
-    super.initState();
-    number = currentUser.number;
-    readData();
-  }
-
-  @override
   Widget build(BuildContext context) {
     super.build(context);
     if (userList.length == 0) {
