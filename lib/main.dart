@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -28,6 +29,7 @@ void main() {
     SyncfusionLicense.registerLicense(SyncfusionCommunityLicenceKey);
     initPackageInfo();
     initFirebaseMsg();
+    FlutterPrivacyScreen.enablePrivacyScreen();
     await initPref();
     initUser();
 

@@ -29,6 +29,7 @@ dependencies:
   quiver: ^2.0.5
   transparent_image: ^1.0.0
   keyboard_visibility: ^0.5.6
+  flutter_privacy_screen: ^0.0.1
 
 dev_dependencies:
   flutter_test:
