@@ -29,12 +29,10 @@ class _AboutPageState extends BetterState<AboutPage> {
             horizontal: (sidePadding > 0 ? sidePadding : 0)+24.0,
           ),
           children: <Widget>[
-            FadeInImage(
-              placeholder: MemoryImage(kTransparentImage),
+            Image(
               image: AssetImage("assets/images/app_logo.png"),
               height: 130,
               width: 130,
-              fadeInDuration: const Duration(milliseconds: 100),
             ),
             Center(
               child: Text(
@@ -81,13 +79,26 @@ class _AboutPageState extends BetterState<AboutPage> {
             SizedBox(
               height: 200,
             ),
-            FlatButton.icon(
-              onPressed: () {
-                openCustomTab(context, "https://ta-yrdsb.web.app/privacy-policy");
-              },
-              textColor: isLightMode(context: context) ? Colors.grey[800] : Colors.grey[300],
-              icon: Icon(Icons.chrome_reader_mode),
-              label: Text(Strings.get("privacy_policy")),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FlatButton.icon(
+                  onPressed: () {
+                    openCustomTab(context, "https://ta-yrdsb.web.app/privacy-policy");
+                  },
+                  textColor: isLightMode(context: context) ? Colors.grey[800] : Colors.grey[300],
+                  icon: Icon(Icons.chrome_reader_mode),
+                  label: Text(Strings.get("privacy_policy")),
+                ),
+                FlatButton.icon(
+                  onPressed: () {
+                    openCustomTab(context, "https://ta-yrdsb.web.app/support");
+                  },
+                  textColor: isLightMode(context: context) ? Colors.grey[800] : Colors.grey[300],
+                  icon: Icon(Icons.live_help),
+                  label: Text(Strings.get("support")),
+                ),
+              ],
             ),
             Center(
               child: Text(

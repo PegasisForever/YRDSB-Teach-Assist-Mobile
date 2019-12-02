@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +106,12 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
   afterFirstLayout(BuildContext context) {
     if (userList.length == 0) {
       Navigator.pushReplacementNamed(context, "/login");
-    } else if (prefs.getBool("show_no_google_play_warning") ??
+      return;
+    }
+
+    precacheImage(Image.asset("assets/images/app_logo.png").image,context);
+
+    if (prefs.getBool("show_no_google_play_warning") ??
         true && !supportsGooglePlay() && firebaseInited) {
       showDialog(
           context: context,
