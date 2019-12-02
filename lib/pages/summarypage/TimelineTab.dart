@@ -24,20 +24,21 @@ class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClient
   Widget build(BuildContext context) {
     super.build(context);
 
+    var sidePadding = (widthOf(context) - 500) / 2;
     return widget.timeline.length > 0
         ? ListView(
-      padding: EdgeInsets.only(bottom: 8 + getBottomPadding(context)),
-      children: _getTimelineCards(widget.timeline),
-    )
+            padding: EdgeInsets.only(
+                bottom: 8 + getBottomPadding(context),
+                left: sidePadding > 0 ? sidePadding : 0,
+                right: sidePadding > 0 ? sidePadding : 0),
+            children: _getTimelineCards(widget.timeline),
+          )
         : Center(
-      child: Text(
-        Strings.get("timeline_blank_text"),
-        style: Theme
-            .of(context)
-            .textTheme
-            .subhead,
-      ),
-    );
+            child: Text(
+              Strings.get("timeline_blank_text"),
+              style: Theme.of(context).textTheme.subhead,
+            ),
+          );
   }
 
   List<Widget> _getTimelineCards(List<TAUpdate> timeline) {

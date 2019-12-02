@@ -24,6 +24,7 @@ class _AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    var sidePadding = (widthOf(context) - 500) / 2;
     var courseInfoText =
         Strings.get("course_about_name:") + testBlank(_course.name) + "\n";
     courseInfoText +=
@@ -39,7 +40,10 @@ class _AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin 
         (_course.endTime!=null?DateFormat("yyyy-MM-dd").format(_course.endTime):Strings.get("unknown"));
 
     return ListView(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.symmetric(
+        vertical: 16,
+        horizontal: (sidePadding > 0 ? sidePadding : 0)+16.0,
+      ),
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 4),

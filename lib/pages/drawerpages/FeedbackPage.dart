@@ -102,42 +102,47 @@ class _FeedbackPageState extends BetterState<FeedbackPage> {
           )
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: <Widget>[
-            EditText(
-              textInputAction: TextInputAction.next,
-              nextFocusNode: _feedbackFocusNode,
-              focusNode: _contactInfoFocusNode,
-              controller: _contactInfoController,
-              hint: Strings.get("contact_info"),
-              errorText: _contactErrorText,
-              icon: Icons.contact_mail,
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 500),
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              children: <Widget>[
+                EditText(
+                  textInputAction: TextInputAction.next,
+                  nextFocusNode: _feedbackFocusNode,
+                  focusNode: _contactInfoFocusNode,
+                  controller: _contactInfoController,
+                  hint: Strings.get("contact_info"),
+                  errorText: _contactErrorText,
+                  icon: Icons.contact_mail,
+                ),
+                SizedBox(height: 12),
+                Expanded(
+                  child: TextField(
+                    expands: true,
+                    maxLines: null,
+                    focusNode: _feedbackFocusNode,
+                    controller: _feedbackController,
+                    textAlignVertical: TextAlignVertical.top,
+                    onChanged: (s) {
+                      if (!_feedbackValid) {
+                        setState(() {
+                          _feedbackValid = true;
+                        });
+                      }
+                    },
+                    decoration: InputDecoration(
+                        alignLabelWithHint: true,
+                        border: OutlineInputBorder(),
+                        errorText: _feedbackValid ? null : Strings.get("plz_fill_in_ur_feedback"),
+                        labelText: Strings.get("feedback")),
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 12),
-            Expanded(
-              child: TextField(
-                expands: true,
-                maxLines: null,
-                focusNode: _feedbackFocusNode,
-                controller: _feedbackController,
-                textAlignVertical: TextAlignVertical.top,
-                onChanged: (s) {
-                  if (!_feedbackValid) {
-                    setState(() {
-                      _feedbackValid = true;
-                    });
-                  }
-                },
-                decoration: InputDecoration(
-                    alignLabelWithHint: true,
-                    border: OutlineInputBorder(),
-                    errorText: _feedbackValid ? null : Strings.get("plz_fill_in_ur_feedback"),
-                    labelText: Strings.get("feedback")),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

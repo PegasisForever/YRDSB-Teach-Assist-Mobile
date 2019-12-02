@@ -23,11 +23,12 @@ import 'package:flutter/material.dart';
 typedef ItemBuilder = Widget Function(BuildContext context, dynamic itemData);
 
 class BetterAnimatedList extends StatefulWidget {
-  BetterAnimatedList({@required this.list, @required this.itemBuilder, this.header});
+  BetterAnimatedList({@required this.list, @required this.itemBuilder, this.header,this.padding});
 
   final List list;
   final Widget header;
   final ItemBuilder itemBuilder;
+  final EdgeInsetsGeometry padding;
 
   @override
   _BetterAnimatedListState createState() => _BetterAnimatedListState();
@@ -72,6 +73,7 @@ class _BetterAnimatedListState extends State<BetterAnimatedList> {
 
     return AnimatedList(
       key: key,
+      padding: widget.padding,
       initialItemCount: list.length + 1,
       itemBuilder: (context, index, animation) {
         if (index == 0) {

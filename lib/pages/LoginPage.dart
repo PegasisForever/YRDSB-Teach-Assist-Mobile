@@ -35,62 +35,61 @@ class _LoginPageState extends BetterState<LoginPage> {
         return ScrollConfiguration(
           behavior: DisableOverScroll(),
           child: Center(
-            child: ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              children: <Widget>[
-                SizedBox(
-                  height: 28,
-                ),
-                Image.asset(
-                  "assets/images/app_logo.png",
-                  height: 130,
-                ),
-                Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 400),
+              child: ListView(
+                shrinkWrap: true,
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                children: <Widget>[
+                  SizedBox(
+                    height: 28,
+                  ),
+                  Image.asset(
+                    "assets/images/app_logo.png",
+                    height: 130,
+                  ),
+                  Center(
                     child: Text(
-                  "YRDSB",
-                  style: TextStyle(fontSize: 24),
-                )),
-                Center(child: Text("Teach Assist", style: TextStyle(fontSize: 24))),
-                SizedBox(
-                  height: 80,
-                ),
-                Center(
-                  widthFactor: 0,
-                  child: Text(Strings.get("login_your_account", context),
-                      style: Theme.of(context).textTheme.title),
-                ),
-                SizedBox(height: 18),
-                EditText(
-                  textInputAction: TextInputAction.next,
-                  nextFocusNode: _passwordFocusNode,
-                  focusNode: _studentNumberFocusNode,
-                  controller: _studentNumberController,
-                  maxWidth: 400,
-                  hint: Strings.get("student_number"),
-                  errorText: _studentNumberErrorText,
-                  icon: Icons.account_circle,
-                  inputType: TextInputType.numberWithOptions(signed: false, decimal: false),
-                ),
-                SizedBox(height: 12),
-                EditText(
-                  textInputAction: TextInputAction.done,
-                  focusNode: _passwordFocusNode,
-                  controller: _passwordController,
-                  maxWidth: 400,
-                  hint: Strings.get("password"),
-                  errorText: _passwordErrorText,
-                  icon: Icons.lock,
-                  isPassword: true,
-                  onSubmitted: (s) {
-                    if (!_isLoading) {
-                      _startLogin(context);
-                    }
-                  },
-                ),
-                ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 400),
-                  child: ButtonBar(
+                      "YRDSB",
+                      style: TextStyle(fontSize: 24),
+                    ),
+                  ),
+                  Center(child: Text("Teach Assist", style: TextStyle(fontSize: 24))),
+                  SizedBox(
+                    height: 80,
+                  ),
+                  Center(
+                    widthFactor: 0,
+                    child: Text(Strings.get("login_your_account", context),
+                        style: Theme.of(context).textTheme.title),
+                  ),
+                  SizedBox(height: 18),
+                  EditText(
+                    textInputAction: TextInputAction.next,
+                    nextFocusNode: _passwordFocusNode,
+                    focusNode: _studentNumberFocusNode,
+                    controller: _studentNumberController,
+                    hint: Strings.get("student_number"),
+                    errorText: _studentNumberErrorText,
+                    icon: Icons.account_circle,
+                    inputType: TextInputType.numberWithOptions(signed: false, decimal: false),
+                  ),
+                  SizedBox(height: 12),
+                  EditText(
+                    textInputAction: TextInputAction.done,
+                    focusNode: _passwordFocusNode,
+                    controller: _passwordController,
+                    hint: Strings.get("password"),
+                    errorText: _passwordErrorText,
+                    icon: Icons.lock,
+                    isPassword: true,
+                    onSubmitted: (s) {
+                      if (!_isLoading) {
+                        _startLogin(context);
+                      }
+                    },
+                  ),
+                  ButtonBar(
                     children: <Widget>[
                       _isLoading
                           ? CircularProgressIndicator()
@@ -99,28 +98,25 @@ class _LoginPageState extends BetterState<LoginPage> {
                               fallbackHeight: 0,
                             ),
                       RaisedButton(
-                        color: Theme
-                            .of(context)
-                            .colorScheme
-                            .primary,
+                        color: Theme.of(context).colorScheme.primary,
                         child: Text(
                           Strings.get("login").toUpperCase(),
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: !_isLoading
                             ? () {
-                          FocusScope.of(context).unfocus();
-                          _startLogin(context);
-                        }
+                                FocusScope.of(context).unfocus();
+                                _startLogin(context);
+                              }
                             : null,
                       )
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-              ],
+                  SizedBox(
+                    height: 16,
+                  ),
+                ],
+              ),
             ),
           ),
         );

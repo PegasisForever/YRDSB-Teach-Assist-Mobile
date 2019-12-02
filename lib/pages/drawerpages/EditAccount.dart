@@ -46,6 +46,7 @@ class _EditAccountState extends BetterState<EditAccount> {
   @override
   Widget build(BuildContext context) {
     var _oldUser = widget.user;
+    var sidePadding = (widthOf(context) - 500) / 2;
     return Scaffold(
         appBar: AppBar(
           title: Text(_oldUser.number != ""
@@ -234,14 +235,16 @@ class _EditAccountState extends BetterState<EditAccount> {
           ],
         ),
         body: ListView(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: (sidePadding > 0 ? sidePadding : 0)+16.0,
+            vertical: 16
+          ),
           children: <Widget>[
             EditText(
                 textInputAction: TextInputAction.next,
                 focusNode: _aliasFocusNode,
                 nextFocusNode: _studentNumberFocusNode,
                 controller: _aliasController,
-                maxWidth: 400,
                 hint: Strings.get("alias_optional"),
                 errorText: ErrorText(null),
                 icon: Icons.stars),
@@ -251,7 +254,6 @@ class _EditAccountState extends BetterState<EditAccount> {
               focusNode: _studentNumberFocusNode,
               nextFocusNode: _passwordFocusNode,
               controller: _studentNumberController,
-              maxWidth: 400,
               hint: Strings.get("student_number"),
               errorText: _studentNumberErrorText,
               icon: Icons.account_circle,
@@ -264,7 +266,6 @@ class _EditAccountState extends BetterState<EditAccount> {
               textInputAction: TextInputAction.done,
               focusNode: _passwordFocusNode,
               controller: _passwordController,
-              maxWidth: 400,
               hint: Strings.get("password"),
               errorText: _passwordErrorText,
               icon: Icons.lock,

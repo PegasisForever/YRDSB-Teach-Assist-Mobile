@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/drawerpages/EditAccount.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
 
 class AccountsList extends StatefulWidget {
@@ -12,6 +13,7 @@ class AccountsList extends StatefulWidget {
 class _AccountsListState extends BetterState<AccountsList> {
   @override
   Widget build(BuildContext context) {
+    var sidePadding = (widthOf(context) - 500) / 2;
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.get("accounts_list")),
@@ -25,6 +27,9 @@ class _AccountsListState extends BetterState<AccountsList> {
         ],
       ),
       body: ReorderableListView(
+        padding: EdgeInsets.symmetric(
+          horizontal: sidePadding > 0 ? sidePadding : 0,
+        ),
         onReorder: (oldIndex,newIndex){
           setState(() {
             if (newIndex > oldIndex) {

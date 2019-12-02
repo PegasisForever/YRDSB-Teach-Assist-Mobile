@@ -38,32 +38,33 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
     super.build(context);
     var _course = widget._course;
     var isLight = isLightMode(context: context);
+    var sidePadding = (widthOf(context) - 500) / 2;
     return (_course.overallMark != null && _course.assignments.length > 0)
         ? ListView(
-      children: <Widget>[
-        _getTermOverall(),
-        _getChart("overall", isLight),
-        Divider(),
-        _getPieChart(),
-        Divider(),
-        _getChart("knowledge_understanding", isLight),
-        Divider(),
-        _getChart("thinking", isLight),
-        Divider(),
-        _getChart("communication", isLight),
-        Divider(),
-        _getChart("application", isLight),
-      ],
-    )
+            padding: EdgeInsets.symmetric(
+              horizontal: sidePadding > 0 ? sidePadding : 0,
+            ),
+            children: <Widget>[
+              _getTermOverall(),
+              _getChart("overall", isLight),
+              Divider(),
+              _getPieChart(),
+              Divider(),
+              _getChart("knowledge_understanding", isLight),
+              Divider(),
+              _getChart("thinking", isLight),
+              Divider(),
+              _getChart("communication", isLight),
+              Divider(),
+              _getChart("application", isLight),
+            ],
+          )
         : Center(
-      child: Text(
-        Strings.get("statistics_unavailable"),
-        style: Theme
-            .of(context)
-            .textTheme
-            .subhead,
-      ),
-    );
+            child: Text(
+              Strings.get("statistics_unavailable"),
+              style: Theme.of(context).textTheme.subhead,
+            ),
+          );
   }
 
   Widget _getPieChart() {
@@ -81,30 +82,30 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
     var analysis = widget._whatIfMode ? _course.getCourseAnalysis() : null;
     final List<_PieData> chartData = widget._whatIfMode
         ? [
-      if (_course.weightTable.O.CW > 0)
-        _PieData(Strings.get("o"), _course.weightTable.O.CW, analysis.oSA, _OPcolor),
-      _PieData(Strings.get("a"), _course.weightTable.A.CW, analysis.aSA, _APcolor),
-      _PieData(Strings.get("c"), _course.weightTable.C.CW, analysis.cSA, _CPcolor),
-      _PieData(Strings.get("t"), _course.weightTable.T.CW, analysis.tSA, _TPcolor),
-      _PieData(Strings.get("ku"), _course.weightTable.KU.CW, analysis.kuSA, _KPcolor),
-      _PieData(Strings.get("f"), _course.weightTable.F.CW, analysis.fSA, primaryColorOf(context)),
-    ]
+            if (_course.weightTable.O.CW > 0)
+              _PieData(Strings.get("o"), _course.weightTable.O.CW, analysis.oSA, _OPcolor),
+            _PieData(Strings.get("a"), _course.weightTable.A.CW, analysis.aSA, _APcolor),
+            _PieData(Strings.get("c"), _course.weightTable.C.CW, analysis.cSA, _CPcolor),
+            _PieData(Strings.get("t"), _course.weightTable.T.CW, analysis.tSA, _TPcolor),
+            _PieData(Strings.get("ku"), _course.weightTable.KU.CW, analysis.kuSA, _KPcolor),
+            _PieData(
+                Strings.get("f"), _course.weightTable.F.CW, analysis.fSA, primaryColorOf(context)),
+          ]
         : [
-      if (_course.weightTable.O.CW > 0)
-        _PieData(
-            Strings.get("o"), _course.weightTable.O.CW, _course.weightTable.O.SA, _OPcolor),
-      _PieData(
-          Strings.get("a"), _course.weightTable.A.CW, _course.weightTable.A.SA, _APcolor),
-      _PieData(
-          Strings.get("c"), _course.weightTable.C.CW, _course.weightTable.C.SA, _CPcolor),
-      _PieData(
-          Strings.get("t"), _course.weightTable.T.CW, _course.weightTable.T.SA, _TPcolor),
-      _PieData(
-          Strings.get("ku"), _course.weightTable.KU.CW, _course.weightTable.KU.SA, _KPcolor),
-      _PieData(
-          Strings.get("f"), _course.weightTable.F.CW, _course.weightTable.F.SA,
-          primaryColorOf(context)),
-    ];
+            if (_course.weightTable.O.CW > 0)
+              _PieData(
+                  Strings.get("o"), _course.weightTable.O.CW, _course.weightTable.O.SA, _OPcolor),
+            _PieData(
+                Strings.get("a"), _course.weightTable.A.CW, _course.weightTable.A.SA, _APcolor),
+            _PieData(
+                Strings.get("c"), _course.weightTable.C.CW, _course.weightTable.C.SA, _CPcolor),
+            _PieData(
+                Strings.get("t"), _course.weightTable.T.CW, _course.weightTable.T.SA, _TPcolor),
+            _PieData(
+                Strings.get("ku"), _course.weightTable.KU.CW, _course.weightTable.KU.SA, _KPcolor),
+            _PieData(Strings.get("f"), _course.weightTable.F.CW, _course.weightTable.F.SA,
+                primaryColorOf(context)),
+          ];
     return <PieSeries<_PieData, String>>[
       PieSeries<_PieData, String>(
           explodeAll: true,
@@ -129,10 +130,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
 
   Widget _getTermOverall() {
     var _course = widget._course;
-    var newOverall = _course
-        .getCourseAnalysis()
-        .overallList
-        .last;
+    var newOverall = _course.getCourseAnalysis().overallList.last;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Column(
@@ -169,37 +167,28 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
           ),
           widget._whatIfMode
               ? (_course.overallMark > newOverall
-              ? LPI.LinearProgressIndicator(
-            key: Key("a"),
-            lineHeight: 20.0,
-            value1: newOverall / 100,
-            value2: _course.overallMark / 100,
-            value1Color: Theme
-                .of(context)
-                .colorScheme
-                .primary,
-            value2Color: Colors.red[400],
-          )
+                  ? LPI.LinearProgressIndicator(
+                      key: Key("a"),
+                      lineHeight: 20.0,
+                      value1: newOverall / 100,
+                      value2: _course.overallMark / 100,
+                      value1Color: Theme.of(context).colorScheme.primary,
+                      value2Color: Colors.red[400],
+                    )
+                  : LPI.LinearProgressIndicator(
+                      key: Key("b"),
+                      lineHeight: 20.0,
+                      value1: _course.overallMark / 100,
+                      value2: newOverall / 100,
+                      value1Color: Theme.of(context).colorScheme.primary,
+                      value2Color: Colors.green,
+                    ))
               : LPI.LinearProgressIndicator(
-            key: Key("b"),
-            lineHeight: 20.0,
-            value1: _course.overallMark / 100,
-            value2: newOverall / 100,
-            value1Color: Theme
-                .of(context)
-                .colorScheme
-                .primary,
-            value2Color: Colors.green,
-          ))
-              : LPI.LinearProgressIndicator(
-            key: Key("c"),
-            lineHeight: 20.0,
-            value1: _course.overallMark / 100,
-            value1Color: Theme
-                .of(context)
-                .colorScheme
-                .primary,
-          )
+                  key: Key("c"),
+                  lineHeight: 20.0,
+                  value1: _course.overallMark / 100,
+                  value1Color: Theme.of(context).colorScheme.primary,
+                )
         ],
       ),
     );
@@ -258,9 +247,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
           : null;
       color = isLight ? _Acolor : _APcolor;
     } else if (category == "overall") {
-      var overallList = _course
-          .getCourseAnalysis()
-          .overallList;
+      var overallList = _course.getCourseAnalysis().overallList;
       yValueMapper = (_, index) {
         return num2Round(overallList[index]);
       };
@@ -273,9 +260,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
         color: color,
         markerSettings: MarkerSettings(
           isVisible: true,
-          color: Theme
-              .of(context)
-              .canvasColor,
+          color: Theme.of(context).canvasColor,
           borderWidth: 3,
         ),
         enableTooltip: true,

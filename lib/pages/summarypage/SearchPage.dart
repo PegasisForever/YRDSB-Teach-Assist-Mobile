@@ -86,6 +86,7 @@ class AssignmentSearchDelegate extends SearchDelegate {
           onSelectHistory: onSelectHistory);
     }
 
+    var sidePadding = (widthOf(context) - 500) / 2;
     var listItems = List<Widget>();
     getCourseListOf(currentUser.number).forEach((course) {
       var matchedItems = List<Widget>();
@@ -106,12 +107,17 @@ class AssignmentSearchDelegate extends SearchDelegate {
         listItems.add(StickyHeader(
           header: Container(
             color: isLightMode(context: context) ? Colors.grey[200] : Colors.grey[800],
-            padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+            padding: EdgeInsets.fromLTRB((sidePadding > 0 ? sidePadding : 0)+16.0, 8, 16, 8),
             alignment: Alignment.centerLeft,
             child: Text(sprintf(Strings.get("results_from"), [course.displayName])),
           ),
-          content: Column(
-            children: matchedItems,
+          content: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: sidePadding > 0 ? sidePadding : 0,
+            ),
+            child: Column(
+              children: matchedItems,
+            ),
           ),
         ));
     });
@@ -193,7 +199,11 @@ class __SearchHistoryListState extends State<_SearchHistoryList> {
       ));
     }
 
+    var sidePadding = (widthOf(context) - 500) / 2;
     return ListView(
+      padding: EdgeInsets.symmetric(
+        horizontal: sidePadding > 0 ? sidePadding : 0,
+      ),
       children: historyWidgets,
     );
   }

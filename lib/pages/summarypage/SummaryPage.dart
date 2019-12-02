@@ -11,6 +11,7 @@ import 'package:ta/pages/summarypage/SearchPage.dart';
 import 'package:ta/pages/summarypage/SummaryTab.dart';
 import 'package:ta/pages/summarypage/TimelineTab.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
 
 import '../../dataStore.dart';
@@ -72,6 +73,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
             )
           ],
           bottom: TabBar(
+            isScrollable: widthOf(context) > 500,
             indicatorColor: Colors.white,
             tabs: <Widget>[Tab(text: Strings.get("summary")), Tab(text: Strings.get("time_line"))],
           ),

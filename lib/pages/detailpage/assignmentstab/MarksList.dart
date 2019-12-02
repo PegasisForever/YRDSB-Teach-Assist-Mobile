@@ -6,6 +6,7 @@ import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/TipsCard.dart';
 import 'package:ta/pages/detailpage/whatifpage/EditAssignmentDialog.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterAnimatedList.dart';
 import 'package:ta/widgets/CrossFade.dart';
 
@@ -34,58 +35,57 @@ class _MarksListState extends State<MarksList>
     super.build(context);
     var whatIfMode = widget._whatIfMode;
     var course = widget._course;
+    var sidePadding = (widthOf(context) - 500) / 2;
     return Stack(
       children: <Widget>[
         if (course.overallMark == null || course.assignments.length == 0)
           Center(
             child: Text(
               Strings.get("assignments_unavailable"),
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .subhead,
+              style: Theme.of(context).textTheme.subhead,
             ),
           ),
         if (course.assignments != null)
           BetterAnimatedList(
+            padding: EdgeInsets.symmetric(
+              horizontal: sidePadding > 0 ? sidePadding : 0,
+            ),
             list: course.assignments.reversed.toList(),
             header: Column(
               children: <Widget>[
                 CrossFade(
-                  key: Key("tip"),
-                  firstChild: TipsCard(
-                      text: Strings.get("tap_to_view_detail"),
-                      onDismiss: () {
-                        setState(() {
-                          showTips = false;
-                          prefs.setBool("show_tap_to_view_detail_tip", false);
-                        });
-                      }),
-                  secondChild: SizedBox(
-                    height: 0.5,
-                    width: double.infinity,
-                  ),
-                    showFirst: showTips
-                ),
+                    key: Key("tip"),
+                    firstChild: TipsCard(
+                        text: Strings.get("tap_to_view_detail"),
+                        onDismiss: () {
+                          setState(() {
+                            showTips = false;
+                            prefs.setBool("show_tap_to_view_detail_tip", false);
+                          });
+                        }),
+                    secondChild: SizedBox(
+                      height: 0.5,
+                      width: double.infinity,
+                    ),
+                    showFirst: showTips),
                 CrossFade(
-                  key: Key("add-btn"),
-                  firstChild: Column(
-                    children: <Widget>[
-                      Center(
-                        child: FlatButton.icon(
-                            onPressed: () => addAssignment(context),
-                            icon: Icon(Icons.add),
-                            label: Text(Strings.get("new_assignment"))),
-                      ),
-                      Divider()
-                    ],
-                  ),
-                  secondChild: SizedBox(
-                    height: 0.5,
-                    width: double.infinity,
-                  ),
-                    showFirst: whatIfMode
-                )
+                    key: Key("add-btn"),
+                    firstChild: Column(
+                      children: <Widget>[
+                        Center(
+                          child: FlatButton.icon(
+                              onPressed: () => addAssignment(context),
+                              icon: Icon(Icons.add),
+                              label: Text(Strings.get("new_assignment"))),
+                        ),
+                        Divider()
+                      ],
+                    ),
+                    secondChild: SizedBox(
+                      height: 0.5,
+                      width: double.infinity,
+                    ),
+                    showFirst: whatIfMode)
               ],
             ),
             itemBuilder: (context, assignment) {

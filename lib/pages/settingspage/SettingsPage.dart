@@ -13,11 +13,15 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
+    var sidePadding = (widthOf(context) - 500) / 2;
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.get("settings")),
       ),
       body: ListView(
+        padding: EdgeInsets.symmetric(
+          horizontal: sidePadding > 0 ? sidePadding : 0,
+        ),
         children: <Widget>[
           ListTile(
             title: Text(Strings.get("manage_accounts_alt")),

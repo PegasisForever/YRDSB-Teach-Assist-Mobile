@@ -80,9 +80,14 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
                     Text(Strings.get("average:") + ((avg != null) ? (num2Str(avg) + "%") : "N/A"),
                         style: TextStyle(fontSize: 16, color: Colors.grey)),
                     SizedBox(height: 8),
-                    SmallMarkChartDetail(
-                      assignment,
-                      height: 170,
+                    Center(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 300),
+                        child: SmallMarkChartDetail(
+                          assignment,
+                          height: 170,
+                        ),
+                      ),
                     ),
                     SizedBox(height: 16),
                     TextField(

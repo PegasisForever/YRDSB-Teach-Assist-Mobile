@@ -29,11 +29,15 @@ class _SummaryTabState extends State<SummaryTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    var sidePadding = (widthOf(context) - 500) / 2;
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: widget.onRefresh,
       child: ListView(
-        padding: EdgeInsets.only(bottom: 8 + getBottomPadding(context)),
+        padding: EdgeInsets.only(
+            bottom: 8 + getBottomPadding(context),
+            left: sidePadding > 0 ? sidePadding : 0,
+            right: sidePadding > 0 ? sidePadding : 0),
         children: _getSummaryCards(widget.courses),
       ),
     );

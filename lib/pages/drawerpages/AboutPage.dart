@@ -17,6 +17,7 @@ class AboutPage extends StatefulWidget {
 class _AboutPageState extends BetterState<AboutPage> {
   @override
   Widget build(BuildContext context) {
+    var sidePadding = (widthOf(context) - 500) / 2;
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.get("about")),
@@ -24,7 +25,9 @@ class _AboutPageState extends BetterState<AboutPage> {
       body: Center(
         child: ListView(
           shrinkWrap: true,
-          padding: EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(
+            horizontal: (sidePadding > 0 ? sidePadding : 0)+24.0,
+          ),
           children: <Widget>[
             FadeInImage(
               placeholder: MemoryImage(kTransparentImage),

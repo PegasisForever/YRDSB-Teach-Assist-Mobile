@@ -5,7 +5,6 @@ class EditText extends StatefulWidget {
       {this.controller,
       this.errorText,
       this.hint,
-      this.maxWidth,
       this.isPassword,
       this.icon,
       this.expandable,
@@ -19,7 +18,6 @@ class EditText extends StatefulWidget {
   final TextEditingController controller;
   final ErrorText errorText;
   final String hint;
-  final double maxWidth;
   final bool isPassword;
   final IconData icon;
   final bool expandable;
@@ -38,7 +36,6 @@ class _EditTextState extends State<EditText> {
   TextEditingController _controller;
   ErrorText _errorText;
   String _hint;
-  double _maxWidth;
   FocusNode _focusNode;
   bool _clearBtnVisibility;
   Icon _icon;
@@ -60,7 +57,6 @@ class _EditTextState extends State<EditText> {
     }
     _controller = widget.controller;
     _hint = widget.hint ?? "";
-    _maxWidth = widget.maxWidth ?? double.infinity;
     _icon = widget.icon != null ? Icon(widget.icon) : null;
     _expandable = widget.expandable == true;
     _inputType = widget.inputType ?? TextInputType.text;
@@ -74,42 +70,39 @@ class _EditTextState extends State<EditText> {
     _errorText = widget.errorText;
     _clearBtnVisibility = _controller?.text?.isNotEmpty ?? false;
 
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: _maxWidth),
-      child: TextField(
-        autofocus: widget.autoFocus,
-        textInputAction: _textInputAction,
-        onSubmitted: _onSubmitted,
-        keyboardType: _inputType,
-        maxLines: _expandable ? null : 1,
-        obscureText: widget.isPassword ?? false,
-        focusNode: _focusNode,
-        controller: _controller,
-        onChanged: (str) {
-          setState(() {
-            _errorText.text = null;
-            _clearBtnVisibility = str != "";
-          });
-        },
-        decoration: InputDecoration(
-            prefixIcon: _icon,
-            suffixIcon: _clearBtnVisibility
-                ? IconButton(
-              icon: Icon(Icons.clear),
-              onPressed: () {
-                FocusScope.of(context).requestFocus(_focusNode);
-                _controller.clear();
+    return TextField(
+      autofocus: widget.autoFocus,
+      textInputAction: _textInputAction,
+      onSubmitted: _onSubmitted,
+      keyboardType: _inputType,
+      maxLines: _expandable ? null : 1,
+      obscureText: widget.isPassword ?? false,
+      focusNode: _focusNode,
+      controller: _controller,
+      onChanged: (str) {
+        setState(() {
+          _errorText.text = null;
+          _clearBtnVisibility = str != "";
+        });
+      },
+      decoration: InputDecoration(
+          prefixIcon: _icon,
+          suffixIcon: _clearBtnVisibility
+              ? IconButton(
+            icon: Icon(Icons.clear),
+            onPressed: () {
+              FocusScope.of(context).requestFocus(_focusNode);
+              _controller.clear();
 
-                setState(() {
-                  _clearBtnVisibility = false;
-                });
-              },
-            )
-                : null,
-            filled: true,
-            labelText: _hint,
-            errorText: _errorText.text),
-      ),
+              setState(() {
+                _clearBtnVisibility = false;
+              });
+            },
+          )
+              : null,
+          filled: true,
+          labelText: _hint,
+          errorText: _errorText.text),
     );
   }
 

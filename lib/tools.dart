@@ -153,3 +153,7 @@ Color primaryColorOf(BuildContext context) {
       .colorScheme
       .primary;
 }
+
+double widthOf(BuildContext context){
+  return MediaQuery.of(context).size.width;
+}

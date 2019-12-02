@@ -6,6 +6,7 @@ import 'package:ta/network/network.dart';
 import 'package:ta/pages/detailpage/DetailPage.dart';
 import 'package:ta/pages/summarypage/CourseCard.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/tools.dart';
 
 import 'AwardBar.dart';
 
@@ -34,6 +35,7 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
       }
     });
 
+    var sidePadding = (widthOf(context) - 500) / 2;
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.get("archived_marks")),
@@ -63,6 +65,9 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
               } catch (e) {}
             },
             child: ListView.builder(
+              padding: EdgeInsets.symmetric(
+                horizontal: sidePadding > 0 ? sidePadding : 0,
+              ),
               itemCount: archivedCourses.length + 1,
               itemBuilder: (context, index) {
                 if (index == 0) {

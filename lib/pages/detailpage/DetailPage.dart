@@ -5,6 +5,7 @@ import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/MarksList.dart';
 import 'package:ta/pages/detailpage/staticstab/StaticsList.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
 import 'package:ta/widgets/CrossFade.dart';
 
@@ -26,7 +27,9 @@ class _DetailPageState extends BetterState<DetailPage> {
   var whatIfMode = false;
   var showWhatIfTips = prefs.getBool("show_what_if_tip") ?? true;
 
-  _DetailPageState(Course course) :_course=course.copy(),_originalCourse=course.copy();
+  _DetailPageState(Course course)
+      : _course = course.copy(),
+        _originalCourse = course.copy();
 
   updateCourse(course) {
     setState(() {
@@ -64,6 +67,7 @@ class _DetailPageState extends BetterState<DetailPage> {
               )
           ],
           bottom: TabBar(
+            isScrollable: widthOf(context) > 500,
             indicatorColor: Colors.white,
             tabs: [
               Tab(text: Strings.get("assignments")),
@@ -82,10 +86,10 @@ class _DetailPageState extends BetterState<DetailPage> {
                   color: Colors.amber,
                   child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.get("what_if_mode_activated"),
-                            style: TextStyle(color: Colors.black)),
-                      )),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(Strings.get("what_if_mode_activated"),
+                        style: TextStyle(color: Colors.black)),
+                  )),
                 ),
                 secondChild: Container(),
                 showFirst: whatIfMode,
