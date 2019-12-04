@@ -92,6 +92,7 @@ class _AppState extends State<App> {
     }
 
     return new MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'YRDSB Teach Assist',
       theme: lightTheme,
       darkTheme: darkTheme,

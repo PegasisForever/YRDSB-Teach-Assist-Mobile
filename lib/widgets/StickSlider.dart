@@ -117,6 +117,7 @@ class _StickSliderTileState extends State<StickSliderTile> {
           child: ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 35),
             child: TextField(
+              keyboardAppearance: isLightMode(context: context)?Brightness.light:Brightness.dark,
               enabled: widget.enabled,
               focusNode: widget.focusNode,
               controller: _numberTextController,

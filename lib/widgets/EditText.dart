@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ta/tools.dart';
 
 class EditText extends StatefulWidget {
   EditText(
@@ -71,6 +72,7 @@ class _EditTextState extends State<EditText> {
     _clearBtnVisibility = _controller?.text?.isNotEmpty ?? false;
 
     return TextField(
+      keyboardAppearance: isLightMode(context: context)?Brightness.light:Brightness.dark,
       autofocus: widget.autoFocus,
       textInputAction: _textInputAction,
       onSubmitted: _onSubmitted,

@@ -121,6 +121,7 @@ class _FeedbackPageState extends BetterState<FeedbackPage> {
                 SizedBox(height: 12),
                 Expanded(
                   child: TextField(
+                    keyboardAppearance: isLightMode(context: context)?Brightness.light:Brightness.dark,
                     expands: true,
                     maxLines: null,
                     focusNode: _feedbackFocusNode,

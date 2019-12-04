@@ -91,6 +91,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
                     ),
                     SizedBox(height: 16),
                     TextField(
+                      keyboardAppearance: isLightMode(context: context)?Brightness.light:Brightness.dark,
                       controller: _titleController,
                       decoration:
                       InputDecoration(labelText: Strings.get("assignment_title"), filled: true),
