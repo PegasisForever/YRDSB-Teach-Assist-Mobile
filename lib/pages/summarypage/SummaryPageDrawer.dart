@@ -109,14 +109,14 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
                 Navigator.pushNamed(context, "/about");
               },
             ),
-            ListTile(
-              title: Text(Strings.get("donate")),
-              leading: Icon(Icons.monetization_on),
-              onTap: (){
-                Navigator.pop(context);
-                openCustomTab(context, "https://www.patreon.com/yrdsbta");
-              },
-            )
+//            ListTile(
+//              title: Text(Strings.get("donate")),
+//              leading: Icon(Icons.monetization_on),
+//              onTap: (){
+//                Navigator.pop(context);
+//                openCustomTab(context, "https://www.patreon.com/yrdsbta");
+//              },
+//            )
           ],
         ),
       ),
