@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:open_appstore/open_appstore.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
@@ -158,8 +159,15 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
               title: Text(Strings.get("version_no_longer_supported")),
               actions: <Widget>[
                 FlatButton(
-                  child: Text(Strings.get("ok").toUpperCase()),
+                  child: Text(Strings.get("cancel").toUpperCase()),
                   onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                FlatButton(
+                  child: Text(Strings.get("update").toUpperCase()),
+                  onPressed: () {
+                    OpenAppstore.launch(androidAppId: "site.pegasis.yrdsb.ta", iOSAppId: "1483082868");
                     Navigator.pop(context);
                   },
                 ),

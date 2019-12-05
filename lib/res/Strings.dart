@@ -144,6 +144,7 @@ class Strings {
       "ur_avg_of_this_assi_didnt_change": "Your average of this assessment didn't change.",
       "privacy_policy": "Privacy Policy",
       "support": "Support",
+      "update": "Update",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -280,6 +281,7 @@ class Strings {
       "ur_avg_of_this_assi_didnt_change": "这项作业的平均分没有改变。",
       "privacy_policy": "隐私政策",
       "support": "用户支持",
+      "update": "更新",
     }
   };
 
