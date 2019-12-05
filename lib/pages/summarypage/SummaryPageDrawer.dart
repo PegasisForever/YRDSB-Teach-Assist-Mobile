@@ -67,8 +67,9 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
             ListTile(
               title: Text(Strings.get("moodle")),
               leading: Image.asset(
-                isLightMode(context: context) ?
-                "assets/images/moodle_logo.png":"assets/images/moodle_logo_ondark.png",
+                isLightMode(context: context)
+                    ? "assets/images/moodle_logo.png"
+                    : "assets/images/moodle_logo_ondark.png",
                 height: 28,
                 width: 28,
               ),
@@ -109,14 +110,15 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
                 Navigator.pushNamed(context, "/about");
               },
             ),
-//            ListTile(
-//              title: Text(Strings.get("donate")),
-//              leading: Icon(Icons.monetization_on),
-//              onTap: (){
-//                Navigator.pop(context);
-//                openCustomTab(context, "https://www.patreon.com/yrdsbta");
-//              },
-//            )
+            if (!isAndroid()) //Google play doesn't allow me to put this
+              ListTile(
+                title: Text(Strings.get("donate")),
+                leading: Icon(Icons.monetization_on),
+                onTap: () {
+                  Navigator.pop(context);
+                  openCustomTab(context, "https://www.patreon.com/yrdsbta");
+                },
+              )
           ],
         ),
       ),
