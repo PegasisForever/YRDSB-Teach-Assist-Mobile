@@ -11,12 +11,9 @@ import 'package:ta/model/User.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
-import '../firebase.dart';
-
-const String baseUrl = kReleaseMode
-    ? "https://api.pegasis.site/yrdsb_ta/"
-    : "http://192.168.1.22:5004/";
-const int apiVersion = 6;
+const String baseUrl =
+    kReleaseMode ? "https://api.pegasis.site/yrdsb_ta/" : "http://192.168.1.22:5004/";
+const int apiVersion = 7;
 
 class HttpResponse {
   String body = "";
@@ -49,8 +46,10 @@ Future<HttpResponse> _postWithMetric(String url, body) async {
 }
 
 Future<String> regi(User user) async {
-  var res = await _postWithMetric(baseUrl + "regi",
-      jsonEncode({"user": user, "token": Config.firebaseToken, "language": Strings.currentLanguage}));
+  var res = await _postWithMetric(
+      baseUrl + "regi",
+      jsonEncode(
+          {"user": user, "token": Config.firebaseToken, "language": Strings.currentLanguage}));
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -61,8 +60,10 @@ Future<String> regi(User user) async {
 }
 
 Future<void> deregi(User user) async {
-  var res = await _postWithMetric(baseUrl + "deregi",
-      jsonEncode({"user": user, "token": Config.firebaseToken, "language": Strings.currentLanguage}));
+  var res = await _postWithMetric(
+      baseUrl + "deregi",
+      jsonEncode(
+          {"user": user, "token": Config.firebaseToken, "language": Strings.currentLanguage}));
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -74,7 +75,9 @@ Future<void> deregi(User user) async {
 
 Future<String> getMarkTimeLine(User user) async {
   var res = await _postWithMetric(
-      baseUrl + "getmark_timeline", jsonEncode({"number": user.number, "password": user.password}));
+      baseUrl + "getmark_timeline",
+      jsonEncode(
+          {"user": user, "token": Config.firebaseToken, "language": Strings.currentLanguage}));
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
