@@ -99,12 +99,13 @@ class Strings {
       "version_no_longer_supported": "Your APP version is no longer supported, please update.",
       "ur_ta_pwd_has_changed": "Your TA Password Has Changed",
       "u_need_to_update_your_password":
-      "You need to update your password in order to view up-to-date marks.",
+          "You need to update your password in order to view up-to-date marks.",
       "update_password": "Update Password",
       "what_if...": "What if .....",
       "i_got_a_new_mark": "I got a new mark?",
       "teacher_updated_my_mark": "Teacher edited my mark?",
-      "what_if_description": "In What If Mode, you can edit your assessments without any limitation and see how does it affect your course overall.",
+      "what_if_description":
+          "In What If Mode, you can edit your assessments without any limitation and see how does it affect your course overall.",
       "enable_what_if_mode": "Enable What If Mode",
       "what_if_mode_activated": "What If Mode Activated",
       "new_assignment": "New Assessment",
@@ -138,10 +139,11 @@ class Strings {
       "u_got_full_in_this_assi": "You got full mark in this new assessment.",
       "ur_new_avg_of_this_assi": "Your new average of this assessment is %s%%.",
       "ur_avg_of_this_assi_dropped": "Your average of this assessment dropped from %s%% to %s%%.",
-      "ur_avg_of_this_assi_increased": "Your average of this assessment increased from %s%% to %s%%.",
+      "ur_avg_of_this_assi_increased":
+          "Your average of this assessment increased from %s%% to %s%%.",
       "ur_avg_of_this_assi_didnt_change": "Your average of this assessment didn't change.",
-      "privacy_policy":"Privacy Policy",
-      "support":"Support",
+      "privacy_policy": "Privacy Policy",
+      "support": "Support",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -276,8 +278,8 @@ class Strings {
       "ur_avg_of_this_assi_dropped": "这项作业的平均分从%s分下降到了%s分。",
       "ur_avg_of_this_assi_increased": "这项作业的平均分从%s分提高到了%s分。",
       "ur_avg_of_this_assi_didnt_change": "这项作业的平均分没有改变。",
-      "privacy_policy":"隐私政策",
-      "support":"用户支持",
+      "privacy_policy": "隐私政策",
+      "support": "用户支持",
     }
   };
 
