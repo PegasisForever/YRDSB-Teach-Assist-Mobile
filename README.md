@@ -2,7 +2,7 @@
 
 One of the three programs in the project. Other two: [Fetch TA Data](https://github.com/PegasisForever/Fetch-TA-Data), [YRDSB Teach Assist Web](https://github.com/PegasisForever/YRDSB-Teach-Assist-Web).
 
-This is an unofficial YRDSB Teach Assist mobile app for checking marks, you can get it from [Google Play]() and [App Store](). (not yet)
+This is an unofficial YRDSB Teach Assist mobile app for checking marks, you can get it from [Google Play](https://play.google.com/store/apps/details?id=site.pegasis.yrdsb.ta) and [App Store](https://apps.apple.com/us/app/yrdsb-teach-assist/id1483082868?ls=1).
 
 Made by a grade 11 student in MCI.
 
