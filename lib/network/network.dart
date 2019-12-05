@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/model/User.dart';
@@ -49,7 +50,7 @@ Future<HttpResponse> _postWithMetric(String url, body) async {
 
 Future<String> regi(User user) async {
   var res = await _postWithMetric(baseUrl + "regi",
-      jsonEncode({"user": user, "token": firebaseToken, "language": Strings.currentLanguage}));
+      jsonEncode({"user": user, "token": Config.firebaseToken, "language": Strings.currentLanguage}));
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -61,7 +62,7 @@ Future<String> regi(User user) async {
 
 Future<void> deregi(User user) async {
   var res = await _postWithMetric(baseUrl + "deregi",
-      jsonEncode({"user": user, "token": firebaseToken, "language": Strings.currentLanguage}));
+      jsonEncode({"user": user, "token": Config.firebaseToken, "language": Strings.currentLanguage}));
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {

@@ -1,9 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:ta/dataStore.dart';
 
 //Firebase Cloud Messaging
 final _firebaseMessaging = FirebaseMessaging();
 var firebaseInited = false;
-var firebaseToken;
 
 void initFirebaseMsg() {
   _firebaseMessaging.configure();
@@ -14,10 +14,16 @@ void initFirebaseMsg() {
   ));
   _firebaseMessaging.getToken().then((String token) {
     firebaseInited = true;
-    firebaseToken = token;
+    if (token!=null){
+      Config.firebaseToken=token;
+    }
   });
 }
 
 bool supportsGooglePlay() {
-  return firebaseToken != null;
+  if (firebaseInited){
+    return Config.firebaseToken!=null;
+  }else{
+    return null;
+  }
 }

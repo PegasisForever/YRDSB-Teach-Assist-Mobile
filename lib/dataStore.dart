@@ -52,4 +52,12 @@ class Config {
   static set showMoreDecimal(bool v) {
     prefs.setBool("show_more_decimal", v);
   }
+
+  static String get firebaseToken{
+    return prefs.getString("firebase_token") ?? null;
+  }
+
+  static set firebaseToken(String token){
+    prefs.setString("firebase_token", token);
+  }
 }

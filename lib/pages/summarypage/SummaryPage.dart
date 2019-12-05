@@ -109,10 +109,9 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
       return;
     }
 
-    precacheImage(Image.asset("assets/images/app_logo.png").image,context);
+    precacheImage(Image.asset("assets/images/app_logo.png").image, context);
 
-    if (prefs.getBool("show_no_google_play_warning") ??
-        true && !supportsGooglePlay() && firebaseInited) {
+    if (prefs.getBool("show_no_google_play_warning") ?? true && supportsGooglePlay() == false) {
       showDialog(
           context: context,
           builder: (context) {
