@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:quiver/core.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/prasers/ParsersCollection.dart';
@@ -32,13 +33,12 @@ class SmallMark {
 
   SmallMark.blank();
 
-  SmallMark copy() =>
-      SmallMark.blank()
-        ..available = available
-        ..finished = finished
-        ..total = total
-        ..get = get
-        ..weight = weight;
+  SmallMark copy() => SmallMark.blank()
+    ..available = available
+    ..finished = finished
+    ..total = total
+    ..get = get
+    ..weight = weight;
 
   @override
   bool operator ==(other) {
@@ -165,28 +165,27 @@ class Assignment {
         (F.available && F.finished);
   }
 
-  bool isNoWeight(){
-    return (KU.weight==0 || !KU.available) &&
-        (T.weight==0 || !T.available) &&
-        (C.weight==0 || !C.available) &&
-        (A.weight==0 || !A.available) &&
-        (O.weight==0 || !O.available) &&
-        (F.weight==0 || !F.available);
+  bool isNoWeight() {
+    return (KU.weight == 0 || !KU.available) &&
+        (T.weight == 0 || !T.available) &&
+        (C.weight == 0 || !C.available) &&
+        (A.weight == 0 || !A.available) &&
+        (O.weight == 0 || !O.available) &&
+        (F.weight == 0 || !F.available);
   }
 
-  Assignment copy() =>
-      Assignment.blank()
-        ..KU = KU.copy()
-        ..T = T.copy()
-        ..C = C.copy()
-        ..A = A.copy()
-        ..O = O.copy()
-        ..F = F.copy()
-        ..name = name
-        ..feedback = feedback
-        ..time = time
-        ..edited = edited
-        ..expanded = expanded;
+  Assignment copy() => Assignment.blank()
+    ..KU = KU.copy()
+    ..T = T.copy()
+    ..C = C.copy()
+    ..A = A.copy()
+    ..O = O.copy()
+    ..F = F.copy()
+    ..name = name
+    ..feedback = feedback
+    ..time = time
+    ..edited = edited
+    ..expanded = expanded;
 
   @override
   bool operator ==(other) {
@@ -218,11 +217,10 @@ class Weight {
 
   Weight.blank();
 
-  Weight copy() =>
-      Weight.blank()
-        ..W = W
-        ..CW = CW
-        ..SA = SA;
+  Weight copy() => Weight.blank()
+    ..W = W
+    ..CW = CW
+    ..SA = SA;
 
   @override
   bool operator ==(other) {
@@ -243,14 +241,13 @@ class WeightTable {
 
   WeightTable.blank();
 
-  WeightTable copy() =>
-      WeightTable.blank()
-        ..KU = KU.copy()
-        ..T = T.copy()
-        ..C = C.copy()
-        ..A = A.copy()
-        ..O = O.copy()
-        ..F = F.copy();
+  WeightTable copy() => WeightTable.blank()
+    ..KU = KU.copy()
+    ..T = T.copy()
+    ..C = C.copy()
+    ..A = A.copy()
+    ..O = O.copy()
+    ..F = F.copy();
 
   @override
   bool operator ==(other) {
@@ -365,28 +362,28 @@ class Course {
       var avg = 0.0;
       var avgn = 0.0;
       if (Ka >= 0.0) {
-        avg += Ka * weightTable.KU.W;
-        avgn += weightTable.KU.W;
+        avg += Ka * weightTable.KU.CW;
+        avgn += weightTable.KU.CW;
       }
       if (Ta >= 0.0) {
-        avg += Ta * weightTable.T.W;
-        avgn += weightTable.T.W;
+        avg += Ta * weightTable.T.CW;
+        avgn += weightTable.T.CW;
       }
       if (Ca >= 0.0) {
-        avg += Ca * weightTable.C.W;
-        avgn += weightTable.C.W;
+        avg += Ca * weightTable.C.CW;
+        avgn += weightTable.C.CW;
       }
       if (Aa >= 0.0) {
-        avg += Aa * weightTable.A.W;
-        avgn += weightTable.A.W;
+        avg += Aa * weightTable.A.CW;
+        avgn += weightTable.A.CW;
       }
       if (Oa >= 0.0) {
-        avg += Oa * weightTable.O.W;
-        avgn += weightTable.O.W;
+        avg += Oa * weightTable.O.CW;
+        avgn += weightTable.O.CW;
       }
       if (Fa >= 0.0) {
-        avg += Fa * weightTable.F.W;
-        avgn += weightTable.F.W;
+        avg += Fa * weightTable.F.CW;
+        avgn += weightTable.F.CW;
       }
 
       if (i == assignments.length - 1) {
@@ -425,13 +422,11 @@ class Course {
   }
 
   @override
-  int get hashCode =>
-      hash4(
-          hash4(
-              hash4(hashObjects(assignments), weightTable, startTime, endTime), name, code, block),
-          room,
-          overallMark,
-          cached);
+  int get hashCode => hash4(
+      hash4(hash4(hashObjects(assignments), weightTable, startTime, endTime), name, code, block),
+      room,
+      overallMark,
+      cached);
 }
 
 class CourseAnalysis {
