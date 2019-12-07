@@ -31,6 +31,32 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           ListTile(
+            title: Text(Strings.get("language")),
+            leading: Icon(Icons.translate),
+            trailing: DropdownButton<String>(
+                value: Config.language,
+                onChanged: (v) {
+                  setState(() {
+                    Config.language=v;
+                    Strings.updateCurrentLanguage(context);
+                  });
+                },
+                items: [
+                  DropdownMenuItem(
+                    value: null,
+                    child: Text(Strings.get("follow_system")),
+                  ),
+                  DropdownMenuItem(
+                    value: "en",
+                    child: Text(Languages["en"]),
+                  ),
+                  DropdownMenuItem(
+                    value: "zh",
+                    child: Text(Languages["zh"]),
+                  ),
+                ]),
+          ),
+          ListTile(
             title: Text(Strings.get("dark_mode")),
             leading: Icon(Icons.brightness_4),
             trailing: DropdownButton<int>(

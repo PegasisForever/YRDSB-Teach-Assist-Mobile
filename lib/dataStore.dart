@@ -60,4 +60,12 @@ class Config {
   static set firebaseToken(String token){
     prefs.setString("firebase_token", token);
   }
+
+  static String get language{
+    return prefs.getString("language") ?? null;
+  }
+
+  static set language(String lang){
+    prefs.setString("language", lang);
+  }
 }

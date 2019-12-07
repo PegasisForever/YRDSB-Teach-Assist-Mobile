@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ta/dataStore.dart';
+
+const Languages = {
+  "en": "English",
+  "zh": "中文（简体）",
+};
 
 class Strings {
   static var currentLanguage;
@@ -145,6 +151,7 @@ class Strings {
       "privacy_policy": "Privacy Policy",
       "support": "Support",
       "update": "Update",
+      "language": "Language",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -282,11 +289,12 @@ class Strings {
       "privacy_policy": "隐私政策",
       "support": "用户支持",
       "update": "更新",
+      "language": "语言",
     }
   };
 
   static updateCurrentLanguage(BuildContext context) {
-    currentLanguage = Localizations.localeOf(context).languageCode;
+    currentLanguage = Config.language ?? Localizations.localeOf(context).languageCode;
   }
 
   static String get(String id, [BuildContext context]) {
