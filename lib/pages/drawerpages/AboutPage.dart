@@ -6,7 +6,6 @@ import 'package:ta/pages/drawerpages/OpenCustomTab.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -65,11 +64,9 @@ class _AboutPageState extends BetterState<AboutPage> {
                   TextSpan(
                       text: "dev.pegasis.site/ta",
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          launch("https://dev.pegasis.site/ta");
-                        },
+                        ..onTap = () => openCustomTab(context,"https://dev.pegasis.site/ta"),
                       style: TextStyle(
-                        color: Colors.blue,
+                        color: isLightMode(context: context)?Colors.blue:Colors.blue[300],
                         decoration: TextDecoration.underline,
                       )),
                 ]),
