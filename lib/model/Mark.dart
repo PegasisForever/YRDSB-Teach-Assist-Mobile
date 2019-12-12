@@ -1,12 +1,20 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:quiver/core.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/prasers/ParsersCollection.dart';
 import 'package:ta/res/Strings.dart';
 
 import '../tools.dart';
+
+enum Category {
+  KU,
+  T,
+  C,
+  A,
+  O,
+  F,
+}
 
 class SmallMark {
   bool available;
@@ -68,6 +76,17 @@ class Assignment {
   bool added;
   bool expanded;
 
+  Map<Category, SmallMark> get smallMarks {
+    return {
+      Category.KU: KU,
+      Category.T: T,
+      Category.C: C,
+      Category.A: A,
+      Category.O: O,
+      Category.F: F,
+    };
+  }
+
   Assignment(this.KU, this.T, this.C, this.A, this.O, this.F, this.name, String date) {
     if (date != null) {
       this.time = DateTime.parse(date);
@@ -84,34 +103,17 @@ class Assignment {
     }
   }
 
-  double getAverage(WeightTable weights) {
+  double getAverage(WeightTable weightTable) {
     var get = 0.0;
     var total = 0.0;
+    var weights = weightTable.weights;
 
-    if (KU.available && KU.finished) {
-      get += KU.get / KU.total * weights.KU.CW * KU.weight;
-      total += weights.KU.CW * KU.weight;
-    }
-    if (T.available && T.finished) {
-      get += T.get / T.total * weights.T.CW * T.weight;
-      total += weights.T.CW * T.weight;
-    }
-    if (C.available && C.finished) {
-      get += C.get / C.total * weights.C.CW * C.weight;
-      total += weights.C.CW * C.weight;
-    }
-    if (A.available && A.finished) {
-      get += A.get / A.total * weights.A.CW * A.weight;
-      total += weights.A.CW * A.weight;
-    }
-    if (O.available && O.finished) {
-      get += O.get / O.total * weights.O.CW * O.weight;
-      total += weights.O.CW * O.weight;
-    }
-    if (F.available && F.finished) {
-      get += F.get / F.total * weights.F.CW * F.weight;
-      total += weights.F.CW * F.weight;
-    }
+    smallMarks.forEach((category, smallMark) {
+      if (smallMark.available && smallMark.finished) {
+        get += smallMark.get / smallMark.total * weights[category].CW * smallMark.weight;
+        total += weights[category].CW * smallMark.weight;
+      }
+    });
 
     if (total > 0) {
       var avg = get / total;
@@ -124,30 +126,13 @@ class Assignment {
   double getAverageWeight() {
     var weight = 0.0;
     var count = 0.0;
-    if (KU.available && KU.finished) {
-      weight += KU.weight;
-      count++;
-    }
-    if (T.available && T.finished) {
-      weight += T.weight;
-      count++;
-    }
-    if (C.available && C.finished) {
-      weight += C.weight;
-      count++;
-    }
-    if (A.available && A.finished) {
-      weight += A.weight;
-      count++;
-    }
-    if (O.available && O.finished) {
-      weight += O.weight;
-      count++;
-    }
-    if (F.available && F.finished) {
-      weight += F.weight;
-      count++;
-    }
+
+    smallMarks.forEach((category, smallMark) {
+      if (smallMark.available && smallMark.finished) {
+        weight += smallMark.weight;
+        count++;
+      }
+    });
 
     if (count > 0) {
       return weight / count;
@@ -239,6 +224,17 @@ class WeightTable {
   Weight O;
   Weight F;
 
+  Map<Category, Weight> get weights {
+    return {
+      Category.KU: KU,
+      Category.T: T,
+      Category.C: C,
+      Category.A: A,
+      Category.O: O,
+      Category.F: F,
+    };
+  }
+
   WeightTable.blank();
 
   WeightTable copy() => WeightTable.blank()
@@ -314,86 +310,59 @@ class Course {
     var analysis = CourseAnalysis.blank();
 
     var i = 0;
-    var K = 0.0;
-    var Kn = 0.0;
-    var T = 0.0;
-    var Tn = 0.0;
-    var C = 0.0;
-    var Cn = 0.0;
-    var A = 0.0;
-    var An = 0.0;
-    var O = 0.0;
-    var On = 0.0;
-    var F = 0.0;
-    var Fn = 0.0;
+    var gets = <Category, double>{
+      Category.KU: 0.0,
+      Category.T: 0.0,
+      Category.C: 0.0,
+      Category.A: 0.0,
+      Category.O: 0.0,
+      Category.F: 0.0,
+    };
+    var totals = <Category, double>{
+      Category.KU: 0.0,
+      Category.T: 0.0,
+      Category.C: 0.0,
+      Category.A: 0.0,
+      Category.O: 0.0,
+      Category.F: 0.0,
+    };
 
     assignments.forEach((assi) {
-      if (assi.KU.available && assi.KU.finished) {
-        K += assi.KU.get / assi.KU.total * assi.KU.weight;
-        Kn += assi.KU.weight;
-      }
-      if (assi.T.available && assi.T.finished) {
-        T += assi.T.get / assi.T.total * assi.T.weight;
-        Tn += assi.T.weight;
-      }
-      if (assi.C.available && assi.C.finished) {
-        C += assi.C.get / assi.C.total * assi.C.weight;
-        Cn += assi.C.weight;
-      }
-      if (assi.A.available && assi.A.finished) {
-        A += assi.A.get / assi.A.total * assi.A.weight;
-        An += assi.A.weight;
-      }
-      if (assi.O.available && assi.O.finished) {
-        O += assi.O.get / assi.O.total * assi.O.weight;
-        On += assi.O.weight;
-      }
-      if (assi.F.available && assi.F.finished) {
-        F += assi.F.get / assi.F.total * assi.F.weight;
-        Fn += assi.F.weight;
-      }
+      assi.smallMarks.forEach((category, smallMark) {
+        if (smallMark.available && smallMark.finished) {
+          gets[category] += smallMark.get / smallMark.total * smallMark.weight;
+          totals[category] += smallMark.weight;
+        }
+      });
 
-      var Ka = K / Kn;
-      var Ta = T / Tn;
-      var Ca = C / Cn;
-      var Aa = A / An;
-      var Oa = O / On;
-      var Fa = F / Fn;
       var avg = 0.0;
       var avgn = 0.0;
-      if (Ka >= 0.0) {
-        avg += Ka * weightTable.KU.CW;
-        avgn += weightTable.KU.CW;
-      }
-      if (Ta >= 0.0) {
-        avg += Ta * weightTable.T.CW;
-        avgn += weightTable.T.CW;
-      }
-      if (Ca >= 0.0) {
-        avg += Ca * weightTable.C.CW;
-        avgn += weightTable.C.CW;
-      }
-      if (Aa >= 0.0) {
-        avg += Aa * weightTable.A.CW;
-        avgn += weightTable.A.CW;
-      }
-      if (Oa >= 0.0) {
-        avg += Oa * weightTable.O.CW;
-        avgn += weightTable.O.CW;
-      }
-      if (Fa >= 0.0) {
-        avg += Fa * weightTable.F.CW;
-        avgn += weightTable.F.CW;
-      }
 
-      if (i == assignments.length - 1) {
-        analysis.kuSA = Ka >= 0 ? Ka * 100 : 0;
-        analysis.tSA = Ta >= 0 ? Ta * 100 : 0;
-        analysis.cSA = Ca >= 0 ? Ca * 100 : 0;
-        analysis.aSA = Aa >= 0 ? Aa * 100 : 0;
-        analysis.oSA = Oa >= 0 ? Oa * 100 : 0;
-        analysis.fSA = Fa >= 0 ? Fa * 100 : 0;
-      }
+      var weights = weightTable.weights;
+      Category.values.forEach((category) {
+        var smallAvg = gets[category] / totals[category];
+        if (smallAvg >= 0.0) {
+          avg += smallAvg * weights[category].CW;
+          avgn += weights[category].CW;
+        }
+
+        if (i == assignments.length - 1) {
+          if (category == Category.KU) {
+            analysis.kuSA = smallAvg >= 0 ? smallAvg * 100 : 0;
+          } else if (category == Category.T) {
+            analysis.tSA = smallAvg >= 0 ? smallAvg * 100 : 0;
+          } else if (category == Category.C) {
+            analysis.cSA = smallAvg >= 0 ? smallAvg * 100 : 0;
+          } else if (category == Category.A) {
+            analysis.aSA = smallAvg >= 0 ? smallAvg * 100 : 0;
+          } else if (category == Category.O) {
+            analysis.oSA = smallAvg >= 0 ? smallAvg * 100 : 0;
+          } else if (category == Category.F) {
+            analysis.fSA = smallAvg >= 0 ? smallAvg * 100 : 0;
+          }
+        }
+      });
+
       if (avgn > 0.0) {
         analysis.overallList.add(avg / avgn * 100);
       } else {
@@ -437,6 +406,17 @@ class CourseAnalysis {
   double aSA;
   double oSA;
   double fSA;
+
+  Map<Category, double> get SAs {
+    return {
+      Category.KU: kuSA,
+      Category.T: tSA,
+      Category.C: cSA,
+      Category.A: aSA,
+      Category.O: oSA,
+      Category.F: fSA,
+    };
+  }
 
   CourseAnalysis.blank();
 }
