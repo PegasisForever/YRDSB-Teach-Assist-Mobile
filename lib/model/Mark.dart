@@ -17,41 +17,25 @@ enum Category {
 }
 
 class SmallMark {
-  bool available;
   bool finished;
   double total;
   double get;
   double weight;
 
-  get percent {
-    if (!available) {
-      return "N/A";
-    } else {
-      return "${getRoundString((get / total * 100), 2)}%";
-    }
-  }
-
-  SmallMark.unavailable() {
-    this.available = false;
-    this.finished = true;
-    this.total = 100;
-    this.get = 90;
-    this.weight = 10;
-  }
+  double get percentage => total > 0.0 ? (get / total) : 0.0;
 
   SmallMark.blank();
 
-  SmallMark copy() => SmallMark.blank()
-    ..available = available
-    ..finished = finished
-    ..total = total
-    ..get = get
-    ..weight = weight;
+  SmallMark copy() =>
+      SmallMark.blank()
+        ..finished = finished
+        ..total = total
+        ..get = get
+        ..weight = weight;
 
   @override
   bool operator ==(other) {
     return (other is SmallMark) &&
-        available == other.available &&
         finished == other.finished &&
         total == other.total &&
         get == other.get &&
@@ -59,35 +43,91 @@ class SmallMark {
   }
 
   @override
-  int get hashCode => hash4(available, finished, weight, hash2(total, get));
+  int get hashCode => hash4(finished, weight, total, get);
+}
+
+class SmallMarkGroup {
+  List<SmallMark> smallMarks = List();
+
+  bool get available => smallMarks.length > 0;
+
+  bool get hasFinished => find(smallMarks, (SmallMark it) => it.finished) != null;
+
+  bool get allFinished => find(smallMarks, (SmallMark it) => !it.finished) == null;
+
+  bool get hasWeight => find(smallMarks, (SmallMark it) => it.weight > 0) != null;
+
+  double get allGet => sum(smallMarks, (SmallMark it) => it.finished ? it.get : 0.0);
+
+  double get allTotal => sum(smallMarks, (SmallMark it) => it.finished ? it.total : 0.0);
+
+  double get allWeight => sum(smallMarks, (SmallMark it) => it.finished ? it.weight : 0.0);
+
+  double get percentage {
+    var get = 0.0;
+    var total = 0.0;
+    smallMarks.forEach((SmallMark smallMark) {
+      get += smallMark.percentage * smallMark.weight;
+      total += smallMark.weight;
+    });
+    return total > 0.0 ? (get / total) : 0.0;
+  }
+
+
+  SmallMarkGroup.blank();
+
+  SmallMarkGroup copy() =>
+      SmallMarkGroup.blank()
+        ..smallMarks = List.from(smallMarks);
+
+  @override
+  bool operator ==(other) {
+    return (other is SmallMarkGroup) &&
+        hashObjects(smallMarks) == hashObjects(other.smallMarks);
+  }
+
+  @override
+  int get hashCode => hash2(available, hashObjects(smallMarks));
 }
 
 class Assignment {
-  SmallMark KU;
-  SmallMark T;
-  SmallMark C;
-  SmallMark A;
-  SmallMark O;
-  SmallMark F;
   String name;
   String feedback;
   DateTime time;
   bool edited;
   bool added;
   bool expanded;
+  Map<Category, SmallMarkGroup> smallMarkGroups = {
+    Category.KU: null,
+    Category.T: null,
+    Category.C: null,
+    Category.A: null,
+    Category.O: null,
+    Category.F: null,
+  };
 
-  Map<Category, SmallMark> get smallMarks {
-    return {
-      Category.KU: KU,
-      Category.T: T,
-      Category.C: C,
-      Category.A: A,
-      Category.O: O,
-      Category.F: F,
-    };
+  bool get isAvailable {
+    for (final category in Category.values) {
+      SmallMarkGroup smallMarkGroup = this[category];
+      if (smallMarkGroup.available && smallMarkGroup.hasFinished) return true;
+    }
+    return false;
   }
 
-  Assignment(this.KU, this.T, this.C, this.A, this.O, this.F, this.name, String date) {
+  bool get isNoWeight {
+    for (final category in Category.values) {
+      SmallMarkGroup smallMarkGroup = this[category];
+      if (smallMarkGroup.hasWeight) return false;
+    }
+    return true;
+  }
+
+  SmallMarkGroup operator [](Category category) => smallMarkGroups[category];
+
+  void operator []=(Category category, SmallMarkGroup smallMarkGroup) =>
+      smallMarkGroups[category] = smallMarkGroup;
+
+  Assignment(this.smallMarkGroups, this.name, String date) {
     if (date != null) {
       this.time = DateTime.parse(date);
     }
@@ -95,7 +135,7 @@ class Assignment {
 
   Assignment.blank();
 
-  get displayName {
+  String get displayName {
     if (name.isNotEmpty) {
       return name;
     } else {
@@ -108,29 +148,28 @@ class Assignment {
     var total = 0.0;
     var weights = weightTable.weights;
 
-    smallMarks.forEach((category, smallMark) {
-      if (smallMark.available && smallMark.finished) {
-        get += smallMark.get / smallMark.total * weights[category].CW * smallMark.weight;
-        total += weights[category].CW * smallMark.weight;
+    smallMarkGroups.forEach((category, smallMarkGroup) {
+      if (smallMarkGroup.available && smallMarkGroup.hasFinished) {
+        get += smallMarkGroup.percentage * smallMarkGroup.allWeight * weights[category].CW;
+        total += smallMarkGroup.allWeight * weights[category].CW;
       }
     });
 
-    if (total > 0) {
-      var avg = get / total;
-      return avg * 100;
-    } else {
-      return null;
-    }
+    return total > 0.0 ? (get / total * 100) : null;
   }
 
   double getAverageWeight() {
     var weight = 0.0;
     var count = 0.0;
 
-    smallMarks.forEach((category, smallMark) {
-      if (smallMark.available && smallMark.finished) {
-        weight += smallMark.weight;
-        count++;
+    smallMarkGroups.forEach((category, smallMarkGroup) {
+      if (smallMarkGroup.available) {
+        smallMarkGroup.smallMarks.forEach((smallMark) {
+          if (smallMark.finished) {
+            weight += smallMark.weight;
+            count++;
+          }
+        });
       }
     });
 
@@ -141,54 +180,37 @@ class Assignment {
     }
   }
 
-  bool isAvailable() {
-    return (KU.available && KU.finished) ||
-        (T.available && T.finished) ||
-        (C.available && C.finished) ||
-        (A.available && A.finished) ||
-        (O.available && O.finished) ||
-        (F.available && F.finished);
+  Assignment copy() {
+    var assignment = Assignment.blank()
+      ..name = name
+      ..feedback = feedback
+      ..time = time
+      ..edited = edited
+      ..expanded = expanded;
+    Category.values.forEach((category) {
+      assignment.smallMarkGroups[category] = smallMarkGroups[category].copy();
+    });
+    return assignment;
   }
 
-  bool isNoWeight() {
-    return (KU.weight == 0 || !KU.available) &&
-        (T.weight == 0 || !T.available) &&
-        (C.weight == 0 || !C.available) &&
-        (A.weight == 0 || !A.available) &&
-        (O.weight == 0 || !O.available) &&
-        (F.weight == 0 || !F.available);
-  }
-
-  Assignment copy() => Assignment.blank()
-    ..KU = KU.copy()
-    ..T = T.copy()
-    ..C = C.copy()
-    ..A = A.copy()
-    ..O = O.copy()
-    ..F = F.copy()
-    ..name = name
-    ..feedback = feedback
-    ..time = time
-    ..edited = edited
-    ..expanded = expanded;
 
   @override
   bool operator ==(other) {
-    return (other is Assignment) &&
-        KU == other.KU &&
-        T == other.T &&
-        C == other.C &&
-        A == other.A &&
-        O == other.O &&
-        F == other.F &&
+    if (!((other is Assignment) &&
         name == other.name &&
         feedback == other.feedback &&
         time == other.time &&
-        edited == other.edited;
+        edited == other.edited
+    )) return false;
+    for (final category in Category.values) {
+      if (this[category] != other[category]) return false;
+    }
+    return true;
   }
 
   @override
-  int get hashCode => hash4(hash4(hash4(name, feedback, time, edited), KU, T, C), A, O, F);
+  int get hashCode =>
+      hash2(hash4(name, feedback, time, edited), hashObjects(smallMarkGroups.values));
 }
 
 class Weight {
@@ -202,10 +224,11 @@ class Weight {
 
   Weight.blank();
 
-  Weight copy() => Weight.blank()
-    ..W = W
-    ..CW = CW
-    ..SA = SA;
+  Weight copy() =>
+      Weight.blank()
+        ..W = W
+        ..CW = CW
+        ..SA = SA;
 
   @override
   bool operator ==(other) {
@@ -217,47 +240,40 @@ class Weight {
 }
 
 class WeightTable {
-  Weight KU;
-  Weight T;
-  Weight C;
-  Weight A;
-  Weight O;
-  Weight F;
+  Map<Category, Weight> weights = {
+    Category.KU: null,
+    Category.T: null,
+    Category.C: null,
+    Category.A: null,
+    Category.O: null,
+    Category.F: null,
+  };
 
-  Map<Category, Weight> get weights {
-    return {
-      Category.KU: KU,
-      Category.T: T,
-      Category.C: C,
-      Category.A: A,
-      Category.O: O,
-      Category.F: F,
-    };
-  }
+  Weight operator [](Category category) => weights[category];
+
+  void operator []=(Category category, Weight weight) => weights[category] = weight;
 
   WeightTable.blank();
 
-  WeightTable copy() => WeightTable.blank()
-    ..KU = KU.copy()
-    ..T = T.copy()
-    ..C = C.copy()
-    ..A = A.copy()
-    ..O = O.copy()
-    ..F = F.copy();
-
-  @override
-  bool operator ==(other) {
-    return (other is WeightTable) &&
-        KU == other.KU &&
-        T == other.T &&
-        C == other.C &&
-        A == other.A &&
-        O == other.O &&
-        F == other.F;
+  WeightTable copy() {
+    var weightTable = WeightTable.blank();
+    for (final category in Category.values) {
+      weightTable[category] = this[category].copy();
+    }
+    return weightTable;
   }
 
   @override
-  int get hashCode => hash3(hash4(KU, T, C, A), O, F);
+  bool operator ==(other) {
+    if (!(other is WeightTable)) return false;
+    for (final category in Category.values) {
+      if (this[category] != other[category]) return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode => hashObjects(weights.values);
 }
 
 class Course {
@@ -328,10 +344,10 @@ class Course {
     };
 
     assignments.forEach((assi) {
-      assi.smallMarks.forEach((category, smallMark) {
-        if (smallMark.available && smallMark.finished) {
-          gets[category] += smallMark.get / smallMark.total * smallMark.weight;
-          totals[category] += smallMark.weight;
+      assi.smallMarkGroups.forEach((category, smallMarkGroup) {
+        if (smallMarkGroup.hasFinished && smallMarkGroup.available && smallMarkGroup.hasWeight) {
+          gets[category] += smallMarkGroup.percentage * smallMarkGroup.allWeight;
+          totals[category] += smallMarkGroup.allWeight;
         }
       });
 
@@ -347,19 +363,7 @@ class Course {
         }
 
         if (i == assignments.length - 1) {
-          if (category == Category.KU) {
-            analysis.kuSA = smallAvg >= 0 ? smallAvg * 100 : 0;
-          } else if (category == Category.T) {
-            analysis.tSA = smallAvg >= 0 ? smallAvg * 100 : 0;
-          } else if (category == Category.C) {
-            analysis.cSA = smallAvg >= 0 ? smallAvg * 100 : 0;
-          } else if (category == Category.A) {
-            analysis.aSA = smallAvg >= 0 ? smallAvg * 100 : 0;
-          } else if (category == Category.O) {
-            analysis.oSA = smallAvg >= 0 ? smallAvg * 100 : 0;
-          } else if (category == Category.F) {
-            analysis.fSA = smallAvg >= 0 ? smallAvg * 100 : 0;
-          }
+          analysis[category] = smallAvg >= 0 ? smallAvg * 100 : 0;
         }
       });
 
@@ -391,32 +395,29 @@ class Course {
   }
 
   @override
-  int get hashCode => hash4(
-      hash4(hash4(hashObjects(assignments), weightTable, startTime, endTime), name, code, block),
-      room,
-      overallMark,
-      cached);
+  int get hashCode =>
+      hash4(
+          hash4(
+              hash4(hashObjects(assignments), weightTable, startTime, endTime), name, code, block),
+          room,
+          overallMark,
+          cached);
 }
 
 class CourseAnalysis {
   var overallList = List<double>();
-  double kuSA;
-  double tSA;
-  double cSA;
-  double aSA;
-  double oSA;
-  double fSA;
+  Map<Category, double> SAs = {
+    Category.KU: null,
+    Category.T: null,
+    Category.C: null,
+    Category.A: null,
+    Category.O: null,
+    Category.F: null,
+  };
 
-  Map<Category, double> get SAs {
-    return {
-      Category.KU: kuSA,
-      Category.T: tSA,
-      Category.C: cSA,
-      Category.A: aSA,
-      Category.O: oSA,
-      Category.F: fSA,
-    };
-  }
+  double operator [](Category category) => SAs[category];
+
+  void operator []=(Category category, double sa) => SAs[category] = sa;
 
   CourseAnalysis.blank();
 }

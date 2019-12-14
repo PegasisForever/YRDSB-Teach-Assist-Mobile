@@ -6,11 +6,7 @@ import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/SmallMarkChartDetail.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
-import 'package:ta/widgets/CrossFade.dart';
 import 'package:ta/widgets/InputDoneView.dart';
-
-import 'AssignmentAdvancedEdit.dart';
-import 'AssignmentSimpleEdit.dart';
 
 class EditAssignmentDialog extends StatefulWidget {
   final Course course;
@@ -37,12 +33,13 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
     isAdd = assignment == null;
     if (assignment == null) {
       assignment = Assignment(
-          getTemplateSmallMark(),
-          getTemplateSmallMark(),
-          getTemplateSmallMark(),
-          getTemplateSmallMark(),
-          SmallMark.unavailable(),
-          SmallMark.unavailable(),
+          {
+            Category.KU: getTemplateSmallMarkGroup(),
+            Category.T: getTemplateSmallMarkGroup(),
+            Category.C: getTemplateSmallMarkGroup(),
+            Category.A: getTemplateSmallMarkGroup(),
+            Category.O: SmallMarkGroup.blank(),
+            Category.F: SmallMarkGroup.blank()},
           Strings.get("untitled_assignment"),
           null)
         ..added = true;
@@ -91,7 +88,9 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
                     ),
                     SizedBox(height: 16),
                     TextField(
-                      keyboardAppearance: isLightMode(context: context)?Brightness.light:Brightness.dark,
+                      keyboardAppearance: isLightMode(context: context)
+                          ? Brightness.light
+                          : Brightness.dark,
                       controller: _titleController,
                       decoration:
                       InputDecoration(labelText: Strings.get("assignment_title"), filled: true),
@@ -118,25 +117,6 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
                             isAdvanced = value;
                           });
                         },
-                      ),
-                      CrossFade(
-                        firstChild: SimpleEdit(
-                          weights: course.weightTable,
-                          assignment: assignment,
-                          onChanged: (assi) {
-                            setState(() {
-                              assignment = assi;
-                            });
-                          },
-                        ),
-                        secondChild: AdvancedEdit(
-                            assignment: assignment,
-                            onChanged: (assi) {
-                              setState(() {
-                                assignment = assi;
-                              });
-                            }),
-                        showFirst: !isAdvanced,
                       ),
                       SizedBox(
                         height: 8,
@@ -175,14 +155,14 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
     );
   }
 
-  SmallMark getTemplateSmallMark() {
+  SmallMarkGroup getTemplateSmallMarkGroup() {
     var smallMark = SmallMark.blank();
     smallMark.finished = true;
-    smallMark.available = true;
     smallMark.total = 100;
     smallMark.get = 90;
     smallMark.weight = 10;
-    return smallMark;
+    return SmallMarkGroup.blank()
+      ..smallMarks.add(smallMark);
   }
 
   showOverlay(BuildContext context) {

@@ -111,7 +111,9 @@ bool isLightMode({BuildContext context}) {
 }
 
 SystemUiOverlayStyle getSystemUiOverlayStyle(BuildContext context) {
-  var brightness = MediaQuery.of(context).platformBrightness;
+  var brightness = MediaQuery
+      .of(context)
+      .platformBrightness;
   return brightness == Brightness.light ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark;
 }
 
@@ -154,6 +156,26 @@ Color primaryColorOf(BuildContext context) {
       .primary;
 }
 
-double widthOf(BuildContext context){
-  return MediaQuery.of(context).size.width;
+double widthOf(BuildContext context) {
+  return MediaQuery
+      .of(context)
+      .size
+      .width;
+}
+
+T find<T>(List<T> list, bool f(T it)) {
+  for (var item in list) {
+    if (f(item)) {
+      return item;
+    }
+  }
+  return null;
+}
+
+double sum<T>(List<T> list, double f(T it)) {
+  var total = 0.0;
+  list.forEach((item) {
+    total += f(item);
+  });
+  return total;
 }

@@ -1,19 +1,15 @@
+import 'package:flutter/foundation.dart' as Foundation;
 import 'package:ta/model/Mark.dart';
 
-SmallMark _parseSmallMark(Map<String, dynamic> json) {
+SmallMarkGroup _parseSmallMarkGroup(Map<String, dynamic> json) {
   var smallMark = SmallMark.blank();
+  smallMark.finished = json["finished"];
+  smallMark.total = json["total"];
+  smallMark.get = json["get"];
+  smallMark.weight = json["weight"];
 
-  if (json["available"]) {
-    smallMark.available = true;
-    smallMark.finished = json["finished"];
-    smallMark.total = json["total"];
-    smallMark.get = json["get"];
-    smallMark.weight = json["weight"];
-  } else {
-    smallMark.available = false;
-  }
-
-  return smallMark;
+  return SmallMarkGroup.blank()
+    ..smallMarks.add(smallMark);
 }
 
 Assignment parseAssignment(Map<String, dynamic> json) {
@@ -22,13 +18,12 @@ Assignment parseAssignment(Map<String, dynamic> json) {
   assignment.name = json["name"];
   assignment.feedback = json["feedback"];
   assignment.time = json["time"] != null ? DateTime.parse(json["time"]) : null;
-  assignment.KU = json.containsKey("KU") ? _parseSmallMark(json["KU"]) : SmallMark.unavailable();
-  assignment.T = json.containsKey("T") ? _parseSmallMark(json["T"]) : SmallMark.unavailable();
-  assignment.C = json.containsKey("C") ? _parseSmallMark(json["C"]) : SmallMark.unavailable();
-  assignment.A = json.containsKey("A") ? _parseSmallMark(json["A"]) : SmallMark.unavailable();
-  assignment.O = json.containsKey("O") ? _parseSmallMark(json["O"]) : SmallMark.unavailable();
-  assignment.F = json.containsKey("F") ? _parseSmallMark(json["F"]) : SmallMark.unavailable();
-
+  for (final category in Category.values) {
+    String categoryName = Foundation.describeEnum(category);
+    assignment[category] =
+    json.containsKey(categoryName) ? _parseSmallMarkGroup(json[categoryName]) : SmallMarkGroup
+        .blank();
+  }
   return assignment;
 }
 
@@ -44,14 +39,9 @@ Weight _parseWeight(Map<String, dynamic> json) {
 
 WeightTable _parseWeightTable(Map<String, dynamic> json) {
   var weightTable = WeightTable.blank();
-
-  weightTable.KU = _parseWeight(json["KU"]);
-  weightTable.T = _parseWeight(json["T"]);
-  weightTable.C = _parseWeight(json["C"]);
-  weightTable.A = _parseWeight(json["A"]);
-  weightTable.O = _parseWeight(json["O"]);
-  weightTable.F = _parseWeight(json["F"]);
-
+  for (final category in Category.values) {
+    weightTable[category] = _parseWeight(json[Foundation.describeEnum(category)]);
+  }
   return weightTable;
 }
 

@@ -5,6 +5,7 @@ import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/CrossFade.dart';
 import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
+import 'package:flutter/foundation.dart' as Foundation;
 
 class StaticsList extends StatefulWidget {
   StaticsList(this._course, this._whatIfMode);
@@ -17,16 +18,22 @@ class StaticsList extends StatefulWidget {
 }
 
 class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClientMixin {
-  final Color _Kcolor = const Color(0xffc49000);
-  final Color _Tcolor = const Color(0xff388e3c);
-  final Color _Ccolor = const Color(0xff3949ab);
-  final Color _Acolor = const Color(0xffef6c00);
+  final Map<Category, Color> darkColorMap = {
+    Category.KU: const Color(0xffc49000),
+    Category.T: const Color(0xff388e3c),
+    Category.C: const Color(0xff3949ab),
+    Category.A: const Color(0xffef6c00),
+  };
 
-  final Color _KPcolor = const Color(0xffffeb3b);
-  final Color _TPcolor = const Color(0xff8bc34a);
-  final Color _CPcolor = const Color(0xff9fa8da);
-  final Color _APcolor = const Color(0xffffb74d);
-  final Color _OPcolor = Colors.blueGrey[300];
+
+  final Map<Category, Color> lightColorMap = {
+    Category.KU: const Color(0xffffeb3b),
+    Category.T: const Color(0xff8bc34a),
+    Category.C: const Color(0xff9fa8da),
+    Category.A: const Color(0xffffb74d),
+    Category.O: const Color(0xff90a4ae),
+    Category.F: null,
+  };
 
   _StaticsListState();
 
@@ -36,35 +43,40 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    lightColorMap[Category.F] = primaryColorOf(context);
+
     var _course = widget._course;
     var isLight = isLightMode(context: context);
     var sidePadding = (widthOf(context) - 500) / 2;
     return (_course.overallMark != null && _course.assignments.length > 0)
         ? ListView(
-            padding: EdgeInsets.symmetric(
-              horizontal: sidePadding > 0 ? sidePadding : 0,
-            ),
-            children: <Widget>[
-              _getTermOverall(),
-              _getChart("overall", isLight),
-              Divider(),
-              _getPieChart(),
-              Divider(),
-              _getChart("knowledge_understanding", isLight),
-              Divider(),
-              _getChart("thinking", isLight),
-              Divider(),
-              _getChart("communication", isLight),
-              Divider(),
-              _getChart("application", isLight),
-            ],
-          )
+      padding: EdgeInsets.symmetric(
+        horizontal: sidePadding > 0 ? sidePadding : 0,
+      ),
+      children: <Widget>[
+        _getTermOverall(),
+        _getOverallChart(isLight),
+        Divider(),
+        _getPieChart(),
+        Divider(),
+        _getChart(Category.KU, isLight),
+        Divider(),
+        _getChart(Category.T, isLight),
+        Divider(),
+        _getChart(Category.C, isLight),
+        Divider(),
+        _getChart(Category.A, isLight),
+      ],
+    )
         : Center(
-            child: Text(
-              Strings.get("statistics_unavailable"),
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          );
+      child: Text(
+        Strings.get("statistics_unavailable"),
+        style: Theme
+            .of(context)
+            .textTheme
+            .subhead,
+      ),
+    );
   }
 
   Widget _getPieChart() {
@@ -80,32 +92,23 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
   List<PieSeries<_PieData, String>> _getPieSeries() {
     var _course = widget._course;
     var analysis = widget._whatIfMode ? _course.getCourseAnalysis() : null;
-    final List<_PieData> chartData = widget._whatIfMode
-        ? [
-            if (_course.weightTable.O.CW > 0)
-              _PieData(Strings.get("o"), _course.weightTable.O.CW, analysis.oSA, _OPcolor),
-            _PieData(Strings.get("a"), _course.weightTable.A.CW, analysis.aSA, _APcolor),
-            _PieData(Strings.get("c"), _course.weightTable.C.CW, analysis.cSA, _CPcolor),
-            _PieData(Strings.get("t"), _course.weightTable.T.CW, analysis.tSA, _TPcolor),
-            _PieData(Strings.get("ku"), _course.weightTable.KU.CW, analysis.kuSA, _KPcolor),
-            _PieData(
-                Strings.get("f"), _course.weightTable.F.CW, analysis.fSA, primaryColorOf(context)),
-          ]
-        : [
-            if (_course.weightTable.O.CW > 0)
-              _PieData(
-                  Strings.get("o"), _course.weightTable.O.CW, _course.weightTable.O.SA, _OPcolor),
-            _PieData(
-                Strings.get("a"), _course.weightTable.A.CW, _course.weightTable.A.SA, _APcolor),
-            _PieData(
-                Strings.get("c"), _course.weightTable.C.CW, _course.weightTable.C.SA, _CPcolor),
-            _PieData(
-                Strings.get("t"), _course.weightTable.T.CW, _course.weightTable.T.SA, _TPcolor),
-            _PieData(
-                Strings.get("ku"), _course.weightTable.KU.CW, _course.weightTable.KU.SA, _KPcolor),
-            _PieData(Strings.get("f"), _course.weightTable.F.CW, _course.weightTable.F.SA,
-                primaryColorOf(context)),
-          ];
+    final List<_PieData> chartData = widget._whatIfMode ? [
+      for (final category in Category.values)
+        if (category != Category.O || _course.weightTable[Category.O].CW > 0)
+          _PieData(
+              Strings.get(Foundation.describeEnum(category).toLowerCase()),
+              _course.weightTable[category].CW,
+              analysis[category],
+              lightColorMap[category])
+    ] : [
+      for (final category in Category.values)
+        if (category != Category.O || _course.weightTable[Category.O].CW > 0)
+          _PieData(
+              Strings.get(Foundation.describeEnum(category).toLowerCase()),
+              _course.weightTable[category].CW,
+              _course.weightTable[category].SA,
+              lightColorMap[category])
+    ];
     return <PieSeries<_PieData, String>>[
       PieSeries<_PieData, String>(
           explodeAll: true,
@@ -130,14 +133,20 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
 
   Widget _getTermOverall() {
     var _course = widget._course;
-    var newOverall = _course.getCourseAnalysis().overallList.last;
+    var newOverall = _course
+        .getCourseAnalysis()
+        .overallList
+        .last;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Column(
         children: <Widget>[
           Text(
             Strings.get("overall"),
-            style: Theme.of(context).textTheme.title,
+            style: Theme
+                .of(context)
+                .textTheme
+                .title,
           ),
           CrossFade(
             showFirst: !widget._whatIfMode,
@@ -167,51 +176,75 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
           ),
           widget._whatIfMode
               ? (_course.overallMark > newOverall
-                  ? LPI.LinearProgressIndicator(
-                      key: Key("a"),
-                      lineHeight: 20.0,
-                      value1: newOverall / 100,
-                      value2: _course.overallMark / 100,
-                      value1Color: Theme.of(context).colorScheme.primary,
-                      value2Color: Colors.red[400],
-                    )
-                  : LPI.LinearProgressIndicator(
-                      key: Key("b"),
-                      lineHeight: 20.0,
-                      value1: _course.overallMark / 100,
-                      value2: newOverall / 100,
-                      value1Color: Theme.of(context).colorScheme.primary,
-                      value2Color: Colors.green,
-                    ))
+              ? LPI.LinearProgressIndicator(
+            key: Key("a"),
+            lineHeight: 20.0,
+            value1: newOverall / 100,
+            value2: _course.overallMark / 100,
+            value1Color: Theme
+                .of(context)
+                .colorScheme
+                .primary,
+            value2Color: Colors.red[400],
+          )
               : LPI.LinearProgressIndicator(
-                  key: Key("c"),
-                  lineHeight: 20.0,
-                  value1: _course.overallMark / 100,
-                  value1Color: Theme.of(context).colorScheme.primary,
-                )
+            key: Key("b"),
+            lineHeight: 20.0,
+            value1: _course.overallMark / 100,
+            value2: newOverall / 100,
+            value1Color: Theme
+                .of(context)
+                .colorScheme
+                .primary,
+            value2Color: Colors.green,
+          ))
+              : LPI.LinearProgressIndicator(
+            key: Key("c"),
+            lineHeight: 20.0,
+            value1: _course.overallMark / 100,
+            value1Color: Theme
+                .of(context)
+                .colorScheme
+                .primary,
+          )
         ],
       ),
     );
   }
 
-  Widget _getChart(String category, bool isLight) {
+  Widget _getOverallChart(bool isLight) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          if (category != "overall")
-            Padding(
-              padding: const EdgeInsets.only(left: 4),
-              child: Text(
-                Strings.get(category),
-                style: Theme.of(context).textTheme.title,
-              ),
+          SizedBox(height: 4),
+          SizedBox(
+            width: double.maxFinite,
+            height: 200,
+            child: _getDefaultSplineChart(_getChartData(null, isLight, isOverall: true)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getChart(Category category, bool isLight) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 4),
+            child: Text(
+              Strings.get(Foundation.describeEnum(category).toLowerCase() + "_long"),
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .title,
             ),
-          if (category != "overall")
-            SizedBox(
-              height: 8,
-            ),
+          ),
           SizedBox(
             width: double.maxFinite,
             height: 200,
@@ -222,36 +255,26 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
     );
   }
 
-  List<SplineSeries<Assignment, String>> _getChartData(String category, bool isLight) {
+  List<SplineSeries<Assignment, String>> _getChartData(Category category, bool isLight,
+      {bool isOverall = false}) {
     var _course = widget._course;
-    ChartValueMapper<Assignment, num> yValueMapper;
     Color color;
-    if (category == "knowledge_understanding") {
-      yValueMapper = (Assignment assignment, _) => assignment.KU.available && assignment.KU.finished
-          ? num2Round(assignment.KU.get / assignment.KU.total * 100)
-          : null;
-      color = isLight ? _Kcolor : _KPcolor;
-    } else if (category == "thinking") {
-      yValueMapper = (Assignment assignment, _) => assignment.T.available && assignment.T.finished
-          ? num2Round(assignment.T.get / assignment.T.total * 100)
-          : null;
-      color = isLight ? _Tcolor : _TPcolor;
-    } else if (category == "communication") {
-      yValueMapper = (Assignment assignment, _) => assignment.C.available && assignment.C.finished
-          ? num2Round(assignment.C.get / assignment.C.total * 100)
-          : null;
-      color = isLight ? _Ccolor : _CPcolor;
-    } else if (category == "application") {
-      yValueMapper = (Assignment assignment, _) => assignment.A.available && assignment.A.finished
-          ? num2Round(assignment.A.get / assignment.A.total * 100)
-          : null;
-      color = isLight ? _Acolor : _APcolor;
-    } else if (category == "overall") {
-      var overallList = _course.getCourseAnalysis().overallList;
+    ChartValueMapper<Assignment, num> yValueMapper;
+
+    if (isOverall) {
+      var overallList = _course
+          .getCourseAnalysis()
+          .overallList;
       yValueMapper = (_, index) {
         return num2Round(overallList[index]);
       };
       color = primaryColorOf(context);
+    } else {
+      color = isLight ? darkColorMap[category] : lightColorMap[category];
+      yValueMapper = (Assignment assignment, _) =>
+      assignment[category].hasFinished
+          ? num2Round(assignment[category].percentage * 100)
+          : null;
     }
 
     return [
@@ -260,7 +283,9 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
         color: color,
         markerSettings: MarkerSettings(
           isVisible: true,
-          color: Theme.of(context).canvasColor,
+          color: Theme
+              .of(context)
+              .canvasColor,
           borderWidth: 3,
         ),
         enableTooltip: true,
@@ -269,7 +294,8 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
         emptyPointSettings: EmptyPointSettings(mode: EmptyPointMode.drop),
         xValueMapper: (Assignment assignment, _) => assignment.name,
         yValueMapper: yValueMapper,
-        name: Strings.get(category),
+        name: Strings.get(isOverall ? "overall" :
+        Foundation.describeEnum(category).toLowerCase() + "_long"),
       )
     ];
   }

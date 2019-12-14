@@ -1,17 +1,22 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
+import 'package:flutter/foundation.dart' as Foundation;
 
 class _SmallMarkChartDetailPainter extends CustomPainter {
   final Assignment _assi;
-  final Color _Kcolor = const Color(0xffffeb3b);
-  final Color _Tcolor = const Color(0xff8bc34a);
-  final Color _Ccolor = const Color(0xff9fa8da);
-  final Color _Acolor = const Color(0xffffb74d);
-  final Color _Ocolor = const Color(0xff90a4ae);
-  final Color _Fcolor = const Color(0xff81d4fa);
+  final Map<Category, Color> colorMap = {
+    Category.KU: const Color(0xffffeb3b),
+    Category.T: const Color(0xff8bc34a),
+    Category.C: const Color(0xff9fa8da),
+    Category.A: const Color(0xffffb74d),
+    Category.O: const Color(0xff90a4ae),
+    Category.F: const Color(0xff81d4fa),
+  };
 
   _SmallMarkChartDetailPainter(this._assi);
 
@@ -20,123 +25,96 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
     var width = size.width;
     var height = size.height;
 
-    var barCount = 4;
-    if (_assi.O.available) {
-      barCount++;
-    }
-    if (_assi.F.available) {
-      barCount++;
+    var barCount = 0.0;
+    for (final category in Category.values) {
+      barCount += max((category == Category.O || category == Category.F) ? 0 : 1,
+          _assi[category].smallMarks.length);
     }
     var barWidth = width / barCount;
+
     var i = 0;
-
-    _paintBar(
-        canvas,
-        Strings.get("ku"),
-        _Kcolor,
-        _assi.KU,
-        barWidth * (i++),
-        barWidth,
-        height);
-    _paintBar(
-        canvas,
-        Strings.get("t"),
-        _Tcolor,
-        _assi.T,
-        barWidth * (i++),
-        barWidth,
-        height);
-    _paintBar(
-        canvas,
-        Strings.get("c"),
-        _Ccolor,
-        _assi.C,
-        barWidth * (i++),
-        barWidth,
-        height);
-    _paintBar(
-        canvas,
-        Strings.get("a"),
-        _Acolor,
-        _assi.A,
-        barWidth * (i++),
-        barWidth,
-        height);
-
-    if (_assi.O.available) {
-      _paintBar(
-          canvas,
-          Strings.get("o"),
-          _Ocolor,
-          _assi.O,
-          barWidth * (i++),
-          barWidth,
-          height);
-    }
-    if (_assi.F.available) {
-      _paintBar(
-          canvas,
-          Strings.get("f"),
-          _Fcolor,
-          _assi.F,
-          barWidth * (i++),
-          barWidth,
-          height);
+    for (final category in Category.values) {
+      if (_assi[category].available) {
+        for (final smallMark in _assi[category].smallMarks) {
+          _paintBar(
+              canvas,
+              Strings.get(Foundation.describeEnum(category).toLowerCase()),
+              colorMap[category],
+              smallMark,
+              barWidth * (i++),
+              barWidth,
+              height);
+        }
+      } else if (category != Category.O && category != Category.F) {
+        _paintUnavailableBar(
+            canvas,
+            Strings.get(Foundation.describeEnum(category).toLowerCase()),
+            barWidth * (i++),
+            barWidth,
+            height);
+      }
     }
   }
 
-  void _paintBar(Canvas canvas, String text, Color color, SmallMark smallMark, double x,
+  void _paintUnavailableBar(Canvas canvas, String text, double x,
       double width, double height) {
-    var bottomLabelPainter = TextPainter(
+    TextPainter(
         text: TextSpan(text: text, style: TextStyle(fontSize: 16.0, color: Colors.grey)),
         textDirection: TextDirection.ltr,
         textAlign: TextAlign.center)
       ..layout(maxWidth: width, minWidth: width)
-      ..paint(canvas, Offset(x, height - 32));
+      ..paint(canvas, Offset(x, height - 32)) // category text
 
-    if (smallMark.available) {
-      var mark = smallMark.get / smallMark.total * 100;
+      ..text = TextSpan(text: "N/A", style: TextStyle(fontSize: 16.0, color: Colors.grey))
+      ..layout(maxWidth: width, minWidth: width)
+      ..paint(canvas, Offset(x, height - 54)); // "N/A" text
+  }
+
+  void _paintBar(Canvas canvas, String text, Color color, SmallMark smallMark, double x,
+      double width, double height) {
+    TextPainter(
+        text: TextSpan(text: text, style: TextStyle(fontSize: 16.0, color: Colors.grey)),
+        textDirection: TextDirection.ltr,
+        textAlign: TextAlign.center)
+      ..layout(maxWidth: width, minWidth: width)
+      ..paint(canvas, Offset(x, height - 32)) // category text
+
+      ..text = TextSpan(
+          text: Strings.get("w:") + getRoundString(smallMark.weight, 2),
+          style: TextStyle(fontSize: 12.0, color: Colors.grey))
+      ..layout(maxWidth: width, minWidth: width)
+      ..paint(canvas, Offset(x, height - 12)); //weight text
+
+    if (smallMark.finished) {
+      var mark = smallMark.percentage * 100;
       var paint = Paint()
         ..style = PaintingStyle.fill
         ..color = color
         ..isAntiAlias = true;
       canvas.drawRRect(
           RRect.fromLTRBAndCorners(
-              7 + x, (height - 66) * (1 - mark / 100) + 33, width - 7 + x, height - 33,
-              topLeft: Radius.circular(5), topRight: Radius.circular(5)),
+            7 + x, (height - 66) * (1 - mark / 100) + 33,
+            width - 7 + x, height - 33,
+            topLeft: Radius.circular(5),
+            topRight: Radius.circular(5),),
           paint);
 
-      bottomLabelPainter.text = TextSpan(
-          text: Strings.get("w:") + getRoundString(smallMark.weight, 2),
-          style: TextStyle(fontSize: 12.0, color: Colors.grey));
-      bottomLabelPainter.layout(maxWidth: width, minWidth: width);
-      bottomLabelPainter.paint(canvas, Offset(x, height - 12));
-
-      if (smallMark.finished) {
-        TextPainter(
-            text: TextSpan(
-                text: num2Str(mark),
-                style: TextStyle(fontSize: 16.0, color: Colors.grey)),
-            textDirection: TextDirection.ltr,
-            textAlign: TextAlign.center)
-          ..layout(maxWidth: width, minWidth: width)
-          ..paint(canvas, Offset(x, (height - 66) * (1 - mark / 100)))
-          ..text = TextSpan(
-              text: getRoundString(smallMark.get, 2) + "/" + getRoundString(smallMark.total, 2),
-              style: TextStyle(fontSize: 12.0, color: Colors.grey))
-          ..layout(maxWidth: width, minWidth: width)
-          ..paint(canvas, Offset(x, (height - 66) * (1 - mark / 100) + 16));
-      } else {
-        TextPainter(
-            text: TextSpan(text: "N", style: TextStyle(fontSize: 16.0, color: Colors.red)),
-            textDirection: TextDirection.ltr,
-            textAlign: TextAlign.center)
-          ..layout(maxWidth: width, minWidth: width)
-          ..paint(canvas, Offset(x, height - 54));
-      }
+      TextPainter(
+          text: TextSpan(
+              text: num2Str(mark),
+              style: TextStyle(fontSize: 16.0, color: Colors.grey)),
+          textDirection: TextDirection.ltr,
+          textAlign: TextAlign.center)
+        ..layout(maxWidth: width, minWidth: width)
+        ..paint(canvas, Offset(x, (height - 66) * (1 - mark / 100)))
+        ..text = TextSpan(
+            text: getRoundString(smallMark.get, 2) + "/" + getRoundString(smallMark.total, 2),
+            style: TextStyle(fontSize: 12.0, color: Colors.grey))
+        ..layout(maxWidth: width, minWidth: width)
+        ..paint(canvas, Offset(x, (height - 66) * (1 - mark / 100) + 16));
     } else {
       TextPainter(
-          text: TextSpan(text: "N/A", style: TextStyle(fontSize: 16.0, color: Colors.grey)),
+          text: TextSpan(text: "N", style: TextStyle(fontSize: 16.0, color: Colors.red)),
           textDirection: TextDirection.ltr,
           textAlign: TextAlign.center)
         ..layout(maxWidth: width, minWidth: width)
