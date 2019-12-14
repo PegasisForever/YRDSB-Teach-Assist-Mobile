@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:ta/model/Mark.dart';
-import 'package:ta/pages/detailpage/assignmentstab/SmallMarkChartDetail.dart';
+import 'package:ta/pages/detailpage/whatifpage/SmallMarkEditor.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
@@ -48,6 +48,38 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
     var course = widget.course;
     var avg = assignment.getAverage(course.weightTable);
 
+    var smallMarkEditors = <SmallMarkEditor>[];
+    for (final category in Category.values) {
+      var smallMarkGroup = assignment[category];
+      if (smallMarkGroup.available) {
+        for (int i = 0; i < smallMarkGroup.smallMarks.length; i++) {
+          smallMarkEditors.add(SmallMarkEditor(
+            smallMark: smallMarkGroup.smallMarks[i],
+            category: category,
+            onChanged: (smallMark) {
+              setState(() {
+                smallMarkGroup.smallMarks[i] = smallMark;
+              });
+            },
+          ));
+        }
+      } else {
+        smallMarkEditors.add(SmallMarkEditor(
+          smallMark: null,
+          category: category,
+          onChanged: (smallMark) {
+            setState(() {
+              if (smallMarkGroup.available) {
+                smallMarkGroup.smallMarks[0] = smallMark;
+              } else {
+                smallMarkGroup.smallMarks.add(smallMark);
+              }
+            });
+          },
+        ));
+      }
+    }
+
     return Dialog(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -59,14 +91,14 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
               children: <Widget>[
                 TextField(
                   keyboardAppearance:
-                  isLightMode(context: context) ? Brightness.light : Brightness.dark,
+                      isLightMode(context: context) ? Brightness.light : Brightness.dark,
                   controller: _titleController,
                   decoration: InputDecoration(
                     hintText: Strings.get("assignment_title"),
-                    contentPadding: EdgeInsets.symmetric(vertical: 8,horizontal: 8),
+                    contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4),
-                      borderSide:  BorderSide.none,
+                      borderSide: BorderSide.none,
                     ),
                     filled: true,
                   ),
@@ -79,14 +111,16 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                 ),
                 SizedBox(height: 4),
                 Text(Strings.get("average:") + ((avg != null) ? (num2Str(avg) + "%") : "N/A"),
-                    style: TextStyle(fontSize: 16, color: Colors.grey)),
+                    style: TextStyle(fontSize: 16, color: getGrey(context: context))),
                 SizedBox(height: 8),
                 Center(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 300),
-                    child: SmallMarkChartDetail(
-                      assignment,
-                      height: 170,
+                  child: SizedBox(
+                    height: 180,
+                    child: ListView(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.zero,
+                      children: smallMarkEditors,
                     ),
                   ),
                 ),

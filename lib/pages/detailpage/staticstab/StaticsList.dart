@@ -18,7 +18,7 @@ class StaticsList extends StatefulWidget {
 }
 
 class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClientMixin {
-  final Map<Category, Color> darkColorMap = {
+  final Map<Category, Color> darkColorMap = const {
     Category.KU: const Color(0xffc49000),
     Category.T: const Color(0xff388e3c),
     Category.C: const Color(0xff3949ab),

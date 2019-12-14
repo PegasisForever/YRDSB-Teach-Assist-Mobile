@@ -179,3 +179,7 @@ double sum<T>(List<T> list, double f(T it)) {
   });
   return total;
 }
+
+Color getGrey({BuildContext context}){
+  return isLightMode(context: context)?Colors.grey[700]:Colors.grey[300];
+}

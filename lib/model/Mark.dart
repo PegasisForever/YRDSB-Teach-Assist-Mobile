@@ -26,12 +26,11 @@ class SmallMark {
 
   SmallMark.blank();
 
-  SmallMark copy() =>
-      SmallMark.blank()
-        ..finished = finished
-        ..total = total
-        ..get = get
-        ..weight = weight;
+  SmallMark copy() => SmallMark.blank()
+    ..finished = finished
+    ..total = total
+    ..get = get
+    ..weight = weight;
 
   @override
   bool operator ==(other) {
@@ -73,17 +72,19 @@ class SmallMarkGroup {
     return total > 0.0 ? (get / total) : 0.0;
   }
 
-
   SmallMarkGroup.blank();
 
-  SmallMarkGroup copy() =>
-      SmallMarkGroup.blank()
-        ..smallMarks = List.from(smallMarks);
+  SmallMarkGroup copy() {
+    var smallMarkGroup = SmallMarkGroup.blank();
+    smallMarks.forEach((smallMark) {
+      smallMarkGroup.smallMarks.add(smallMark.copy());
+    });
+    return smallMarkGroup;
+  }
 
   @override
   bool operator ==(other) {
-    return (other is SmallMarkGroup) &&
-        hashObjects(smallMarks) == hashObjects(other.smallMarks);
+    return (other is SmallMarkGroup) && hashObjects(smallMarks) == hashObjects(other.smallMarks);
   }
 
   @override
@@ -193,15 +194,13 @@ class Assignment {
     return assignment;
   }
 
-
   @override
   bool operator ==(other) {
     if (!((other is Assignment) &&
         name == other.name &&
         feedback == other.feedback &&
         time == other.time &&
-        edited == other.edited
-    )) return false;
+        edited == other.edited)) return false;
     for (final category in Category.values) {
       if (this[category] != other[category]) return false;
     }
@@ -224,11 +223,10 @@ class Weight {
 
   Weight.blank();
 
-  Weight copy() =>
-      Weight.blank()
-        ..W = W
-        ..CW = CW
-        ..SA = SA;
+  Weight copy() => Weight.blank()
+    ..W = W
+    ..CW = CW
+    ..SA = SA;
 
   @override
   bool operator ==(other) {
@@ -395,13 +393,11 @@ class Course {
   }
 
   @override
-  int get hashCode =>
-      hash4(
-          hash4(
-              hash4(hashObjects(assignments), weightTable, startTime, endTime), name, code, block),
-          room,
-          overallMark,
-          cached);
+  int get hashCode => hash4(
+      hash4(hash4(hashObjects(assignments), weightTable, startTime, endTime), name, code, block),
+      room,
+      overallMark,
+      cached);
 }
 
 class CourseAnalysis {

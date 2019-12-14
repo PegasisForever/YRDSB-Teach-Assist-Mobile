@@ -10,7 +10,7 @@ import 'package:flutter/foundation.dart' as Foundation;
 class _SmallMarkChartPainter extends CustomPainter {
   final Assignment _assi;
   final bool _drawKTCA;
-  final Map<Category, Color> colorMap = {
+  final Map<Category, Color> colorMap = const {
     Category.KU: const Color(0xffffeb3b),
     Category.T: const Color(0xff8bc34a),
     Category.C: const Color(0xff9fa8da),
