@@ -1,12 +1,9 @@
-import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/SmallMarkChartDetail.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
-import 'package:ta/widgets/InputDoneView.dart';
 
 class EditAssignmentDialog extends StatefulWidget {
   final Course course;
@@ -18,8 +15,7 @@ class EditAssignmentDialog extends StatefulWidget {
   _EditAssignmentDialogState createState() => _EditAssignmentDialogState();
 }
 
-class _EditAssignmentDialogState extends State<EditAssignmentDialog>
-    with AfterLayoutMixin<EditAssignmentDialog> {
+class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
   Assignment assignment;
   var isAdvanced = false;
   var _titleController = TextEditingController();
@@ -32,16 +28,14 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
     assignment = widget.assignment?.copy();
     isAdd = assignment == null;
     if (assignment == null) {
-      assignment = Assignment(
-          {
-            Category.KU: getTemplateSmallMarkGroup(),
-            Category.T: getTemplateSmallMarkGroup(),
-            Category.C: getTemplateSmallMarkGroup(),
-            Category.A: getTemplateSmallMarkGroup(),
-            Category.O: SmallMarkGroup.blank(),
-            Category.F: SmallMarkGroup.blank()},
-          Strings.get("untitled_assignment"),
-          null)
+      assignment = Assignment({
+        Category.KU: getTemplateSmallMarkGroup(),
+        Category.T: getTemplateSmallMarkGroup(),
+        Category.C: getTemplateSmallMarkGroup(),
+        Category.A: getTemplateSmallMarkGroup(),
+        Category.O: SmallMarkGroup.blank(),
+        Category.F: SmallMarkGroup.blank()
+      }, Strings.get("untitled_assignment"), null)
         ..added = true;
     }
 
@@ -54,103 +48,72 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
     var course = widget.course;
     var avg = assignment.getAverage(course.weightTable);
 
-    return SingleChildScrollView(
-      child: Dialog(
-        child: DefaultTabController(
-          length: 6,
-          initialIndex: 0,
-          child: Column(
+    return Dialog(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextField(
+                  keyboardAppearance:
+                  isLightMode(context: context) ? Brightness.light : Brightness.dark,
+                  controller: _titleController,
+                  decoration: InputDecoration(
+                    hintText: Strings.get("assignment_title"),
+                    contentPadding: EdgeInsets.symmetric(vertical: 8,horizontal: 8),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(4),
+                      borderSide:  BorderSide.none,
+                    ),
+                    filled: true,
+                  ),
+                  style: TextStyle(fontSize: 17),
+                  onChanged: (text) {
+                    setState(() {
+                      assignment.name = text;
+                    });
+                  },
+                ),
+                SizedBox(height: 4),
+                Text(Strings.get("average:") + ((avg != null) ? (num2Str(avg) + "%") : "N/A"),
+                    style: TextStyle(fontSize: 16, color: Colors.grey)),
+                SizedBox(height: 8),
+                Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 300),
+                    child: SmallMarkChartDetail(
+                      assignment,
+                      height: 170,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          ButtonBar(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      assignment.name,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .title,
-                    ),
-                    SizedBox(height: 4),
-                    Text(Strings.get("average:") + ((avg != null) ? (num2Str(avg) + "%") : "N/A"),
-                        style: TextStyle(fontSize: 16, color: Colors.grey)),
-                    SizedBox(height: 8),
-                    Center(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 300),
-                        child: SmallMarkChartDetail(
-                          assignment,
-                          height: 170,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    TextField(
-                      keyboardAppearance: isLightMode(context: context)
-                          ? Brightness.light
-                          : Brightness.dark,
-                      controller: _titleController,
-                      decoration:
-                      InputDecoration(labelText: Strings.get("assignment_title"), filled: true),
-                      onChanged: (text) {
-                        setState(() {
-                          assignment.name = text;
-                        });
-                      },
-                    ),
-                  ],
-                ),
+              FlatButton(
+                child: Text(Strings.get("cancel").toUpperCase()),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Card(
-                  clipBehavior: Clip.antiAlias,
-                  child: Column(
-                    children: <Widget>[
-                      SwitchListTile(
-                        title: Text(Strings.get("advanced_mode")),
-                        value: isAdvanced,
-                        onChanged: (value) {
-                          setState(() {
-                            isAdvanced = value;
-                          });
-                        },
-                      ),
-                      SizedBox(
-                        height: 8,
-                      )
-                    ],
-                  ),
+              RaisedButton(
+                color: Theme.of(context).colorScheme.primary,
+                child: Text(
+                  isAdd ? Strings.get("add").toUpperCase() : Strings.get("save").toUpperCase(),
+                  style: TextStyle(color: Colors.white),
                 ),
-              ),
-              ButtonBar(
-                children: <Widget>[
-                  FlatButton(
-                    child: Text(Strings.get("cancel").toUpperCase()),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  RaisedButton(
-                    color: Theme
-                        .of(context)
-                        .colorScheme
-                        .primary,
-                    child: Text(
-                      isAdd ? Strings.get("add").toUpperCase() : Strings.get("save").toUpperCase(),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop(assignment);
-                    },
-                  )
-                ],
+                onPressed: () {
+                  Navigator.of(context).pop(assignment);
+                },
               )
             ],
-          ),
-        ),
+          )
+        ],
       ),
     );
   }
@@ -161,42 +124,6 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
     smallMark.total = 100;
     smallMark.get = 90;
     smallMark.weight = 10;
-    return SmallMarkGroup.blank()
-      ..smallMarks.add(smallMark);
-  }
-
-  showOverlay(BuildContext context) {
-    if (overlayEntry != null) return;
-    OverlayState overlayState = Overlay.of(context);
-    overlayEntry = OverlayEntry(builder: (context) {
-      return Positioned(
-          bottom: MediaQuery
-              .of(context)
-              .viewInsets
-              .bottom,
-          right: 0.0,
-          left: 0.0,
-          child: InputDoneView());
-    });
-
-    overlayState.insert(overlayEntry);
-  }
-
-  removeOverlay() {
-    if (overlayEntry != null) {
-      overlayEntry.remove();
-      overlayEntry = null;
-    }
-  }
-
-  @override
-  void afterFirstLayout(BuildContext context) {
-    if (!isAndroid()) {
-      KeyboardVisibilityNotification().addNewListener(onShow: () {
-        showOverlay(context);
-      }, onHide: () {
-        removeOverlay();
-      });
-    }
+    return SmallMarkGroup.blank()..smallMarks.add(smallMark);
   }
 }
