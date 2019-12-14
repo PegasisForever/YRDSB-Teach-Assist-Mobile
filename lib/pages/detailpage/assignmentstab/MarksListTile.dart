@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/res/Strings.dart';
@@ -54,7 +55,10 @@ class MarksListTileState extends State<MarksListTile>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(_assignment.displayName, style: Theme.of(context).textTheme.title),
+                Text(
+                  _assignment.displayName,
+                  style: Theme.of(context).textTheme.title,
+                ),
                 SizedBox(
                   height: 4,
                 ),
@@ -68,7 +72,7 @@ class MarksListTileState extends State<MarksListTile>
               ],
             ),
           ),
-          Flexible(child: SmallMarkChart(_assignment))
+          Flexible(flex: 0, child: SmallMarkChart(_assignment))
         ],
       ),
     );
@@ -89,12 +93,12 @@ class MarksListTileState extends State<MarksListTile>
                   label: Text(Strings.get("edit").toUpperCase()),
                   icon: Icon(Icons.edit),
                   disabledTextColor:
-                  isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
+                      isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
                   textColor: isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
                   onPressed: _assignment.expanded == true
                       ? () {
-                    widget.editAssignment(context, _assignment);
-                  }
+                          widget.editAssignment(context, _assignment);
+                        }
                       : null,
                 ),
                 SizedBox(
@@ -104,12 +108,12 @@ class MarksListTileState extends State<MarksListTile>
                   label: Text(Strings.get("remove").toUpperCase()),
                   icon: Icon(Icons.delete),
                   disabledTextColor:
-                  isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
+                      isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
                   textColor: isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
                   onPressed: _assignment.expanded == true
                       ? () {
-                    widget.removeAssignment(_assignment);
-                  }
+                          widget.removeAssignment(_assignment);
+                        }
                       : null,
                 ),
               ],
@@ -119,6 +123,7 @@ class MarksListTileState extends State<MarksListTile>
           Text(
             _assignment.displayName,
             style: Theme.of(context).textTheme.title,
+            textAlign: TextAlign.center,
           ),
           SizedBox(
             height: 4,
