@@ -12,8 +12,8 @@ import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
 const String baseUrl =
-    true ? "https://api.pegasis.site/yrdsb_ta/" : "http://192.168.1.22:5004/";
-const int apiVersion = 7;
+    kReleaseMode ? "https://api.pegasis.site/yrdsb_ta/" : "http://192.168.1.22:5004/";
+const int apiVersion = 9;
 
 class HttpResponse {
   String body = "";
