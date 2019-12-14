@@ -101,7 +101,6 @@ class AssignmentSearchDelegate extends SearchDelegate {
             ));
           }
         });
-      if (matchedItems.length > 0) matchedItems.removeLast();
 
       if (matchedItems.length > 0)
         listItems.add(StickyHeader(
@@ -119,6 +118,7 @@ class AssignmentSearchDelegate extends SearchDelegate {
               children: matchedItems,
             ),
           ),
+          key: Key(course.displayName),
         ));
     });
 
