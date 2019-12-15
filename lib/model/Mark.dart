@@ -50,24 +50,27 @@ class SmallMarkGroup {
 
   bool get available => smallMarks.length > 0;
 
-  bool get hasFinished => find(smallMarks, (SmallMark it) => it.finished) != null;
+  bool get hasFinished => find(smallMarks, (SmallMark it) => it?.finished == true) != null;
 
-  bool get allFinished => find(smallMarks, (SmallMark it) => !it.finished) == null;
+  bool get allFinished => find(smallMarks, (SmallMark it) => !(it?.finished == true)) == null;
 
-  bool get hasWeight => find(smallMarks, (SmallMark it) => it.weight > 0) != null;
+  bool get hasWeight =>
+      find(smallMarks, (SmallMark it) => it != null ? it.weight > 0 : false) != null;
 
-  double get allGet => sum(smallMarks, (SmallMark it) => it.finished ? it.get : 0.0);
+  double get allGet => sum(smallMarks, (SmallMark it) => it?.finished == true ? it.get : 0.0);
 
-  double get allTotal => sum(smallMarks, (SmallMark it) => it.finished ? it.total : 0.0);
+  double get allTotal => sum(smallMarks, (SmallMark it) => it?.finished == true ? it.total : 0.0);
 
-  double get allWeight => sum(smallMarks, (SmallMark it) => it.finished ? it.weight : 0.0);
+  double get allWeight => sum(smallMarks, (SmallMark it) => it?.finished == true ? it.weight : 0.0);
 
   double get percentage {
     var get = 0.0;
     var total = 0.0;
     smallMarks.forEach((SmallMark smallMark) {
-      get += smallMark.percentage * smallMark.weight;
-      total += smallMark.weight;
+      if (smallMark != null) {
+        get += smallMark.percentage * smallMark.weight;
+        total += smallMark.weight;
+      }
     });
     return total > 0.0 ? (get / total) : 0.0;
   }

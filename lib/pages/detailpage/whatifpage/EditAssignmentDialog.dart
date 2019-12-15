@@ -56,6 +56,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
           smallMarkEditors.add(SmallMarkEditor(
             smallMark: smallMarkGroup.smallMarks[i],
             category: category,
+            key: Key(category.toString() + i.toString()),
             onChanged: (smallMark) {
               setState(() {
                 smallMarkGroup.smallMarks[i] = smallMark;
@@ -67,11 +68,16 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
         smallMarkEditors.add(SmallMarkEditor(
           smallMark: null,
           category: category,
+          key: Key(category.toString() + "0"),
           onChanged: (smallMark) {
             setState(() {
               if (smallMarkGroup.available) {
-                smallMarkGroup.smallMarks[0] = smallMark;
-              } else {
+                if (smallMark != null) {
+                  smallMarkGroup.smallMarks[0] = smallMark;
+                } else {
+                  smallMarkGroup.smallMarks.removeAt(0);
+                }
+              } else if (smallMark != null) {
                 smallMarkGroup.smallMarks.add(smallMark);
               }
             });
@@ -85,7 +91,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -142,6 +148,9 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
+                  assignment.smallMarkGroups.forEach((_, smallMarkGroup) {
+                    smallMarkGroup.smallMarks.removeWhere((smallMark) => smallMark == null);
+                  });
                   Navigator.of(context).pop(assignment);
                 },
               )
