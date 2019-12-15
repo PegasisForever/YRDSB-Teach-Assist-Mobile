@@ -39,7 +39,7 @@ class CourseCard extends StatelessWidget {
                 RichText(
                   text: TextSpan(children: [
                     TextSpan(
-                      text: course.displayName,
+                      text: course.displayName+" ",
                       style: Theme.of(context).textTheme.title,
                     ),
                     if (course.overallMark != null && course.overallMark >= 90 && showIcons)
