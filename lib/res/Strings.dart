@@ -291,7 +291,7 @@ class Strings {
       "support": "用户支持",
       "update": "更新",
       "language": "语言",
-      "assi_edit_tip":"垂直拖动来调整分数；长按来启用/禁用。",
+      "assi_edit_tip":"垂直拖动来调整得分；长按来启用/禁用小项。",
     }
   };
 
