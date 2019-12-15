@@ -59,13 +59,13 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
   void _paintUnavailableBar(Canvas canvas, String text, double x,
       double width, double height) {
     TextPainter(
-        text: TextSpan(text: text, style: TextStyle(fontSize: 16.0, color: Colors.grey)),
+        text: TextSpan(text: text, style: TextStyle(fontSize: 16.0, color: getGrey(100))),
         textDirection: TextDirection.ltr,
         textAlign: TextAlign.center)
       ..layout(maxWidth: width, minWidth: width)
       ..paint(canvas, Offset(x, height - 32)) // category text
 
-      ..text = TextSpan(text: "N/A", style: TextStyle(fontSize: 16.0, color: Colors.grey))
+      ..text = TextSpan(text: "N/A", style: TextStyle(fontSize: 16.0, color: getGrey(100)))
       ..layout(maxWidth: width, minWidth: width)
       ..paint(canvas, Offset(x, height - 54)); // "N/A" text
   }
@@ -73,7 +73,7 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
   void _paintBar(Canvas canvas, String text, Color color, SmallMark smallMark, double x,
       double width, double height) {
     TextPainter(
-        text: TextSpan(text: text, style: TextStyle(fontSize: 16.0, color: Colors.grey)),
+        text: TextSpan(text: text, style: TextStyle(fontSize: 16.0, color: getGrey(100))),
         textDirection: TextDirection.ltr,
         textAlign: TextAlign.center)
       ..layout(maxWidth: width, minWidth: width)
@@ -81,7 +81,7 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
 
       ..text = TextSpan(
           text: Strings.get("w:") + getRoundString(smallMark.weight, 2),
-          style: TextStyle(fontSize: 12.0, color: Colors.grey))
+          style: TextStyle(fontSize: 12.0, color: getGrey(100)))
       ..layout(maxWidth: width, minWidth: width)
       ..paint(canvas, Offset(x, height - 12)); //weight text
 
@@ -102,14 +102,14 @@ class _SmallMarkChartDetailPainter extends CustomPainter {
       TextPainter(
           text: TextSpan(
               text: num2Str(mark),
-              style: TextStyle(fontSize: 16.0, color: Colors.grey)),
+              style: TextStyle(fontSize: 16.0, color: getGrey(100))),
           textDirection: TextDirection.ltr,
           textAlign: TextAlign.center)
         ..layout(maxWidth: width, minWidth: width)
         ..paint(canvas, Offset(x, (height - 66) * (1 - mark / 100)))
         ..text = TextSpan(
             text: getRoundString(smallMark.get, 2) + "/" + getRoundString(smallMark.total, 2),
-            style: TextStyle(fontSize: 12.0, color: Colors.grey))
+            style: TextStyle(fontSize: 12.0, color: getGrey(100)))
         ..layout(maxWidth: width, minWidth: width)
         ..paint(canvas, Offset(x, (height - 66) * (1 - mark / 100) + 16));
     } else {

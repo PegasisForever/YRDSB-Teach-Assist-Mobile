@@ -96,9 +96,7 @@ void updateNavigationBarBrightness({BuildContext context}) {
 
 bool isLightMode({BuildContext context}) {
   if (context != null) {
-    currentBrightness = MediaQuery
-        .of(context)
-        .platformBrightness ?? currentBrightness;
+    currentBrightness = MediaQuery.of(context).platformBrightness ?? currentBrightness;
   }
   switch (Config.darkMode) {
     case 0:
@@ -111,9 +109,7 @@ bool isLightMode({BuildContext context}) {
 }
 
 SystemUiOverlayStyle getSystemUiOverlayStyle(BuildContext context) {
-  var brightness = MediaQuery
-      .of(context)
-      .platformBrightness;
+  var brightness = MediaQuery.of(context).platformBrightness;
   return brightness == Brightness.light ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark;
 }
 
@@ -150,17 +146,11 @@ addIfNotNull(List list, dynamic item) {
 }
 
 Color primaryColorOf(BuildContext context) {
-  return Theme
-      .of(context)
-      .colorScheme
-      .primary;
+  return Theme.of(context).colorScheme.primary;
 }
 
 double widthOf(BuildContext context) {
-  return MediaQuery
-      .of(context)
-      .size
-      .width;
+  return MediaQuery.of(context).size.width;
 }
 
 T find<T>(List<T> list, bool f(T it)) {
@@ -180,6 +170,6 @@ double sum<T>(List<T> list, double f(T it)) {
   return total;
 }
 
-Color getGrey({BuildContext context}){
-  return isLightMode(context: context)?Colors.grey[700]:Colors.grey[300];
+Color getGrey(int contrast, {BuildContext context}) {
+  return isLightMode(context: context) ? Colors.grey[500 + contrast] : Colors.grey[500 - contrast];
 }

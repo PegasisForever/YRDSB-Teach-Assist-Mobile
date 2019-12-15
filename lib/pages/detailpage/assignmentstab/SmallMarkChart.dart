@@ -81,13 +81,13 @@ class _SmallMarkChartPainter extends CustomPainter {
   void _paintUnavailableBar(Canvas canvas, String text, double x,
       double width, double height) {
     TextPainter(
-        text: TextSpan(text: text, style: TextStyle(fontSize: 16.0, color: Colors.grey)),
+        text: TextSpan(text: text, style: TextStyle(fontSize: 16.0, color: getGrey(100))),
         textDirection: TextDirection.ltr,
         textAlign: TextAlign.center)
       ..layout(maxWidth: width, minWidth: width)
       ..paint(canvas, Offset(x, height - 16)) // category text
 
-      ..text = TextSpan(text: "N/A", style: TextStyle(fontSize: 16.0, color: Colors.grey))
+      ..text = TextSpan(text: "N/A", style: TextStyle(fontSize: 16.0, color: getGrey(100)))
       ..layout(maxWidth: width, minWidth: width)
       ..paint(canvas, Offset(x, height - 40)); // "N/A" text
   }
@@ -95,7 +95,7 @@ class _SmallMarkChartPainter extends CustomPainter {
   void _paintBar(Canvas canvas, String text, Color color, SmallMark smallMark, double x,
       double width, double height) {
     TextPainter(
-        text: TextSpan(text: text, style: TextStyle(fontSize: 16.0, color: Colors.grey)),
+        text: TextSpan(text: text, style: TextStyle(fontSize: 16.0, color: getGrey(100))),
         textDirection: TextDirection.ltr,
         textAlign: TextAlign.center)
       ..layout(maxWidth: width, minWidth: width)
@@ -120,7 +120,7 @@ class _SmallMarkChartPainter extends CustomPainter {
       TextPainter(
           text: TextSpan(
               text: getRoundString(mark, 1),
-              style: TextStyle(fontSize: 16.0, color: Colors.grey)),
+              style: TextStyle(fontSize: 16.0, color: getGrey(100))),
           textDirection: TextDirection.ltr,
           textAlign: TextAlign.center)
         ..layout(maxWidth: width, minWidth: width)

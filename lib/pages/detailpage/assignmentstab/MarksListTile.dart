@@ -42,7 +42,7 @@ class MarksListTileState extends State<MarksListTile>
     var avgText = avg == null
         ? SizedBox(width: 0, height: 0)
         : Text(Strings.get("avg:") + num2Str(avg) + "%",
-            style: TextStyle(fontSize: 16, color: Colors.grey));
+            style: TextStyle(fontSize: 16, color: getGrey(100, context: context)));
 
     var summary = Padding(
       padding: const EdgeInsets.all(16.0),
@@ -65,10 +65,10 @@ class MarksListTileState extends State<MarksListTile>
                 avgText,
                 if (_assignment.isNoWeight)
                   Text(Strings.get("no_weight"),
-                      style: TextStyle(fontSize: 16, color: Colors.grey)),
+                      style: TextStyle(fontSize: 16, color: getGrey(100, context: context))),
                 if (_assignment.feedback != null)
                   Text(Strings.get("feedback_available"),
-                      style: TextStyle(fontSize: 16, color: Colors.grey)),
+                      style: TextStyle(fontSize: 16, color: getGrey(100, context: context))),
               ],
             ),
           ),
@@ -92,9 +92,8 @@ class MarksListTileState extends State<MarksListTile>
                 FlatButton.icon(
                   label: Text(Strings.get("edit").toUpperCase()),
                   icon: Icon(Icons.edit),
-                  disabledTextColor:
-                      isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
-                  textColor: isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
+                  disabledTextColor: getGrey(200, context: context),
+                  textColor: getGrey(200, context: context),
                   onPressed: _assignment.expanded == true
                       ? () {
                           widget.editAssignment(context, _assignment);
@@ -107,9 +106,8 @@ class MarksListTileState extends State<MarksListTile>
                 FlatButton.icon(
                   label: Text(Strings.get("remove").toUpperCase()),
                   icon: Icon(Icons.delete),
-                  disabledTextColor:
-                      isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
-                  textColor: isLightMode(context: context) ? Colors.grey[700] : Colors.grey[300],
+                  disabledTextColor: getGrey(200, context: context),
+                  textColor: getGrey(200, context: context),
                   onPressed: _assignment.expanded == true
                       ? () {
                           widget.removeAssignment(_assignment);
@@ -135,9 +133,7 @@ class MarksListTileState extends State<MarksListTile>
           if (_assignment.feedback != null)
             Text(
               Strings.get("feedback:") + _assignment.feedback,
-              style: TextStyle(
-                  fontSize: 16,
-                  color: isLightMode(context: context) ? Colors.grey[800] : Colors.grey[200]),
+              style: TextStyle(fontSize: 16, color: getGrey(300, context: context)),
               textAlign: TextAlign.center,
             ),
           SizedBox(

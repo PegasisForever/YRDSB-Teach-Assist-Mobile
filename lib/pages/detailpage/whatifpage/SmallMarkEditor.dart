@@ -87,7 +87,7 @@ class _SmallMarkEditorState extends State<SmallMarkEditor> {
               padding: const EdgeInsets.symmetric(horizontal: 7),
               child: TextField(
                 controller: _weightTextController,
-                style: TextStyle(fontSize: 13, color: getGrey(context: context)),
+                style: TextStyle(fontSize: 13, color: getGrey(100,context: context)),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 onSubmitted: (str) {
                   var newWeight = double.tryParse(str);

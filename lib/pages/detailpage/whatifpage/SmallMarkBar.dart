@@ -41,7 +41,7 @@ class _SmallMarkBarPainter extends CustomPainter {
     var width = size.width;
     var categoryText = Strings.get(Foundation.describeEnum(_category).toLowerCase());
     var labelPainter = TextPainter(
-        text: TextSpan(text: categoryText, style: TextStyle(fontSize: 16.0, color: getGrey())),
+        text: TextSpan(text: categoryText, style: TextStyle(fontSize: 16.0, color: getGrey(100))),
         textDirection: TextDirection.ltr,
         textAlign: TextAlign.center)
       ..layout(maxWidth: width, minWidth: width)
@@ -50,7 +50,7 @@ class _SmallMarkBarPainter extends CustomPainter {
     if (_smallMark == null) {
       // unavailable
       labelPainter
-        ..text = TextSpan(text: "N/A", style: TextStyle(fontSize: 16.0, color: getGrey()))
+        ..text = TextSpan(text: "N/A", style: TextStyle(fontSize: 16.0, color: getGrey(100)))
         ..layout(maxWidth: width, minWidth: width)
         ..paint(canvas, Offset(0, height - 54)); // "N/A" text
     } else {
@@ -73,14 +73,14 @@ class _SmallMarkBarPainter extends CustomPainter {
 
         TextPainter(
             text:
-                TextSpan(text: num2Str(mark), style: TextStyle(fontSize: 16.0, color: getGrey())),
+                TextSpan(text: num2Str(mark), style: TextStyle(fontSize: 16.0, color: getGrey(100))),
             textDirection: TextDirection.ltr,
             textAlign: TextAlign.center)
           ..layout(maxWidth: width, minWidth: width)
           ..paint(canvas, Offset(0, (height - 66) * (1 - mark / 100)))
           ..text = TextSpan(
               text: getRoundString(_smallMark.get, 2) + "/" + getRoundString(_smallMark.total, 2),
-              style: TextStyle(fontSize: 12.0, color: getGrey()))
+              style: TextStyle(fontSize: 12.0, color: getGrey(100)))
           ..layout(maxWidth: width, minWidth: width)
           ..paint(canvas, Offset(0, (height - 66) * (1 - mark / 100) + 16));
       } else {
