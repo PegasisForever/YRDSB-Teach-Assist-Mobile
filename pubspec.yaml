@@ -1,6 +1,6 @@
 name: ta
 description: YRDSB Teach Assist
-version: 1.5.7+26
+version: 1.6.0+27
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -29,6 +29,7 @@ dependencies:
   quiver: ^2.0.5
   flutter_privacy_screen: ^0.0.1
   open_appstore: ^1.0.2
+  keyboard_visibility: ^0.5.6
 
 dev_dependencies:
   flutter_test:

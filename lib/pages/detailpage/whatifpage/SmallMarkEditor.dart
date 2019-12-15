@@ -89,6 +89,13 @@ class _SmallMarkEditorState extends State<SmallMarkEditor> {
                 controller: _weightTextController,
                 style: TextStyle(fontSize: 13, color: getGrey(100,context: context)),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
+                onChanged: (str) {
+                  var newWeight = double.tryParse(str);
+                  if (newWeight != null) {
+                    smallMark.weight = newWeight;
+                    widget.onChanged(smallMark);
+                  }
+                },
                 onSubmitted: (str) {
                   var newWeight = double.tryParse(str);
                   if (newWeight != null) {

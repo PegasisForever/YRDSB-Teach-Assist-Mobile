@@ -1,8 +1,11 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/widgets/CrossFade.dart';
+import 'package:ta/widgets/InputDoneView.dart';
 import 'package:ta/widgets/SmallIconButton.dart';
 import 'package:ta/widgets/TipsCard.dart';
 import 'package:ta/pages/detailpage/whatifpage/SmallMarkEditor.dart';
@@ -20,7 +23,8 @@ class EditAssignmentDialog extends StatefulWidget {
   _EditAssignmentDialogState createState() => _EditAssignmentDialogState();
 }
 
-class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
+class _EditAssignmentDialogState extends State<EditAssignmentDialog>
+    with AfterLayoutMixin<EditAssignmentDialog> {
   Assignment assignment;
   var isAdvanced = false;
   var _titleController = TextEditingController();
@@ -150,7 +154,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                       ),
                       SizedBox(height: 4),
                       Text(Strings.get("average:") + ((avg != null) ? (num2Str(avg) + "%") : "N/A"),
-                          style: TextStyle(fontSize: 16, color: getGrey(100,context: context))),
+                          style: TextStyle(fontSize: 16, color: getGrey(100, context: context))),
                       SizedBox(height: 8),
                       Center(
                         child: SizedBox(
@@ -211,5 +215,37 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
     smallMark.get = 90;
     smallMark.weight = 10;
     return SmallMarkGroup.blank()..smallMarks.add(smallMark);
+  }
+
+  showOverlay(BuildContext context) {
+    if (overlayEntry != null) return;
+    OverlayState overlayState = Overlay.of(context);
+    overlayEntry = OverlayEntry(builder: (context) {
+      return Positioned(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          right: 0.0,
+          left: 0.0,
+          child: InputDoneView());
+    });
+
+    overlayState.insert(overlayEntry);
+  }
+
+  removeOverlay() {
+    if (overlayEntry != null) {
+      overlayEntry.remove();
+      overlayEntry = null;
+    }
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    if (!isAndroid()) {
+      KeyboardVisibilityNotification().addNewListener(onShow: () {
+        showOverlay(context);
+      }, onHide: () {
+        removeOverlay();
+      });
+    }
   }
 }
