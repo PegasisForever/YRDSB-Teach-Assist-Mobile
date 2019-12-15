@@ -37,7 +37,7 @@ class _SmallMarkBarPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var height = size.height + 10;
+    var height = size.height + 8;
     var width = size.width;
     var categoryText = Strings.get(Foundation.describeEnum(_category).toLowerCase());
     var labelPainter = TextPainter(

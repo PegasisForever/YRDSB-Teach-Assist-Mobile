@@ -152,6 +152,7 @@ class Strings {
       "support": "Support",
       "update": "Update",
       "language": "Language",
+      "assi_edit_tip":"Drag vertically to edit, long press to disable/enable."
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -290,6 +291,7 @@ class Strings {
       "support": "用户支持",
       "update": "更新",
       "language": "语言",
+      "assi_edit_tip":"垂直拖动来调整分数；长按来启用/禁用。",
     }
   };
 

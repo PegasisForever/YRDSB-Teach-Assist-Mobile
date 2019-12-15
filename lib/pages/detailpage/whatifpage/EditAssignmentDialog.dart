@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
+import 'package:ta/widgets/CrossFade.dart';
+import 'package:ta/widgets/SmallIconButton.dart';
+import 'package:ta/widgets/TipsCard.dart';
 import 'package:ta/pages/detailpage/whatifpage/SmallMarkEditor.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
+import 'package:ta/widgets/NoBackgroundDialog.dart';
 
 class EditAssignmentDialog extends StatefulWidget {
   final Course course;
@@ -21,6 +26,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
   var _titleController = TextEditingController();
   bool isAdd;
   OverlayEntry overlayEntry;
+  var showTips = prefs.getBool("show_assi_edit_tip") ?? true;
 
   @override
   void initState() {
@@ -86,76 +92,112 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
       }
     }
 
-    return Dialog(
+    return NoBackgroundDialog(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+          CrossFade(
+            firstChild: TipsCard(
+              text: Strings.get("assi_edit_tip"),
+              padding: const EdgeInsets.all(8),
+              trailing: SmallIconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  setState(() {
+                    showTips = false;
+                    prefs.setBool("show_assi_edit_tip", false);
+                  });
+                },
+              ),
+            ),
+            secondChild: Container(),
+            showFirst: showTips,
+          ),
+          AnimatedContainer(
+            height: showTips ? 10 : 0,
+            curve: Curves.easeInOutCubic,
+            duration: Duration(milliseconds: 300),
+          ),
+          Card(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                TextField(
-                  keyboardAppearance:
-                      isLightMode(context: context) ? Brightness.light : Brightness.dark,
-                  controller: _titleController,
-                  decoration: InputDecoration(
-                    hintText: Strings.get("assignment_title"),
-                    contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      TextField(
+                        keyboardAppearance:
+                            isLightMode(context: context) ? Brightness.light : Brightness.dark,
+                        controller: _titleController,
+                        decoration: InputDecoration(
+                          hintText: Strings.get("assignment_title"),
+                          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                        ),
+                        style: TextStyle(fontSize: 17),
+                        onChanged: (text) {
+                          setState(() {
+                            assignment.name = text;
+                          });
+                        },
+                      ),
+                      SizedBox(height: 4),
+                      Text(Strings.get("average:") + ((avg != null) ? (num2Str(avg) + "%") : "N/A"),
+                          style: TextStyle(fontSize: 16, color: getGrey(context: context))),
+                      SizedBox(height: 8),
+                      Center(
+                        child: SizedBox(
+                          height: 180,
+                          child: ListView(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.zero,
+                            children: smallMarkEditors,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  style: TextStyle(fontSize: 17),
-                  onChanged: (text) {
-                    setState(() {
-                      assignment.name = text;
-                    });
-                  },
                 ),
-                SizedBox(height: 4),
-                Text(Strings.get("average:") + ((avg != null) ? (num2Str(avg) + "%") : "N/A"),
-                    style: TextStyle(fontSize: 16, color: getGrey(context: context))),
-                SizedBox(height: 8),
-                Center(
-                  child: SizedBox(
-                    height: 180,
-                    child: ListView(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.zero,
-                      children: smallMarkEditors,
+                ButtonBar(
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text(Strings.get("cancel").toUpperCase()),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
-                  ),
-                ),
+                    RaisedButton(
+                      color: Theme.of(context).colorScheme.primary,
+                      child: Text(
+                        isAdd
+                            ? Strings.get("add").toUpperCase()
+                            : Strings.get("save").toUpperCase(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        assignment.smallMarkGroups.forEach((_, smallMarkGroup) {
+                          smallMarkGroup.smallMarks.removeWhere((smallMark) => smallMark == null);
+                        });
+                        Navigator.of(context).pop(assignment);
+                      },
+                    )
+                  ],
+                )
               ],
             ),
           ),
-          ButtonBar(
-            children: <Widget>[
-              FlatButton(
-                child: Text(Strings.get("cancel").toUpperCase()),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              RaisedButton(
-                color: Theme.of(context).colorScheme.primary,
-                child: Text(
-                  isAdd ? Strings.get("add").toUpperCase() : Strings.get("save").toUpperCase(),
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () {
-                  assignment.smallMarkGroups.forEach((_, smallMarkGroup) {
-                    smallMarkGroup.smallMarks.removeWhere((smallMark) => smallMark == null);
-                  });
-                  Navigator.of(context).pop(assignment);
-                },
-              )
-            ],
-          )
+          AnimatedContainer(
+            height: showTips ? 40 : 0,
+            curve: Curves.easeInOutCubic,
+            duration: Duration(milliseconds: 300),
+          ),
         ],
       ),
     );

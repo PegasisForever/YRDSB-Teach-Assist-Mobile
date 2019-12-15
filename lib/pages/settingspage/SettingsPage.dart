@@ -144,6 +144,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   onTap: () {
                     prefs.setBool("show_what_if_tip", true);
                     prefs.setBool("show_tap_to_view_detail_tip", true);
+                    prefs.setBool("show_assi_edit_tip", true);
                     showSnackBar(context, Strings.get("tips_reset"));
                   },
                 );

@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
-import 'package:ta/pages/detailpage/assignmentstab/TipsCard.dart';
+import 'package:ta/widgets/TipsCard.dart';
 import 'package:ta/pages/detailpage/whatifpage/EditAssignmentDialog.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
@@ -55,14 +55,23 @@ class _MarksListState extends State<MarksList>
               children: <Widget>[
                 CrossFade(
                     key: Key("tip"),
-                    firstChild: TipsCard(
+                    firstChild: Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                      child: TipsCard(
+                        padding: const EdgeInsets.only(left: 8, right: 6),
                         text: Strings.get("tap_to_view_detail"),
-                        onDismiss: () {
-                          setState(() {
-                            showTips = false;
-                            prefs.setBool("show_tap_to_view_detail_tip", false);
-                          });
-                        }),
+                        leading: Icon(Icons.info_outline),
+                        trailing: FlatButton(
+                          child: Text(Strings.get("dismiss")),
+                          onPressed: () {
+                            setState(() {
+                              showTips = false;
+                              prefs.setBool("show_tap_to_view_detail_tip", false);
+                            });
+                          },
+                        ),
+                      ),
+                    ),
                     secondChild: SizedBox(
                       height: 0.5,
                       width: double.infinity,
