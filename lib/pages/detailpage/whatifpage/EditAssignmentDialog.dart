@@ -93,6 +93,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
     }
 
     return NoBackgroundDialog(
+      maxWidth: 400,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
