@@ -36,38 +36,41 @@ class CourseCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    runAlignment: WrapAlignment.center,
-                    spacing: 4,
-                    runSpacing: 4,
-                    children: <Widget>[
-                      Text(course.displayName, style: Theme.of(context).textTheme.title),
-                      if (course.overallMark != null && course.overallMark >= 90 && showIcons)
-                        (course.overallMark < 99)
-                            ? Icon(
-                                CustomIcons.fire,
-                                color: Colors.orange,
-                                size: 20,
-                              )
-                            : Icon(
-                                CustomIcons.diamond,
-                                color: Colors.lightBlue,
-                                size: 17,
-                              ),
-                      if (course.cached && showIcons)
-                        Container(
-                          padding: const EdgeInsets.all(1),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.all(Radius.circular(4)),
-                          ),
-                          child: Text(
-                            Strings.get("cached"),
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        )
-                    ]),
+                RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                      text: course.displayName,
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    if (course.overallMark != null && course.overallMark >= 90 && showIcons)
+                      (course.overallMark < 99)
+                          ? WidgetSpan(
+                              child: Icon(
+                              CustomIcons.fire,
+                              color: Colors.orange,
+                              size: 20,
+                            ))
+                          : WidgetSpan(
+                              child: Icon(
+                              CustomIcons.diamond,
+                              color: Colors.lightBlue,
+                              size: 17,
+                            )),
+                    if (course.cached && showIcons)
+                      WidgetSpan(
+                          child: Container(
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                        ),
+                        child: Text(
+                          Strings.get("cached"),
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ))
+                  ]),
+                ),
                 SizedBox(height: 4),
                 if (infoStr.length > 0)
                   Text(infoStr.join("  -  "), style: Theme.of(context).textTheme.subhead),
