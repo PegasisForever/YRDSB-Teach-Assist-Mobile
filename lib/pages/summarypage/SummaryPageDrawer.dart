@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/drawerpages/OpenCustomTab.dart';
 import 'package:ta/res/Strings.dart';
