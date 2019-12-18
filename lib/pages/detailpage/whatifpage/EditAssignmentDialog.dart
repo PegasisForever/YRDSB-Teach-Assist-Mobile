@@ -138,6 +138,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
                         controller: _titleController,
                         decoration: InputDecoration(
                           hintText: Strings.get("assignment_title"),
+                          isDense: true,
                           contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4),

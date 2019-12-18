@@ -28,7 +28,6 @@ It doesn't fetch data from official TA website, but from [Fetch TA Data](https:/
 
 1. Create a Firebase project and put `google-services.json` in Android project and `GoogleService-Info.plist` in iOS project.
 2. Go to [Syncfusion](https://www.syncfusion.com/products/communitylicense) to get a community licence and put it in `lib/licence.dart`.
-3. (Optional) Follow `flutter modify list.txt` to change the source code of Flutter.
 
 ## Support Me
 

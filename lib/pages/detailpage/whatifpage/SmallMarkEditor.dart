@@ -110,6 +110,7 @@ class _SmallMarkEditorState extends State<SmallMarkEditor> {
                 },
                 decoration: InputDecoration(
                   enabled: smallMark != null,
+                  isDense: true,
                   prefix: Text("w: "),
                   contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                   border: OutlineInputBorder(
