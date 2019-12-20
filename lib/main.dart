@@ -31,7 +31,9 @@ void main() {
     SyncfusionLicense.registerLicense(SyncfusionCommunityLicenceKey);
     initPackageInfo();
     initFirebaseMsg();
-    FlutterPrivacyScreen.enablePrivacyScreen();
+    if (Config.hideAppContent){
+      FlutterPrivacyScreen.enablePrivacyScreen();
+    }
     initUser();
 
     runApp(App());

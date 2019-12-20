@@ -62,10 +62,18 @@ class Config {
   }
 
   static String get language{
-    return prefs.getString("language") ?? null;
+    return prefs.getString("language");
   }
 
   static set language(String lang){
     prefs.setString("language", lang);
+  }
+
+  static bool get hideAppContent{
+    return prefs.getBool("hide_app_content") ?? true;
+  }
+
+  static set hideAppContent(bool v){
+    prefs.setBool("hide_app_content", v);
   }
 }

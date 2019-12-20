@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/main.dart';
 import 'package:ta/pages/settingspage/SelectColorDialog.dart';
@@ -37,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 value: Config.language,
                 onChanged: (v) {
                   setState(() {
-                    Config.language=v;
+                    Config.language = v;
                     Strings.updateCurrentLanguage(context);
                   });
                 },
@@ -120,6 +121,34 @@ class _SettingsPageState extends State<SettingsPage> {
                 ]),
           ),
           ListTile(
+            title: Text("Private mode"),
+            subtitle: Text(Strings.get("hide_in_app_switcher_" + (isAndroid() ? "android" : "ios"))),
+            leading: Icon(Icons.visibility_off),
+            trailing: Switch(
+              value: Config.hideAppContent,
+              onChanged: (v) {
+                setState(() {
+                  Config.hideAppContent = v;
+                  if (Config.hideAppContent){
+                    FlutterPrivacyScreen.enablePrivacyScreen();
+                  }else{
+                    FlutterPrivacyScreen.disablePrivacyScreen();
+                  }
+                });
+              },
+            ),
+            onTap: () {
+              setState(() {
+                Config.hideAppContent = !Config.hideAppContent;
+                if (Config.hideAppContent){
+                  FlutterPrivacyScreen.enablePrivacyScreen();
+                }else{
+                  FlutterPrivacyScreen.disablePrivacyScreen();
+                }
+              });
+            },
+          ),
+          ListTile(
             title: Text(Strings.get("show_more_decimal_places")),
             leading: Icon(Icons.exposure_plus_2),
             trailing: Switch(
@@ -136,20 +165,18 @@ class _SettingsPageState extends State<SettingsPage> {
               });
             },
           ),
-          Builder(
-              builder: (context) {
-                return ListTile(
-                  title: Text(Strings.get("reset_all_tips")),
-                  leading: Icon(Icons.assistant),
-                  onTap: () {
-                    prefs.setBool("show_what_if_tip", true);
-                    prefs.setBool("show_tap_to_view_detail_tip", true);
-                    prefs.setBool("show_assi_edit_tip", true);
-                    showSnackBar(context, Strings.get("tips_reset"));
-                  },
-                );
-              }
-          )
+          Builder(builder: (context) {
+            return ListTile(
+              title: Text(Strings.get("reset_all_tips")),
+              leading: Icon(Icons.assistant),
+              onTap: () {
+                prefs.setBool("show_what_if_tip", true);
+                prefs.setBool("show_tap_to_view_detail_tip", true);
+                prefs.setBool("show_assi_edit_tip", true);
+                showSnackBar(context, Strings.get("tips_reset"));
+              },
+            );
+          })
         ],
       ),
     );

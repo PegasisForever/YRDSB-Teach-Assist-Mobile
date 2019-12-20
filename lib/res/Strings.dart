@@ -152,7 +152,9 @@ class Strings {
       "support": "Support",
       "update": "Update",
       "language": "Language",
-      "assi_edit_tip":"Drag vertically to edit, long press to disable/enable."
+      "assi_edit_tip":"Drag vertically to edit, long press to disable/enable.",
+      "hide_in_app_switcher_android":"Hide contents in app switcher and disble screenshots",
+      "hide_in_app_switcher_ios":"Hide contents in app switcher",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -292,6 +294,8 @@ class Strings {
       "update": "更新",
       "language": "语言",
       "assi_edit_tip":"垂直拖动来调整得分；长按来启用/禁用小项。",
+      "hide_in_app_switcher_android":"在应用切换器里隐藏界面并禁用屏幕截图",
+      "hide_in_app_switcher_ios":"在应用切换器里隐藏界面",
     }
   };
 
