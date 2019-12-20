@@ -1,7 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_extend/share_extend.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/main.dart';
+import 'package:ta/model/User.dart';
 import 'package:ta/pages/settingspage/SelectColorDialog.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
@@ -121,17 +127,18 @@ class _SettingsPageState extends State<SettingsPage> {
                 ]),
           ),
           ListTile(
-            title: Text("Private mode"),
-            subtitle: Text(Strings.get("hide_in_app_switcher_" + (isAndroid() ? "android" : "ios"))),
+            title: Text(Strings.get("privacy_mode")),
+            subtitle:
+                Text(Strings.get("hide_in_app_switcher_" + (isAndroid() ? "android" : "ios"))),
             leading: Icon(Icons.visibility_off),
             trailing: Switch(
               value: Config.hideAppContent,
               onChanged: (v) {
                 setState(() {
                   Config.hideAppContent = v;
-                  if (Config.hideAppContent){
+                  if (Config.hideAppContent) {
                     FlutterPrivacyScreen.enablePrivacyScreen();
-                  }else{
+                  } else {
                     FlutterPrivacyScreen.disablePrivacyScreen();
                   }
                 });
@@ -140,9 +147,9 @@ class _SettingsPageState extends State<SettingsPage> {
             onTap: () {
               setState(() {
                 Config.hideAppContent = !Config.hideAppContent;
-                if (Config.hideAppContent){
+                if (Config.hideAppContent) {
                   FlutterPrivacyScreen.enablePrivacyScreen();
-                }else{
+                } else {
                   FlutterPrivacyScreen.disablePrivacyScreen();
                 }
               });
@@ -176,7 +183,28 @@ class _SettingsPageState extends State<SettingsPage> {
                 showSnackBar(context, Strings.get("tips_reset"));
               },
             );
-          })
+          }),
+          ListTile(
+            title: Text(Strings.get("export_data")),
+            leading: Icon(Icons.save),
+            onTap: () async {
+              var markJSON = jsonDecode(prefs.getString("${currentUser.number}-mark") ?? "[]");
+              var archivedJSON =
+                  jsonDecode(prefs.getString("${currentUser.number}-archived") ?? "[]");
+              var timelineJSON =
+                  jsonDecode(prefs.getString("${currentUser.number}-timeline") ?? "[]");
+              var exportJSONString = jsonEncode({
+                "courses": markJSON,
+                "archived_courses": archivedJSON,
+                "timeline": timelineJSON
+              });
+
+              Directory dir = await getApplicationDocumentsDirectory();
+              File testFile = new File("${dir.path}/export.json");
+              testFile.writeAsStringSync(exportJSONString);
+              ShareExtend.share(testFile.path, "file");
+            },
+          ),
         ],
       ),
     );

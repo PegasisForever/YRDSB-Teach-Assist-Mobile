@@ -4,6 +4,7 @@ import 'package:ta/model/Mark.dart';
 import 'package:ta/res/CustomIcons.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
+import 'package:ta/widgets/tooltip.dart';
 
 import '../../tools.dart';
 
@@ -39,22 +40,30 @@ class CourseCard extends StatelessWidget {
                 RichText(
                   text: TextSpan(children: [
                     TextSpan(
-                      text: course.displayName+" ",
+                      text: course.displayName + " ",
                       style: Theme.of(context).textTheme.title,
                     ),
                     if (course.overallMark != null && course.overallMark >= 90 && showIcons)
                       (course.overallMark < 99)
                           ? WidgetSpan(
+                              child: TapTooltip(
+                              message: Strings.get("fire_info"),
+                              padding: const EdgeInsets.all(16),
+                              margin: const EdgeInsets.symmetric(horizontal: 16),
                               child: Icon(
-                              CustomIcons.fire,
-                              color: Colors.orange,
-                              size: 20,
+                                CustomIcons.fire,
+                                color: Colors.orange,
+                                size: 20,
+                              ),
                             ))
                           : WidgetSpan(
+                              child: TapTooltip(
+                              message: Strings.get("diamond_info"),
                               child: Icon(
-                              CustomIcons.diamond,
-                              color: Colors.lightBlue,
-                              size: 17,
+                                CustomIcons.diamond,
+                                color: Colors.lightBlue,
+                                size: 17,
+                              ),
                             )),
                     if (course.cached && showIcons)
                       WidgetSpan(

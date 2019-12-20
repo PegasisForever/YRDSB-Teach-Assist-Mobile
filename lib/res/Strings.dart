@@ -153,8 +153,12 @@ class Strings {
       "update": "Update",
       "language": "Language",
       "assi_edit_tip":"Drag vertically to edit, long press to disable/enable.",
-      "hide_in_app_switcher_android":"Hide contents in app switcher and disble screenshots",
+      "hide_in_app_switcher_android":"Hide contents in app switcher and disable screenshots",
       "hide_in_app_switcher_ios":"Hide contents in app switcher",
+      "fire_info":"This fire will appear when you got over 10% on the course.",
+      "diamond_info":"This diamond will appear when you got over 99% on the course.",
+      "privacy_mode":"Privacy mode",
+      "export_data":"Export data",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -296,6 +300,10 @@ class Strings {
       "assi_edit_tip":"垂直拖动来调整得分；长按来启用/禁用小项。",
       "hide_in_app_switcher_android":"在应用切换器里隐藏界面并禁用屏幕截图",
       "hide_in_app_switcher_ios":"在应用切换器里隐藏界面",
+      "fire_info":"火苗意味着你在这门课中获得了90+的分数",
+      "diamond_info":"火苗意味着你在这门课中获得了99+的分数",
+      "privacy_mode":"隐私模式",
+      "export_data":"导出数据",
     }
   };
 
