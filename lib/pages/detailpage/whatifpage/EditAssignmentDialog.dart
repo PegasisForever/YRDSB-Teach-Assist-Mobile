@@ -189,7 +189,8 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
                       ),
                       onPressed: () {
                         assignment.smallMarkGroups.forEach((_, smallMarkGroup) {
-                          smallMarkGroup.smallMarks.removeWhere((smallMark) => smallMark == null);
+                          smallMarkGroup.smallMarks.removeWhere(
+                              (smallMark) => smallMark == null || smallMark.enabled == false);
                         });
                         Navigator.of(context).pop(assignment);
                       },

@@ -37,20 +37,26 @@ class _SmallMarkEditorState extends State<SmallMarkEditor> {
         children: <Widget>[
           Expanded(
             child: GestureDetector(
-              child: SmallMarkBar(smallMark, widget.category),
+              child: SmallMarkBar(smallMark?.enabled != false ? smallMark : null, widget.category),
               onLongPress: () {
-                if (smallMark != null) {
-                  smallMark = null;
+                if (smallMark != null && smallMark.enabled != false) {
+                  smallMark.enabled = false;
                   _percentage = -10;
                   _weightTextController.text = "";
                 } else {
-                  smallMark = SmallMark.blank()
-                    ..finished = true
-                    ..total = 100
-                    ..get = 90
-                    ..weight = 10;
-                  _percentage = 90;
-                  _weightTextController.text = "10";
+                  if (smallMark?.enabled == false) {
+                    smallMark.enabled = true;
+                    _percentage = smallMark.percentage * 100;
+                    _weightTextController.text = getRoundString(smallMark.weight, 2);
+                  } else {
+                    smallMark = SmallMark.blank()
+                      ..finished = true
+                      ..total = 100
+                      ..get = 90
+                      ..weight = 10;
+                    _percentage = 90;
+                    _weightTextController.text = "10";
+                  }
                 }
                 widget.onChanged(smallMark);
               },
@@ -58,12 +64,16 @@ class _SmallMarkEditorState extends State<SmallMarkEditor> {
                 _percentage += -details.primaryDelta / 0.9;
                 if (_percentage > 100) _percentage = 100;
                 if (_percentage <= -10) {
-                  smallMark = null;
+                  smallMark?.enabled = false;
                   _percentage = -10;
                   _weightTextController.text = "";
                 } else if (_percentage >= 0) {
                   if (smallMark != null) {
                     smallMark.finished = true;
+                    smallMark.enabled = true;
+                    if (_weightTextController.text == "") {
+                      _weightTextController.text = getRoundString(smallMark.weight, 2);
+                    }
                   } else {
                     smallMark = SmallMark.blank()
                       ..finished = true
@@ -87,7 +97,7 @@ class _SmallMarkEditorState extends State<SmallMarkEditor> {
               padding: const EdgeInsets.symmetric(horizontal: 7),
               child: TextField(
                 controller: _weightTextController,
-                style: TextStyle(fontSize: 13, color: getGrey(100,context: context)),
+                style: TextStyle(fontSize: 13, color: getGrey(100, context: context)),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 onChanged: (str) {
                   var newWeight = double.tryParse(str);

@@ -17,6 +17,7 @@ enum Category {
 }
 
 class SmallMark {
+  bool enabled; //only used in what if mode editor
   bool finished;
   double total;
   double get;
