@@ -8,17 +8,17 @@ import 'package:ta/widgets/CrossFade.dart';
 import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
 import 'package:flutter/foundation.dart' as Foundation;
 
-class StaticsList extends StatefulWidget {
-  StaticsList(this._course, this._whatIfMode);
+class StatisticsList extends StatefulWidget {
+  StatisticsList(this._course, this._whatIfMode);
 
   final Course _course;
   final bool _whatIfMode;
 
   @override
-  _StaticsListState createState() => _StaticsListState();
+  _StatisticsListState createState() => _StatisticsListState();
 }
 
-class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClientMixin {
+class _StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveClientMixin {
   final Map<Category, Color> darkColorMap = const {
     Category.KU: const Color(0xffc49000),
     Category.T: const Color(0xff388e3c),
@@ -36,7 +36,7 @@ class _StaticsListState extends State<StaticsList> with AutomaticKeepAliveClient
   };
   bool showWeightTable = false;
 
-  _StaticsListState();
+  _StatisticsListState();
 
   @override
   bool get wantKeepAlive => true;

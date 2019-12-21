@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/MarksList.dart';
-import 'package:ta/pages/detailpage/staticstab/StaticsList.dart';
+import 'package:ta/pages/detailpage/statisticstab/StatisticsList.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
@@ -99,7 +99,7 @@ class _DetailPageState extends BetterState<DetailPage> {
               child: TabBarView(
                 children: [
                   MarksList(_course, whatIfMode, updateCourse),
-                  StaticsList(_course, whatIfMode),
+                  StatisticsList(_course, whatIfMode),
                   AboutTab(_course),
                 ],
               ),
