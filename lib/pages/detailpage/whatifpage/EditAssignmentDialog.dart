@@ -1,7 +1,7 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/widgets/CrossFade.dart';
@@ -23,8 +23,7 @@ class EditAssignmentDialog extends StatefulWidget {
   _EditAssignmentDialogState createState() => _EditAssignmentDialogState();
 }
 
-class _EditAssignmentDialogState extends State<EditAssignmentDialog>
-    with AfterLayoutMixin<EditAssignmentDialog> {
+class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
   Assignment assignment;
   var isAdvanced = false;
   var _titleController = TextEditingController();
@@ -51,6 +50,14 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
 
     assignment.edited = true;
     _titleController.text = assignment.name;
+
+    if (!isAndroid()) {
+      KeyboardVisibilityNotification().addNewListener(
+        onChange: (bool visible) {
+          print(visible);
+        },
+      );
+    }
   }
 
   @override
@@ -237,17 +244,6 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog>
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
-    }
-  }
-
-  @override
-  void afterFirstLayout(BuildContext context) {
-    if (!isAndroid()) {
-      KeyboardVisibilityNotification().addNewListener(onShow: () {
-        showOverlay(context);
-      }, onHide: () {
-        removeOverlay();
-      });
     }
   }
 }
