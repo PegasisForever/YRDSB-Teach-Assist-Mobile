@@ -83,11 +83,11 @@ class _StatisticsListState extends State<StatisticsList> with AutomaticKeepAlive
       children: <Widget>[
         CrossFade(
           firstChild: SizedBox(
-              width: double.maxFinite,
-              height: 250,
-              child: SfCircularChart(
-                series: _getPieSeries(),
-              ),
+            width: double.maxFinite,
+            height: 250,
+            child: SfCircularChart(
+              series: _getPieSeries(),
+            ),
           ),
           secondChild: Center(
             heightFactor: 1,
@@ -96,16 +96,16 @@ class _StatisticsListState extends State<StatisticsList> with AutomaticKeepAlive
               headingRowHeight: 42,
               columnSpacing: 0,
               columns: [
-                DataColumn(label: Text("Category")),
-                DataColumn(label: Text("Weighting")),
-                DataColumn(label: Text("Course Weighting")),
+                DataColumn(label: Text(Strings.get("category"))),
+                DataColumn(label: Text(Strings.get("weighting"))),
+                DataColumn(label: Text(Strings.get("course_weighting"))),
               ],
               rows: [
                 for (final category in Category.values)
                   DataRow(cells: [
                     DataCell(Text(Strings.get(describeEnum(category).toLowerCase()))),
-                    DataCell(Text(num2Str(_course.weightTable[category].W)+"%")),
-                    DataCell(Text(num2Str(_course.weightTable[category].CW)+"%")),
+                    DataCell(Text(num2Str(_course.weightTable[category].W) + "%")),
+                    DataCell(Text(num2Str(_course.weightTable[category].CW) + "%")),
                   ])
               ],
             ),

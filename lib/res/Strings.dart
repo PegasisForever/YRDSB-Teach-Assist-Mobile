@@ -159,6 +159,9 @@ class Strings {
       "diamond_info":"This diamond will appear when you got over 99% on the course.",
       "privacy_mode":"Privacy mode",
       "export_data":"Export data",
+      "category":"Category",
+      "weighting":"Weighting",
+      "course_weighting":"Course Weighting"
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -304,6 +307,9 @@ class Strings {
       "diamond_info":"火苗意味着你在这门课中获得了99+的分数",
       "privacy_mode":"隐私模式",
       "export_data":"导出数据",
+      "category":"类别",
+      "weighting":"权重",
+      "course_weighting":"课程权重"
     }
   };
 
