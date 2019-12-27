@@ -9,13 +9,16 @@ import 'package:syncfusion_flutter_core/core.dart';
 import 'package:ta/licence.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/packageinfo.dart';
+import 'package:ta/pages/calendarpage/CalendarPage.dart';
 import 'package:ta/pages/LoginPage.dart';
+import 'package:ta/pages/UpdatesPage.dart';
 import 'package:ta/pages/archivedpage/ArchivedCoursesPage.dart';
 import 'package:ta/pages/detailpage/whatifpage/WhatIfWelcomePage.dart';
 import 'package:ta/pages/drawerpages/AboutPage.dart';
 import 'package:ta/pages/drawerpages/AccountsList.dart';
 import 'package:ta/pages/drawerpages/EditAccount.dart';
 import 'package:ta/pages/drawerpages/FeedbackPage.dart';
+import 'package:ta/pages/newsummarypage/NewSummaryPage.dart';
 import 'package:ta/pages/settingspage/SettingsPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 
@@ -31,7 +34,7 @@ void main() {
     SyncfusionLicense.registerLicense(SyncfusionCommunityLicenceKey);
     initPackageInfo();
     initFirebaseMsg();
-    if (Config.hideAppContent){
+    if (Config.hideAppContent) {
       FlutterPrivacyScreen.enablePrivacyScreen();
     }
     initUser();
@@ -100,8 +103,10 @@ class _AppState extends State<App> {
       theme: lightTheme,
       darkTheme: darkTheme,
       routes: <String, WidgetBuilder>{
-        "/": (BuildContext context) => SummaryPage(),
+        "/": (BuildContext context) => NewSummaryPage(),
         "/login": (BuildContext context) => LoginPage(),
+        "/updates": (BuildContext context) => UpdatesPage(),
+        "/calendar": (BuildContext context) => CalendarPage(),
         "/accounts_list": (BuildContext context) => AccountsList(),
         "/accounts_list/edit": (BuildContext context) => EditAccount(User.blank(), false),
         "/about": (BuildContext context) => AboutPage(),
@@ -121,67 +126,69 @@ class _AppState extends State<App> {
 
   ThemeData getLightTheme(MaterialColor color) {
     return ThemeData(
-        brightness: Brightness.light,
+      brightness: Brightness.light,
+      colorScheme: ColorScheme.light(
+        primary: color,
+        secondary: color[200],
+      ),
+      accentColor: color,
+      primaryColor: color,
+      primaryColorDark: color[700],
+      toggleableActiveColor: color,
+      appBarTheme: AppBarTheme(color: color),
+      textSelectionColor: color[200],
+      textSelectionHandleColor: color,
+      cursorColor: color,
+      buttonTheme: ButtonThemeData(
         colorScheme: ColorScheme.light(
-          primary: color,
+          primary: color[400],
           secondary: color[200],
         ),
-        accentColor: color,
-        primaryColor: color,
-        primaryColorDark: color[700],
-        toggleableActiveColor: color,
-        appBarTheme: AppBarTheme(color: color),
-        textSelectionColor: color[200],
-        textSelectionHandleColor: color,
-        cursorColor: color,
-        buttonTheme: ButtonThemeData(
-          colorScheme: ColorScheme.light(
-            primary: color[400],
-            secondary: color[200],
-          ),
-        ),
-        sliderTheme: SliderThemeData(
-          disabledActiveTrackColor: Colors.grey[400],
-          disabledInactiveTrackColor: Colors.grey[400],
-          disabledThumbColor: Colors.grey[500],
-          activeTrackColor: color[200],
-          inactiveTrackColor: color[200],
-          thumbColor: color,
-        ),
-        dialogTheme: DialogTheme(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
-        ));
+      ),
+      sliderTheme: SliderThemeData(
+        disabledActiveTrackColor: Colors.grey[400],
+        disabledInactiveTrackColor: Colors.grey[400],
+        disabledThumbColor: Colors.grey[500],
+        activeTrackColor: color[200],
+        inactiveTrackColor: color[200],
+        thumbColor: color,
+      ),
+      dialogTheme: DialogTheme(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+      ),
+    );
   }
 
   ThemeData getDarkTheme(MaterialColor color) {
     return ThemeData(
-        brightness: Brightness.dark,
+      brightness: Brightness.dark,
+      colorScheme: ColorScheme.dark(
+        primary: color,
+        secondary: color[300],
+      ),
+      accentColor: color,
+      toggleableActiveColor: color[300],
+      textSelectionColor: color,
+      textSelectionHandleColor: color[300],
+      cursorColor: color,
+      buttonTheme: ButtonThemeData(
         colorScheme: ColorScheme.dark(
-          primary: color,
-          secondary: color[300],
+          primary: color[400],
+          secondary: color[200],
         ),
-        accentColor: color,
-        toggleableActiveColor: color[300],
-        textSelectionColor: color,
-        textSelectionHandleColor: color[300],
-        cursorColor: color,
-        buttonTheme: ButtonThemeData(
-          colorScheme: ColorScheme.dark(
-            primary: color[400],
-            secondary: color[200],
-          ),
-        ),
-        primarySwatch: color,
-        sliderTheme: SliderThemeData(
-          disabledActiveTrackColor: Colors.grey[500],
-          disabledInactiveTrackColor: Colors.grey[500],
-          disabledThumbColor: Colors.grey[600],
-          activeTrackColor: color[300],
-          inactiveTrackColor: color[300],
-          thumbColor: color,
-        ),
-        dialogTheme: DialogTheme(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
-        ));
+      ),
+      primarySwatch: color,
+      sliderTheme: SliderThemeData(
+        disabledActiveTrackColor: Colors.grey[500],
+        disabledInactiveTrackColor: Colors.grey[500],
+        disabledThumbColor: Colors.grey[600],
+        activeTrackColor: color[300],
+        inactiveTrackColor: color[300],
+        thumbColor: color,
+      ),
+      dialogTheme: DialogTheme(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+      ),
+    );
   }
 }

@@ -92,7 +92,6 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
               onRefresh: onRefresh,
             ),
             TimelineTab(
-              courses: courses,
               timeline: timeline,
             ),
           ],

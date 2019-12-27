@@ -173,3 +173,31 @@ double sum<T>(List<T> list, double f(T it)) {
 Color getGrey(int contrast, {BuildContext context}) {
   return isLightMode(context: context) ? Colors.grey[500 + contrast] : Colors.grey[500 - contrast];
 }
+
+String period2Str(DateTime date1, DateTime date2) {
+  if (date1.year == date2.year) {
+    return date2Str(date1) + " - " + date2Str(date2);
+  } else {
+    return date2Str(date1, keepYear: true) + " - " + date2Str(date2, keepYear: true);
+  }
+}
+
+String date2Str(DateTime date, {bool keepYear = false}) {
+  if (keepYear) {
+    return "${date.year}/${date.month}/${date.day}";
+  } else {
+    return "${date.month}/${date.day}";
+  }
+}
+
+// example input: 2019-5-20
+DateTime str2Date(String str) {
+  var numberList = str.split("-");
+  return DateTime(numberList[0].toInt(), numberList[1].toInt(), numberList[2].toInt());
+}
+
+extension on String {
+  int toInt() {
+    return int.parse(this);
+  }
+}

@@ -109,6 +109,17 @@ Future<void> sendFeedBack(String contactInfo, String feedback) async {
   }
 }
 
+Future<String> getCalendar() async {
+  var res = await _postWithMetric(baseUrl + "getcalendar",{});
+
+  int statusCode = res.statusCode;
+  if (statusCode != 200) {
+    throw HttpException(statusCode.toString());
+  }
+
+  return res.body;
+}
+
 getAndSaveMarkTimeline(User user) async {
   var res = await getMarkTimeLine(user);
   var json = jsonDecode(res);
@@ -130,4 +141,9 @@ regiAndSave(User user) async {
 
   saveCourseListOf(user.number, json["course_list"]);
   saveTimelineOf(user.number, json["time_line"]);
+}
+
+getAndSaveCalendar() async {
+  var res = await getCalendar();
+  prefs.setString("calendar", res);
 }

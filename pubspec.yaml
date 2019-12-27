@@ -3,7 +3,7 @@ description: YRDSB Teach Assist
 version: 1.6.3+30
 
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -32,6 +32,7 @@ dependencies:
   flutter_keyboard_visibility: ^0.7.0
   share_extend: ^1.1.0
   path_provider: ^1.5.1
+  pull_to_refresh: ^1.5.7
 
 dev_dependencies:
   flutter_test:

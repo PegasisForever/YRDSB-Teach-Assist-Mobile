@@ -9,6 +9,7 @@ import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/BetterState.dart';
 import 'package:ta/widgets/EditText.dart';
 
+import '../dataStore.dart';
 import '../res/Themes.dart';
 import '../tools.dart';
 
@@ -148,7 +149,7 @@ class _LoginPageState extends BetterState<LoginPage> {
       await regiAndSave(user);
       addUser(user);
       setCurrentUser(user);
-
+      prefs.setString("last_update-${currentUser.number}", DateTime.now().toString());
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => SummaryPage.noRefresh()),

@@ -1,42 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
+import 'package:ta/model/User.dart';
 import 'package:ta/pages/summarypage/timelinecontents/getUpdateWidget.dart';
-import 'package:ta/res/Strings.dart';
-import 'package:ta/tools.dart';
+import 'package:ta/widgets/BetterState.dart';
 
-class TimelineTab extends StatefulWidget {
-  TimelineTab({this.timeline});
+import '../tools.dart';
 
-  final List<TAUpdate> timeline;
-
+class UpdatesPage extends StatefulWidget {
   @override
-  _TimelineTabState createState() => _TimelineTabState();
+  _UpdatesPageState createState() => _UpdatesPageState();
 }
 
-class _TimelineTabState extends State<TimelineTab> with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
+class _UpdatesPageState extends BetterState<UpdatesPage> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
-    var sidePadding = (widthOf(context) - 500) / 2;
-    return widget.timeline.length > 0
-        ? ListView(
-            padding: EdgeInsets.only(
-                bottom: 8 + getBottomPadding(context),
-                left: sidePadding > 0 ? sidePadding : 0,
-                right: sidePadding > 0 ? sidePadding : 0),
-            children: _getTimelineCards(widget.timeline),
-          )
-        : Center(
-            child: Text(
-              Strings.get("timeline_blank_text"),
-              style: Theme.of(context).textTheme.subhead,
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            title: Text("Updates"),
+            forceElevated:true,
+            floating: true,
+            snap: true,
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+                _getTimelineCards(getTimelineOf(currentUser.number))
             ),
-          );
+          )
+        ],
+      )
+    );
   }
 
   List<Widget> _getTimelineCards(List<TAUpdate> timeline) {

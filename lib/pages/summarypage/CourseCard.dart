@@ -13,8 +13,15 @@ class CourseCard extends StatelessWidget {
   final Course course;
   final bool showIcons;
   final bool showAnimations;
+  final bool showPadding;
 
-  CourseCard({this.onTap, this.course, this.showIcons = true, this.showAnimations = true});
+  CourseCard(
+      {this.onTap,
+      this.course,
+      this.showIcons = true,
+      this.showAnimations = true,
+      this.showPadding = true})
+      : super(key: Key(course.displayName));
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +33,7 @@ class CourseCard extends StatelessWidget {
       infoStr.add(sprintf(Strings.get("room_number"), [course.room]));
     }
     return Padding(
-      key: Key(course.displayName),
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+      padding: showPadding ? const EdgeInsets.fromLTRB(8, 8, 8, 0) : EdgeInsets.zero,
       child: Card(
         clipBehavior: Clip.antiAlias,
         child: InkWell(
@@ -59,6 +65,8 @@ class CourseCard extends StatelessWidget {
                           : WidgetSpan(
                               child: TapTooltip(
                               message: Strings.get("diamond_info"),
+                              padding: const EdgeInsets.all(16),
+                              margin: const EdgeInsets.symmetric(horizontal: 16),
                               child: Icon(
                                 CustomIcons.diamond,
                                 color: Colors.lightBlue,
@@ -73,9 +81,14 @@ class CourseCard extends StatelessWidget {
                           border: Border.all(color: Colors.grey, width: 1),
                           borderRadius: BorderRadius.all(Radius.circular(4)),
                         ),
-                        child: Text(
-                          Strings.get("cached"),
-                          style: TextStyle(color: Colors.grey),
+                        child: TapTooltip(
+                          message: Strings.get("cached_info"),
+                          padding: const EdgeInsets.all(16),
+                          margin: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            Strings.get("cached"),
+                            style: TextStyle(color: getGrey(100, context: context)),
+                          ),
                         ),
                       ))
                   ]),

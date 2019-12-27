@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ta/dataStore.dart';
+import 'package:ta/pages/newsummarypage/CalendarCard.dart';
 
 const Languages = {
   "en": "English",
@@ -161,7 +162,43 @@ class Strings {
       "export_data":"Export data",
       "category":"Category",
       "weighting":"Weighting",
-      "course_weighting":"Course Weighting"
+      "course_weighting":"Course Weighting",
+      "monday_short":"MON",
+      "tuesday_short":"TUE",
+      "wednesday_short":"WED",
+      "thursday_short":"THU",
+      "friday_short":"FRI",
+      "saturday_short":"SAT",
+      "sunday_short":"SUN",
+      "january":"January",
+      "february":"February",
+      "march":"March",
+      "april":"April",
+      "may":"May",
+      "june":"June",
+      "july":"July",
+      "august":"August",
+      "september":"September",
+      "october":"October",
+      "november":"November",
+      "december":"December",
+      "just_updated":"Just Updated",
+      "last_update":"Last Update\n",
+      "1_min_ago":"1 Minute Ago",
+      "min_ago":"%s Minutes Ago",
+      "1_hr_ago":"1 Hour Ago",
+      "hr_ago":"%s Hours Ago",
+      "events":"Events",
+      "view_full_calendar":"View Full Calendar",
+      "recent_updates":"Recent Updates",
+      "view_all":"View All",
+      "calendar":"Calendar",
+      "pull_down_to_refresh":"Pull Down to Refresh",
+      "release_to_refresh":"Release to Refresh",
+      "refreshing":"Refreshing",
+      "refresh_completed":"Refresh Completed",
+      "refresh_failed":"Refresh Failed",
+      "cached_info":"The mark of this course was hidden by the teacher. The APP is displaying the old data.",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -309,7 +346,43 @@ class Strings {
       "export_data":"导出数据",
       "category":"类别",
       "weighting":"权重",
-      "course_weighting":"课程权重"
+      "course_weighting":"课程权重",
+      "monday_short":"一",
+      "tuesday_short":"二",
+      "wednesday_short":"三",
+      "thursday_short":"四",
+      "friday_short":"五",
+      "saturday_short":"六",
+      "sunday_short":"日",
+      "january":"一月",
+      "february":"二月",
+      "march":"三月",
+      "april":"四月",
+      "may":"五月",
+      "june":"六月",
+      "july":"七月",
+      "august":"八月",
+      "september":"九月",
+      "october":"十月",
+      "november":"十一月",
+      "december":"十二月",
+      "just_updated":"刚刚更新",
+      "last_update":"上次更新\n",
+      "1_min_ago":"1分钟前",
+      "min_ago":"%s分钟前",
+      "1_hr_ago":"1小时前",
+      "hr_ago":"%s小时前",
+      "events":"事件",
+      "view_full_calendar":"打开日历",
+      "recent_updates":"近期动态",
+      "view_all":"查看所有动态",
+      "calendar":"日历",
+      "pull_down_to_refresh":"下拉刷新",
+      "release_to_refresh":"松手开始刷新",
+      "refreshing":"正在刷新",
+      "refresh_completed":"刷新成功",
+      "refresh_failed":"刷新失败",
+      "cached_info":"这门课的成绩已在官网上被老师隐藏，APP中显示的是以前的缓存数据",
     }
   };
 
@@ -327,5 +400,13 @@ class Strings {
       string = get("unknown");
     }
     return string;
+  }
+
+  static getLocalizedMonth(DateTime time){
+    if(currentLanguage=="zh"){
+      return time.year.toString()+" "+get(MONTHS[time.month-1]);
+    }else{
+      return get(MONTHS[time.month-1])+" "+time.year.toString();
+    }
   }
 }

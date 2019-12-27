@@ -5,6 +5,7 @@ import '../tools.dart';
 
 abstract class BetterState<T extends StatefulWidget> extends State<T> with WidgetsBindingObserver{
   @override
+  @mustCallSuper
   void initState() {
     super.initState();
     updateNavigationBarBrightness();
@@ -12,12 +13,14 @@ abstract class BetterState<T extends StatefulWidget> extends State<T> with Widge
   }
 
   @override
+  @mustCallSuper
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
+  @mustCallSuper
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state==AppLifecycleState.resumed){
       updateNavigationBarBrightness();
@@ -25,6 +28,7 @@ abstract class BetterState<T extends StatefulWidget> extends State<T> with Widge
   }
 
   @override
+  @mustCallSuper
   Widget build(BuildContext context) {
     updateNavigationBarBrightness(context: context);
     Strings.updateCurrentLanguage(context);
