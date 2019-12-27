@@ -29,7 +29,7 @@ List<Event> readCalendar() {
 }
 
 extension CalenderList on List<Event> {
-  List<Event> findEvent(DateTime date) {
+  List<Event> findEvents(DateTime date) {
     var list = <Event>[];
     this.forEach((event) {
       if (event.endDate == null) {

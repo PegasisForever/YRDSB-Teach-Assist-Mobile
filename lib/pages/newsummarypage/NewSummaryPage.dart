@@ -17,8 +17,8 @@ import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
 
-import 'CalendarCard.dart';
-import 'UpdatesCard.dart';
+import 'CalendarSection.dart';
+import 'UpdatesSection.dart';
 
 class NewSummaryPage extends StatefulWidget {
   @override
@@ -28,7 +28,7 @@ class NewSummaryPage extends StatefulWidget {
 class _NewSummaryPageState extends BetterState<NewSummaryPage> {
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   Timer timer;
-  var scaffoldKey=GlobalKey<ScaffoldState>();
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -44,11 +44,7 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage> {
     timer.cancel();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    var sidePadding = (widthOf(context) - 500) / 2;
-
+  String getUpdateText() {
     var lastUpdateStr = prefs.getString("last_update-${currentUser.number}");
     var updateText = "";
     if (lastUpdateStr != null) {
@@ -77,6 +73,16 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage> {
     } else {
       updateText = Strings.get("last_update") + Strings.get("unknown");
     }
+
+    return updateText;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    var sidePadding = (widthOf(context) - 500) / 2;
+
+    var sections = getSectionWidgets([CalendarSection(), UpdatesSection()]).sectionWidgets;
 
     return Scaffold(
       key: scaffoldKey,
@@ -121,7 +127,7 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Transform.translate(
-                      offset: Offset(-6,0),
+                      offset: Offset(-6, 0),
                       child: IconButton(
                         icon: Icon(Icons.menu),
                         onPressed: () {
@@ -130,7 +136,7 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage> {
                       ),
                     ),
                     Text(
-                      updateText,
+                      getUpdateText(),
                       textAlign: TextAlign.end,
                       style: TextStyle(color: getGrey(100, context: context)),
                     ),
@@ -138,26 +144,13 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage> {
                 ),
               ],
             ),
-
             Text(
               "Hi Pegasis,\nHappy Christmas!",
               style: TextStyle(fontSize: 30),
             ),
-            Section(
-              card: CalendarCard(),
-              title: Strings.get("events"),
-              buttonText: Strings.get("view_full_calendar"),
-              onTap: () {
-                Navigator.pushNamed(context, "/calendar");
-              },
-            ),
-            Section(
-              card: UpdatesCard(),
-              title: Strings.get("recent_updates"),
-              buttonText: Strings.get("view_all"),
-              onTap: () {
-                Navigator.pushNamed(context, "/updates");
-              },
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: sections,
             ),
             Divider(),
             SummaryList()

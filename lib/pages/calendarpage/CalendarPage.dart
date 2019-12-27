@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/Calendar.dart';
 import 'package:ta/pages/calendarpage/Calendar.dart';
-import 'package:ta/pages/newsummarypage/CalendarCard.dart';
+import 'package:ta/pages/newsummarypage/CalendarSection.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
@@ -44,7 +44,7 @@ class _CalendarPageState extends BetterState<CalendarPage> {
               for (var date = DateTime(time.year, time.month);
                   date.month == time.month;
                   date = date.add(Duration(days: 1))) {
-                var eventInThisDay = calendar.findEvent(date);
+                var eventInThisDay = calendar.findEvents(date);
                 if (eventInThisDay.length > 0) {
                   events.addAll(eventInThisDay);
                 }
@@ -70,7 +70,7 @@ class _CalendarPageState extends BetterState<CalendarPage> {
             },
             builder: (context, date) {
               var dateType = DateType.NORMAL;
-              var eventInThisDay = calendar.findEvent(date.add(Duration(hours: 1)));
+              var eventInThisDay = calendar.findEvents(date.add(Duration(hours: 1)));
               if (eventInThisDay.length > 0) {
                 dateType = DateType.OUTLINE;
               }

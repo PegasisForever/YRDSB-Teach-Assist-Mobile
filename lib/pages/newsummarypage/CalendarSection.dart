@@ -3,46 +3,72 @@ import 'package:ta/model/Calendar.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
-class CalendarCard extends StatelessWidget {
+import 'Section.dart';
+
+class CalendarSection extends SectionCandidate {
+  @override
+  SectionResponse getSectionResponse() {
+    var response = SectionResponse();
+    response.shouldDisplay = false;
+    var today = DateTime.now();
+    var days = [for (int i = 0; i < 5; i++) today.add(Duration(days: i))];
+    List<Event> calendar = readCalendar();
+    days.forEach((day) {
+      var eventsInThisDay = calendar.findEvents(day);
+      if (eventsInThisDay.length > 0) {
+        response.shouldDisplay = true;
+      }
+    });
+
+    return response;
+  }
+
   @override
   Widget build(BuildContext context) {
     var today = DateTime.now();
     var days = [for (int i = 0; i < 5; i++) today.add(Duration(days: i))];
     List<Event> calendar = readCalendar();
     var events = Set<Event>();
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: days.map((date) {
-                var dateType = DateType.NORMAL;
-                var eventInThisDay = calendar.findEvent(date);
-                if (eventInThisDay.length > 0) {
-                  dateType = DateType.OUTLINE;
-                  events.addAll(eventInThisDay);
-                }
-                if (date.day == today.day) {
-                  dateType = DateType.FILL;
-                }
-                return _CalenderDate(
-                  dateType: dateType,
-                  date: date.day,
-                  title: Strings.get(WEEKDAYS[date.weekday - 1] + "_short"),
-                );
-              }).toList(),
-            ),
-            for (final event in events)
-              CalendarEvent(
-                leading: getHolidayIcon(event.name["en"], context),
-                name: event.name[Strings.currentLanguage],
-                startDate: event.startDate,
-                endDate: event.endDate,
-                padding: const EdgeInsets.only(top: 16),
+    return Section(
+      title: Strings.get("events"),
+      buttonText: Strings.get("view_full_calendar"),
+      onTap: () {
+        Navigator.pushNamed(context, "/calendar");
+      },
+      card: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: days.map((date) {
+                  var dateType = DateType.NORMAL;
+                  var eventsInThisDay = calendar.findEvents(date);
+                  if (eventsInThisDay.length > 0) {
+                    dateType = DateType.OUTLINE;
+                    events.addAll(eventsInThisDay);
+                  }
+                  if (date.day == today.day) {
+                    dateType = DateType.FILL;
+                  }
+                  return _CalenderDate(
+                    dateType: dateType,
+                    date: date.day,
+                    title: Strings.get(WEEKDAYS[date.weekday - 1] + "_short"),
+                  );
+                }).toList(),
               ),
-          ],
+              for (final event in events)
+                CalendarEvent(
+                  leading: getHolidayIcon(event.name["en"], context),
+                  name: event.name[Strings.currentLanguage],
+                  startDate: event.startDate,
+                  endDate: event.endDate,
+                  padding: const EdgeInsets.only(top: 16),
+                ),
+            ],
+          ),
         ),
       ),
     );

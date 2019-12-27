@@ -2,10 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/summarypage/timelinecontents/getUpdateWidget.dart';
+import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
-class UpdatesCard extends StatelessWidget {
+import 'Section.dart';
+
+class UpdatesSection extends SectionCandidate {
   final List<TAUpdate> timeline = getTimelineOf(currentUser.number);
+
+  @override
+  SectionResponse getSectionResponse() {
+    var response = SectionResponse();
+    if(timeline.length==0){
+      response.shouldDisplay=false;
+    }else if(timeline.last.time.difference(DateTime.now()).inDays>5){
+      response.shouldDisplay=false;
+    }else{
+      response.shouldDisplay=true;
+    }
+
+    return response;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +47,18 @@ class UpdatesCard extends StatelessWidget {
         ),
       );
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: cardWidgets,
+    return Section(
+      title: Strings.get("recent_updates"),
+      buttonText: Strings.get("view_all"),
+      onTap: () {
+        Navigator.pushNamed(context, "/updates");
+      },
+      card: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: cardWidgets,
+          ),
         ),
       ),
     );

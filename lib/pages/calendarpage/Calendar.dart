@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ta/pages/newsummarypage/CalendarCard.dart';
+import 'package:ta/pages/newsummarypage/CalendarSection.dart';
 import 'package:ta/res/Strings.dart';
 
 typedef Widget CalendarDateBuilder(BuildContext context, DateTime date);

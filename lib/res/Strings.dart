@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ta/dataStore.dart';
-import 'package:ta/pages/newsummarypage/CalendarCard.dart';
+import 'package:ta/pages/newsummarypage/CalendarSection.dart';
 
 const Languages = {
   "en": "English",
