@@ -48,10 +48,7 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
                 Strings.get(
                   "no_archived_courses",
                 ),
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .subhead,
+                style: Theme.of(context).textTheme.subhead,
               ),
             ),
           RefreshIndicator(
@@ -77,9 +74,10 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
                   return CourseCard(
                     course: course,
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(builder: (context) => DetailPage(course)),
+                        "/detail",
+                        arguments: [course],
                       );
                     },
                     showIcons: false,

@@ -83,7 +83,7 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
             leading: Icon(Icons.archive),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, "/archived_course");
+              Navigator.pushNamed(context, "/archived");
             },
           ),
           ListTile(

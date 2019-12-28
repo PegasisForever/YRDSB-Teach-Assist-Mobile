@@ -21,7 +21,11 @@ class _AccountsListState extends BetterState<AccountsList> {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
-              Navigator.pushNamed(context, "/accounts_list/edit");
+              Navigator.pushNamed(
+                context,
+                "/accounts_list/edit",
+                arguments: [User.blank(), false],
+              );
             },
           )
         ],
@@ -30,7 +34,7 @@ class _AccountsListState extends BetterState<AccountsList> {
         padding: EdgeInsets.symmetric(
           horizontal: sidePadding > 0 ? sidePadding : 0,
         ),
-        onReorder: (oldIndex,newIndex){
+        onReorder: (oldIndex, newIndex) {
           setState(() {
             if (newIndex > oldIndex) {
               newIndex -= 1;
@@ -38,31 +42,34 @@ class _AccountsListState extends BetterState<AccountsList> {
             reorderUser(oldIndex, newIndex);
           });
         },
-        header: userList.length>1?Padding(
-          padding: EdgeInsets.only(top: 8.0),
-          child: Text(Strings.get("long_press_and_drag_to_reorder_the_list"),
-            style: Theme.of(context).textTheme.caption,),
-        ):null,
+        header: userList.length > 1
+            ? Padding(
+                padding: EdgeInsets.only(top: 8.0),
+                child: Text(
+                  Strings.get("long_press_and_drag_to_reorder_the_list"),
+                  style: Theme.of(context).textTheme.caption,
+                ),
+              )
+            : null,
         children: getAccountListTiles(),
       ),
     );
   }
 
-  List<Widget> getAccountListTiles(){
-    var widgets= <Widget>[];
-    for (final user in userList){
+  List<Widget> getAccountListTiles() {
+    var widgets = <Widget>[];
+    for (final user in userList) {
       widgets.add(ListTile(
         key: ValueKey(user.number),
-        title:
-        Text(user.displayName == "" ? user.number : user.displayName),
+        title: Text(user.displayName == "" ? user.number : user.displayName),
         subtitle: user.displayName == "" ? null : Text(user.number),
         trailing: IconButton(
           icon: Icon(Icons.edit),
           onPressed: () {
-            Navigator.push(
+            Navigator.pushNamed(
               context,
-              MaterialPageRoute(
-                  builder: (context) => EditAccount(user, false)),
+              "/accounts_list/edit",
+              arguments: [user, false],
             );
           },
         ),

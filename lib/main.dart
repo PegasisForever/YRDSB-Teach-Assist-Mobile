@@ -13,6 +13,7 @@ import 'package:ta/pages/calendarpage/CalendarPage.dart';
 import 'package:ta/pages/LoginPage.dart';
 import 'package:ta/pages/UpdatesPage.dart';
 import 'package:ta/pages/archivedpage/ArchivedCoursesPage.dart';
+import 'package:ta/pages/detailpage/DetailPage.dart';
 import 'package:ta/pages/detailpage/whatifpage/WhatIfWelcomePage.dart';
 import 'package:ta/pages/drawerpages/AboutPage.dart';
 import 'package:ta/pages/drawerpages/AccountsList.dart';
@@ -20,7 +21,6 @@ import 'package:ta/pages/drawerpages/EditAccount.dart';
 import 'package:ta/pages/drawerpages/FeedbackPage.dart';
 import 'package:ta/pages/newsummarypage/NewSummaryPage.dart';
 import 'package:ta/pages/settingspage/SettingsPage.dart';
-import 'package:ta/pages/summarypage/SummaryPage.dart';
 
 import 'dataStore.dart';
 import 'firebase.dart';
@@ -102,19 +102,8 @@ class _AppState extends State<App> {
       title: 'YRDSB Teach Assist',
       theme: lightTheme,
       darkTheme: darkTheme,
-      routes: <String, WidgetBuilder>{
-        "/": (BuildContext context) => NewSummaryPage(),
-        "/login": (BuildContext context) => LoginPage(),
-        "/updates": (BuildContext context) => UpdatesPage(),
-        "/calendar": (BuildContext context) => CalendarPage(),
-        "/accounts_list": (BuildContext context) => AccountsList(),
-        "/accounts_list/edit": (BuildContext context) => EditAccount(User.blank(), false),
-        "/about": (BuildContext context) => AboutPage(),
-        "/feedback": (BuildContext context) => FeedbackPage(),
-        "/whatif_welcome": (BuildContext context) => WhatIfWelcomePage(),
-        "/archived_course": (BuildContext context) => ArchivedCoursesPage(),
-        "/settings": (BuildContext context) => SettingsPage(),
-      },
+      initialRoute: "/",
+      onGenerateRoute: generateRoute,
       localizationsDelegates: [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -122,6 +111,38 @@ class _AppState extends State<App> {
       ],
       supportedLocales: [const Locale('en'), const Locale.fromSubtags(languageCode: 'zh')],
     );
+  }
+
+  Route generateRoute(RouteSettings settings) {
+    final args = settings.arguments as List;
+
+    switch (settings.name) {
+      case "/":
+        return MaterialPageRoute(
+            builder: (_) => userList.length == 0 ? LoginPage() : NewSummaryPage());
+      case "/login":
+        return MaterialPageRoute(builder: (_) => LoginPage());
+      case "/updates":
+        return MaterialPageRoute(builder: (_) => UpdatesPage());
+      case "/calendar":
+        return MaterialPageRoute(builder: (_) => CalendarPage());
+      case "/accounts_list":
+        return MaterialPageRoute(builder: (_) => AccountsList());
+      case "/accounts_list/edit":
+        return MaterialPageRoute(builder: (_) => EditAccount(args[0],args[1]));
+      case "/about":
+        return MaterialPageRoute(builder: (_) => AboutPage());
+      case "/feedback":
+        return MaterialPageRoute(builder: (_) => FeedbackPage());
+      case "/detail":
+        return MaterialPageRoute(builder: (_) => DetailPage(args[0]));
+      case "/detail/whatif_welcome":
+        return MaterialPageRoute(builder: (_) => WhatIfWelcomePage());
+      case "/archived":
+        return MaterialPageRoute(builder: (_) => ArchivedCoursesPage());
+      case "/settings":
+        return MaterialPageRoute(builder: (_) => SettingsPage());
+    }
   }
 
   ThemeData getLightTheme(MaterialColor color) {

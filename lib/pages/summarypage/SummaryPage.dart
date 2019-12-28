@@ -190,9 +190,10 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
                     child: Text(Strings.get("update_password").toUpperCase()),
                     onPressed: () {
                       Navigator.pop(context);
-                      Navigator.push(
+                      Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(builder: (context) => EditAccount(currentUser, true)),
+                        "/accounts_list/edit",
+                        arguments: [currentUser, true]
                       );
                     }),
               ],

@@ -50,7 +50,7 @@ class _DetailPageState extends BetterState<DetailPage> {
                 icon: Icon(whatIfMode ? CustomIcons.lightbulb_filled : Icons.lightbulb_outline),
                 onPressed: () async {
                   if (showWhatIfTips) {
-                    var isEnableWhatIf = await Navigator.pushNamed(context, "/whatif_welcome");
+                    var isEnableWhatIf = await Navigator.pushNamed(context, "/detail/whatif_welcome");
                     if (isEnableWhatIf != true) {
                       return;
                     }

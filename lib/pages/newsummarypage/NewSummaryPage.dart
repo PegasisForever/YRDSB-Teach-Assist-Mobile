@@ -190,11 +190,6 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage>
 
   @override
   afterFirstLayout(BuildContext context) {
-    if (userList.length == 0) {
-      Navigator.pushReplacementNamed(context, "/login");
-      return;
-    }
-
     if (prefs.getBool("show_no_google_play_warning") ?? true && supportsGooglePlay() == false) {
       showDialog(
           context: context,
@@ -315,9 +310,10 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage>
                     child: Text(Strings.get("update_password").toUpperCase()),
                     onPressed: () {
                       Navigator.pop(context);
-                      Navigator.push(
+                      Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(builder: (context) => EditAccount(currentUser, true)),
+                        "/accounts_list/edit",
+                        arguments: [currentUser, true],
                       );
                     }),
               ],

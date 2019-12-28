@@ -9,7 +9,7 @@ import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
 import '../../tools.dart';
 
 class SummaryList extends StatelessWidget {
-  final List<Course> courses=getCourseListOf(currentUser.number);
+  final List<Course> courses = getCourseListOf(currentUser.number);
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +28,10 @@ class SummaryList extends StatelessWidget {
         showPadding: false,
         course: course,
         onTap: () {
-          Navigator.push(
+          Navigator.pushNamed(
             context,
-            MaterialPageRoute(builder: (context) => DetailPage(course)),
+            "/detail",
+            arguments: [course],
           );
         },
       ));
