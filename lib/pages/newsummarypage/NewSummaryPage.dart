@@ -250,18 +250,23 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage>
   }
 
   autoRefresh({bool noFetch, VoidCallback callBack}) async {
-    try {
-      await Future.wait(
-        <Future>[
-          getAndSaveMarkTimeline(currentUser, noFetch: noFetch),
-          getAndSaveCalendar(),
-          getAndSaveAnnouncement(),
-        ],
-        eagerError: true,
-      );
-    } catch (e) {
-      handleError(e);
+    var lastUpdateTime = prefs.getString("last_update-${currentUser.number}");
+    if (!(lastUpdateTime != null &&
+        DateTime.now().difference(DateTime.parse(lastUpdateTime)).inMinutes < 1)) {
+      try {
+        await Future.wait(
+          <Future>[
+            getAndSaveMarkTimeline(currentUser, noFetch: noFetch),
+            getAndSaveCalendar(),
+            getAndSaveAnnouncement(),
+          ],
+          eagerError: true,
+        );
+      } catch (e) {
+        handleError(e);
+      }
     }
+
     if (callBack != null) callBack();
     setState(() {});
   }
