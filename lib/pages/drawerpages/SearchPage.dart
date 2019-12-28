@@ -124,6 +124,9 @@ class AssignmentSearchDelegate extends SearchDelegate {
 
     if (listItems.length > 0) {
       return ListView(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).padding.bottom,
+        ),
         children: listItems,
       );
     } else {
@@ -153,10 +156,10 @@ class _SearchHistoryList extends StatefulWidget {
   _SearchHistoryList({this.onGetHistory, this.onClearHistory, this.onSelectHistory});
 
   @override
-  __SearchHistoryListState createState() => __SearchHistoryListState();
+  _SearchHistoryListState createState() => _SearchHistoryListState();
 }
 
-class __SearchHistoryListState extends State<_SearchHistoryList> {
+class _SearchHistoryListState extends State<_SearchHistoryList> {
   List<String> history;
 
   List<String> onGetHistory() {

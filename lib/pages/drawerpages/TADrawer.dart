@@ -8,9 +8,10 @@ import 'package:ta/widgets/CrossFade.dart';
 import 'package:ta/widgets/user_accounts_drawer_header.dart';
 
 class TADrawer extends StatefulWidget {
-  TADrawer({this.onUserSelected});
-
   final ValueChanged<User> onUserSelected;
+  final VoidCallback onOpenSearch;
+
+  TADrawer({this.onUserSelected,this.onOpenSearch});
 
   @override
   _TADrawerState createState() => _TADrawerState();
@@ -75,6 +76,14 @@ class _TADrawerState extends State<TADrawer> {
             onTap: () {
               Navigator.pop(context);
               openCustomTab(context, "https://moodle2.yrdsb.ca/");
+            },
+          ),
+          ListTile(
+            title: Text(Strings.get("search")),
+            leading: Icon(Icons.search),
+            onTap: () {
+              Navigator.pop(context);
+              widget.onOpenSearch();
             },
           ),
           ListTile(

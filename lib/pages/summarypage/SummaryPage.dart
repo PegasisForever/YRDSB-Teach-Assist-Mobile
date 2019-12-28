@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:open_appstore/open_appstore.dart';
 import 'package:sprintf/sprintf.dart';
+import 'package:ta/pages/drawerpages/SearchPage.dart';
 import 'package:ta/pages/summarypage/SummaryCourseList.dart';
 import 'package:ta/pages/summarypage/section/AnnouncementSection.dart';
 import 'package:ta/pages/summarypage/section/CalendarSection.dart';
@@ -92,10 +93,10 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
         onRefresh: manualRefresh,
         child: ListView(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top+8,
+            top: MediaQuery.of(context).padding.top + 8,
             left: max(sidePadding, 14),
             right: max(sidePadding, 14),
-            bottom: MediaQuery.of(context).padding.bottom+16,
+            bottom: MediaQuery.of(context).padding.bottom + 16,
           ),
           children: <Widget>[
             Stack(
@@ -159,6 +160,12 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
           setState(() {
             setCurrentUser(user);
           });
+        },
+        onOpenSearch: () {
+          showSearch(
+            context: context,
+            delegate: AssignmentSearchDelegate(),
+          );
         },
       ),
     );
