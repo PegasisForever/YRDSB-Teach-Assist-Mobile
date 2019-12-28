@@ -1,25 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:ta/dataStore.dart';
+import 'package:ta/pages/drawerpages/OpenCustomTab.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/widgets/CrossFade.dart';
 
 import 'Section.dart';
 
 class AnnouncementSection extends SectionCandidate {
   @override
+  _AnnouncementSectionState createState() => _AnnouncementSectionState();
+
+  @override
   bool shouldDisplay() {
-    return true;
+    var announcement = prefs.getString("announcement");
+    if (announcement == "" ||
+        announcement == null ||
+        prefs.getBool("announcement-${announcement.hashCode}") == false) {
+      return false;
+    } else {
+      return true;
+    }
   }
+}
+
+class _AnnouncementSectionState extends State<AnnouncementSection> {
+  bool isDismissed = false;
 
   @override
   Widget build(BuildContext context) {
-    return Section(
-      title: Strings.get("announcement"),
-      buttonText: Strings.get("dismiss"),
-      onTap: (){
+    var announcement = prefs.getString("announcement");
 
-      },
-      card: Card(
-        child: Placeholder(fallbackHeight: 200),
+    return CrossFade(
+      firstChild: Section(
+        title: Strings.get("announcement"),
+        buttonText: Strings.get("dismiss"),
+        buttonIcon: Icons.close,
+        onTap: () {
+          prefs.setBool("announcement-${announcement.hashCode}", false);
+          setState(() {
+            isDismissed = true;
+          });
+        },
+        card: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: MarkdownBody(
+              fitContent: false,
+              data: announcement,
+              onTapLink: (url) {
+                openCustomTab(context, url);
+              },
+            ),
+          ),
+        ),
       ),
+      secondChild: Container(),
+      showFirst: !isDismissed,
     );
   }
 }

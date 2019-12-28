@@ -12,7 +12,7 @@ List<Widget> getSectionWidgets(List<SectionCandidate> sections) {
 }
 
 
-abstract class SectionCandidate extends StatelessWidget {
+abstract class SectionCandidate extends StatefulWidget {
   bool shouldDisplay();
 }
 
@@ -20,9 +20,10 @@ class Section extends StatelessWidget {
   final Widget card;
   final String title;
   final String buttonText;
+  final IconData buttonIcon;
   final VoidCallback onTap;
 
-  Section({this.card, this.title, this.buttonText, this.onTap});
+  Section({this.card, this.title, this.buttonText,this.buttonIcon=Icons.arrow_forward, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class Section extends StatelessWidget {
                         Text(buttonText),
                         SizedBox(width: 4),
                         Icon(
-                          Icons.arrow_forward,
+                          buttonIcon,
                           size: 20,
                         )
                       ],

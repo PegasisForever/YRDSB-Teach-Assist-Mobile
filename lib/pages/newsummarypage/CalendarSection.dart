@@ -6,25 +6,33 @@ import 'package:ta/tools.dart';
 import 'Section.dart';
 
 class CalendarSection extends SectionCandidate {
+  final calendar = List<Event>();
+
+  @override
+  _CalendarSectionState createState() => _CalendarSectionState();
+
   @override
   bool shouldDisplay() {
+    calendar.clear();
+    calendar.addAll(readCalendar());
+
     var today = DateTime.now();
     var days = [for (int i = 0; i < 5; i++) today.add(Duration(days: i))];
-    List<Event> calendar = readCalendar();
-    for (final day in days){
-      if(calendar.findEvents(day).length>0){
+    for (final day in days) {
+      if (calendar.findEvents(day).length > 0) {
         return true;
       }
     }
 
     return false;
   }
+}
 
+class _CalendarSectionState extends State<CalendarSection> {
   @override
   Widget build(BuildContext context) {
     var today = DateTime.now();
     var days = [for (int i = 0; i < 5; i++) today.add(Duration(days: i))];
-    List<Event> calendar = readCalendar();
     var events = Set<Event>();
     return Section(
       title: Strings.get("events"),
@@ -41,7 +49,7 @@ class CalendarSection extends SectionCandidate {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: days.map((date) {
                   var dateType = DateType.NORMAL;
-                  var eventsInThisDay = calendar.findEvents(date);
+                  var eventsInThisDay = widget.calendar.findEvents(date);
                   if (eventsInThisDay.length > 0) {
                     dateType = DateType.OUTLINE;
                     events.addAll(eventsInThisDay);

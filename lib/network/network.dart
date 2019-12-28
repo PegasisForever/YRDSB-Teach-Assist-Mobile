@@ -134,6 +134,17 @@ Future<String> getCalendar() async {
   return res.body;
 }
 
+Future<String> getAnnouncement() async {
+  var res = await _postWithMetric(baseUrl + "getannouncement", {});
+
+  int statusCode = res.statusCode;
+  if (statusCode != 200) {
+    throw HttpException(statusCode.toString());
+  }
+
+  return res.body;
+}
+
 getAndSaveMarkTimeline(User user, {bool noFetch = false}) async {
   String res;
   if (noFetch) {
@@ -166,11 +177,23 @@ regiAndSave(User user) async {
 getAndSaveCalendar() async {
   var lastCalendarUpdateTime = prefs.getString("last_update_calendar");
   if (lastCalendarUpdateTime != null &&
-      DateTime.parse(lastCalendarUpdateTime).difference(DateTime.now()).inDays < 30) {
+      DateTime.now().difference(DateTime.parse(lastCalendarUpdateTime)).inDays < 30) {
     return;
   }
 
   var res = await getCalendar();
   prefs.setString("last_update_calendar", DateTime.now().toString());
   prefs.setString("calendar", res);
+}
+
+getAndSaveAnnouncement() async{
+  var lastAnnouncementUpdateTime = prefs.getString("last_update_announcement");
+  if (lastAnnouncementUpdateTime != null &&
+      DateTime.now().difference(DateTime.parse(lastAnnouncementUpdateTime)).inMinutes < 0) {
+    return;
+  }
+
+  var res = await getAnnouncement();
+  prefs.setString("last_update_announcement", DateTime.now().toString());
+  prefs.setString("announcement", res);
 }

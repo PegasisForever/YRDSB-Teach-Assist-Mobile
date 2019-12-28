@@ -237,6 +237,7 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage>
         <Future>[
           getAndSaveMarkTimeline(currentUser, noFetch: false),
           getAndSaveCalendar(),
+          getAndSaveAnnouncement(),
         ],
         eagerError: true,
       );
@@ -254,6 +255,7 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage>
         <Future>[
           getAndSaveMarkTimeline(currentUser, noFetch: noFetch),
           getAndSaveCalendar(),
+          getAndSaveAnnouncement(),
         ],
         eagerError: true,
       );
