@@ -1,34 +1,19 @@
 import 'package:flutter/material.dart';
 
-class SectionsResult {
-  List<Widget> sectionWidgets;
-  String text;
-}
-
-SectionsResult getSectionWidgets(List<SectionCandidate> sections) {
+List<Widget> getSectionWidgets(List<SectionCandidate> sections) {
   var list = <Widget>[];
   sections.forEach((section) {
-    var response = section.getSectionResponse();
-    if (response.shouldDisplay) {
+    if (section.shouldDisplay()) {
       list.add(section);
     }
   });
 
-  return SectionsResult()..sectionWidgets = list;
+  return list;
 }
 
-class WelcomeText {
-  int priority = 0;
-  String text;
-}
-
-class SectionResponse {
-  bool shouldDisplay;
-  WelcomeText welcomeText = WelcomeText();
-}
 
 abstract class SectionCandidate extends StatelessWidget {
-  SectionResponse getSectionResponse();
+  bool shouldDisplay();
 }
 
 class Section extends StatelessWidget {
@@ -43,7 +28,7 @@ class Section extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        SizedBox(height: 24),
+        SizedBox(height: 12),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Row(
@@ -75,6 +60,7 @@ class Section extends StatelessWidget {
           ),
         ),
         card,
+        SizedBox(height: 12),
       ],
     );
   }

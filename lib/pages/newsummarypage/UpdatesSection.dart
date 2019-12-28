@@ -11,17 +11,14 @@ class UpdatesSection extends SectionCandidate {
   final List<TAUpdate> timeline = getTimelineOf(currentUser.number);
 
   @override
-  SectionResponse getSectionResponse() {
-    var response = SectionResponse();
+  bool shouldDisplay() {
     if(timeline.length==0){
-      response.shouldDisplay=false;
+      return false;
     }else if(timeline.last.time.difference(DateTime.now()).inDays>5){
-      response.shouldDisplay=false;
+      return false;
     }else{
-      response.shouldDisplay=true;
+      return true;
     }
-
-    return response;
   }
 
   @override

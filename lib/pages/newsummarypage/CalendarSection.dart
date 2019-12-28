@@ -7,20 +7,17 @@ import 'Section.dart';
 
 class CalendarSection extends SectionCandidate {
   @override
-  SectionResponse getSectionResponse() {
-    var response = SectionResponse();
-    response.shouldDisplay = false;
+  bool shouldDisplay() {
     var today = DateTime.now();
     var days = [for (int i = 0; i < 5; i++) today.add(Duration(days: i))];
     List<Event> calendar = readCalendar();
-    days.forEach((day) {
-      var eventsInThisDay = calendar.findEvents(day);
-      if (eventsInThisDay.length > 0) {
-        response.shouldDisplay = true;
+    for (final day in days){
+      if(calendar.findEvents(day).length>0){
+        return true;
       }
-    });
+    }
 
-    return response;
+    return false;
   }
 
   @override

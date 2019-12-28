@@ -82,8 +82,6 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage> {
     super.build(context);
     var sidePadding = (widthOf(context) - 500) / 2;
 
-    var sections = getSectionWidgets([CalendarSection(), UpdatesSection()]).sectionWidgets;
-
     return Scaffold(
       key: scaffoldKey,
       body: SmartRefresher(
@@ -144,13 +142,12 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage> {
                 ),
               ],
             ),
-            Text(
-              "Hi Pegasis,\nHappy Christmas!",
-              style: TextStyle(fontSize: 30),
-            ),
             Column(
               mainAxisSize: MainAxisSize.min,
-              children: sections,
+              children: getSectionWidgets([
+                CalendarSection(),
+                UpdatesSection(),
+              ]),
             ),
             Divider(),
             SummaryList()
