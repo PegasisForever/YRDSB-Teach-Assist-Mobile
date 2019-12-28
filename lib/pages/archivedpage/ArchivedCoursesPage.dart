@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
@@ -60,8 +62,10 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
               } catch (e) {}
             },
             child: ListView.builder(
-              padding: EdgeInsets.symmetric(
-                horizontal: sidePadding > 0 ? sidePadding : 0,
+              padding: EdgeInsets.only(
+                left: max(sidePadding, 6),
+                right: max(sidePadding, 6),
+                bottom: MediaQuery.of(context).padding.bottom + 16,
               ),
               itemCount: archivedCourses.length + 1,
               itemBuilder: (context, index) {

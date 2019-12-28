@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/res/Strings.dart';
@@ -30,8 +32,10 @@ class _AccountsListState extends BetterState<AccountsList> {
         ],
       ),
       body: ReorderableListView(
-        padding: EdgeInsets.symmetric(
-          horizontal: sidePadding > 0 ? sidePadding : 0,
+        padding: EdgeInsets.only(
+          left: max(sidePadding, 0),
+          right: max(sidePadding, 0),
+          bottom: MediaQuery.of(context).padding.bottom,
         ),
         onReorder: (oldIndex, newIndex) {
           setState(() {

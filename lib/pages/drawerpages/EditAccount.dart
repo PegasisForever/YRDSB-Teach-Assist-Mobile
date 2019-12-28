@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:ta/plugins/firebase.dart';
@@ -224,8 +225,12 @@ class _EditAccountState extends BetterState<EditAccount> {
           ],
         ),
         body: ListView(
-          padding: EdgeInsets.symmetric(
-              horizontal: (sidePadding > 0 ? sidePadding : 0) + 16.0, vertical: 16),
+          padding: EdgeInsets.only(
+            top: 16,
+            left: max(sidePadding, 16),
+            right: max(sidePadding, 16),
+            bottom: MediaQuery.of(context).padding.bottom+16,
+          ),
           children: <Widget>[
             EditText(
                 textInputAction: TextInputAction.next,

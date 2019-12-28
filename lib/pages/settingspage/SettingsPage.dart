@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
@@ -26,8 +27,10 @@ class _SettingsPageState extends State<SettingsPage> {
         title: Text(Strings.get("settings")),
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(
-          horizontal: sidePadding > 0 ? sidePadding : 0,
+        padding: EdgeInsets.only(
+          left: max(sidePadding, 0),
+          right: max(sidePadding, 0),
+          bottom: MediaQuery.of(context).padding.bottom,
         ),
         children: <Widget>[
           ListTile(
