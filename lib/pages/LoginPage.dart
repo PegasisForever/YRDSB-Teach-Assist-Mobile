@@ -148,9 +148,10 @@ class _LoginPageState extends BetterState<LoginPage> {
       await regiAndSave(user);
       addUser(user);
       setCurrentUser(user);
-      Navigator.pushReplacement(
+      await getAndSaveCalendar();
+      Navigator.pushNamed(
         context,
-        MaterialPageRoute(builder: (context) => SummaryPage()),
+        "/",
       );
     } catch (e) {
       _handleError(e, context);
