@@ -6,18 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:open_appstore/open_appstore.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sprintf/sprintf.dart';
-import 'package:ta/plugins/dataStore.dart';
-import 'package:ta/plugins/firebase.dart';
-import 'package:ta/model/User.dart';
-import 'package:ta/network/network.dart';
-import 'package:ta/pages/drawerpages/TADrawer.dart';
 import 'package:ta/pages/summarypage/SummaryCourseList.dart';
 import 'package:ta/pages/summarypage/section/AnnouncementSection.dart';
 import 'package:ta/pages/summarypage/section/CalendarSection.dart';
 import 'package:ta/pages/summarypage/section/Section.dart';
 import 'package:ta/pages/summarypage/section/UpdatesSection.dart';
+import 'package:ta/plugins/dataStore.dart';
+import 'package:ta/plugins/firebase.dart';
+import 'package:ta/model/User.dart';
+import 'package:ta/network/network.dart';
+import 'package:ta/pages/drawerpages/TADrawer.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
@@ -28,7 +27,6 @@ class SummaryPage extends StatefulWidget {
 }
 
 class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<SummaryPage> {
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
   Timer timer;
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool autoRefreshing = false;
@@ -91,26 +89,8 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
 
     return Scaffold(
       key: scaffoldKey,
-      body: SmartRefresher(
-        enablePullDown: true,
-        header: ClassicHeader(
-          textStyle: TextStyle(color: getGrey(100, context: context)),
-          idleText: Strings.get("pull_down_to_refresh"),
-          releaseText: Strings.get("release_to_refresh"),
-          refreshingText: Strings.get("refreshing"),
-          completeText: Strings.get("refresh_completed"),
-          failedText: Strings.get("refresh_failed"),
-          refreshStyle: RefreshStyle.UnFollow,
-          outerBuilder: (widget) {
-            return SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 24),
-                child: widget,
-              ),
-            );
-          },
-        ),
-        controller: _refreshController,
+      body: RefreshIndicator(
+        displacement: 32 + MediaQuery.of(context).padding.top,
         onRefresh: manualRefresh,
         child: ListView(
           padding: EdgeInsets.only(
@@ -219,7 +199,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
     }
   }
 
-  manualRefresh() async {
+  Future<void> manualRefresh() async {
     try {
       await Future.wait(
         <Future>[
@@ -229,9 +209,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
         ],
         eagerError: true,
       );
-      _refreshController.refreshCompleted();
     } catch (e) {
-      _refreshController.refreshFailed();
       handleError(e);
     }
     setState(() {});
