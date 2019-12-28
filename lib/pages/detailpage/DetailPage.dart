@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
+import 'package:ta/pages/detailpage/abouttab/AboutTab.dart';
 import 'package:ta/pages/detailpage/assignmentstab/MarksList.dart';
 import 'package:ta/pages/detailpage/statisticstab/StatisticsList.dart';
+import 'package:ta/res/CustomIcons.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
 import 'package:ta/widgets/CrossFade.dart';
-
-import '../../res/CustomIcons.dart';
-import 'abouttab/AboutTab.dart';
 
 class DetailPage extends StatefulWidget {
   DetailPage(this.course);
@@ -50,7 +49,8 @@ class _DetailPageState extends BetterState<DetailPage> {
                 icon: Icon(whatIfMode ? CustomIcons.lightbulb_filled : Icons.lightbulb_outline),
                 onPressed: () async {
                   if (showWhatIfTips) {
-                    var isEnableWhatIf = await Navigator.pushNamed(context, "/detail/whatif_welcome");
+                    var isEnableWhatIf =
+                        await Navigator.pushNamed(context, "/detail/whatif_welcome");
                     if (isEnableWhatIf != true) {
                       return;
                     }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:ta/res/CustomIcons.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
-
-import '../../../res/CustomIcons.dart';
 
 class WhatIfWelcomePage extends StatefulWidget {
   @override
@@ -81,15 +80,14 @@ class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
                     ),
                     Center(
                       child: FlatButton(
-                        color: Theme
-                            .of(context)
-                            .colorScheme
-                            .primary,
+                        color: Theme.of(context).colorScheme.primary,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                           child: Text(Strings.get("enable_what_if_mode"),
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.normal, color: Colors.white)),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.white)),
                         ),
                         onPressed: () {
                           Navigator.pop(context, true);

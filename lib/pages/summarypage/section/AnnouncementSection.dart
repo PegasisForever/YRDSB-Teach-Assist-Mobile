@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:ta/dataStore.dart';
-import 'package:ta/pages/drawerpages/OpenCustomTab.dart';
+import 'package:ta/pages/drawerpages/openCustomTab.dart';
+import 'package:ta/pages/summarypage/section/Section.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/CrossFade.dart';
-
-import 'Section.dart';
 
 class AnnouncementSection extends SectionCandidate {
   @override

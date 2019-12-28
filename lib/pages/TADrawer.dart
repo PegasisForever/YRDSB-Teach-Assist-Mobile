@@ -1,23 +1,22 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide UserAccountsDrawerHeader;
 import 'package:ta/model/User.dart';
-import 'package:ta/pages/drawerpages/OpenCustomTab.dart';
+import 'package:ta/pages/drawerpages/openCustomTab.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/res/Themes.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/CrossFade.dart';
+import 'package:ta/widgets/user_accounts_drawer_header.dart';
 
-import '../../tools.dart';
-import '../../widgets/user_accounts_drawer_header.dart' as UADrawerHeader;
-
-class SummaryPageDrawer extends StatefulWidget {
-  SummaryPageDrawer({this.onUserSelected});
+class TADrawer extends StatefulWidget {
+  TADrawer({this.onUserSelected});
 
   final ValueChanged<User> onUserSelected;
 
   @override
-  _SummaryPageDrawerState createState() => _SummaryPageDrawerState();
+  _TADrawerState createState() => _TADrawerState();
 }
 
-class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
+class _TADrawerState extends State<TADrawer> {
   var _drawerHeaderOpened = false;
   ValueChanged<User> _onUserSelected;
 
@@ -36,7 +35,7 @@ class _SummaryPageDrawerState extends State<SummaryPageDrawer> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          UADrawerHeader.UserAccountsDrawerHeader(
+          UserAccountsDrawerHeader(
             isOpened: _drawerHeaderOpened,
             accountName:
                 Text(currentUser.displayName == "" ? currentUser.number : currentUser.displayName),

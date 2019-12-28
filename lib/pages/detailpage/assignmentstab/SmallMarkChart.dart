@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart' hide Category;
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
-import 'package:flutter/foundation.dart' as Foundation;
 
 class _SmallMarkChartPainter extends CustomPainter {
   final Assignment _assi;
@@ -30,56 +30,34 @@ class _SmallMarkChartPainter extends CustomPainter {
       for (final category in [Category.KU, Category.T, Category.C, Category.A]) {
         if (_assi[category].available) {
           for (final smallMark in _assi[category].smallMarks) {
-            _paintBar(
-                canvas,
-                Strings.get(Foundation.describeEnum(category).toLowerCase() + "_single"),
-                colorMap[category],
-                smallMark,
-                x,
-                40,
-                height);
+            _paintBar(canvas, Strings.get(describeEnum(category).toLowerCase() + "_single"),
+                colorMap[category], smallMark, x, 40, height);
             x += 40;
           }
         } else {
-          _paintUnavailableBar(canvas,
-              Strings.get(Foundation.describeEnum(category).toLowerCase() + "_single"),
-              x, 40, height);
+          _paintUnavailableBar(
+              canvas, Strings.get(describeEnum(category).toLowerCase() + "_single"), x, 40, height);
           x += 40;
         }
       }
     } else if (_assi[Category.F].available) {
       x += 15;
       for (final smallMark in _assi[Category.F].smallMarks) {
-        _paintBar(
-            canvas,
-            Strings.get("f_single"),
-            colorMap[Category.F],
-            smallMark,
-            x,
-            40,
-            height);
+        _paintBar(canvas, Strings.get("f_single"), colorMap[Category.F], smallMark, x, 40, height);
         x += 40;
       }
       x += 15;
     } else {
       x += 15;
       for (final smallMark in _assi[Category.O].smallMarks) {
-        _paintBar(
-            canvas,
-            Strings.get("o_single"),
-            colorMap[Category.O],
-            smallMark,
-            x,
-            40,
-            height);
+        _paintBar(canvas, Strings.get("o_single"), colorMap[Category.O], smallMark, x, 40, height);
         x += 40;
       }
       x += 15;
     }
   }
 
-  void _paintUnavailableBar(Canvas canvas, String text, double x,
-      double width, double height) {
+  void _paintUnavailableBar(Canvas canvas, String text, double x, double width, double height) {
     TextPainter(
         text: TextSpan(text: text, style: TextStyle(fontSize: 16.0, color: getGrey(100))),
         textDirection: TextDirection.ltr,
@@ -119,8 +97,7 @@ class _SmallMarkChartPainter extends CustomPainter {
 
       TextPainter(
           text: TextSpan(
-              text: getRoundString(mark, 1),
-              style: TextStyle(fontSize: 16.0, color: getGrey(100))),
+              text: getRoundString(mark, 1), style: TextStyle(fontSize: 16.0, color: getGrey(100))),
           textDirection: TextDirection.ltr,
           textAlign: TextAlign.center)
         ..layout(maxWidth: width, minWidth: width)
@@ -146,13 +123,12 @@ class SmallMarkChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isKTCAAvailable =
-        _assi[Category.KU].available ||
-            _assi[Category.T].available ||
-            _assi[Category.C].available ||
-            _assi[Category.A].available;
-    var drawKTCA = isKTCAAvailable ||
-        (!_assi[Category.O].available && !_assi[Category.F].available);
+    var isKTCAAvailable = _assi[Category.KU].available ||
+        _assi[Category.T].available ||
+        _assi[Category.C].available ||
+        _assi[Category.A].available;
+    var drawKTCA =
+        isKTCAAvailable || (!_assi[Category.O].available && !_assi[Category.F].available);
 
     var width = 0.0;
     if (drawKTCA) {

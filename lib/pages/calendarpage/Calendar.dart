@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ta/pages/newsummarypage/CalendarSection.dart';
+import 'package:ta/model/CalendarModels.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/tools.dart';
 
 typedef Widget CalendarDateBuilder(BuildContext context, DateTime date);
 typedef Widget CalendarIndicatorBuilder(BuildContext context, String weekDay);
@@ -14,7 +15,14 @@ class Calendar extends StatefulWidget {
   final DateTimeCallBack onMonthChanged;
   final GetEventWidgets getEventWidgets;
 
-  Calendar({this.startMonth, this.builder, this.indicatorBuilder, this.onMonthChanged,this.getEventWidgets,Key key}):super(key:key);
+  Calendar(
+      {this.startMonth,
+      this.builder,
+      this.indicatorBuilder,
+      this.onMonthChanged,
+      this.getEventWidgets,
+      Key key})
+      : super(key: key);
 
   @override
   CalendarState createState() => CalendarState();
@@ -80,18 +88,18 @@ class CalendarState extends State<Calendar> {
             controller: pageController,
             itemCount: 5 * 12, //2019/1 - 2023/12
             itemBuilder: (context, index) {
-              var timeInPageView=DateTime((index / 12).floor() + 2019, index % 12 + 1);
+              var timeInPageView = DateTime((index / 12).floor() + 2019, index % 12 + 1);
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Flexible(
-                    flex:0,
+                    flex: 0,
                     child: CalendarWeekDayIndicator(
                       indicatorBuilder: widget.indicatorBuilder,
                     ),
                   ),
                   Flexible(
-                    flex:0,
+                    flex: 0,
                     child: CalendarMonth(
                       startMonth: timeInPageView,
                       builder: widget.builder,
@@ -101,7 +109,7 @@ class CalendarState extends State<Calendar> {
                     child: ListView(
                       padding: const EdgeInsets.only(top: 8),
                       shrinkWrap: true,
-                      children: widget.getEventWidgets(context,timeInPageView),
+                      children: widget.getEventWidgets(context, timeInPageView),
                     ),
                   )
                 ],
@@ -110,6 +118,69 @@ class CalendarState extends State<Calendar> {
           ),
         ),
       ],
+    );
+  }
+}
+
+Widget getHolidayIcon(String name, BuildContext context) {
+  if (HolidayIconMap.containsKey(name)) {
+    return Image.asset(
+      isLightMode(context: context)
+          ? "assets/images/${HolidayIconMap[name]}.png"
+          : "assets/images/${HolidayIconMap[name]}_ondark.png",
+      height: 28,
+      width: 28,
+    );
+  } else if (name == "First Day of Classes" || name == "Last Day of Classes") {
+    return Icon(
+      Icons.business,
+      size: 28,
+    );
+  } else {
+    return Icon(
+      Icons.calendar_today,
+      size: 28,
+    );
+  }
+}
+
+class CalendarEvent extends StatelessWidget {
+  final Widget leading;
+  final String name;
+  final DateTime startDate;
+  final DateTime endDate;
+  final EdgeInsets padding;
+
+  CalendarEvent({this.leading, this.name, this.startDate, this.endDate, this.padding});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: padding,
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            flex: 0,
+            child: leading,
+          ),
+          SizedBox(
+            width: 8,
+          ),
+          Flexible(
+            flex: 0,
+            child: Text(
+              name,
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              endDate == null ? date2Str(startDate) : period2Str(startDate, endDate),
+              textAlign: TextAlign.end,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

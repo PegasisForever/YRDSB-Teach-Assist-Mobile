@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
+import 'package:ta/pages/detailpage/assignmentstab/SmallMarkChart.dart';
+import 'package:ta/pages/detailpage/assignmentstab/SmallMarkChartDetail.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/CrossFade.dart';
-
-import '../../../tools.dart';
-import 'SmallMarkChart.dart';
-import 'SmallMarkChartDetail.dart';
 
 class MarksListTile extends StatefulWidget {
   final Assignment _assignment;

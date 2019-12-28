@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/model/User.dart';
-import 'package:ta/pages/summarypage/timelinecontents/getUpdateWidget.dart';
+import 'package:ta/pages/summarypage/section/Section.dart';
+import 'package:ta/pages/updatespage/updatecontents/getUpdateWidget.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
-
-import 'Section.dart';
 
 class UpdatesSection extends SectionCandidate {
   final timeline = List<TAUpdate>();

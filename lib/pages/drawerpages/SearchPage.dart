@@ -106,7 +106,7 @@ class AssignmentSearchDelegate extends SearchDelegate {
         listItems.add(StickyHeader(
           header: Container(
             color: isLightMode(context: context) ? Colors.grey[200] : Colors.grey[800],
-            padding: EdgeInsets.fromLTRB((sidePadding > 0 ? sidePadding : 0)+16.0, 8, 16, 8),
+            padding: EdgeInsets.fromLTRB((sidePadding > 0 ? sidePadding : 0) + 16.0, 8, 16, 8),
             alignment: Alignment.centerLeft,
             child: Text(sprintf(Strings.get("results_from"), [course.displayName])),
           ),

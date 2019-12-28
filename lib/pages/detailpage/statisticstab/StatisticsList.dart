@@ -1,12 +1,11 @@
 import 'package:flutter/foundation.dart' hide Category;
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide LinearProgressIndicator;
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/CrossFade.dart';
-import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:ta/widgets/LinearProgressIndicator.dart';
 
 class StatisticsList extends StatefulWidget {
   StatisticsList(this._course, this._whatIfMode);
@@ -138,14 +137,14 @@ class _StatisticsListState extends State<StatisticsList> with AutomaticKeepAlive
         ? [
             for (final category in Category.values)
               if (category != Category.O || _course.weightTable[Category.O].CW > 0)
-                _PieData(Strings.get(Foundation.describeEnum(category).toLowerCase()),
+                _PieData(Strings.get(describeEnum(category).toLowerCase()),
                     _course.weightTable[category].CW, analysis[category], lightColorMap[category])
           ]
         : [
             for (final category in Category.values)
               if (category != Category.O || _course.weightTable[Category.O].CW > 0)
                 _PieData(
-                    Strings.get(Foundation.describeEnum(category).toLowerCase()),
+                    Strings.get(describeEnum(category).toLowerCase()),
                     _course.weightTable[category].CW,
                     _course.weightTable[category].SA,
                     lightColorMap[category])
@@ -211,7 +210,7 @@ class _StatisticsListState extends State<StatisticsList> with AutomaticKeepAlive
           ),
           widget._whatIfMode
               ? (_course.overallMark > newOverall
-                  ? LPI.LinearProgressIndicator(
+                  ? LinearProgressIndicator(
                       key: Key("a"),
                       lineHeight: 20.0,
                       value1: newOverall / 100,
@@ -219,7 +218,7 @@ class _StatisticsListState extends State<StatisticsList> with AutomaticKeepAlive
                       value1Color: Theme.of(context).colorScheme.primary,
                       value2Color: Colors.red[400],
                     )
-                  : LPI.LinearProgressIndicator(
+                  : LinearProgressIndicator(
                       key: Key("b"),
                       lineHeight: 20.0,
                       value1: _course.overallMark / 100,
@@ -227,7 +226,7 @@ class _StatisticsListState extends State<StatisticsList> with AutomaticKeepAlive
                       value1Color: Theme.of(context).colorScheme.primary,
                       value2Color: Colors.green,
                     ))
-              : LPI.LinearProgressIndicator(
+              : LinearProgressIndicator(
                   key: Key("c"),
                   lineHeight: 20.0,
                   value1: _course.overallMark / 100,
@@ -264,7 +263,7 @@ class _StatisticsListState extends State<StatisticsList> with AutomaticKeepAlive
           Padding(
             padding: const EdgeInsets.only(left: 4),
             child: Text(
-              Strings.get(Foundation.describeEnum(category).toLowerCase() + "_long"),
+              Strings.get(describeEnum(category).toLowerCase() + "_long"),
               style: Theme.of(context).textTheme.title,
             ),
           ),
@@ -312,8 +311,7 @@ class _StatisticsListState extends State<StatisticsList> with AutomaticKeepAlive
         emptyPointSettings: EmptyPointSettings(mode: EmptyPointMode.drop),
         xValueMapper: (Assignment assignment, _) => assignment.name,
         yValueMapper: yValueMapper,
-        name: Strings.get(
-            isOverall ? "overall" : Foundation.describeEnum(category).toLowerCase() + "_long"),
+        name: Strings.get(isOverall ? "overall" : describeEnum(category).toLowerCase() + "_long"),
       )
     ];
   }

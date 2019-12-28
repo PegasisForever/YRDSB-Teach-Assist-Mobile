@@ -27,4 +27,3 @@ class TipsCard extends StatelessWidget {
     );
   }
 }
-

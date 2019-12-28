@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
-import 'package:ta/pages/detailpage/DetailPage.dart';
+import 'package:ta/pages/archivedpage/AwardBar.dart';
 import 'package:ta/pages/summarypage/CourseCard.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
-
-import 'AwardBar.dart';
 
 class ArchivedCoursesPage extends StatefulWidget {
   @override

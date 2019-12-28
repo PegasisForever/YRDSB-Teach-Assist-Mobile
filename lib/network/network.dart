@@ -186,7 +186,7 @@ getAndSaveCalendar() async {
   prefs.setString("calendar", res);
 }
 
-getAndSaveAnnouncement() async{
+getAndSaveAnnouncement() async {
   var lastAnnouncementUpdateTime = prefs.getString("last_update_announcement");
   if (lastAnnouncementUpdateTime != null &&
       DateTime.now().difference(DateTime.parse(lastAnnouncementUpdateTime)).inMinutes < 2) {

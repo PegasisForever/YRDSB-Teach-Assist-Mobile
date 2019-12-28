@@ -1,17 +1,16 @@
-import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
-import 'package:ta/widgets/CrossFade.dart';
-import 'package:ta/widgets/InputDoneView.dart';
-import 'package:ta/widgets/SmallIconButton.dart';
-import 'package:ta/widgets/TipsCard.dart';
 import 'package:ta/pages/detailpage/whatifpage/SmallMarkEditor.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
+import 'package:ta/widgets/CrossFade.dart';
+import 'package:ta/widgets/InputDoneView.dart';
 import 'package:ta/widgets/NoBackgroundDialog.dart';
+import 'package:ta/widgets/SmallIconButton.dart';
+import 'package:ta/widgets/TipsCard.dart';
 
 class EditAssignmentDialog extends StatefulWidget {
   final Course course;

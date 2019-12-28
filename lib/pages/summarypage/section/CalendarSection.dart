@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ta/model/Calendar.dart';
+import 'package:ta/model/CalendarModels.dart';
+import 'package:ta/pages/calendarpage/Calendar.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
@@ -79,99 +80,6 @@ class _CalendarSectionState extends State<CalendarSection> {
     );
   }
 }
-
-const HolidayIconMap = {
-  "Labour Day": "labour_day",
-  "PA Day": "pa_day",
-  "Thanksgiving Day": "thanksgiving_day",
-  "Winter Break": "winter_break",
-  "Family Day": "family_day",
-  "Mid-Winter Break": "winter_break",
-  "Good Friday": "good_friday",
-  "Easter Monday": "easter_monday",
-  "Victoria Day": "victoria_day",
-};
-
-Widget getHolidayIcon(String name, BuildContext context) {
-  if (HolidayIconMap.containsKey(name)) {
-    return Image.asset(
-      isLightMode(context: context)
-          ? "assets/images/${HolidayIconMap[name]}.png"
-          : "assets/images/${HolidayIconMap[name]}_ondark.png",
-      height: 28,
-      width: 28,
-    );
-  } else if (name == "First Day of Classes" || name == "Last Day of Classes") {
-    return Icon(
-      Icons.business,
-      size: 28,
-    );
-  } else {
-    return Icon(
-      Icons.calendar_today,
-      size: 28,
-    );
-  }
-}
-
-class CalendarEvent extends StatelessWidget {
-  final Widget leading;
-  final String name;
-  final DateTime startDate;
-  final DateTime endDate;
-  final EdgeInsets padding;
-
-  CalendarEvent({this.leading, this.name, this.startDate, this.endDate, this.padding});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: padding,
-      child: Row(
-        children: <Widget>[
-          Flexible(
-            flex: 0,
-            child: leading,
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          Flexible(
-            flex: 0,
-            child: Text(
-              name,
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              endDate == null ? date2Str(startDate) : period2Str(startDate, endDate),
-              textAlign: TextAlign.end,
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-enum DateType { NORMAL, OUTLINE, FILL }
-
-const WEEKDAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
-const MONTHS = [
-  "january",
-  "february",
-  "march",
-  "april",
-  "may",
-  "june",
-  "july",
-  "august",
-  "september",
-  "october",
-  "november",
-  "december"
-];
 
 class _CalenderDate extends StatelessWidget {
   final DateType dateType;

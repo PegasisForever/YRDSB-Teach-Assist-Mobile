@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ta/res/CustomIcons.dart';
-
-import '../../tools.dart';
+import 'package:ta/tools.dart';
 
 class AwardBar extends StatelessWidget {
   final int bronze;

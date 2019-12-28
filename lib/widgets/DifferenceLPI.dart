@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide LinearProgressIndicator;
 import 'package:ta/tools.dart';
-import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
+import 'package:ta/widgets/LinearProgressIndicator.dart';
 
 class DifferenceLPI extends StatelessWidget {
   DifferenceLPI(this.value1, this.value2);
@@ -30,14 +30,14 @@ class DifferenceLPI extends StatelessWidget {
         ),
         SizedBox(height: 8),
         value1 > value2
-            ? LPI.LinearProgressIndicator(
+            ? LinearProgressIndicator(
                 lineHeight: 20.0,
                 value1: value2 / 100,
                 value2: value1 / 100,
                 value1Color: Theme.of(context).colorScheme.secondary,
                 value2Color: Colors.red[400],
               )
-            : LPI.LinearProgressIndicator(
+            : LinearProgressIndicator(
                 lineHeight: 20.0,
                 value1: value1 / 100,
                 value2: value2 / 100,

@@ -1,14 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:ta/firebase.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
 import 'package:ta/widgets/EditText.dart';
-
-import '../../firebase.dart';
-import '../../tools.dart';
 
 class EditAccount extends StatefulWidget {
   EditAccount(this.user, this.updatePassword);

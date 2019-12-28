@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
-
-import 'UpdateWidgetTitle.dart';
+import 'package:ta/pages/updatespage/updatecontents/UpdateWidgetTitle.dart';
 
 class CourseRemovedWidget extends StatelessWidget {
   final CourseRemoved update;

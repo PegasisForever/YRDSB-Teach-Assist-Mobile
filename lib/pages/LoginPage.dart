@@ -4,15 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
-import 'package:ta/pages/newsummarypage/NewSummaryPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/res/Themes.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
 import 'package:ta/widgets/EditText.dart';
-
-import '../dataStore.dart';
-import '../res/Themes.dart';
-import '../tools.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage() : super();
@@ -152,7 +149,7 @@ class _LoginPageState extends BetterState<LoginPage> {
       setCurrentUser(user);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => NewSummaryPage()),
+        MaterialPageRoute(builder: (context) => SummaryPage()),
       );
     } catch (e) {
       _handleError(e, context);

@@ -4,8 +4,7 @@ import 'package:quiver/core.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/prasers/ParsersCollection.dart';
 import 'package:ta/res/Strings.dart';
-
-import '../tools.dart';
+import 'package:ta/tools.dart';
 
 enum Category {
   KU,
@@ -428,7 +427,7 @@ List<Course> getCourseListOf(String number) {
 }
 
 saveCourseListOf(String number, Map<String, dynamic> json, {DateTime time}) {
-  prefs.setString("last_update-$number", (time??DateTime.now()).toString());
+  prefs.setString("last_update-$number", (time ?? DateTime.now()).toString());
   prefs.setString("$number-mark", jsonEncode(json));
 }
 

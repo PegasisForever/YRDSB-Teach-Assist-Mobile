@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:ta/tools.dart';
 
-void openCustomTab(BuildContext context,String url) async {
+void openCustomTab(BuildContext context, String url) async {
   await launch(
     url,
     option: new CustomTabsOption(

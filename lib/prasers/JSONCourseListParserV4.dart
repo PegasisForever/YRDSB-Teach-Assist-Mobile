@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart' as Foundation;
+import 'package:flutter/foundation.dart' hide Category;
 import 'package:ta/model/Mark.dart';
 
 SmallMarkGroup _parseSmallMarkGroup(Map<String, dynamic> json) {
@@ -8,8 +8,7 @@ SmallMarkGroup _parseSmallMarkGroup(Map<String, dynamic> json) {
   smallMark.get = json["get"];
   smallMark.weight = json["weight"];
 
-  return SmallMarkGroup.blank()
-    ..smallMarks.add(smallMark);
+  return SmallMarkGroup.blank()..smallMarks.add(smallMark);
 }
 
 Assignment parseAssignment(Map<String, dynamic> json) {
@@ -19,10 +18,10 @@ Assignment parseAssignment(Map<String, dynamic> json) {
   assignment.feedback = json["feedback"];
   assignment.time = json["time"] != null ? DateTime.parse(json["time"]) : null;
   for (final category in Category.values) {
-    String categoryName = Foundation.describeEnum(category);
-    assignment[category] =
-    json.containsKey(categoryName) ? _parseSmallMarkGroup(json[categoryName]) : SmallMarkGroup
-        .blank();
+    String categoryName = describeEnum(category);
+    assignment[category] = json.containsKey(categoryName)
+        ? _parseSmallMarkGroup(json[categoryName])
+        : SmallMarkGroup.blank();
   }
   return assignment;
 }
@@ -40,7 +39,7 @@ Weight _parseWeight(Map<String, dynamic> json) {
 WeightTable _parseWeightTable(Map<String, dynamic> json) {
   var weightTable = WeightTable.blank();
   for (final category in Category.values) {
-    weightTable[category] = _parseWeight(json[Foundation.describeEnum(category)]);
+    weightTable[category] = _parseWeight(json[describeEnum(category)]);
   }
   return weightTable;
 }

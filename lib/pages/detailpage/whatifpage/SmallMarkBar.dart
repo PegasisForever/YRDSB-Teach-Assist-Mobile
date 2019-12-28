@@ -1,6 +1,6 @@
+import 'package:flutter/foundation.dart' hide Category;
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
-import 'package:flutter/foundation.dart' as Foundation;
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
@@ -39,7 +39,7 @@ class _SmallMarkBarPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     var height = size.height + 8;
     var width = size.width;
-    var categoryText = Strings.get(Foundation.describeEnum(_category).toLowerCase());
+    var categoryText = Strings.get(describeEnum(_category).toLowerCase());
     var labelPainter = TextPainter(
         text: TextSpan(text: categoryText, style: TextStyle(fontSize: 16.0, color: getGrey(100))),
         textDirection: TextDirection.ltr,
@@ -72,8 +72,8 @@ class _SmallMarkBarPainter extends CustomPainter {
             paint);
 
         TextPainter(
-            text:
-                TextSpan(text: num2Str(mark), style: TextStyle(fontSize: 16.0, color: getGrey(100))),
+            text: TextSpan(
+                text: num2Str(mark), style: TextStyle(fontSize: 16.0, color: getGrey(100))),
             textDirection: TextDirection.ltr,
             textAlign: TextAlign.center)
           ..layout(maxWidth: width, minWidth: width)

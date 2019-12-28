@@ -13,8 +13,8 @@ class EditText extends StatefulWidget {
       this.focusNode,
       this.nextFocusNode,
       this.textInputAction,
-        this.onSubmitted,
-        this.autoFocus = false});
+      this.onSubmitted,
+      this.autoFocus = false});
 
   final TextEditingController controller;
   final ErrorText errorText;
@@ -49,11 +49,11 @@ class _EditTextState extends State<EditText> {
   void initState() {
     super.initState();
     _focusNode = widget.focusNode == null ? FocusNode() : widget.focusNode;
-    if (widget.onSubmitted!=null){
-      _onSubmitted=widget.onSubmitted;
-    }else if (widget.nextFocusNode!=null){
-      _onSubmitted=(s){
-        _changeFocusChange(context,_focusNode,widget.nextFocusNode);
+    if (widget.onSubmitted != null) {
+      _onSubmitted = widget.onSubmitted;
+    } else if (widget.nextFocusNode != null) {
+      _onSubmitted = (s) {
+        _changeFocusChange(context, _focusNode, widget.nextFocusNode);
       };
     }
     _controller = widget.controller;
@@ -61,9 +61,8 @@ class _EditTextState extends State<EditText> {
     _icon = widget.icon != null ? Icon(widget.icon) : null;
     _expandable = widget.expandable == true;
     _inputType = widget.inputType ?? TextInputType.text;
-    _textInputAction = widget.textInputAction == null
-        ? TextInputAction.unspecified
-        : widget.textInputAction;
+    _textInputAction =
+        widget.textInputAction == null ? TextInputAction.unspecified : widget.textInputAction;
   }
 
   @override
@@ -72,7 +71,7 @@ class _EditTextState extends State<EditText> {
     _clearBtnVisibility = _controller?.text?.isNotEmpty ?? false;
 
     return TextField(
-      keyboardAppearance: isLightMode(context: context)?Brightness.light:Brightness.dark,
+      keyboardAppearance: isLightMode(context: context) ? Brightness.light : Brightness.dark,
       autofocus: widget.autoFocus,
       textInputAction: _textInputAction,
       onSubmitted: _onSubmitted,
@@ -91,16 +90,16 @@ class _EditTextState extends State<EditText> {
           prefixIcon: _icon,
           suffixIcon: _clearBtnVisibility
               ? IconButton(
-            icon: Icon(Icons.clear),
-            onPressed: () {
-              FocusScope.of(context).requestFocus(_focusNode);
-              _controller.clear();
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    FocusScope.of(context).requestFocus(_focusNode);
+                    _controller.clear();
 
-              setState(() {
-                _clearBtnVisibility = false;
-              });
-            },
-          )
+                    setState(() {
+                      _clearBtnVisibility = false;
+                    });
+                  },
+                )
               : null,
           filled: true,
           labelText: _hint,
@@ -114,7 +113,7 @@ class _EditTextState extends State<EditText> {
     super.dispose();
   }
 
-  _changeFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus) {
+  _changeFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }

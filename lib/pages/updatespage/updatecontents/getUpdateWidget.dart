@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
-import 'package:ta/pages/summarypage/timelinecontents/AssignmentAddedWidget.dart';
-import 'package:ta/pages/summarypage/timelinecontents/AssignmentUpdatedWidget.dart';
-import 'package:ta/pages/summarypage/timelinecontents/CourseAddedWidget.dart';
-import 'package:ta/pages/summarypage/timelinecontents/CourseRemovedWidget.dart';
+import 'package:ta/pages/updatespage/updatecontents/AssignmentAddedWidget.dart';
+import 'package:ta/pages/updatespage/updatecontents/AssignmentUpdatedWidget.dart';
+import 'package:ta/pages/updatespage/updatecontents/CourseAddedWidget.dart';
+import 'package:ta/pages/updatespage/updatecontents/CourseRemovedWidget.dart';
 
 Widget getUpdateWidget(TAUpdate update) {
   if (update is AssignmentAdded) {

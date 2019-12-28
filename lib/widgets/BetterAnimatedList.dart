@@ -20,10 +20,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-typedef ItemBuilder = Widget Function(BuildContext context, dynamic itemData);
+typedef Widget ItemBuilder(BuildContext context, dynamic itemData);
 
 class BetterAnimatedList extends StatefulWidget {
-  BetterAnimatedList({@required this.list, @required this.itemBuilder, this.header,this.padding});
+  BetterAnimatedList({@required this.list, @required this.itemBuilder, this.header, this.padding});
 
   final List list;
   final Widget header;

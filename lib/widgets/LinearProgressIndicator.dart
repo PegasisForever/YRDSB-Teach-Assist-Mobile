@@ -12,7 +12,8 @@ class LinearProgressIndicator extends StatefulWidget {
   final double lineHeight;
   final Widget center;
 
-  LinearProgressIndicator({this.backgroundColor,
+  LinearProgressIndicator(
+      {this.backgroundColor,
       this.value1Color,
       this.value2Color,
       this.value1,
@@ -20,8 +21,8 @@ class LinearProgressIndicator extends StatefulWidget {
       this.text,
       this.animationDuration = 0,
       this.lineHeight,
-        this.center,
-        key})
+      this.center,
+      key})
       : super(key: key);
 
   @override

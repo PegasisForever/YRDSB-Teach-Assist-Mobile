@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../dataStore.dart';
+import 'package:ta/dataStore.dart';
 
 List<User> userList = [];
 User currentUser;
@@ -14,26 +14,25 @@ initUser() {
   }
 
   var currentUserJSON = prefs.getString("currentuser");
-  if(currentUserJSON!=null){
-    currentUser=User.fromJson(jsonDecode(currentUserJSON));
-  }else if(userList.length>0){
+  if (currentUserJSON != null) {
+    currentUser = User.fromJson(jsonDecode(currentUserJSON));
+  } else if (userList.length > 0) {
     setCurrentUser(userList[0]);
   }
 }
 
-setCurrentUser(User user){
-  currentUser=user;
-  if (currentUser!=null){
+setCurrentUser(User user) {
+  currentUser = user;
+  if (currentUser != null) {
     prefs.setString("currentuser", jsonEncode(user));
-  }else{
+  } else {
     prefs.setString("currentuser", null);
   }
-
 }
 
-addUser(User newUser){
-  userList.forEach((user){
-    if (user.number==newUser.number){
+addUser(User newUser) {
+  userList.forEach((user) {
+    if (user.number == newUser.number) {
       return;
     }
   });
@@ -41,33 +40,33 @@ addUser(User newUser){
   prefs.setString("users", jsonEncode(userList));
 }
 
-editUser(User newUser,String oldNumber){
-  var isCurrentUser=currentUser.number==oldNumber;
+editUser(User newUser, String oldNumber) {
+  var isCurrentUser = currentUser.number == oldNumber;
   removeUser(oldNumber);
   addUser(newUser);
 
-  if(isCurrentUser){
+  if (isCurrentUser) {
     setCurrentUser(newUser);
   }
 }
 
-removeUser(String number){
-  userList.removeWhere((user){
-    return user.number==number;
+removeUser(String number) {
+  userList.removeWhere((user) {
+    return user.number == number;
   });
 
-  if(currentUser.number==number){
-    if (userList.length>0){
+  if (currentUser.number == number) {
+    if (userList.length > 0) {
       setCurrentUser(userList[0]);
-    }else{
+    } else {
       setCurrentUser(null);
     }
   }
   prefs.setString("users", jsonEncode(userList));
 }
 
-reorderUser(int oldIndex,int newIndex){
-  var user=userList.removeAt(oldIndex);
+reorderUser(int oldIndex, int newIndex) {
+  var user = userList.removeAt(oldIndex);
   userList.insert(newIndex, user);
   prefs.setString("users", jsonEncode(userList));
 }
@@ -78,13 +77,13 @@ class User {
   String displayName;
   bool receiveNotification;
 
-  User(this.number, this.password, this.receiveNotification, {this.displayName=""});
+  User(this.number, this.password, this.receiveNotification, {this.displayName = ""});
 
-  User.blank(){
-    number="";
-    password="";
-    displayName="";
-    receiveNotification=true;
+  User.blank() {
+    number = "";
+    password = "";
+    displayName = "";
+    receiveNotification = true;
   }
 
   User.fromJson(Map<String, dynamic> json)
@@ -100,14 +99,14 @@ class User {
         "receive": receiveNotification
       };
 
-  User copy(){
+  User copy() {
     return User.fromJson(this.toJson());
   }
 
-  String getName(){
-    if (displayName!=""){
+  String getName() {
+    if (displayName != "") {
       return displayName;
-    }else{
+    } else {
       return number;
     }
   }

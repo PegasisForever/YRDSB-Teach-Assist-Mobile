@@ -37,18 +37,18 @@ class _StickSliderState extends State<StickSlider> {
       max: 1,
       onChanged: widget.enabled
           ? (v) {
-        setState(() {
-          _stickValue = v;
-        });
+              setState(() {
+                _stickValue = v;
+              });
 
-        Timer.periodic(Duration(milliseconds: 16), (timer) {
-          if (_timer != null && _timer != timer) _timer.cancel();
-          _timer = timer;
-          if (_stickValue != null) {
-            widget.onDelta(powWithSign(_stickValue * widget.speed, 2));
-          }
-        });
-      }
+              Timer.periodic(Duration(milliseconds: 16), (timer) {
+                if (_timer != null && _timer != timer) _timer.cancel();
+                _timer = timer;
+                if (_stickValue != null) {
+                  widget.onDelta(powWithSign(_stickValue * widget.speed, 2));
+                }
+              });
+            }
           : null,
       onChangeEnd: (v) {
         setState(() {
@@ -71,14 +71,15 @@ class StickSliderTile extends StatefulWidget {
   final bool enabled;
   final FocusNode focusNode;
 
-  StickSliderTile({this.labelWidth,
-    this.label,
-    this.enabled = true,
-    this.max = 1000,
-    this.min = 0,
-    this.value,
-    this.onChanged,
-    this.focusNode});
+  StickSliderTile(
+      {this.labelWidth,
+      this.label,
+      this.enabled = true,
+      this.max = 1000,
+      this.min = 0,
+      this.value,
+      this.onChanged,
+      this.focusNode});
 
   @override
   _StickSliderTileState createState() => _StickSliderTileState();
@@ -117,7 +118,8 @@ class _StickSliderTileState extends State<StickSliderTile> {
           child: ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 35),
             child: TextField(
-              keyboardAppearance: isLightMode(context: context)?Brightness.light:Brightness.dark,
+              keyboardAppearance:
+                  isLightMode(context: context) ? Brightness.light : Brightness.dark,
               enabled: widget.enabled,
               focusNode: widget.focusNode,
               controller: _numberTextController,

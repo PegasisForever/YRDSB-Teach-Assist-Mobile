@@ -53,27 +53,27 @@ class Config {
     prefs.setBool("show_more_decimal", v);
   }
 
-  static String get firebaseToken{
+  static String get firebaseToken {
     return prefs.getString("firebase_token") ?? null;
   }
 
-  static set firebaseToken(String token){
+  static set firebaseToken(String token) {
     prefs.setString("firebase_token", token);
   }
 
-  static String get language{
+  static String get language {
     return prefs.getString("language");
   }
 
-  static set language(String lang){
+  static set language(String lang) {
     prefs.setString("language", lang);
   }
 
-  static bool get hideAppContent{
+  static bool get hideAppContent {
     return prefs.getBool("hide_app_content") ?? true;
   }
 
-  static set hideAppContent(bool v){
+  static set hideAppContent(bool v) {
     prefs.setBool("hide_app_content", v);
   }
 }

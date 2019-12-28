@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ta/model/Calendar.dart';
+import 'package:ta/model/CalendarModels.dart';
 import 'package:ta/pages/calendarpage/Calendar.dart';
-import 'package:ta/pages/newsummarypage/CalendarSection.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
@@ -51,13 +50,13 @@ class _CalendarPageState extends BetterState<CalendarPage> {
               }
 
               var widgets = <Widget>[];
-              events.forEach((event){
+              events.forEach((event) {
                 widgets.add(CalendarEvent(
-                  leading: getHolidayIcon(event.name["en"],context),
+                  leading: getHolidayIcon(event.name["en"], context),
                   name: event.name[Strings.currentLanguage],
                   startDate: event.startDate,
                   endDate: event.endDate,
-                  padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 ));
               });
 

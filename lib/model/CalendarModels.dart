@@ -4,7 +4,7 @@ import 'package:ta/dataStore.dart';
 import 'package:ta/tools.dart';
 
 class Event {
-  Map<String, String> name={};
+  Map<String, String> name = {};
 
   DateTime startDate;
   DateTime endDate;
@@ -12,11 +12,11 @@ class Event {
 
 List<Event> readCalendar() {
   var str = prefs.getString("calendar");
-  var list= <Event>[];
+  var list = <Event>[];
   jsonDecode(str).forEach((obj) {
     var event = Event();
-    obj["name"].forEach((language,name){
-      event.name[language]=name;
+    obj["name"].forEach((language, name) {
+      event.name[language] = name;
     });
     event.startDate = str2Date(obj["start_date"]);
     event.endDate = obj["end_date"] == null
@@ -45,3 +45,41 @@ extension CalenderList on List<Event> {
     return list;
   }
 }
+
+const HolidayIconMap = {
+  "Labour Day": "labour_day",
+  "PA Day": "pa_day",
+  "Thanksgiving Day": "thanksgiving_day",
+  "Winter Break": "winter_break",
+  "Family Day": "family_day",
+  "Mid-Winter Break": "winter_break",
+  "Good Friday": "good_friday",
+  "Easter Monday": "easter_monday",
+  "Victoria Day": "victoria_day",
+};
+
+enum DateType { NORMAL, OUTLINE, FILL }
+
+const WEEKDAYS = [
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
+];
+const MONTHS = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+];

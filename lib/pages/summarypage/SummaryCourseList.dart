@@ -1,14 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide LinearProgressIndicator;
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
-import 'package:ta/pages/detailpage/DetailPage.dart';
 import 'package:ta/pages/summarypage/CourseCard.dart';
 import 'package:ta/res/Strings.dart';
-import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
+import 'package:ta/tools.dart';
+import 'package:ta/widgets/LinearProgressIndicator.dart';
 
-import '../../tools.dart';
-
-class SummaryList extends StatelessWidget {
+class SummaryCourseList extends StatelessWidget {
   final List<Course> courses = getCourseListOf(currentUser.number);
 
   @override
@@ -54,7 +52,7 @@ class SummaryList extends StatelessWidget {
                   num2Str(avg) + "%",
                   style: TextStyle(fontSize: 60),
                 ),
-                LPI.LinearProgressIndicator(
+                LinearProgressIndicator(
                   animationDuration: 700,
                   lineHeight: 20.0,
                   value1: avg / 100,

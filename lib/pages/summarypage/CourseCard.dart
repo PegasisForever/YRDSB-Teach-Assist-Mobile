@@ -3,10 +3,9 @@ import 'package:sprintf/sprintf.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/res/CustomIcons.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
-import 'package:ta/widgets/tooltip.dart';
-
-import '../../tools.dart';
+import 'package:ta/widgets/TapTooltip.dart';
 
 class CourseCard extends StatelessWidget {
   final Function onTap;

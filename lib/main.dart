@@ -1,29 +1,28 @@
 import 'dart:async';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
 import 'package:syncfusion_flutter_core/core.dart';
+import 'package:ta/dataStore.dart';
+import 'package:ta/firebase.dart';
 import 'package:ta/licence.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/packageinfo.dart';
-import 'package:ta/pages/calendarpage/CalendarPage.dart';
 import 'package:ta/pages/LoginPage.dart';
-import 'package:ta/pages/UpdatesPage.dart';
 import 'package:ta/pages/archivedpage/ArchivedCoursesPage.dart';
+import 'package:ta/pages/calendarpage/CalendarPage.dart';
 import 'package:ta/pages/detailpage/DetailPage.dart';
 import 'package:ta/pages/detailpage/whatifpage/WhatIfWelcomePage.dart';
 import 'package:ta/pages/drawerpages/AboutPage.dart';
 import 'package:ta/pages/drawerpages/AccountsList.dart';
 import 'package:ta/pages/drawerpages/EditAccount.dart';
 import 'package:ta/pages/drawerpages/FeedbackPage.dart';
-import 'package:ta/pages/newsummarypage/NewSummaryPage.dart';
 import 'package:ta/pages/settingspage/SettingsPage.dart';
-
-import 'dataStore.dart';
-import 'firebase.dart';
+import 'package:ta/pages/summarypage/SummaryPage.dart';
+import 'package:ta/pages/updatespage/UpdatesPage.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -119,7 +118,7 @@ class _AppState extends State<App> {
     switch (settings.name) {
       case "/":
         return MaterialPageRoute(
-            builder: (_) => userList.length == 0 ? LoginPage() : NewSummaryPage());
+            builder: (_) => userList.length == 0 ? LoginPage() : SummaryPage());
       case "/login":
         return MaterialPageRoute(builder: (_) => LoginPage());
       case "/updates":
@@ -129,7 +128,7 @@ class _AppState extends State<App> {
       case "/accounts_list":
         return MaterialPageRoute(builder: (_) => AccountsList());
       case "/accounts_list/edit":
-        return MaterialPageRoute(builder: (_) => EditAccount(args[0],args[1]));
+        return MaterialPageRoute(builder: (_) => EditAccount(args[0], args[1]));
       case "/about":
         return MaterialPageRoute(builder: (_) => AboutPage());
       case "/feedback":

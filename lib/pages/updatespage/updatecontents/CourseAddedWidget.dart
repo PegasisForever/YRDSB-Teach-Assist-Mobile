@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
-
-import 'UpdateWidgetTitle.dart';
+import 'package:ta/pages/updatespage/updatecontents/UpdateWidgetTitle.dart';
 
 class CourseAddedWidget extends StatelessWidget {
   final CourseAdded update;

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
-import 'package:ta/pages/summarypage/timelinecontents/DifferenceLPI.dart';
-import 'package:ta/pages/summarypage/timelinecontents/ExpandableSmallMarkChart.dart';
-import 'package:ta/pages/summarypage/timelinecontents/UpdateWidgetTitle.dart';
+import 'package:ta/pages/updatespage/updatecontents/ExpandableSmallMarkChart.dart';
+import 'package:ta/pages/updatespage/updatecontents/UpdateWidgetTitle.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
-import 'package:ta/widgets/LinearProgressIndicator.dart' as LPI;
+import 'package:ta/widgets/DifferenceLPI.dart';
 
 class AssignmentAddedWidget extends StatelessWidget {
   final AssignmentAdded update;

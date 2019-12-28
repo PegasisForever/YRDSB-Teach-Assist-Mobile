@@ -11,7 +11,6 @@ List<Widget> getSectionWidgets(List<SectionCandidate> sections) {
   return list;
 }
 
-
 abstract class SectionCandidate extends StatefulWidget {
   bool shouldDisplay();
 }
@@ -23,7 +22,8 @@ class Section extends StatelessWidget {
   final IconData buttonIcon;
   final VoidCallback onTap;
 
-  Section({this.card, this.title, this.buttonText,this.buttonIcon=Icons.arrow_forward, this.onTap});
+  Section(
+      {this.card, this.title, this.buttonText, this.buttonIcon = Icons.arrow_forward, this.onTap});
 
   @override
   Widget build(BuildContext context) {

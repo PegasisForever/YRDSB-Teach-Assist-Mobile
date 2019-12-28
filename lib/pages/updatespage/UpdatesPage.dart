@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/model/User.dart';
-import 'package:ta/pages/summarypage/timelinecontents/getUpdateWidget.dart';
+import 'package:ta/pages/updatespage/updatecontents/getUpdateWidget.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
-
-import '../tools.dart';
 
 class UpdatesPage extends StatefulWidget {
   @override
@@ -17,22 +16,19 @@ class _UpdatesPageState extends BetterState<UpdatesPage> {
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            title: Text("Updates"),
-            forceElevated:true,
-            floating: true,
-            snap: true,
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-                _getTimelineCards(getTimelineOf(currentUser.number))
-            ),
-          )
-        ],
-      )
-    );
+        body: CustomScrollView(
+      slivers: <Widget>[
+        SliverAppBar(
+          title: Text("Updates"),
+          forceElevated: true,
+          floating: true,
+          snap: true,
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate(_getTimelineCards(getTimelineOf(currentUser.number))),
+        )
+      ],
+    ));
   }
 
   List<Widget> _getTimelineCards(List<TAUpdate> timeline) {

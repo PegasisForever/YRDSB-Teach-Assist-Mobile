@@ -3,14 +3,13 @@ import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:ta/dataStore.dart';
 import 'package:ta/model/Mark.dart';
-import 'package:ta/widgets/TipsCard.dart';
+import 'package:ta/pages/detailpage/assignmentstab/MarksListTile.dart';
 import 'package:ta/pages/detailpage/whatifpage/EditAssignmentDialog.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterAnimatedList.dart';
 import 'package:ta/widgets/CrossFade.dart';
-
-import 'MarksListTile.dart';
+import 'package:ta/widgets/TipsCard.dart';
 
 class MarksList extends StatefulWidget {
   MarksList(this._course, this._whatIfMode, this._updateCourse);

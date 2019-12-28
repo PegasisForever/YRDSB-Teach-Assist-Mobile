@@ -3,10 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
 import 'package:ta/widgets/EditText.dart';
-
-import '../../tools.dart';
 
 class FeedbackPage extends StatefulWidget {
   @override
@@ -32,72 +31,69 @@ class _FeedbackPageState extends BetterState<FeedbackPage> {
             builder: (context) {
               return _isLoading
                   ? Stack(
-                alignment: Alignment(0, 0),
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: CircularProgressIndicator(
-                      backgroundColor: Color(0x66FFFFFF),
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme
-                              .of(context)
-                              .colorScheme
-                              .onPrimary),
-                    ),
-                  )
-                ],
-              )
+                      alignment: Alignment(0, 0),
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: CircularProgressIndicator(
+                            backgroundColor: Color(0x66FFFFFF),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).colorScheme.onPrimary),
+                          ),
+                        )
+                      ],
+                    )
                   : IconButton(
-                icon: Icon(Icons.send),
-                onPressed: () async {
-                  if (_contactInfoController.text.isEmpty) {
-                    setState(() {
-                      _contactErrorText.text = Strings.get("plz_fill_in_ur_contact_info");
-                    });
-                    return;
-                  }
-                  if (_feedbackController.text.isEmpty) {
-                    setState(() {
-                      _feedbackValid = false;
-                    });
-                    return;
-                  }
+                      icon: Icon(Icons.send),
+                      onPressed: () async {
+                        if (_contactInfoController.text.isEmpty) {
+                          setState(() {
+                            _contactErrorText.text = Strings.get("plz_fill_in_ur_contact_info");
+                          });
+                          return;
+                        }
+                        if (_feedbackController.text.isEmpty) {
+                          setState(() {
+                            _feedbackValid = false;
+                          });
+                          return;
+                        }
 
-                  setState(() {
-                    _isLoading = true;
-                  });
-
-                  try {
-                    await sendFeedBack(_contactInfoController.text, _feedbackController.text);
-                    setState(() {
-                      _isLoading = false;
-                    });
-                    await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text(Strings.get("thank_you_for_giving_feedback")),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text(Strings.get("ok").toUpperCase()),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
-                            contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
-                          );
+                        setState(() {
+                          _isLoading = true;
                         });
-                    Navigator.pop(context);
-                  } catch (e) {
-                    _handleError(e, context);
-                  } finally {
-                    setState(() {
-                      _isLoading = false;
-                    });
-                  }
-                },
-              );
+
+                        try {
+                          await sendFeedBack(_contactInfoController.text, _feedbackController.text);
+                          setState(() {
+                            _isLoading = false;
+                          });
+                          await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text(Strings.get("thank_you_for_giving_feedback")),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: Text(Strings.get("ok").toUpperCase()),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                  contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
+                                );
+                              });
+                          Navigator.pop(context);
+                        } catch (e) {
+                          _handleError(e, context);
+                        } finally {
+                          setState(() {
+                            _isLoading = false;
+                          });
+                        }
+                      },
+                    );
             },
           )
         ],
@@ -121,7 +117,8 @@ class _FeedbackPageState extends BetterState<FeedbackPage> {
                 SizedBox(height: 12),
                 Expanded(
                   child: TextField(
-                    keyboardAppearance: isLightMode(context: context)?Brightness.light:Brightness.dark,
+                    keyboardAppearance:
+                        isLightMode(context: context) ? Brightness.light : Brightness.dark,
                     expands: true,
                     maxLines: null,
                     focusNode: _feedbackFocusNode,
