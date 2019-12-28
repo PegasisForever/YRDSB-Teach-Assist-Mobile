@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
+import 'package:ta/pages/newsummarypage/NewSummaryPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/BetterState.dart';
@@ -152,7 +153,7 @@ class _LoginPageState extends BetterState<LoginPage> {
       prefs.setString("last_update-${currentUser.number}", DateTime.now().toString());
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SummaryPage.noRefresh()),
+        MaterialPageRoute(builder: (context) => NewSummaryPage()),
       );
     } catch (e) {
       _handleError(e, context);

@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:open_appstore/open_appstore.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:ta/dataStore.dart';
+import 'package:ta/firebase.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/pages/drawerpages/EditAccount.dart';
@@ -17,6 +19,7 @@ import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
 
+import 'AnnouncementSection.dart';
 import 'CalendarSection.dart';
 import 'UpdatesSection.dart';
 
@@ -25,7 +28,8 @@ class NewSummaryPage extends StatefulWidget {
   _NewSummaryPageState createState() => _NewSummaryPageState();
 }
 
-class _NewSummaryPageState extends BetterState<NewSummaryPage> {
+class _NewSummaryPageState extends BetterState<NewSummaryPage>
+    with AfterLayoutMixin<NewSummaryPage> {
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   Timer timer;
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -80,6 +84,10 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    if (userList.length == 0) {
+      return Container();
+    }
+
     var sidePadding = (widthOf(context) - 500) / 2;
 
     return Scaffold(
@@ -145,6 +153,7 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: getSectionWidgets([
+                AnnouncementSection(),
                 CalendarSection(),
                 UpdatesSection(),
               ]),
@@ -162,6 +171,35 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage> {
         },
       ),
     );
+  }
+
+  @override
+  afterFirstLayout(BuildContext context) {
+    if (userList.length == 0) {
+      Navigator.pushReplacementNamed(context, "/login");
+      return;
+    }
+
+    if (prefs.getBool("show_no_google_play_warning") ?? true && supportsGooglePlay() == false) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(Strings.get("google_play_services")),
+              content: Text(Strings.get("no_google_play_warning_content")),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(Strings.get("ok").toUpperCase()),
+                  onPressed: () {
+                    prefs.setBool("show_no_google_play_warning", false);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+              contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
+            );
+          });
+    }
   }
 
   onRefresh() async {
