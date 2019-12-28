@@ -37,59 +37,66 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
 
     var sidePadding = (widthOf(context) - 500) / 2;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Strings.get("archived_marks")),
-      ),
-      body: Stack(
-        children: <Widget>[
-          if (archivedCourses.length == 0)
-            Center(
-              child: Text(
-                Strings.get(
-                  "no_archived_courses",
-                ),
-                style: Theme.of(context).textTheme.subhead,
-              ),
-            ),
-          RefreshIndicator(
-            key: _refreshIndicatorKey,
-            onRefresh: () async {
-              try {
-                await getAndSaveArchived(currentUser);
-                setState(() {
-                  archivedCourses = getArchivedCourseListOf(currentUser.number);
-                });
-              } catch (e) {}
-            },
-            child: ListView.builder(
-              padding: EdgeInsets.only(
-                left: max(sidePadding, 6),
-                right: max(sidePadding, 6),
-                bottom: MediaQuery.of(context).padding.bottom + 16,
-              ),
-              itemCount: archivedCourses.length + 1,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return AwardBar(bronze, silver, gold);
-                } else {
-                  var course = archivedCourses[index - 1];
-                  return CourseCard(
-                    course: course,
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        "/detail",
-                        arguments: [course],
-                      );
-                    },
-                    showIcons: false,
-                    showAnimations: false,
-                  );
-                }
-              },
-            ),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxScrolled) => [
+          SliverAppBar(
+            title: Text(Strings.get("archived_marks")),
+            forceElevated: true,
+            floating: true,
+            snap: true,
           ),
         ],
+        body: Stack(
+          children: <Widget>[
+            if (archivedCourses.length == 0)
+              Center(
+                child: Text(
+                  Strings.get(
+                    "no_archived_courses",
+                  ),
+                  style: Theme.of(context).textTheme.subhead,
+                ),
+              ),
+            RefreshIndicator(
+              key: _refreshIndicatorKey,
+              onRefresh: () async {
+                try {
+                  await getAndSaveArchived(currentUser);
+                  setState(() {
+                    archivedCourses = getArchivedCourseListOf(currentUser.number);
+                  });
+                } catch (e) {}
+              },
+              child: ListView.builder(
+                padding: EdgeInsets.only(
+                  left: max(sidePadding, 6),
+                  right: max(sidePadding, 6),
+                  bottom: MediaQuery.of(context).padding.bottom + 16,
+                ),
+                itemCount: archivedCourses.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return AwardBar(bronze, silver, gold);
+                  } else {
+                    var course = archivedCourses[index - 1];
+                    return CourseCard(
+                      course: course,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          "/detail",
+                          arguments: [course],
+                        );
+                      },
+                      showIcons: false,
+                      showAnimations: false,
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
