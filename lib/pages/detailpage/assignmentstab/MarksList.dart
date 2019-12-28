@@ -46,8 +46,10 @@ class _MarksListState extends State<MarksList>
           ),
         if (course.assignments != null)
           BetterAnimatedList(
-            padding: EdgeInsets.symmetric(
-              horizontal: sidePadding > 0 ? sidePadding : 0,
+            padding: EdgeInsets.only(
+              left: sidePadding > 0 ? sidePadding : 0,
+              right: sidePadding > 0 ? sidePadding : 0,
+              bottom: MediaQuery.of(context).padding.bottom,
             ),
             list: course.assignments.reversed.toList(),
             header: Column(

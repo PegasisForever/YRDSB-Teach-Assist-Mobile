@@ -26,7 +26,10 @@ class _UpdatesPageState extends BetterState<UpdatesPage> {
           snap: true,
         ),
         SliverList(
-          delegate: SliverChildListDelegate(_getTimelineCards(getTimelineOf(currentUser.number))),
+          delegate: SliverChildListDelegate(
+            _getTimelineCards(getTimelineOf(currentUser.number))
+              ..add(SizedBox(height: MediaQuery.of(context).padding.bottom + 16)),
+          ),
         )
       ],
     ));
@@ -68,7 +71,7 @@ class _UpdatesPageState extends BetterState<UpdatesPage> {
       }
     }
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

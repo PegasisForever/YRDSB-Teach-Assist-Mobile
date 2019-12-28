@@ -50,8 +50,10 @@ class _StatisticsListState extends State<StatisticsList> with AutomaticKeepAlive
     var sidePadding = (widthOf(context) - 500) / 2;
     return (_course.overallMark != null && _course.assignments.length > 0)
         ? ListView(
-            padding: EdgeInsets.symmetric(
-              horizontal: sidePadding > 0 ? sidePadding : 0,
+            padding: EdgeInsets.only(
+              left: sidePadding > 0 ? sidePadding : 0,
+              right: sidePadding > 0 ? sidePadding : 0,
+              bottom: MediaQuery.of(context).padding.bottom,
             ),
             children: <Widget>[
               _getTermOverall(),

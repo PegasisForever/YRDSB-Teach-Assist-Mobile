@@ -40,9 +40,11 @@ class _AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin 
             : Strings.get("unknown"));
 
     return ListView(
-      padding: EdgeInsets.symmetric(
-        vertical: 16,
-        horizontal: (sidePadding > 0 ? sidePadding : 0) + 16.0,
+      padding: EdgeInsets.only(
+        left: sidePadding > 0 ? sidePadding : 0,
+        right: sidePadding > 0 ? sidePadding : 0,
+        top: 16,
+        bottom: MediaQuery.of(context).padding.bottom + 16,
       ),
       children: <Widget>[
         Padding(

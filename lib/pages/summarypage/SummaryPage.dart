@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:open_appstore/open_appstore.dart';
@@ -81,9 +82,6 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if (userList.length == 0) {
-      return Container();
-    }
 
     var sidePadding = (widthOf(context) - 500) / 2;
 
@@ -94,9 +92,10 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
         onRefresh: manualRefresh,
         child: ListView(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top,
+            top: MediaQuery.of(context).padding.top+8,
             left: max(sidePadding, 14),
             right: max(sidePadding, 14),
+            bottom: MediaQuery.of(context).padding.bottom+16,
           ),
           children: <Widget>[
             Stack(
