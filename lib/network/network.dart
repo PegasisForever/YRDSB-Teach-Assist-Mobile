@@ -87,6 +87,20 @@ Future<String> getMarkTimeLine(User user) async {
   return res.body;
 }
 
+Future<String> updateNoFetch(User user) async {
+  var res = await _postWithMetric(
+      baseUrl + "update_nofetch",
+      jsonEncode(
+          {"user": user, "token": Config.firebaseToken, "language": Strings.currentLanguage}));
+
+  int statusCode = res.statusCode;
+  if (statusCode != 200) {
+    throw HttpException(statusCode.toString());
+  }
+
+  return res.body;
+}
+
 Future<String> getArchived(User user) async {
   var res = await _postWithMetric(
       baseUrl + "getarchived", jsonEncode({"number": user.number, "password": user.password}));
@@ -110,7 +124,7 @@ Future<void> sendFeedBack(String contactInfo, String feedback) async {
 }
 
 Future<String> getCalendar() async {
-  var res = await _postWithMetric(baseUrl + "getcalendar",{});
+  var res = await _postWithMetric(baseUrl + "getcalendar", {});
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -120,11 +134,17 @@ Future<String> getCalendar() async {
   return res.body;
 }
 
-getAndSaveMarkTimeline(User user) async {
-  var res = await getMarkTimeLine(user);
-  var json = jsonDecode(res);
+getAndSaveMarkTimeline(User user, {bool noFetch = false}) async {
+  String res;
+  if (noFetch) {
+    res = await updateNoFetch(user);
+  } else {
+    res = await getMarkTimeLine(user);
+  }
+  var json = jsonDecode(res) as Map<String, dynamic>;
 
-  saveCourseListOf(user.number, json["course_list"]);
+  saveCourseListOf(user.number, json["course_list"],
+      time: json.containsKey("update_time") ? DateTime.parse(json["update_time"]) : null);
   saveTimelineOf(user.number, json["time_line"]);
 }
 

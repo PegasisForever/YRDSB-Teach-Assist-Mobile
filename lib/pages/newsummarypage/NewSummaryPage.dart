@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:open_appstore/open_appstore.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sprintf/sprintf.dart';
@@ -33,6 +34,7 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage>
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   Timer timer;
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  bool autoRefreshing = false;
 
   @override
   void initState() {
@@ -112,7 +114,7 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage>
           },
         ),
         controller: _refreshController,
-        onRefresh: onRefresh,
+        onRefresh: manualRefresh,
         child: ListView(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top,
@@ -141,10 +143,23 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage>
                         },
                       ),
                     ),
-                    Text(
-                      getUpdateText(),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(color: getGrey(100, context: context)),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        if (autoRefreshing)
+                          SpinKitDualRing(
+                            color: getGrey(100, context: context),
+                            lineWidth: 1.5,
+                            size: 18,
+                            duration: const Duration(milliseconds: 700),
+                          ),
+                        SizedBox(width: 4),
+                        Text(
+                          getUpdateText(),
+                          textAlign: TextAlign.end,
+                          style: TextStyle(color: getGrey(100, context: context)),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -200,18 +215,53 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage>
             );
           });
     }
+
+    autoRefresh(noFetch: true);
+
+    setState(() {
+      autoRefreshing = true;
+    });
+    autoRefresh(
+      noFetch: false,
+      callBack: () {
+        setState(() {
+          autoRefreshing = false;
+        });
+      },
+    );
   }
 
-  onRefresh() async {
+  manualRefresh() async {
     try {
-      await Future.wait(<Future>[getAndSaveMarkTimeline(currentUser), getAndSaveCalendar()]);
-      prefs.setString("last_update-${currentUser.number}", DateTime.now().toString());
-      setState(() {});
+      await Future.wait(
+        <Future>[
+          getAndSaveMarkTimeline(currentUser, noFetch: false),
+          getAndSaveCalendar(),
+        ],
+        eagerError: true,
+      );
       _refreshController.refreshCompleted();
     } catch (e) {
       _refreshController.refreshFailed();
       handleError(e);
     }
+    setState(() {});
+  }
+
+  autoRefresh({bool noFetch, VoidCallback callBack}) async {
+    try {
+      await Future.wait(
+        <Future>[
+          getAndSaveMarkTimeline(currentUser, noFetch: noFetch),
+          getAndSaveCalendar(),
+        ],
+        eagerError: true,
+      );
+    } catch (e) {
+      handleError(e);
+    }
+    if (callBack != null) callBack();
+    setState(() {});
   }
 
   handleError(e) {

@@ -427,7 +427,8 @@ List<Course> getCourseListOf(String number) {
   return parseCourseList(json);
 }
 
-saveCourseListOf(String number, Map<String, dynamic> json) {
+saveCourseListOf(String number, Map<String, dynamic> json, {DateTime time}) {
+  prefs.setString("last_update-$number", (time??DateTime.now()).toString());
   prefs.setString("$number-mark", jsonEncode(json));
 }
 

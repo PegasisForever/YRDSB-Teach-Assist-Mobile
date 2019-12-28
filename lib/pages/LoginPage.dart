@@ -150,7 +150,6 @@ class _LoginPageState extends BetterState<LoginPage> {
       await regiAndSave(user);
       addUser(user);
       setCurrentUser(user);
-      prefs.setString("last_update-${currentUser.number}", DateTime.now().toString());
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => NewSummaryPage()),
