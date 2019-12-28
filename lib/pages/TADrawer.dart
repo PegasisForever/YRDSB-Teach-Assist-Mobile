@@ -67,8 +67,8 @@ class _TADrawerState extends State<TADrawer> {
             title: Text(Strings.get("moodle")),
             leading: Image.asset(
               isLightMode(context: context)
-                  ? "assets/images/moodle_logo.png"
-                  : "assets/images/moodle_logo_ondark.png",
+                  ? "assets/icons/moodle_logo.png"
+                  : "assets/icons/moodle_logo_ondark.png",
               height: 28,
               width: 28,
             ),

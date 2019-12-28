@@ -126,8 +126,8 @@ Widget getHolidayIcon(String name, BuildContext context) {
   if (HolidayIconMap.containsKey(name)) {
     return Image.asset(
       isLightMode(context: context)
-          ? "assets/images/${HolidayIconMap[name]}.png"
-          : "assets/images/${HolidayIconMap[name]}_ondark.png",
+          ? "assets/icons/${HolidayIconMap[name]}.png"
+          : "assets/icons/${HolidayIconMap[name]}_ondark.png",
       height: 28,
       width: 28,
     );

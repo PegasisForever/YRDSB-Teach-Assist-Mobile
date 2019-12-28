@@ -28,7 +28,7 @@ class _AboutPageState extends BetterState<AboutPage> {
           ),
           children: <Widget>[
             Image(
-              image: AssetImage("assets/images/app_logo.png"),
+              image: AssetImage("assets/icons/app_logo.png"),
               height: 130,
               width: 130,
             ),
