@@ -12,7 +12,6 @@ import 'package:ta/dataStore.dart';
 import 'package:ta/firebase.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
-import 'package:ta/pages/drawerpages/EditAccount.dart';
 import 'package:ta/pages/newsummarypage/Section.dart';
 import 'package:ta/pages/newsummarypage/SummaryList.dart';
 import 'package:ta/pages/summarypage/SummaryPageDrawer.dart';
@@ -211,19 +210,15 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage>
           });
     }
 
-    autoRefresh(noFetch: true);
+    startAutoRefresh();
+  }
 
-    setState(() {
-      autoRefreshing = true;
-    });
-    autoRefresh(
-      noFetch: false,
-      callBack: () {
-        setState(() {
-          autoRefreshing = false;
-        });
-      },
-    );
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state==AppLifecycleState.resumed){
+      startAutoRefresh();
+    }
   }
 
   manualRefresh() async {
@@ -244,10 +239,26 @@ class _NewSummaryPageState extends BetterState<NewSummaryPage>
     setState(() {});
   }
 
+  startAutoRefresh() {
+    autoRefresh(noFetch: true);
+
+    setState(() {
+      autoRefreshing = true;
+    });
+    autoRefresh(
+      noFetch: false,
+      callBack: () {
+        setState(() {
+          autoRefreshing = false;
+        });
+      },
+    );
+  }
+
   autoRefresh({bool noFetch, VoidCallback callBack}) async {
     var lastUpdateTime = prefs.getString("last_update-${currentUser.number}");
     if (!(lastUpdateTime != null &&
-        DateTime.now().difference(DateTime.parse(lastUpdateTime)).inMinutes < 1)) {
+        DateTime.now().difference(DateTime.parse(lastUpdateTime)).inMinutes < 5)) {
       try {
         await Future.wait(
           <Future>[
