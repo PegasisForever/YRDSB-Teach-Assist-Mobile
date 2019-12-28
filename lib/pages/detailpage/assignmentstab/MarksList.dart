@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
-import 'package:ta/dataStore.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/MarksListTile.dart';
 import 'package:ta/pages/detailpage/whatifpage/EditAssignmentDialog.dart';

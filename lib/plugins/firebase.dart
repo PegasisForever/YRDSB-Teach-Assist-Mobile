@@ -1,5 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:ta/dataStore.dart';
+import 'package:ta/plugins/dataStore.dart';
 
 final _firebaseMessaging = FirebaseMessaging();
 var firebaseInited = false;

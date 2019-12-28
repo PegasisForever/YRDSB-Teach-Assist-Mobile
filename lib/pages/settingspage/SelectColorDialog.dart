@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ta/dataStore.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/main.dart';
 import 'package:ta/res/Strings.dart';
 

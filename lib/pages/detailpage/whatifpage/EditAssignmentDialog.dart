@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:ta/dataStore.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/whatifpage/SmallMarkEditor.dart';
 import 'package:ta/res/Strings.dart';

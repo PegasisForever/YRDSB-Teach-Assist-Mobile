@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_extend/share_extend.dart';
-import 'package:ta/dataStore.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/main.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/settingspage/SelectColorDialog.dart';
@@ -104,27 +104,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     return SelectColorDialog();
                   });
             },
-          ),
-          ListTile(
-            title: Text(Strings.get("default_first_page")),
-            leading: Icon(Icons.home),
-            trailing: DropdownButton<int>(
-                value: Config.firstPage,
-                onChanged: (v) {
-                  setState(() {
-                    Config.firstPage = v;
-                  });
-                },
-                items: [
-                  DropdownMenuItem(
-                    value: 0,
-                    child: Text(Strings.get("summary")),
-                  ),
-                  DropdownMenuItem(
-                    value: 1,
-                    child: Text(Strings.get("time_line")),
-                  ),
-                ]),
           ),
           ListTile(
             title: Text(Strings.get("privacy_mode")),

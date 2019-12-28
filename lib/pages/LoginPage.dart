@@ -98,6 +98,7 @@ class _LoginPageState extends BetterState<LoginPage> {
                             ),
                       RaisedButton(
                         color: Theme.of(context).colorScheme.primary,
+                        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
                         child: Text(
                           Strings.get("login").toUpperCase(),
                           style: TextStyle(color: Colors.white),

@@ -86,6 +86,22 @@ class _TADrawerState extends State<TADrawer> {
             },
           ),
           ListTile(
+            title: Text(Strings.get("updates")),
+            leading: Icon(Icons.new_releases),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, "/updates");
+            },
+          ),
+          ListTile(
+            title: Text(Strings.get("calendar")),
+            leading: Icon(Icons.date_range),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, "/calendar");
+            },
+          ),
+          ListTile(
             title: Text(Strings.get("feedback")),
             leading: Icon(Icons.message),
             onTap: () {

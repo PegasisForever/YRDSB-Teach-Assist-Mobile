@@ -37,14 +37,6 @@ class Config {
     });
   }
 
-  static int get firstPage {
-    return prefs.getInt("default_first_page") ?? 0;
-  }
-
-  static set firstPage(int v) {
-    prefs.setInt("default_first_page", v);
-  }
-
   static bool get showMoreDecimal {
     return prefs.getBool("show_more_decimal") ?? false;
   }

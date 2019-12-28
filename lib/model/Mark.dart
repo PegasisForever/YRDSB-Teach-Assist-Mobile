@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:quiver/core.dart';
-import 'package:ta/dataStore.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/prasers/ParsersCollection.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:ta/firebase.dart';
+import 'package:ta/plugins/firebase.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/res/Strings.dart';

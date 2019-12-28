@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ta/dataStore.dart';
+import 'package:ta/plugins/dataStore.dart';
 
 List<User> userList = [];
 User currentUser;

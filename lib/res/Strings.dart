@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ta/dataStore.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/model/CalendarModels.dart';
 
 const Languages = {
@@ -152,6 +152,7 @@ class Strings {
       "privacy_policy": "Privacy Policy",
       "support": "Support",
       "update": "Update",
+      "updates": "Updates",
       "language": "Language",
       "assi_edit_tip": "Drag vertically to edit, long press to disable/enable.",
       "hide_in_app_switcher_android": "Hide contents in app switcher and disable screenshots",
@@ -377,6 +378,7 @@ class Strings {
       "events": "事件",
       "view_full_calendar": "打开日历",
       "recent_updates": "近期动态",
+      "updates": "动态",
       "view_all": "查看所有动态",
       "calendar": "日历",
       "pull_down_to_refresh": "下拉刷新",

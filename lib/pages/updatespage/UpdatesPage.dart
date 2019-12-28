@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/updatespage/updatecontents/getUpdateWidget.dart';
+import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
 
@@ -19,7 +20,7 @@ class _UpdatesPageState extends BetterState<UpdatesPage> {
         body: CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
-          title: Text("Updates"),
+          title: Text(Strings.get("updates")),
           forceElevated: true,
           floating: true,
           snap: true,

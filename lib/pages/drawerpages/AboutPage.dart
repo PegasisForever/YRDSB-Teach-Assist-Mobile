@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:ta/packageinfo.dart';
+import 'package:ta/plugins/packageinfo.dart';
 import 'package:ta/pages/drawerpages/openCustomTab.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
