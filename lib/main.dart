@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ZoomPageTransitionsBuilder;
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
@@ -24,6 +23,7 @@ import 'package:ta/pages/drawerpages/FeedbackPage.dart';
 import 'package:ta/pages/settingspage/SettingsPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 import 'package:ta/pages/updatespage/UpdatesPage.dart';
+import 'package:ta/widgets/ZoomPageTransition.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -154,7 +154,7 @@ class _AppState extends State<App> {
       pageTransitionsTheme: PageTransitionsTheme(
         builders: const {
           TargetPlatform.android: ZoomPageTransitionsBuilder(),
-          TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
         },
       ),
       brightness: Brightness.light,
@@ -199,7 +199,7 @@ class _AppState extends State<App> {
       pageTransitionsTheme: PageTransitionsTheme(
         builders: const {
           TargetPlatform.android: ZoomPageTransitionsBuilder(),
-          TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
         },
       ),
       brightness: Brightness.dark,
