@@ -205,7 +205,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
   }
 
   stopTimer(){
-    timer.cancel();
+    timer?.cancel();
     timer=null;
   }
 
