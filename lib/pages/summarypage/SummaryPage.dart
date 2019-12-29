@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:open_appstore/open_appstore.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:ta/pages/drawerpages/SearchPage.dart';
 import 'package:ta/pages/summarypage/SummaryCourseList.dart';
@@ -29,6 +30,7 @@ class SummaryPage extends StatefulWidget {
 }
 
 class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<SummaryPage> {
+  RefreshController _refreshController = RefreshController(initialRefresh: false);
   Timer timer;
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool autoRefreshing = false;
@@ -45,6 +47,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
   void dispose() {
     super.dispose();
     timer.cancel();
+    _refreshController.dispose();
   }
 
   String getUpdateText() {
@@ -136,8 +139,17 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
             snap: true,
           ),
         ],
-        body: RefreshIndicator(
-          displacement: 32 + MediaQuery.of(context).padding.top,
+        body: SmartRefresher(
+          header: ClassicHeader(
+            textStyle: TextStyle(color: getGrey(100, context: context)),
+            idleText: Strings.get("pull_down_to_refresh"),
+            releaseText: Strings.get("release_to_refresh"),
+            refreshingText: Strings.get("refreshing"),
+            completeText: Strings.get("refresh_completed"),
+            failedText: Strings.get("refresh_failed"),
+            refreshStyle: RefreshStyle.UnFollow,
+          ),
+          controller: _refreshController,
           onRefresh: manualRefresh,
           child: ListView(
             padding: EdgeInsets.only(
@@ -220,8 +232,10 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
         ],
         eagerError: true,
       );
+      _refreshController.refreshCompleted();
     } catch (e) {
       handleError(e);
+      _refreshController.refreshFailed();
     }
     setState(() {});
   }
