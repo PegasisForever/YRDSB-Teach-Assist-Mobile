@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
 class ZoomPageTransitionsBuilder extends PageTransitionsBuilder {
-  const ZoomPageTransitionsBuilder();
+  final bool showEnterAnimation;
+
+  ZoomPageTransitionsBuilder({this.showEnterAnimation = true});
 
   @override
   Widget buildTransitions<T>(
-      PageRoute<T> route,
-      BuildContext context,
-      Animation<double> animation,
-      Animation<double> secondaryAnimation,
-      Widget child,
-      ) {
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return ZoomPageTransition(
       animation: animation,
       secondaryAnimation: secondaryAnimation,
       child: child,
+      showEnterAnimation: showEnterAnimation,
     );
   }
 }
@@ -24,10 +27,12 @@ class ZoomPageTransition extends StatefulWidget {
     Key key,
     this.animation,
     this.secondaryAnimation,
+    this.showEnterAnimation,
     this.child,
   }) : super(key: key);
 
-  static final List<TweenSequenceItem<double>> fastOutExtraSlowInTweenSequenceItems = <TweenSequenceItem<double>>[
+  static final List<TweenSequenceItem<double>> fastOutExtraSlowInTweenSequenceItems =
+      <TweenSequenceItem<double>>[
     TweenSequenceItem<double>(
       tween: Tween<double>(begin: 0.0, end: 0.4)
           .chain(CurveTween(curve: const Cubic(0.05, 0.0, 0.133333, 0.06))),
@@ -39,12 +44,15 @@ class ZoomPageTransition extends StatefulWidget {
       weight: 1.0 - 0.166666,
     ),
   ];
-  static final TweenSequence<double> _scaleCurveSequence = TweenSequence<double>(fastOutExtraSlowInTweenSequenceItems);
-  static final FlippedTweenSequence _flippedScaleCurveSequence = FlippedTweenSequence(fastOutExtraSlowInTweenSequenceItems);
+  static final TweenSequence<double> _scaleCurveSequence =
+      TweenSequence<double>(fastOutExtraSlowInTweenSequenceItems);
+  static final FlippedTweenSequence _flippedScaleCurveSequence =
+      FlippedTweenSequence(fastOutExtraSlowInTweenSequenceItems);
 
   final Animation<double> animation;
   final Animation<double> secondaryAnimation;
   final Widget child;
+  final bool showEnterAnimation;
 
   @override
   ZoomPageTransitionState createState() => ZoomPageTransitionState();
@@ -105,16 +113,13 @@ class ZoomPageTransitionState extends State<ZoomPageTransition> {
             .chain(CurveTween(curve: const Interval(0.05, 0.5))));
 
     final Animation<double> _reverseEndScreenScaleTransition = widget.secondaryAnimation.drive(
-        Tween<double>(begin: 1.00, end: 1.05)
-            .chain(ZoomPageTransition._flippedScaleCurveSequence));
+        Tween<double>(begin: 1.00, end: 1.05).chain(ZoomPageTransition._flippedScaleCurveSequence));
 
     final Animation<double> _reverseStartScreenScaleTransition = widget.animation.drive(
-        Tween<double>(begin: 0.9, end: 1.0)
-            .chain(ZoomPageTransition._flippedScaleCurveSequence));
+        Tween<double>(begin: 0.9, end: 1.0).chain(ZoomPageTransition._flippedScaleCurveSequence));
 
     final Animation<double> _reverseStartScreenFadeTransition = widget.animation.drive(
-        Tween<double>(begin: 0.0, end: 1.00)
-            .chain(CurveTween(curve: const Interval(0.7, 0.95))));
+        Tween<double>(begin: 0.0, end: 1.00).chain(CurveTween(curve: const Interval(0.7, 0.95))));
 
     return AnimatedBuilder(
       animation: widget.animation,
@@ -141,7 +146,8 @@ class ZoomPageTransitionState extends State<ZoomPageTransition> {
       child: AnimatedBuilder(
         animation: widget.secondaryAnimation,
         builder: (BuildContext context, Widget child) {
-          if (widget.secondaryAnimation.status == AnimationStatus.forward || _transitionWasInterrupted) {
+          if (widget.secondaryAnimation.status == AnimationStatus.forward ||
+              _transitionWasInterrupted) {
             return ScaleTransition(
               scale: _forwardStartScreenScaleTransition,
               child: child,

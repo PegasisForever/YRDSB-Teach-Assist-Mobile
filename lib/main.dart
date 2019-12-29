@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide ZoomPageTransitionsBuilder;
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -23,6 +24,7 @@ import 'package:ta/pages/drawerpages/FeedbackPage.dart';
 import 'package:ta/pages/settingspage/SettingsPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 import 'package:ta/pages/updatespage/UpdatesPage.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/ZoomPageTransition.dart';
 
 void main() {
@@ -118,7 +120,8 @@ class _AppState extends State<App> {
 
     switch (settings.name) {
       case "/":
-        return _createNoAnimationRoute(userList.length == 0 ? LoginPage() : SummaryPage());
+        return _createRoute(userList.length == 0 ? LoginPage() : SummaryPage(),
+            showEnterAnimation: false);
       case "/summary":
         return _createRoute(LoginPage());
       case "/login":
@@ -146,27 +149,24 @@ class _AppState extends State<App> {
     }
   }
 
-  Route _createNoAnimationRoute(Widget page) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return child;
-      },
-    );
-  }
-
-  Route _createRoute(Widget page) {
-    return MaterialPageRoute(builder: (_) => page);
+  Route _createRoute(Widget page, {bool showEnterAnimation = true}) {
+    return isAndroid()
+        ? PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => page,
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              return ZoomPageTransition(
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                showEnterAnimation: showEnterAnimation,
+                child: child,
+              );
+            },
+          )
+        : MaterialPageRoute(builder: (_) => page);
   }
 
   ThemeData getLightTheme(MaterialColor color) {
     return ThemeData(
-      pageTransitionsTheme: PageTransitionsTheme(
-        builders: const {
-          TargetPlatform.android: ZoomPageTransitionsBuilder(),
-          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-        },
-      ),
       brightness: Brightness.light,
       colorScheme: ColorScheme.light(
         primary: color,
@@ -206,12 +206,6 @@ class _AppState extends State<App> {
 
   ThemeData getDarkTheme(MaterialColor color) {
     return ThemeData(
-      pageTransitionsTheme: PageTransitionsTheme(
-        builders: const {
-          TargetPlatform.android: ZoomPageTransitionsBuilder(),
-          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-        },
-      ),
       brightness: Brightness.dark,
       colorScheme: ColorScheme.dark(
         primary: color,
