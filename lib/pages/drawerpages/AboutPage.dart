@@ -15,6 +15,7 @@ class AboutPage extends StatefulWidget {
 class _AboutPageState extends BetterState<AboutPage> {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var sidePadding = (widthOf(context) - 500) / 2;
     return Scaffold(
       appBar: AppBar(

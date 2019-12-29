@@ -29,6 +29,7 @@ class _LoginPageState extends BetterState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(body: Builder(
       builder: (BuildContext context) {
         return ScrollConfiguration(

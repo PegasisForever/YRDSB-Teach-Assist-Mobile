@@ -38,6 +38,7 @@ class _DetailPageState extends BetterState<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return DefaultTabController(
       length: 3,
       child: Scaffold(

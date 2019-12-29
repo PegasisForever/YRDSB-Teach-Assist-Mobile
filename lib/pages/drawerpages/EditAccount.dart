@@ -45,6 +45,7 @@ class _EditAccountState extends BetterState<EditAccount> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var _oldUser = widget.user;
     var sidePadding = (widthOf(context) - 500) / 2;
     return Scaffold(

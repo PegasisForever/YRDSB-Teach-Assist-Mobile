@@ -23,6 +23,7 @@ class _FeedbackPageState extends BetterState<FeedbackPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.get("send_feedback")),

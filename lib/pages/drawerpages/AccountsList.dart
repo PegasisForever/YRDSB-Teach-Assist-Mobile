@@ -14,6 +14,7 @@ class AccountsList extends StatefulWidget {
 class _AccountsListState extends BetterState<AccountsList> {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var sidePadding = (widthOf(context) - 500) / 2;
     return Scaffold(
       appBar: AppBar(
