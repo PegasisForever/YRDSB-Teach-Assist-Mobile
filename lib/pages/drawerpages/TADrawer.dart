@@ -4,8 +4,8 @@ import 'package:ta/pages/drawerpages/openCustomTab.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/res/Themes.dart';
 import 'package:ta/tools.dart';
+import 'package:ta/widgets/AccountDrawerHeader.dart';
 import 'package:ta/widgets/CrossFade.dart';
-import 'package:ta/widgets/user_accounts_drawer_header.dart';
 
 class TADrawer extends StatefulWidget {
   final ValueChanged<User> onUserSelected;
@@ -36,22 +36,11 @@ class _TADrawerState extends State<TADrawer> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          UserAccountsDrawerHeader(
+          AccountDetails(
             isOpened: _drawerHeaderOpened,
-            accountName:
-                Text(currentUser.displayName == "" ? currentUser.number : currentUser.displayName),
-            accountEmail: currentUser.displayName == "" ? null : Text(currentUser.number),
-            currentAccountPicture: CircleAvatar(
-              child: Text(
-                (currentUser.displayName == ""
-                    ? currentUser.number.substring(7, 9)
-                    : (currentUser.displayName.length > 2
-                        ? currentUser.displayName.substring(0, 2)
-                        : currentUser.displayName)),
-                style: TextStyle(fontSize: 40.0),
-              ),
-            ),
-            onDetailsPressed: () {
+            accountName:currentUser.displayName == "" ? currentUser.number : currentUser.displayName,
+            accountSubName: currentUser.displayName == "" ? null : currentUser.number,
+            onTap: () {
               setState(() {
                 _drawerHeaderOpened = !_drawerHeaderOpened;
               });
@@ -64,6 +53,7 @@ class _TADrawerState extends State<TADrawer> {
             secondChild: Container(),
             showFirst: _drawerHeaderOpened,
           ),
+          Divider(),
           ListTile(
             title: Text(Strings.get("moodle")),
             leading: Image.asset(
@@ -168,8 +158,6 @@ class _TADrawerState extends State<TADrawer> {
         Navigator.pushNamed(context, "/accounts_list");
       },
     ));
-
-    list.add(Divider());
 
     return list;
   }
