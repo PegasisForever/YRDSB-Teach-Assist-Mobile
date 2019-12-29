@@ -20,11 +20,14 @@ class DetailPage extends StatefulWidget {
   _DetailPageState createState() => _DetailPageState(course);
 }
 
-class _DetailPageState extends BetterState<DetailPage> {
+class _DetailPageState extends BetterState<DetailPage> with SingleTickerProviderStateMixin {
   Course _course;
   Course _originalCourse;
   var whatIfMode = false;
   var showWhatIfTips = prefs.getBool("show_what_if_tip") ?? true;
+  Animation<double> _animation;
+  Tween<double> _tween;
+  AnimationController _animationController;
 
   _DetailPageState(Course course)
       : _course = course.copy(),
@@ -37,80 +40,110 @@ class _DetailPageState extends BetterState<DetailPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: Duration(milliseconds: 300),
+      vsync: this,
+    );
+    _tween = Tween(begin: 48, end: 80);
+    var curve = CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCubic);
+    _animation = _tween.animate(curve)
+      ..addListener(() {
+        setState(() {});
+      });
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
-    return DefaultTabController(
+
+    return Scaffold(
+        body: DefaultTabController(
       length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(_course.displayName, maxLines: 2),
-          actions: <Widget>[
-            if (_course.overallMark != null)
-              IconButton(
-                icon: Icon(whatIfMode ? CustomIcons.lightbulb_filled : Icons.lightbulb_outline),
-                onPressed: () async {
-                  if (showWhatIfTips) {
-                    var isEnableWhatIf =
-                        await Navigator.pushNamed(context, "/detail/whatif_welcome");
-                    if (isEnableWhatIf != true) {
-                      return;
+      child: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
+          SliverAppBar(
+            title: Text(_course.displayName, maxLines: 2),
+            actions: <Widget>[
+              if (_course.overallMark != null)
+                IconButton(
+                  icon: Icon(whatIfMode ? CustomIcons.lightbulb_filled : Icons.lightbulb_outline),
+                  onPressed: () async {
+                    if (showWhatIfTips) {
+                      var isEnableWhatIf =
+                          await Navigator.pushNamed(context, "/detail/whatif_welcome");
+                      if (isEnableWhatIf != true) {
+                        return;
+                      }
+                      showWhatIfTips = false;
+                      prefs.setBool("show_what_if_tip", false);
                     }
-                    showWhatIfTips = false;
-                    prefs.setBool("show_what_if_tip", false);
-                  }
-                  setState(() {
-                    whatIfMode = !whatIfMode;
-                    if (!whatIfMode) {
-                      _course = _originalCourse.copy();
-                    }
-                  });
-                },
-              )
-          ],
-          bottom: TabBar(
-            isScrollable: widthOf(context) > 500,
-            indicatorColor: getPrimary(),
-            labelColor: Theme.of(context).textTheme.title.color,
-            tabs: [
-              Tab(text: Strings.get("assignments")),
-              Tab(text: Strings.get("statistics")),
-              Tab(text: Strings.get("about")),
+                    setState(() {
+                      whatIfMode = !whatIfMode;
+                      if (!whatIfMode) {
+                        _course = _originalCourse.copy();
+
+                        _tween.begin = 80;
+                        _animationController.reset();
+                        _tween.end = 48;
+                        _animationController.forward();
+                      } else {
+                        _tween.begin = 48;
+                        _animationController.reset();
+                        _tween.end = 80;
+                        _animationController.forward();
+                      }
+                    });
+                  },
+                )
             ],
-          ),
-          textTheme: Theme.of(context).textTheme,
-          iconTheme: Theme.of(context).iconTheme,
-        ),
-        body: Column(
-          children: <Widget>[
-            Flexible(
-              flex: 0,
-              child: CrossFade(
-                key: Key("add-btn"),
-                firstChild: Container(
-                  color: Colors.amber,
-                  child: Center(
-                      child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(Strings.get("what_if_mode_activated"),
-                        style: TextStyle(color: Colors.black)),
-                  )),
-                ),
-                secondChild: Container(),
-                showFirst: whatIfMode,
-              ),
-            ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  MarksList(_course, whatIfMode, updateCourse),
-                  StatisticsList(_course, whatIfMode),
-                  AboutTab(_course),
+            forceElevated: innerBoxIsScrolled,
+            floating: true,
+            pinned: true,
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(_animation.value),
+              child: Column(
+                children: <Widget>[
+                  TabBar(
+                    isScrollable: widthOf(context) > 500,
+                    indicatorColor: getPrimary(),
+                    labelColor: Theme.of(context).textTheme.title.color,
+                    tabs: [
+                      Tab(text: Strings.get("assignments")),
+                      Tab(text: Strings.get("statistics")),
+                      Tab(text: Strings.get("about")),
+                    ],
+                  ),
+                  CrossFade(
+                    key: Key("add-btn"),
+                    firstChild: Container(
+                      color: Colors.amber,
+                      child: Center(
+                          child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(Strings.get("what_if_mode_activated"),
+                            style: TextStyle(color: Colors.black)),
+                      )),
+                    ),
+                    secondChild: Container(),
+                    showFirst: whatIfMode,
+                  )
                 ],
               ),
-            )
+            ),
+            textTheme: Theme.of(context).textTheme,
+            iconTheme: Theme.of(context).iconTheme,
+          ),
+        ],
+        body: TabBarView(
+          children: [
+            MarksList(_course, whatIfMode, updateCourse),
+            StatisticsList(_course, whatIfMode),
+            AboutTab(_course),
           ],
         ),
       ),
-    );
+    ));
   }
 }

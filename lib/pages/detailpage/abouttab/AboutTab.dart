@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ta/model/Mark.dart';
@@ -41,8 +43,8 @@ class _AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin 
 
     return ListView(
       padding: EdgeInsets.only(
-        left: sidePadding > 0 ? sidePadding : 0,
-        right: sidePadding > 0 ? sidePadding : 0,
+        left: max(sidePadding, 14),
+        right: max(sidePadding, 14),
         top: 16,
         bottom: MediaQuery.of(context).padding.bottom + 16,
       ),
