@@ -123,7 +123,7 @@ class _AppState extends State<App> {
         return _createRoute(userList.length == 0 ? LoginPage() : SummaryPage(),
             showEnterAnimation: false);
       case "/summary":
-        return _createRoute(LoginPage());
+        return _createRoute(SummaryPage());
       case "/login":
         return _createRoute(LoginPage());
       case "/updates":
