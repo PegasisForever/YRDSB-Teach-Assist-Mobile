@@ -200,3 +200,8 @@ extension on String {
     return int.parse(this);
   }
 }
+
+double getScreenHeight(BuildContext context) {
+  var query = MediaQuery.of(context);
+  return query.size.height - query.padding.top - query.padding.bottom;
+}
