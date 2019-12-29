@@ -22,6 +22,8 @@ class _CalendarPageState extends BetterState<CalendarPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.get("calendar")),
+        textTheme: Theme.of(context).textTheme,
+        iconTheme: Theme.of(context).iconTheme,
         actions: <Widget>[
           if (showReturnButton)
             IconButton(

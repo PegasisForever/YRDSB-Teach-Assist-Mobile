@@ -223,10 +223,12 @@ class _EditAccountState extends BetterState<EditAccount> {
               },
             )
           ],
+          textTheme: Theme.of(context).textTheme,
+          iconTheme: Theme.of(context).iconTheme,
         ),
         body: ListView(
           padding: EdgeInsets.only(
-            top: 16,
+            top: 4,
             left: max(sidePadding, 16),
             right: max(sidePadding, 16),
             bottom: MediaQuery.of(context).padding.bottom+16,

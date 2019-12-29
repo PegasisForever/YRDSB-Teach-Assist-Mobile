@@ -30,6 +30,8 @@ class _AccountsListState extends BetterState<AccountsList> {
             },
           )
         ],
+        textTheme: Theme.of(context).textTheme,
+        iconTheme: Theme.of(context).iconTheme,
       ),
       body: ReorderableListView(
         padding: EdgeInsets.only(

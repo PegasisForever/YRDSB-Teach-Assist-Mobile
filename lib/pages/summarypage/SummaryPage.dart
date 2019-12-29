@@ -133,8 +133,6 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
                 ),
               ),
             ],
-            backgroundColor: Theme.of(context).canvasColor,
-            brightness: Brightness.light,
             floating: true,
             snap: true,
           ),

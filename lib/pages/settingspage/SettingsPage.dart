@@ -25,6 +25,8 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.get("settings")),
+        textTheme: Theme.of(context).textTheme,
+        iconTheme: Theme.of(context).iconTheme,
       ),
       body: ListView(
         padding: EdgeInsets.only(

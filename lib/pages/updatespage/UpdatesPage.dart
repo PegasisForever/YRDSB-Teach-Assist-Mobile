@@ -21,9 +21,10 @@ class _UpdatesPageState extends BetterState<UpdatesPage> {
       slivers: <Widget>[
         SliverAppBar(
           title: Text(Strings.get("updates")),
-          forceElevated: true,
           floating: true,
           snap: true,
+          textTheme: Theme.of(context).textTheme,
+          iconTheme: Theme.of(context).iconTheme,
         ),
         SliverList(
           delegate: SliverChildListDelegate(

@@ -68,13 +68,16 @@ class _DetailPageState extends BetterState<DetailPage> {
           ],
           bottom: TabBar(
             isScrollable: widthOf(context) > 500,
-            indicatorColor: Colors.white,
+            indicatorColor: getPrimary(),
+            labelColor: Theme.of(context).textTheme.title.color,
             tabs: [
               Tab(text: Strings.get("assignments")),
               Tab(text: Strings.get("statistics")),
               Tab(text: Strings.get("about")),
             ],
           ),
+          textTheme: Theme.of(context).textTheme,
+          iconTheme: Theme.of(context).iconTheme,
         ),
         body: Column(
           children: <Widget>[

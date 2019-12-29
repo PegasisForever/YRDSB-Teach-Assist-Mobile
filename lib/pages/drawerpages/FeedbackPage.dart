@@ -97,12 +97,14 @@ class _FeedbackPageState extends BetterState<FeedbackPage> {
             },
           )
         ],
+        textTheme: Theme.of(context).textTheme,
+        iconTheme: Theme.of(context).iconTheme,
       ),
       body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 500),
           child: Padding(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.fromLTRB(16,4,16,16),
             child: Column(
               children: <Widget>[
                 EditText(

@@ -52,9 +52,10 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
         headerSliverBuilder: (context, innerBoxScrolled) => [
           SliverAppBar(
             title: Text(Strings.get("archived_marks")),
-            forceElevated: true,
             floating: true,
             snap: true,
+            textTheme: Theme.of(context).textTheme,
+            iconTheme: Theme.of(context).iconTheme,
           ),
         ],
         body: RefreshIndicator(
@@ -103,6 +104,8 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.get("archived_marks")),
+        textTheme: Theme.of(context).textTheme,
+        iconTheme: Theme.of(context).iconTheme,
       ),
       body: RefreshIndicator(
         key: _noDataRefreshIndicatorKey,
