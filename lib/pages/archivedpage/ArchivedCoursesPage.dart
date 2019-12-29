@@ -53,8 +53,8 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
           SliverAppBar(
             title: Text(Strings.get("archived_marks")),
             forceElevated: true,
-            floating: false,
-            snap: false,
+            floating: true,
+            snap: true,
           ),
         ],
         body: RefreshIndicator(
