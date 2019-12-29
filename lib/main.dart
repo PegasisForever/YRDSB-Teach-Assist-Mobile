@@ -118,8 +118,9 @@ class _AppState extends State<App> {
 
     switch (settings.name) {
       case "/":
-        return MaterialPageRoute(
-            builder: (_) => userList.length == 0 ? LoginPage() : SummaryPage());
+        return _createNoAnimationRoute(userList.length == 0 ? LoginPage() : SummaryPage());
+      case "/summary":
+        return _createRoute(LoginPage());
       case "/login":
         return _createRoute(LoginPage());
       case "/updates":
@@ -143,6 +144,15 @@ class _AppState extends State<App> {
       case "/settings":
         return _createRoute(SettingsPage());
     }
+  }
+
+  Route _createNoAnimationRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child;
+      },
+    );
   }
 
   Route _createRoute(Widget page) {

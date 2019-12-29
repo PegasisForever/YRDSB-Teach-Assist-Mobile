@@ -152,7 +152,7 @@ class _LoginPageState extends BetterState<LoginPage> {
       await getAndSaveCalendar();
       Navigator.pushNamed(
         context,
-        "/",
+        "/summary",
       );
     } catch (e) {
       _handleError(e, context);

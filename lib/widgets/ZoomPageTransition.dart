@@ -27,11 +27,6 @@ class ZoomPageTransition extends StatefulWidget {
     this.child,
   }) : super(key: key);
 
-  static final Tween<double> _scrimOpacityTween = Tween<double>(
-    begin: 0.0,
-    end: 0.60,
-  );
-
   static final List<TweenSequenceItem<double>> fastOutExtraSlowInTweenSequenceItems = <TweenSequenceItem<double>>[
     TweenSequenceItem<double>(
       tween: Tween<double>(begin: 0.0, end: 0.4)
@@ -98,7 +93,7 @@ class ZoomPageTransitionState extends State<ZoomPageTransition> {
   @override
   Widget build(BuildContext context) {
     final Animation<double> _forwardEndScreenScaleTransition = widget.animation.drive(
-        Tween<double>(begin: 0.9, end: 1.00)
+        Tween<double>(begin: 0.9, end: 1.0)
             .chain(ZoomPageTransition._scaleCurveSequence));
 
     final Animation<double> _forwardStartScreenScaleTransition = widget.secondaryAnimation.drive(
@@ -119,7 +114,7 @@ class ZoomPageTransitionState extends State<ZoomPageTransition> {
 
     final Animation<double> _reverseStartScreenFadeTransition = widget.animation.drive(
         Tween<double>(begin: 0.0, end: 1.00)
-            .chain(CurveTween(curve: const Interval(0.5, 0.95))));
+            .chain(CurveTween(curve: const Interval(0.7, 0.95))));
 
     return AnimatedBuilder(
       animation: widget.animation,
