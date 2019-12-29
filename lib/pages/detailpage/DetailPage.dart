@@ -64,7 +64,10 @@ class _DetailPageState extends BetterState<DetailPage> with SingleTickerProvider
       child: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
           SliverAppBar(
-            title: Text(_course.displayName, maxLines: 2),
+            title: Text(
+              _course.displayName,
+              overflow: TextOverflow.fade,
+            ),
             actions: <Widget>[
               if (_course.overallMark != null)
                 IconButton(
