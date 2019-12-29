@@ -88,71 +88,76 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
 
     return Scaffold(
       key: scaffoldKey,
-      body: RefreshIndicator(
-        displacement: 32 + MediaQuery.of(context).padding.top,
-        onRefresh: manualRefresh,
-        child: ListView(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 8,
-            left: max(sidePadding, 14),
-            right: max(sidePadding, 14),
-            bottom: MediaQuery.of(context).padding.bottom + 16,
-          ),
-          children: <Widget>[
-            Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Image(
-                  image: AssetImage("assets/icons/app_logo_64x.png"),
-                  height: 40,
-                  width: 40,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxScrolled) => [
+          SliverAppBar(
+            centerTitle: true,
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: IconButton(
+                color: Theme.of(context).iconTheme.color,
+                icon: Icon(Icons.menu),
+                onPressed: () {
+                  scaffoldKey.currentState.openDrawer();
+                },
+              ),
+            ),
+            title: Image(
+              image: AssetImage("assets/icons/app_logo_64x.png"),
+              height: 40,
+              width: 40,
+            ),
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right:14),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Transform.translate(
-                      offset: Offset(-6, 0),
-                      child: IconButton(
-                        icon: Icon(Icons.menu),
-                        onPressed: () {
-                          scaffoldKey.currentState.openDrawer();
-                        },
+                    if (autoRefreshing)
+                      SpinKitDualRing(
+                        color: getGrey(100, context: context),
+                        lineWidth: 1.5,
+                        size: 18,
+                        duration: const Duration(milliseconds: 700),
                       ),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        if (autoRefreshing)
-                          SpinKitDualRing(
-                            color: getGrey(100, context: context),
-                            lineWidth: 1.5,
-                            size: 18,
-                            duration: const Duration(milliseconds: 700),
-                          ),
-                        SizedBox(width: 4),
-                        Text(
-                          getUpdateText(),
-                          textAlign: TextAlign.end,
-                          style: TextStyle(color: getGrey(100, context: context)),
-                        ),
-                      ],
+                    SizedBox(width: 4),
+                    Text(
+                      getUpdateText(),
+                      textAlign: TextAlign.end,
+                      style: TextStyle(color: getGrey(100, context: context)),
                     ),
                   ],
                 ),
-              ],
+              ),
+            ],
+            backgroundColor: Theme.of(context).canvasColor,
+            brightness: Brightness.light,
+            floating: true,
+            snap: true,
+          ),
+        ],
+        body: RefreshIndicator(
+          displacement: 32 + MediaQuery.of(context).padding.top,
+          onRefresh: manualRefresh,
+          child: ListView(
+            padding: EdgeInsets.only(
+              left: max(sidePadding, 14),
+              right: max(sidePadding, 14),
+              bottom: MediaQuery.of(context).padding.bottom + 16,
             ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: getSectionWidgets([
-                AnnouncementSection(),
-                CalendarSection(),
-                UpdatesSection(),
-              ]),
-            ),
-            Divider(),
-            SummaryCourseList()
-          ],
+            children: <Widget>[
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: getSectionWidgets([
+                  AnnouncementSection(),
+                  CalendarSection(),
+                  UpdatesSection(),
+                ]),
+              ),
+              Divider(),
+              SummaryCourseList()
+            ],
+          ),
         ),
       ),
       drawer: TADrawer(
