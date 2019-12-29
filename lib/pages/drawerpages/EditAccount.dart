@@ -140,9 +140,8 @@ class _EditAccountState extends BetterState<EditAccount> {
                   Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: CircularProgressIndicator(
-                      backgroundColor: Color(0x66FFFFFF),
                       valueColor:
-                          AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.onPrimary),
+                          AlwaysStoppedAnimation<Color>(getPrimary()),
                     ),
                   )
                 ],
