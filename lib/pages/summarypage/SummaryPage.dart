@@ -112,7 +112,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
             ),
             actions: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(right:14),
+                padding: const EdgeInsets.only(right: 14),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -164,7 +164,6 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
                   UpdatesSection(),
                 ]),
               ),
-              Divider(),
               SummaryCourseList()
             ],
           ),
@@ -174,6 +173,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
         onUserSelected: (user) {
           setState(() {
             setCurrentUser(user);
+            startAutoRefresh();
           });
         },
         onOpenSearch: () {
