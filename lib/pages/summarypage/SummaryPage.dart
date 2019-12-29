@@ -35,21 +35,6 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool autoRefreshing = false;
 
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(new Duration(minutes: 1), (timer) {
-      setState(() {}); //update "updateText"
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    timer.cancel();
-    _refreshController.dispose();
-  }
-
   String getUpdateText() {
     var lastUpdateStr = prefs.getString("last_update-${currentUser.number}");
     var updateText = "";
@@ -212,11 +197,39 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
     startAutoRefresh();
   }
 
+  startTimer(){
+    timer?.cancel();
+    timer = Timer.periodic(new Duration(minutes: 1), (timer) {
+      setState(() {}); //update "updateText"
+    });
+  }
+
+  stopTimer(){
+    timer.cancel();
+    timer=null;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    stopTimer();
+    _refreshController.dispose();
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
       startAutoRefresh();
+      startTimer();
+    }else{
+      stopTimer();
     }
   }
 
