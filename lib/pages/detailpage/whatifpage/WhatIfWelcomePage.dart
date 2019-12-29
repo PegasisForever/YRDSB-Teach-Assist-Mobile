@@ -16,15 +16,15 @@ class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
   Widget build(BuildContext context) {
     super.build(context);
     var sidePadding = (widthOf(context) - 400) / 2;
-    var topPadding=MediaQuery.of(context).padding.top;
+    var topPadding = MediaQuery.of(context).padding.top;
 
     return Scaffold(
       body: Stack(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-              top: topPadding+4,
-              left: 4
+              top: topPadding + 4,
+              left: 4,
             ),
             child: IconButton(
               icon: Icon(isAndroid() ? Icons.arrow_back : Icons.arrow_back_ios),
@@ -36,7 +36,7 @@ class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
           Center(
             child: ListView(
               padding: EdgeInsets.only(
-                top: topPadding+16,
+                top: topPadding + 16,
                 bottom: 16,
                 left: max(sidePadding, 24),
                 right: max(sidePadding, 24),
@@ -63,7 +63,7 @@ class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
                 Text(Strings.get("teacher_updated_my_mark"),
                     textAlign: TextAlign.center, style: TextStyle(fontSize: 22)),
                 SizedBox(
-                  height: max(30, min(getScreenHeight(context)-500, 200)),
+                  height: 150,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -83,9 +83,7 @@ class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
                       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                       child: Text(Strings.get("enable_what_if_mode"),
                           style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.white)),
+                              fontSize: 20, fontWeight: FontWeight.normal, color: Colors.white)),
                     ),
                     onPressed: () {
                       Navigator.pop(context, true);
@@ -94,7 +92,7 @@ class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
                 )
               ],
             ),
-          ),
+          )
         ],
       ),
     );
