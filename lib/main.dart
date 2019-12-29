@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -120,32 +121,42 @@ class _AppState extends State<App> {
         return MaterialPageRoute(
             builder: (_) => userList.length == 0 ? LoginPage() : SummaryPage());
       case "/login":
-        return MaterialPageRoute(builder: (_) => LoginPage());
+        return _createRoute(LoginPage());
       case "/updates":
-        return MaterialPageRoute(builder: (_) => UpdatesPage());
+        return _createRoute(UpdatesPage());
       case "/calendar":
-        return MaterialPageRoute(builder: (_) => CalendarPage());
+        return _createRoute(CalendarPage());
       case "/accounts_list":
-        return MaterialPageRoute(builder: (_) => AccountsList());
+        return _createRoute(AccountsList());
       case "/accounts_list/edit":
-        return MaterialPageRoute(builder: (_) => EditAccount(args[0], args[1]));
+        return _createRoute(EditAccount(args[0], args[1]));
       case "/about":
-        return MaterialPageRoute(builder: (_) => AboutPage());
+        return _createRoute(AboutPage());
       case "/feedback":
-        return MaterialPageRoute(builder: (_) => FeedbackPage());
+        return _createRoute(FeedbackPage());
       case "/detail":
-        return MaterialPageRoute(builder: (_) => DetailPage(args[0]));
+        return _createRoute(DetailPage(args[0]));
       case "/detail/whatif_welcome":
-        return MaterialPageRoute(builder: (_) => WhatIfWelcomePage());
+        return _createRoute(WhatIfWelcomePage());
       case "/archived":
-        return MaterialPageRoute(builder: (_) => ArchivedCoursesPage());
+        return _createRoute(ArchivedCoursesPage());
       case "/settings":
-        return MaterialPageRoute(builder: (_) => SettingsPage());
+        return _createRoute(SettingsPage());
     }
+  }
+
+  Route _createRoute(Widget page) {
+    return MaterialPageRoute(builder: (_) => page);
   }
 
   ThemeData getLightTheme(MaterialColor color) {
     return ThemeData(
+      pageTransitionsTheme: PageTransitionsTheme(
+        builders: const {
+          TargetPlatform.android: ZoomPageTransitionsBuilder(),
+          TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+        },
+      ),
       brightness: Brightness.light,
       colorScheme: ColorScheme.light(
         primary: color,
@@ -185,6 +196,12 @@ class _AppState extends State<App> {
 
   ThemeData getDarkTheme(MaterialColor color) {
     return ThemeData(
+      pageTransitionsTheme: PageTransitionsTheme(
+        builders: const {
+          TargetPlatform.android: ZoomPageTransitionsBuilder(),
+          TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+        },
+      ),
       brightness: Brightness.dark,
       colorScheme: ColorScheme.dark(
         primary: color,
