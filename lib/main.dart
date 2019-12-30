@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:after_layout/after_layout.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide ZoomPageTransitionsBuilder;
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
+import 'package:quick_actions/quick_actions.dart';
 import 'package:syncfusion_flutter_core/core.dart';
 import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/plugins/firebase.dart';
@@ -24,6 +26,7 @@ import 'package:ta/pages/drawerpages/FeedbackPage.dart';
 import 'package:ta/pages/settingspage/SettingsPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 import 'package:ta/pages/updatespage/UpdatesPage.dart';
+import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/ZoomPageTransition.dart';
 
@@ -54,6 +57,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+
   _updateBrightness(int v) {
     setState(() {
       Config.darkMode = v;

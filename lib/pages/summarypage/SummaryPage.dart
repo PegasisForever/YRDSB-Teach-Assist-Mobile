@@ -8,8 +8,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:open_appstore/open_appstore.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:quick_actions/quick_actions.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:ta/pages/drawerpages/SearchPage.dart';
+import 'package:ta/pages/drawerpages/openCustomTab.dart';
 import 'package:ta/pages/summarypage/SummaryCourseList.dart';
 import 'package:ta/pages/summarypage/section/AnnouncementSection.dart';
 import 'package:ta/pages/summarypage/section/CalendarSection.dart';
@@ -34,6 +36,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
   Timer timer;
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool autoRefreshing = false;
+  final QuickActions quickActions = QuickActions();
 
   String getUpdateText() {
     var lastUpdateStr = prefs.getString("last_update-${currentUser.number}");
@@ -173,6 +176,24 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
 
   @override
   afterFirstLayout(BuildContext context) {
+    quickActions.initialize((type) {
+      if (type == 'action_moodle') {
+        openCustomTab(context, "https://moodle2.yrdsb.ca/");
+      }else if(type=="action_archived"){
+        Navigator.pushNamed(context, "/archived");
+      }else if(type=="action_updates"){
+        Navigator.pushNamed(context, "/updates");
+      }else if(type=="action_calendar"){
+        Navigator.pushNamed(context, "/calendar");
+      }
+    });
+    quickActions.setShortcutItems(<ShortcutItem>[
+      ShortcutItem(type: 'action_moodle', localizedTitle: Strings.get("moodle",context), icon: 'ic_moodle'),
+      ShortcutItem(type: 'action_archived', localizedTitle: Strings.get("archived_marks",context), icon: 'ic_archived'),
+      ShortcutItem(type: 'action_updates', localizedTitle: Strings.get("updates",context), icon: 'ic_updates'),
+      ShortcutItem(type: 'action_calendar', localizedTitle: Strings.get("calendar",context), icon: 'ic_calendar'),
+    ]);
+
     if (prefs.getBool("show_no_google_play_warning") ?? true && supportsGooglePlay() == false) {
       showDialog(
           context: context,
