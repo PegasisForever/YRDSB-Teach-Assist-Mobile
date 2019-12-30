@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:after_layout/after_layout.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' hide ZoomPageTransitionsBuilder;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
@@ -28,7 +28,6 @@ import 'package:ta/pages/summarypage/SummaryPage.dart';
 import 'package:ta/pages/updatespage/UpdatesPage.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
-import 'package:ta/widgets/ZoomPageTransition.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,7 +56,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-
   _updateBrightness(int v) {
     setState(() {
       Config.darkMode = v;
@@ -154,24 +152,16 @@ class _AppState extends State<App> {
   }
 
   Route _createRoute(Widget page, {bool showEnterAnimation = true}) {
-    return isAndroid()
-        ? PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => page,
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return ZoomPageTransition(
-                animation: animation,
-                secondaryAnimation: secondaryAnimation,
-                showEnterAnimation: showEnterAnimation,
-                child: child,
-              );
-            },
-          )
-        : MaterialPageRoute(builder: (_) => page);
+    return MaterialPageRoute(builder: (_) => page);
   }
 
   ThemeData getLightTheme(MaterialColor color) {
     return ThemeData(
       brightness: Brightness.light,
+      pageTransitionsTheme: PageTransitionsTheme(builders: {
+        TargetPlatform.android: ZoomPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      }),
       colorScheme: ColorScheme.light(
         primary: color,
         secondary: color[200],
@@ -211,6 +201,10 @@ class _AppState extends State<App> {
   ThemeData getDarkTheme(MaterialColor color) {
     return ThemeData(
       brightness: Brightness.dark,
+      pageTransitionsTheme: PageTransitionsTheme(builders: {
+        TargetPlatform.android: ZoomPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      }),
       colorScheme: ColorScheme.dark(
         primary: color,
         secondary: color[300],
