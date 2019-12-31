@@ -75,12 +75,19 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
               ],
             ),
             onNotification: (noti) {
-              appBarOffsetY -= noti.scrollDelta;
-              if (appBarOffsetY < -56) {
-                appBarOffsetY = -56;
-              } else if (appBarOffsetY > 0) {
-                appBarOffsetY = 0;
+              if (noti.metrics.pixels >= noti.metrics.minScrollExtent &&
+                  noti.metrics.pixels <= noti.metrics.maxScrollExtent) {
+                appBarOffsetY -= noti.scrollDelta;
+                if (appBarOffsetY < -56) {
+                  appBarOffsetY = -56;
+                } else if (appBarOffsetY > 0) {
+                  appBarOffsetY = 0;
+                }
+                if(-appBarOffsetY > noti.metrics.pixels){
+                  appBarOffsetY=-noti.metrics.pixels;
+                }
               }
+
               if (noti.metrics.pixels > (-appBarOffsetY)) {
                 elevation = 4;
               } else {
