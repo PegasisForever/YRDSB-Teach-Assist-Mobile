@@ -27,6 +27,7 @@ import 'package:ta/pages/settingspage/SettingsPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 import 'package:ta/pages/updatespage/UpdatesPage.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/res/Themes.dart';
 import 'package:ta/tools.dart';
 
 void main() {
@@ -106,6 +107,12 @@ class _AppState extends State<App> {
       title: 'YRDSB Teach Assist',
       theme: lightTheme,
       darkTheme: darkTheme,
+      builder: (context,child){
+        return ScrollConfiguration(
+          behavior: DisableGlow(),
+          child: child,
+        );
+      },
       initialRoute: "/",
       onGenerateRoute: generateRoute,
       localizationsDelegates: [

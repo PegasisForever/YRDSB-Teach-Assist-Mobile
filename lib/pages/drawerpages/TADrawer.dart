@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' hide UserAccountsDrawerHeader;
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/drawerpages/openCustomTab.dart';
 import 'package:ta/res/Strings.dart';
-import 'package:ta/res/Themes.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/AccountDrawerHeader.dart';
 import 'package:ta/widgets/CrossFade.dart';
@@ -11,7 +10,7 @@ class TADrawer extends StatefulWidget {
   final ValueChanged<User> onUserSelected;
   final VoidCallback onOpenSearch;
 
-  TADrawer({this.onUserSelected,this.onOpenSearch});
+  TADrawer({this.onUserSelected, this.onOpenSearch});
 
   @override
   _TADrawerState createState() => _TADrawerState();
@@ -31,14 +30,13 @@ class _TADrawerState extends State<TADrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: ScrollConfiguration(
-      behavior: DisableOverScroll(),
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
           AccountDetails(
             isOpened: _drawerHeaderOpened,
-            accountName:currentUser.displayName == "" ? currentUser.number : currentUser.displayName,
+            accountName:
+                currentUser.displayName == "" ? currentUser.number : currentUser.displayName,
             accountSubName: currentUser.displayName == "" ? null : currentUser.number,
             onTap: () {
               setState(() {
@@ -126,7 +124,7 @@ class _TADrawerState extends State<TADrawer> {
           ),
         ],
       ),
-    ));
+    );
   }
 
   List<Widget> getAccountSelectorList() {
