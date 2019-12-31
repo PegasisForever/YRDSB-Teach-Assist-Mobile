@@ -191,11 +191,11 @@ class _DetailPageState extends BetterState<DetailPage> with SingleTickerProvider
         ),
         onNotification: (noti) {
           var markOffset = markListKey.currentState?.appBarOffsetY ?? 0.0;
-          var markElevation = markListKey.currentState?.elevation ?? 0.0;
+          var markElevation = markListKey.currentState?.appBarElevation ?? 0.0;
           var statisticsOffset = statisticsListKey.currentState?.appBarOffsetY ?? 0.0;
-          var statisticsElevation = statisticsListKey.currentState?.elevation ?? 0.0;
+          var statisticsElevation = statisticsListKey.currentState?.appBarElevation ?? 0.0;
           var aboutOffset = aboutKey.currentState?.appBarOffsetY ?? 0.0;
-          var aboutElevation = aboutKey.currentState?.elevation ?? 0.0;
+          var aboutElevation = aboutKey.currentState?.appBarElevation ?? 0.0;
 
           if (!(noti.metrics is PageMetrics)) {
             // Listview scroll
