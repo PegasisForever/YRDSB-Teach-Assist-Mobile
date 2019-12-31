@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
@@ -12,21 +13,19 @@ import 'package:ta/widgets/CrossFade.dart';
 import 'package:ta/widgets/TipsCard.dart';
 
 class MarksList extends StatefulWidget {
-  MarksList(this._course, this._whatIfMode, this._updateCourse, Key key) : super(key: key);
+  MarksList({this.course, this.whatIfMode, this.updateCourse});
 
-  final Function _updateCourse;
-  final Course _course;
-  final bool _whatIfMode;
+  final Function updateCourse;
+  final Course course;
+  final bool whatIfMode;
 
   @override
   MarksListState createState() => MarksListState();
 }
 
 class MarksListState extends State<MarksList>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin {
   var showTips = prefs.getBool("show_tap_to_view_detail_tip") ?? true;
-  double appBarOffsetY = 0;
-  double elevation = 0;
 
   @override
   bool get wantKeepAlive => true;
@@ -34,108 +33,84 @@ class MarksListState extends State<MarksList>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    var whatIfMode = widget._whatIfMode;
-    var course = widget._course;
+    var whatIfMode = widget.whatIfMode;
+    var course = widget.course;
     var sidePadding = (widthOf(context) - 500) / 2;
-    return NotificationListener<ScrollUpdateNotification>(
-      child: Stack(
-        children: <Widget>[
-          if (course.overallMark == null || course.assignments.length == 0)
-            Center(
-              child: Text(
-                Strings.get("assignments_unavailable"),
-                style: Theme.of(context).textTheme.subhead,
-              ),
+    return  Stack(
+      children: <Widget>[
+        if (course.overallMark == null || course.assignments.length == 0)
+          Center(
+            child: Text(
+              Strings.get("assignments_unavailable"),
+              style: Theme.of(context).textTheme.subhead,
             ),
-          if (course.assignments != null)
-            BetterAnimatedList(
-              padding: EdgeInsets.only(
-                top: 56,
-                left: sidePadding > 0 ? sidePadding : 0,
-                right: sidePadding > 0 ? sidePadding : 0,
-                bottom: MediaQuery.of(context).padding.bottom,
-              ),
-              list: course.assignments.reversed.toList(),
-              header: Column(
-                children: <Widget>[
-                  CrossFade(
-                      key: Key("tip"),
-                      firstChild: Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-                        child: TipsCard(
-                          padding: const EdgeInsets.only(left: 8, right: 6),
-                          text: Strings.get("tap_to_view_detail"),
-                          leading: Icon(Icons.info_outline),
-                          trailing: FlatButton(
-                            child: Text(Strings.get("dismiss")),
-                            onPressed: () {
-                              setState(() {
-                                showTips = false;
-                                prefs.setBool("show_tap_to_view_detail_tip", false);
-                              });
-                            },
-                          ),
+          ),
+        if (course.assignments != null)
+          BetterAnimatedList(
+            padding: EdgeInsets.only(
+              top: 56,
+              left: sidePadding > 0 ? sidePadding : 0,
+              right: sidePadding > 0 ? sidePadding : 0,
+              bottom: MediaQuery.of(context).padding.bottom,
+            ),
+            list: course.assignments.reversed.toList(),
+            header: Column(
+              children: <Widget>[
+                CrossFade(
+                    key: Key("tip"),
+                    firstChild: Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                      child: TipsCard(
+                        padding: const EdgeInsets.only(left: 8, right: 6),
+                        text: Strings.get("tap_to_view_detail"),
+                        leading: Icon(Icons.info_outline),
+                        trailing: FlatButton(
+                          child: Text(Strings.get("dismiss")),
+                          onPressed: () {
+                            setState(() {
+                              showTips = false;
+                              prefs.setBool("show_tap_to_view_detail_tip", false);
+                            });
+                          },
                         ),
                       ),
-                      secondChild: SizedBox(
-                        height: 0.5,
-                        width: double.infinity,
-                      ),
-                      showFirst: showTips),
-                  CrossFade(
-                      key: Key("add-btn"),
-                      firstChild: Column(
-                        children: <Widget>[
-                          Center(
-                            child: FlatButton.icon(
-                                onPressed: () => addAssignment(context),
-                                icon: Icon(Icons.add),
-                                label: Text(Strings.get("new_assignment"))),
-                          ),
-                          Divider()
-                        ],
-                      ),
-                      secondChild: SizedBox(
-                        height: 0.5,
-                        width: double.infinity,
-                      ),
-                      showFirst: whatIfMode)
-                ],
-              ),
-              itemBuilder: (context, assignment) {
-                return MarksListTile(
-                  assignment,
-                  course.weightTable,
-                  whatIfMode,
-                  editAssignment: editAssignment,
-                  removeAssignment: removeAssignment,
-                );
-              },
-            )
-        ],
-      ),
-      onNotification: (noti) {
-        if (noti.metrics.pixels >= noti.metrics.minScrollExtent &&
-            noti.metrics.pixels <= noti.metrics.maxScrollExtent) {
-          appBarOffsetY -= noti.scrollDelta;
-          if (appBarOffsetY < -56) {
-            appBarOffsetY = -56;
-          } else if (appBarOffsetY > 0) {
-            appBarOffsetY = 0;
-          }
-          if(-appBarOffsetY > noti.metrics.pixels){
-            appBarOffsetY=-noti.metrics.pixels;
-          }
-        }
-
-        if (noti.metrics.pixels > (-appBarOffsetY)) {
-          elevation = 4;
-        } else {
-          elevation = 0;
-        }
-
-        return false;
-      },
+                    ),
+                    secondChild: SizedBox(
+                      height: 0.5,
+                      width: double.infinity,
+                    ),
+                    showFirst: showTips),
+                CrossFade(
+                    key: Key("add-btn"),
+                    firstChild: Column(
+                      children: <Widget>[
+                        Center(
+                          child: FlatButton.icon(
+                              onPressed: () => addAssignment(context),
+                              icon: Icon(Icons.add),
+                              label: Text(Strings.get("new_assignment"))),
+                        ),
+                        Divider()
+                      ],
+                    ),
+                    secondChild: SizedBox(
+                      height: 0.5,
+                      width: double.infinity,
+                    ),
+                    showFirst: whatIfMode)
+              ],
+            ),
+            itemBuilder: (context, assignment) {
+              return MarksListTile(
+                assignment,
+                course.weightTable,
+                whatIfMode,
+                editAssignment: editAssignment,
+                removeAssignment: removeAssignment,
+              );
+            },
+          )
+      ],
     );
   }
 
@@ -156,8 +131,8 @@ class MarksListState extends State<MarksList>
               FlatButton(
                 child: Text(Strings.get("remove").toUpperCase()),
                 onPressed: () {
-                  widget._course.assignments.remove(assignment);
-                  widget._updateCourse(widget._course);
+                  widget.course.assignments.remove(assignment);
+                  widget.updateCourse(widget.course);
                   Navigator.pop(context);
                 },
               ),
@@ -167,19 +142,19 @@ class MarksListState extends State<MarksList>
   }
 
   editAssignment(BuildContext context, Assignment assignment) async {
-    var index = widget._course.assignments.indexOf(assignment);
+    var index = widget.course.assignments.indexOf(assignment);
     var newAssignment = await showDialog<Assignment>(
         context: context,
         builder: (context) {
           return EditAssignmentDialog(
-            course: widget._course,
+            course: widget.course,
             assignment: assignment,
           );
         });
     if (newAssignment != null) {
-      widget._course.assignments.removeAt(index);
-      widget._course.assignments.insert(index, newAssignment);
-      widget._updateCourse(widget._course);
+      widget.course.assignments.removeAt(index);
+      widget.course.assignments.insert(index, newAssignment);
+      widget.updateCourse(widget.course);
     }
   }
 
@@ -187,11 +162,11 @@ class MarksListState extends State<MarksList>
     var newAssignment = await showDialog<Assignment>(
         context: context,
         builder: (context) {
-          return EditAssignmentDialog(course: widget._course);
+          return EditAssignmentDialog(course: widget.course);
         });
     if (newAssignment != null) {
-      widget._course.assignments.add(newAssignment);
-      widget._updateCourse(widget._course);
+      widget.course.assignments.add(newAssignment);
+      widget.updateCourse(widget.course);
     }
   }
 }

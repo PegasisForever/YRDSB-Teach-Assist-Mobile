@@ -10,6 +10,7 @@ import 'package:ta/pages/detailpage/statisticstab/StatisticsList.dart';
 import 'package:ta/res/CustomIcons.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
+import 'package:ta/widgets/AutoHideAppBarListWrapper.dart';
 import 'package:ta/widgets/BetterState.dart';
 import 'package:ta/widgets/CrossFade.dart';
 
@@ -32,9 +33,9 @@ class _DetailPageState extends BetterState<DetailPage> with SingleTickerProvider
   AnimationController _animationController;
   double appBarOffsetY = 0;
   double appBarElevation = 0;
-  final markListKey = GlobalKey<MarksListState>();
-  final statisticsListKey = GlobalKey<StatisticsListState>();
-  final aboutKey = GlobalKey<AboutTabState>();
+  final markListKey = GlobalKey<AutoHideAppBarListWrapperState>();
+  final statisticsListKey = GlobalKey<AutoHideAppBarListWrapperState>();
+  final aboutKey = GlobalKey<AutoHideAppBarListWrapperState>();
   int currentPage = 0;
 
   _DetailPageState(Course course)
@@ -78,20 +79,29 @@ class _DetailPageState extends BetterState<DetailPage> with SingleTickerProvider
               ),
               child: TabBarView(
                 children: [
-                  MarksList(
-                    _course,
-                    whatIfMode,
-                    updateCourse,
-                    markListKey,
+                  AutoHideAppBarListWrapper(
+                    key: markListKey,
+                    onAppBarSnapChanged: onAppBarSnapChanged,
+                    child: MarksList(
+                      course: _course,
+                      whatIfMode: whatIfMode,
+                      updateCourse: updateCourse,
+                    ),
                   ),
-                  StatisticsList(
-                    _course,
-                    whatIfMode,
-                    statisticsListKey,
+                  AutoHideAppBarListWrapper(
+                    key: statisticsListKey,
+                    onAppBarSnapChanged: onAppBarSnapChanged,
+                    child: StatisticsList(
+                      course: _course,
+                      whatIfMode: whatIfMode,
+                    ),
                   ),
-                  AboutTab(
-                    _course,
-                    aboutKey,
+                  AutoHideAppBarListWrapper(
+                    key: aboutKey,
+                    onAppBarSnapChanged: onAppBarSnapChanged,
+                    child: AboutTab(
+                      course: _course,
+                    ),
                   ),
                 ],
               ),
@@ -196,7 +206,7 @@ class _DetailPageState extends BetterState<DetailPage> with SingleTickerProvider
               } else if (currentPage == 1) {
                 appBarOffsetY = statisticsOffset;
                 appBarElevation = statisticsElevation;
-              } else if(currentPage==2){
+              } else if (currentPage == 2) {
                 appBarOffsetY = aboutOffset;
                 appBarElevation = aboutElevation;
               }
@@ -223,17 +233,19 @@ class _DetailPageState extends BetterState<DetailPage> with SingleTickerProvider
                   appBarElevation = 0;
                 }
               });
-            }else if(percent<=2){
+            } else if (percent <= 2) {
               // Scroll between 2nd & 3rd tab
               setState(() {
-                appBarOffsetY = (1 - (percent-1)) * statisticsOffset + (percent-1) * aboutOffset;
+                appBarOffsetY =
+                    (1 - (percent - 1)) * statisticsOffset + (percent - 1) * aboutOffset;
                 if (appBarOffsetY < -56) {
                   appBarOffsetY = -56;
                 } else if (appBarOffsetY > 0) {
                   appBarOffsetY = 0;
                 }
 
-                appBarElevation = (1 - (percent-1)) * statisticsElevation + (percent-1) * aboutElevation;
+                appBarElevation =
+                    (1 - (percent - 1)) * statisticsElevation + (percent - 1) * aboutElevation;
                 if (appBarElevation > 4) {
                   appBarElevation = 4;
                 } else if (appBarElevation < 0) {
@@ -246,5 +258,13 @@ class _DetailPageState extends BetterState<DetailPage> with SingleTickerProvider
         },
       ),
     ));
+  }
+
+
+  void onAppBarSnapChanged(double offset,double elevation){
+    setState(() {
+      appBarOffsetY=offset;
+      appBarElevation=elevation;
+    });
   }
 }

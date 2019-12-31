@@ -8,10 +8,10 @@ import 'package:ta/widgets/CrossFade.dart';
 import 'package:ta/widgets/LinearProgressIndicator.dart';
 
 class StatisticsList extends StatefulWidget {
-  StatisticsList(this._course, this._whatIfMode, Key key) : super(key: key);
+  StatisticsList({this.course, this.whatIfMode});
 
-  final Course _course;
-  final bool _whatIfMode;
+  final Course course;
+  final bool whatIfMode;
 
   @override
   StatisticsListState createState() => StatisticsListState();
@@ -34,10 +34,6 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
     Category.F: null,
   };
   bool showWeightTable = false;
-  double appBarOffsetY = 0;
-  double elevation = 0;
-
-  StatisticsListState();
 
   @override
   bool get wantKeepAlive => true;
@@ -47,56 +43,32 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
     super.build(context);
     lightColorMap[Category.F] = primaryColorOf(context);
 
-    var _course = widget._course;
+    var _course = widget.course;
     var isLight = isLightMode(context: context);
     var sidePadding = (widthOf(context) - 500) / 2;
     return (_course.overallMark != null && _course.assignments.length > 0)
-        ? NotificationListener<ScrollUpdateNotification>(
-            child: ListView(
-              padding: EdgeInsets.only(
-                top: 56,
-                left: sidePadding > 0 ? sidePadding : 0,
-                right: sidePadding > 0 ? sidePadding : 0,
-                bottom: MediaQuery.of(context).padding.bottom,
-              ),
-              children: <Widget>[
-                _getTermOverall(),
-                _getOverallChart(isLight),
-                Divider(),
-                _getPieChart(),
-                Divider(),
-                _getChart(Category.KU, isLight),
-                Divider(),
-                _getChart(Category.T, isLight),
-                Divider(),
-                _getChart(Category.C, isLight),
-                Divider(),
-                _getChart(Category.A, isLight),
-              ],
-            ),
-            onNotification: (noti) {
-              if (noti.metrics.pixels >= noti.metrics.minScrollExtent &&
-                  noti.metrics.pixels <= noti.metrics.maxScrollExtent) {
-                appBarOffsetY -= noti.scrollDelta;
-                if (appBarOffsetY < -56) {
-                  appBarOffsetY = -56;
-                } else if (appBarOffsetY > 0) {
-                  appBarOffsetY = 0;
-                }
-                if(-appBarOffsetY > noti.metrics.pixels){
-                  appBarOffsetY=-noti.metrics.pixels;
-                }
-              }
-
-              if (noti.metrics.pixels > (-appBarOffsetY)) {
-                elevation = 4;
-              } else {
-                elevation = 0;
-              }
-
-              return false;
-            },
-          )
+        ? ListView(
+      padding: EdgeInsets.only(
+        top: 56,
+        left: sidePadding > 0 ? sidePadding : 0,
+        right: sidePadding > 0 ? sidePadding : 0,
+        bottom: MediaQuery.of(context).padding.bottom,
+      ),
+      children: <Widget>[
+        _getTermOverall(),
+        _getOverallChart(isLight),
+        Divider(),
+        _getPieChart(),
+        Divider(),
+        _getChart(Category.KU, isLight),
+        Divider(),
+        _getChart(Category.T, isLight),
+        Divider(),
+        _getChart(Category.C, isLight),
+        Divider(),
+        _getChart(Category.A, isLight),
+      ],
+    )
         : Center(
             child: Text(
               Strings.get("statistics_unavailable"),
@@ -106,7 +78,7 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
   }
 
   Widget _getPieChart() {
-    var _course = widget._course;
+    var _course = widget.course;
     return Stack(
       children: <Widget>[
         CrossFade(
@@ -160,9 +132,9 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
   }
 
   List<PieSeries<_PieData, String>> _getPieSeries() {
-    var _course = widget._course;
-    var analysis = widget._whatIfMode ? _course.getCourseAnalysis() : null;
-    final List<_PieData> chartData = widget._whatIfMode
+    var _course = widget.course;
+    var analysis = widget.whatIfMode ? _course.getCourseAnalysis() : null;
+    final List<_PieData> chartData = widget.whatIfMode
         ? [
             for (final category in Category.values)
               if (category != Category.O || _course.weightTable[Category.O].CW > 0)
@@ -201,7 +173,7 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
   }
 
   Widget _getTermOverall() {
-    var _course = widget._course;
+    var _course = widget.course;
     var newOverall = _course.getCourseAnalysis().overallList.last;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
@@ -212,7 +184,7 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
             style: Theme.of(context).textTheme.title,
           ),
           CrossFade(
-            showFirst: !widget._whatIfMode,
+            showFirst: !widget.whatIfMode,
             firstChild: Center(
               child: Text(
                 num2Str(_course.overallMark) + "%",
@@ -237,7 +209,7 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
               ],
             ),
           ),
-          widget._whatIfMode
+          widget.whatIfMode
               ? (_course.overallMark > newOverall
                   ? LinearProgressIndicator(
                       key: Key("a"),
@@ -308,7 +280,7 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
 
   List<SplineSeries<Assignment, String>> _getChartData(Category category, bool isLight,
       {bool isOverall = false}) {
-    var _course = widget._course;
+    var _course = widget.course;
     Color color;
     ChartValueMapper<Assignment, num> yValueMapper;
 

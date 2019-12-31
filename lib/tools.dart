@@ -206,6 +206,13 @@ double getScreenHeight(BuildContext context) {
   return query.size.height - query.padding.top - query.padding.bottom;
 }
 
-double getScreenWidth(BuildContext context){
+double getScreenWidth(BuildContext context) {
   return MediaQuery.of(context).size.width;
 }
+
+enum Direction {
+  UP,
+  DOWN,
+}
+
+typedef TwoValueChanged<T,R> = void Function(T value,R value2);
