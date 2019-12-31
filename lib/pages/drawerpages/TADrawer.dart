@@ -31,6 +31,7 @@ class _TADrawerState extends State<TADrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
+        physics: ClampingScrollPhysics(),
         padding: EdgeInsets.zero,
         children: <Widget>[
           AccountDetails(
