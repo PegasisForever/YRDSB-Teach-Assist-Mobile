@@ -89,29 +89,17 @@ class CalendarState extends State<Calendar> {
             itemCount: 5 * 12, //2019/1 - 2023/12
             itemBuilder: (context, index) {
               var timeInPageView = DateTime((index / 12).floor() + 2019, index % 12 + 1);
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Flexible(
-                    flex: 0,
-                    child: CalendarWeekDayIndicator(
-                      indicatorBuilder: widget.indicatorBuilder,
-                    ),
+              return ListView(
+                children: [
+                  CalendarWeekDayIndicator(
+                    indicatorBuilder: widget.indicatorBuilder,
                   ),
-                  Flexible(
-                    flex: 0,
-                    child: CalendarMonth(
-                      startMonth: timeInPageView,
-                      builder: widget.builder,
-                    ),
+                  CalendarMonth(
+                    startMonth: timeInPageView,
+                    builder: widget.builder,
                   ),
-                  Expanded(
-                    child: ListView(
-                      padding: const EdgeInsets.only(top: 8),
-                      shrinkWrap: true,
-                      children: widget.getEventWidgets(context, timeInPageView),
-                    ),
-                  )
+                  SizedBox(height: 8,),
+                  ...widget.getEventWidgets(context, timeInPageView)
                 ],
               );
             },
