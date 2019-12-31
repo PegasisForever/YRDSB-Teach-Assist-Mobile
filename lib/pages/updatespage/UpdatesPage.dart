@@ -17,8 +17,8 @@ class _UpdatesPageState extends BetterState<UpdatesPage> {
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-        body: NestedScrollView(
-      headerSliverBuilder: (context, innerBoxScrolled) => [
+        body: CustomScrollView(
+      slivers: <Widget>[
         SliverAppBar(
           title: Text(Strings.get("updates")),
           floating: true,
@@ -26,14 +26,13 @@ class _UpdatesPageState extends BetterState<UpdatesPage> {
           textTheme: Theme.of(context).textTheme,
           iconTheme: Theme.of(context).iconTheme,
         ),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            _getTimelineCards(getTimelineOf(currentUser.number))
+              ..add(SizedBox(height: MediaQuery.of(context).padding.bottom)),
+          ),
+        )
       ],
-      body: ListView(
-        padding: EdgeInsets.only(
-          top: 4,
-          bottom: MediaQuery.of(context).padding.bottom,
-        ),
-        children: _getTimelineCards(getTimelineOf(currentUser.number)),
-      ),
     ));
   }
 
