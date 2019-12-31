@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ta/plugins/dataStore.dart';
@@ -28,6 +30,12 @@ class _DetailPageState extends BetterState<DetailPage> with SingleTickerProvider
   Animation<double> _animation;
   Tween<double> _tween;
   AnimationController _animationController;
+  double appBarOffsetY = 0;
+  double appBarElevation = 0;
+  final markListKey = GlobalKey<MarksListState>();
+  final statisticsListKey = GlobalKey<StatisticsListState>();
+  final aboutKey = GlobalKey<AboutTabState>();
+  int currentPage = 0;
 
   _DetailPageState(Course course)
       : _course = course.copy(),
@@ -61,91 +69,181 @@ class _DetailPageState extends BetterState<DetailPage> with SingleTickerProvider
     return Scaffold(
         body: DefaultTabController(
       length: 3,
-      child: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
-          SliverAppBar(
-            title: Text(
-              _course.displayName,
-              overflow: TextOverflow.fade,
-            ),
-            actions: <Widget>[
-              if (_course.overallMark != null)
-                IconButton(
-                  icon: Icon(whatIfMode ? CustomIcons.lightbulb_filled : Icons.lightbulb_outline),
-                  onPressed: () async {
-                    if (showWhatIfTips) {
-                      var isEnableWhatIf =
-                          await Navigator.pushNamed(context, "/detail/whatif_welcome");
-                      if (isEnableWhatIf != true) {
-                        return;
-                      }
-                      showWhatIfTips = false;
-                      prefs.setBool("show_what_if_tip", false);
-                    }
-                    setState(() {
-                      whatIfMode = !whatIfMode;
-                      if (!whatIfMode) {
-                        _course = _originalCourse.copy();
-
-                        _tween.begin = 80;
-                        _animationController.reset();
-                        _tween.end = 48;
-                        _animationController.forward();
-                      } else {
-                        _tween.begin = 48;
-                        _animationController.reset();
-                        _tween.end = 80;
-                        _animationController.forward();
-                      }
-                    });
-                  },
-                )
-            ],
-            forceElevated: innerBoxIsScrolled,
-            floating: true,
-            pinned: true,
-            bottom: PreferredSize(
-              preferredSize: Size.fromHeight(_animation.value),
-              child: Column(
-                children: <Widget>[
-                  TabBar(
-                    isScrollable: widthOf(context) > 500,
-                    indicatorColor: getPrimary(),
-                    labelColor: Theme.of(context).textTheme.title.color,
-                    tabs: [
-                      Tab(text: Strings.get("assignments")),
-                      Tab(text: Strings.get("statistics")),
-                      Tab(text: Strings.get("about")),
-                    ],
+      child: NotificationListener<ScrollUpdateNotification>(
+        child: Stack(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + _animation.value,
+              ),
+              child: TabBarView(
+                children: [
+                  MarksList(
+                    _course,
+                    whatIfMode,
+                    updateCourse,
+                    markListKey,
                   ),
-                  CrossFade(
-                    key: Key("add-btn"),
-                    firstChild: Container(
-                      color: Colors.amber,
-                      child: Center(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(Strings.get("what_if_mode_activated"),
-                            style: TextStyle(color: Colors.black)),
-                      )),
-                    ),
-                    secondChild: Container(),
-                    showFirst: whatIfMode,
-                  )
+                  StatisticsList(
+                    _course,
+                    whatIfMode,
+                    statisticsListKey,
+                  ),
+                  AboutTab(
+                    _course,
+                    aboutKey,
+                  ),
                 ],
               ),
             ),
-            textTheme: Theme.of(context).textTheme,
-            iconTheme: Theme.of(context).iconTheme,
-          ),
-        ],
-        body: TabBarView(
-          children: [
-            MarksList(_course, whatIfMode, updateCourse),
-            StatisticsList(_course, whatIfMode),
-            AboutTab(_course),
+            Transform.translate(
+              offset: Offset(0, appBarOffsetY),
+              child: Material(
+                elevation: appBarElevation,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Opacity(
+                      opacity: 1 + appBarOffsetY / 56.0,
+                      child: AppBar(
+                        title: Text(
+                          _course.displayName,
+                          overflow: TextOverflow.fade,
+                        ),
+                        actions: <Widget>[
+                          if (_course.overallMark != null)
+                            IconButton(
+                              icon: Icon(whatIfMode
+                                  ? CustomIcons.lightbulb_filled
+                                  : Icons.lightbulb_outline),
+                              onPressed: () async {
+                                if (showWhatIfTips) {
+                                  var isEnableWhatIf =
+                                      await Navigator.pushNamed(context, "/detail/whatif_welcome");
+                                  if (isEnableWhatIf != true) {
+                                    return;
+                                  }
+                                  showWhatIfTips = false;
+                                  prefs.setBool("show_what_if_tip", false);
+                                }
+                                setState(() {
+                                  whatIfMode = !whatIfMode;
+                                  if (!whatIfMode) {
+                                    _course = _originalCourse.copy();
+
+                                    _tween.begin = 80;
+                                    _animationController.reset();
+                                    _tween.end = 48;
+                                    _animationController.forward();
+                                  } else {
+                                    _tween.begin = 48;
+                                    _animationController.reset();
+                                    _tween.end = 80;
+                                    _animationController.forward();
+                                  }
+                                });
+                              },
+                            )
+                        ],
+                        textTheme: Theme.of(context).textTheme,
+                        iconTheme: Theme.of(context).iconTheme,
+                      ),
+                    ),
+                    TabBar(
+                      isScrollable: widthOf(context) > 500,
+                      indicatorColor: getPrimary(),
+                      labelColor: Theme.of(context).textTheme.title.color,
+                      tabs: [
+                        Tab(text: Strings.get("assignments")),
+                        Tab(text: Strings.get("statistics")),
+                        Tab(text: Strings.get("about")),
+                      ],
+                    ),
+                    CrossFade(
+                      key: Key("add-btn"),
+                      firstChild: Container(
+                        color: Colors.amber,
+                        child: Center(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(Strings.get("what_if_mode_activated"),
+                              style: TextStyle(color: Colors.black)),
+                        )),
+                      ),
+                      secondChild: Container(),
+                      showFirst: whatIfMode,
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
+        onNotification: (noti) {
+          var markOffset = markListKey.currentState?.appBarOffsetY ?? 0.0;
+          var markElevation = markListKey.currentState?.elevation ?? 0.0;
+          var statisticsOffset = statisticsListKey.currentState?.appBarOffsetY ?? 0.0;
+          var statisticsElevation = statisticsListKey.currentState?.elevation ?? 0.0;
+          var aboutOffset = aboutKey.currentState?.appBarOffsetY ?? 0.0;
+          var aboutElevation = aboutKey.currentState?.elevation ?? 0.0;
+
+          if (!(noti.metrics is PageMetrics)) {
+            // Listview scroll
+            setState(() {
+              if (currentPage == 0) {
+                appBarOffsetY = markOffset;
+                appBarElevation = markElevation;
+              } else if (currentPage == 1) {
+                appBarOffsetY = statisticsOffset;
+                appBarElevation = statisticsElevation;
+              } else if(currentPage==2){
+                appBarOffsetY = aboutOffset;
+                appBarElevation = aboutElevation;
+              }
+            });
+          } else {
+            // Tabview scroll
+            var percent = noti.metrics.pixels / getScreenWidth(context);
+            currentPage = percent.round();
+
+            if (percent <= 1) {
+              // Scroll between 1st & 2nd tab
+              setState(() {
+                appBarOffsetY = (1 - percent) * markOffset + percent * statisticsOffset;
+                if (appBarOffsetY < -56) {
+                  appBarOffsetY = -56;
+                } else if (appBarOffsetY > 0) {
+                  appBarOffsetY = 0;
+                }
+
+                appBarElevation = (1 - percent) * markElevation + percent * statisticsElevation;
+                if (appBarElevation > 4) {
+                  appBarElevation = 4;
+                } else if (appBarElevation < 0) {
+                  appBarElevation = 0;
+                }
+              });
+            }else if(percent<=2){
+              // Scroll between 2nd & 3rd tab
+              setState(() {
+                appBarOffsetY = (1 - (percent-1)) * statisticsOffset + (percent-1) * aboutOffset;
+                if (appBarOffsetY < -56) {
+                  appBarOffsetY = -56;
+                } else if (appBarOffsetY > 0) {
+                  appBarOffsetY = 0;
+                }
+
+                appBarElevation = (1 - (percent-1)) * statisticsElevation + (percent-1) * aboutElevation;
+                if (appBarElevation > 4) {
+                  appBarElevation = 4;
+                } else if (appBarElevation < 0) {
+                  appBarElevation = 0;
+                }
+              });
+            }
+          }
+          return true;
+        },
       ),
     ));
   }

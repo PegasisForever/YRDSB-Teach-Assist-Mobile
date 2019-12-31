@@ -205,3 +205,7 @@ double getScreenHeight(BuildContext context) {
   var query = MediaQuery.of(context);
   return query.size.height - query.padding.top - query.padding.bottom;
 }
+
+double getScreenWidth(BuildContext context){
+  return MediaQuery.of(context).size.width;
+}

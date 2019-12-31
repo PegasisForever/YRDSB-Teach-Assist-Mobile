@@ -8,16 +8,16 @@ import 'package:ta/widgets/CrossFade.dart';
 import 'package:ta/widgets/LinearProgressIndicator.dart';
 
 class StatisticsList extends StatefulWidget {
-  StatisticsList(this._course, this._whatIfMode);
+  StatisticsList(this._course, this._whatIfMode, Key key) : super(key: key);
 
   final Course _course;
   final bool _whatIfMode;
 
   @override
-  _StatisticsListState createState() => _StatisticsListState();
+  StatisticsListState createState() => StatisticsListState();
 }
 
-class _StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveClientMixin {
+class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveClientMixin {
   final Map<Category, Color> darkColorMap = const {
     Category.KU: const Color(0xffc49000),
     Category.T: const Color(0xff388e3c),
@@ -34,8 +34,10 @@ class _StatisticsListState extends State<StatisticsList> with AutomaticKeepAlive
     Category.F: null,
   };
   bool showWeightTable = false;
+  double appBarOffsetY = 0;
+  double elevation = 0;
 
-  _StatisticsListState();
+  StatisticsListState();
 
   @override
   bool get wantKeepAlive => true;
@@ -49,26 +51,44 @@ class _StatisticsListState extends State<StatisticsList> with AutomaticKeepAlive
     var isLight = isLightMode(context: context);
     var sidePadding = (widthOf(context) - 500) / 2;
     return (_course.overallMark != null && _course.assignments.length > 0)
-        ? ListView(
-            padding: EdgeInsets.only(
-              left: sidePadding > 0 ? sidePadding : 0,
-              right: sidePadding > 0 ? sidePadding : 0,
-              bottom: MediaQuery.of(context).padding.bottom,
+        ? NotificationListener<ScrollUpdateNotification>(
+            child: ListView(
+              padding: EdgeInsets.only(
+                top: 56,
+                left: sidePadding > 0 ? sidePadding : 0,
+                right: sidePadding > 0 ? sidePadding : 0,
+                bottom: MediaQuery.of(context).padding.bottom,
+              ),
+              children: <Widget>[
+                _getTermOverall(),
+                _getOverallChart(isLight),
+                Divider(),
+                _getPieChart(),
+                Divider(),
+                _getChart(Category.KU, isLight),
+                Divider(),
+                _getChart(Category.T, isLight),
+                Divider(),
+                _getChart(Category.C, isLight),
+                Divider(),
+                _getChart(Category.A, isLight),
+              ],
             ),
-            children: <Widget>[
-              _getTermOverall(),
-              _getOverallChart(isLight),
-              Divider(),
-              _getPieChart(),
-              Divider(),
-              _getChart(Category.KU, isLight),
-              Divider(),
-              _getChart(Category.T, isLight),
-              Divider(),
-              _getChart(Category.C, isLight),
-              Divider(),
-              _getChart(Category.A, isLight),
-            ],
+            onNotification: (noti) {
+              appBarOffsetY -= noti.scrollDelta;
+              if (appBarOffsetY < -56) {
+                appBarOffsetY = -56;
+              } else if (appBarOffsetY > 0) {
+                appBarOffsetY = 0;
+              }
+              if (noti.metrics.pixels > (-appBarOffsetY)) {
+                elevation = 4;
+              } else {
+                elevation = 0;
+              }
+
+              return false;
+            },
           )
         : Center(
             child: Text(

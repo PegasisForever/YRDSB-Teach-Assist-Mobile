@@ -7,68 +7,86 @@ import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
 class AboutTab extends StatefulWidget {
-  AboutTab(this._course);
+  AboutTab(this.course, Key key) : super(key: key);
 
-  final Course _course;
+  final Course course;
 
   @override
-  _AboutTabState createState() => _AboutTabState(_course);
+  AboutTabState createState() => AboutTabState();
 }
 
-class _AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin {
-  final Course _course;
-
-  _AboutTabState(this._course);
+class AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin {
+  double appBarOffsetY = 0;
+  double elevation = 0;
 
   @override
   bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
+    var course = widget.course;
+
     super.build(context);
     var sidePadding = (widthOf(context) - 500) / 2;
-    var courseInfoText = Strings.get("course_about_name:") + testBlank(_course.name) + "\n";
-    courseInfoText += Strings.get("course_about_code:") + testBlank(_course.code) + "\n";
-    courseInfoText += Strings.get("course_about_period:") + testBlank(_course.block) + "\n";
-    courseInfoText += Strings.get("course_about_room:") + testBlank(_course.room) + "\n";
+    var courseInfoText = Strings.get("course_about_name:") + testBlank(course.name) + "\n";
+    courseInfoText += Strings.get("course_about_code:") + testBlank(course.code) + "\n";
+    courseInfoText += Strings.get("course_about_period:") + testBlank(course.block) + "\n";
+    courseInfoText += Strings.get("course_about_room:") + testBlank(course.room) + "\n";
     courseInfoText += Strings.get("course_about_starttime:") +
-        (_course.startTime != null
-            ? DateFormat("yyyy-MM-dd").format(_course.startTime)
+        (course.startTime != null
+            ? DateFormat("yyyy-MM-dd").format(course.startTime)
             : Strings.get("unknown")) +
         "\n";
     courseInfoText += Strings.get("course_about_endtime:") +
-        (_course.endTime != null
-            ? DateFormat("yyyy-MM-dd").format(_course.endTime)
+        (course.endTime != null
+            ? DateFormat("yyyy-MM-dd").format(course.endTime)
             : Strings.get("unknown"));
 
-    return ListView(
-      padding: EdgeInsets.only(
-        left: max(sidePadding, 14),
-        right: max(sidePadding, 14),
-        top: 16,
-        bottom: MediaQuery.of(context).padding.bottom + 16,
-      ),
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(left: 4),
-          child: Text(
-            _course.displayName,
-            style: Theme.of(context).textTheme.title,
-          ),
+    return NotificationListener<ScrollUpdateNotification>(
+      child: ListView(
+        padding: EdgeInsets.only(
+          top: 56+16.0,
+          left: max(sidePadding, 14),
+          right: max(sidePadding, 14),
+          bottom: MediaQuery.of(context).padding.bottom + 16,
         ),
-        SizedBox(
-          height: 12,
-        ),
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-            child: SelectableText(
-              courseInfoText,
-              style: TextStyle(height: 1.7),
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 4),
+            child: Text(
+              course.displayName,
+              style: Theme.of(context).textTheme.title,
             ),
           ),
-        )
-      ],
+          SizedBox(
+            height: 12,
+          ),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+              child: SelectableText(
+                courseInfoText,
+                style: TextStyle(height: 1.7),
+              ),
+            ),
+          )
+        ],
+      ),
+      onNotification: (noti) {
+        appBarOffsetY -= noti.scrollDelta;
+        if (appBarOffsetY < -56) {
+          appBarOffsetY = -56;
+        } else if (appBarOffsetY > 0) {
+          appBarOffsetY = 0;
+        }
+        if (noti.metrics.pixels > (-appBarOffsetY)) {
+          elevation = 4;
+        } else {
+          elevation = 0;
+        }
+
+        return false;
+      },
     );
   }
 }
