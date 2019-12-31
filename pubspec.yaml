@@ -1,6 +1,6 @@
 name: ta
 description: YRDSB Teach Assist
-version: 1.7.3+34
+version: 1.7.4+35
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -36,6 +36,7 @@ dependencies:
   flutter_markdown: ^0.3.2
   pull_to_refresh: ^1.5.7
   quick_actions: ^0.4.0+1
+  transparent_image: ^1.0.0
 
 dev_dependencies:
   flutter_test:

@@ -8,6 +8,7 @@ import 'package:ta/pages/drawerpages/openCustomTab.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -32,10 +33,12 @@ class _AboutPageState extends BetterState<AboutPage> {
             horizontal: max(sidePadding, 24),
           ),
           children: <Widget>[
-            Image(
+            FadeInImage(
+              placeholder: MemoryImage(kTransparentImage),
               image: AssetImage("assets/icons/app_logo.png"),
               height: 130,
               width: 130,
+              fadeInDuration: const Duration(milliseconds: 100),
             ),
             Center(
               child: Text(
