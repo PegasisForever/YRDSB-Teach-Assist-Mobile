@@ -25,6 +25,7 @@ import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/plugins/firebase.dart';
 import 'package:ta/plugins/packageinfo.dart';
 import 'package:ta/res/Themes.dart';
+import 'package:ta/widgets/ZoomPageTransition.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -103,7 +104,7 @@ class _AppState extends State<App> {
       title: 'YRDSB Teach Assist',
       theme: lightTheme,
       darkTheme: darkTheme,
-      builder: (context,child){
+      builder: (context, child) {
         return ScrollConfiguration(
           behavior: DisableGlow(),
           child: child,
@@ -155,7 +156,17 @@ class _AppState extends State<App> {
   }
 
   Route _createRoute(Widget page, {bool showEnterAnimation = true}) {
-    return MaterialPageRoute(builder: (_) => page);
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return ZoomPageTransition(
+          animation: animation,
+          secondaryAnimation: secondaryAnimation,
+          child: child,
+          showEnterAnimation: showEnterAnimation,
+        );
+      },
+    );
   }
 
   ThemeData getLightTheme(MaterialColor color) {
