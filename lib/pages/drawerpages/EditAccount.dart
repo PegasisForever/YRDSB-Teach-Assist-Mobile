@@ -140,8 +140,7 @@ class _EditAccountState extends BetterState<EditAccount> {
                   Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(getPrimary()),
+                      valueColor: AlwaysStoppedAnimation<Color>(getPrimary()),
                     ),
                   )
                 ],
@@ -231,7 +230,7 @@ class _EditAccountState extends BetterState<EditAccount> {
             top: 4,
             left: max(sidePadding, 16),
             right: max(sidePadding, 16),
-            bottom: MediaQuery.of(context).padding.bottom+16,
+            bottom: MediaQuery.of(context).padding.bottom + 16,
           ),
           children: <Widget>[
             EditText(

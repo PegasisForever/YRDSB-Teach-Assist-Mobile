@@ -105,7 +105,7 @@ class _FeedbackPageState extends BetterState<FeedbackPage> {
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 500),
           child: Padding(
-            padding: EdgeInsets.fromLTRB(16,4,16,16),
+            padding: EdgeInsets.fromLTRB(16, 4, 16, 16),
             child: Column(
               children: <Widget>[
                 EditText(

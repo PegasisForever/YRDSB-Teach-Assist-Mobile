@@ -88,18 +88,17 @@ class _DetailPageState extends BetterState<DetailPage>
                         whatIfMode: whatIfMode,
                         updateCourse: updateCourse,
                       );
-                    },
-                    keys: [_course,whatIfMode,updateCourse]),
+                    }, keys: [_course, whatIfMode, updateCourse]),
                   ),
                   AutoHideAppBarListWrapper(
                     key: statisticsListKey,
                     onAppBarSnapChanged: onAppBarSnapChanged,
-                    child: fragment((prev,prevKeys){
+                    child: fragment((prev, prevKeys) {
                       return StatisticsList(
                         course: _course,
                         whatIfMode: whatIfMode,
                       );
-                    },keys: [_course,whatIfMode]),
+                    }, keys: [_course, whatIfMode]),
                   ),
                   AutoHideAppBarListWrapper(
                     key: aboutKey,

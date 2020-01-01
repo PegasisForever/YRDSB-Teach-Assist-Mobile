@@ -175,23 +175,35 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
 
   @override
   afterFirstLayout(BuildContext context) {
-    if (isAndroid()){
+    if (isAndroid()) {
       quickActions.initialize((type) {
         if (type == 'action_moodle') {
           openCustomTab(context, "https://moodle2.yrdsb.ca/");
-        }else if(type=="action_archived"){
+        } else if (type == "action_archived") {
           Navigator.pushNamed(context, "/archived");
-        }else if(type=="action_updates"){
+        } else if (type == "action_updates") {
           Navigator.pushNamed(context, "/updates");
-        }else if(type=="action_calendar"){
+        } else if (type == "action_calendar") {
           Navigator.pushNamed(context, "/calendar");
         }
       });
       quickActions.setShortcutItems(<ShortcutItem>[
-        ShortcutItem(type: 'action_moodle', localizedTitle: Strings.get("moodle",context), icon: 'ic_moodle'),
-        ShortcutItem(type: 'action_archived', localizedTitle: Strings.get("archived_marks",context), icon: 'ic_archived'),
-        ShortcutItem(type: 'action_updates', localizedTitle: Strings.get("updates",context), icon: 'ic_updates'),
-        ShortcutItem(type: 'action_calendar', localizedTitle: Strings.get("calendar",context), icon: 'ic_calendar'),
+        ShortcutItem(
+            type: 'action_moodle',
+            localizedTitle: Strings.get("moodle", context),
+            icon: 'ic_moodle'),
+        ShortcutItem(
+            type: 'action_archived',
+            localizedTitle: Strings.get("archived_marks", context),
+            icon: 'ic_archived'),
+        ShortcutItem(
+            type: 'action_updates',
+            localizedTitle: Strings.get("updates", context),
+            icon: 'ic_updates'),
+        ShortcutItem(
+            type: 'action_calendar',
+            localizedTitle: Strings.get("calendar", context),
+            icon: 'ic_calendar'),
       ]);
     }
 
@@ -219,16 +231,16 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
     startAutoRefresh();
   }
 
-  startTimer(){
+  startTimer() {
     timer?.cancel();
     timer = Timer.periodic(new Duration(minutes: 1), (timer) {
       setState(() {}); //update "updateText"
     });
   }
 
-  stopTimer(){
+  stopTimer() {
     timer?.cancel();
-    timer=null;
+    timer = null;
   }
 
   @override
@@ -250,7 +262,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
     if (state == AppLifecycleState.resumed) {
       startAutoRefresh();
       startTimer();
-    }else{
+    } else {
       stopTimer();
     }
   }

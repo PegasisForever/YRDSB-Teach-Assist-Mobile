@@ -215,8 +215,8 @@ enum Direction {
   DOWN,
 }
 
-typedef TwoValueChanged<T,R> = void Function(T value,R value2);
+typedef TwoValueChanged<T, R> = void Function(T value, R value2);
 
-Future asyncWait(int milliseconds){
+Future asyncWait(int milliseconds) {
   return Future.delayed(Duration(milliseconds: milliseconds));
 }

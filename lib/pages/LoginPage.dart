@@ -90,21 +90,21 @@ class _LoginPageState extends BetterState<LoginPage> {
                     _isLoading
                         ? CircularProgressIndicator()
                         : Placeholder(
-                      fallbackWidth: 0,
-                      fallbackHeight: 0,
-                    ),
+                            fallbackWidth: 0,
+                            fallbackHeight: 0,
+                          ),
                     RaisedButton(
                       color: Theme.of(context).colorScheme.primary,
-                      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       child: Text(
                         Strings.get("login").toUpperCase(),
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: !_isLoading
                           ? () {
-                        FocusScope.of(context).unfocus();
-                        _startLogin(context);
-                      }
+                              FocusScope.of(context).unfocus();
+                              _startLogin(context);
+                            }
                           : null,
                     )
                   ],

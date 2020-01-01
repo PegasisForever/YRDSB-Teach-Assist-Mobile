@@ -98,7 +98,9 @@ class CalendarState extends State<Calendar> {
                     startMonth: timeInPageView,
                     builder: widget.builder,
                   ),
-                  SizedBox(height: 8,),
+                  SizedBox(
+                    height: 8,
+                  ),
                   ...widget.getEventWidgets(context, timeInPageView)
                 ],
               );
@@ -183,7 +185,7 @@ class CalendarHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16,0,16,16),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[

@@ -12,12 +12,12 @@ class AssignmentAddedWidget extends StatelessWidget {
 
   AssignmentAddedWidget(this.update) : super(key: Key(update.hashCode.toString()));
 
-  String getDescriptionText(){
-    if(update.assignmentAvg != 100){
+  String getDescriptionText() {
+    if (update.assignmentAvg != 100) {
       return sprintf(Strings.get("u_got_avg_in_this_assi"), [num2Str(update.assignmentAvg)]);
-    }else if(update.assignment.onlyHaveOneSmallMarkGroup){
+    } else if (update.assignment.onlyHaveOneSmallMarkGroup) {
       return Strings.get("u_got_full_in_this_assi");
-    }else{
+    } else {
       return Strings.get("u_got_full_marks_in_this_assi");
     }
   }

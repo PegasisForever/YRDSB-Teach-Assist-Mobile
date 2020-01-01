@@ -48,27 +48,27 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
     var sidePadding = (widthOf(context) - 500) / 2;
     return (_course.overallMark != null && _course.assignments.length > 0)
         ? ListView(
-      padding: EdgeInsets.only(
-        top: 56,
-        left: sidePadding > 0 ? sidePadding : 0,
-        right: sidePadding > 0 ? sidePadding : 0,
-        bottom: MediaQuery.of(context).padding.bottom,
-      ),
-      children: <Widget>[
-        _getTermOverall(),
-        _getOverallChart(isLight),
-        Divider(),
-        _getPieChart(),
-        Divider(),
-        _getChart(Category.KU, isLight),
-        Divider(),
-        _getChart(Category.T, isLight),
-        Divider(),
-        _getChart(Category.C, isLight),
-        Divider(),
-        _getChart(Category.A, isLight),
-      ],
-    )
+            padding: EdgeInsets.only(
+              top: 56,
+              left: sidePadding > 0 ? sidePadding : 0,
+              right: sidePadding > 0 ? sidePadding : 0,
+              bottom: MediaQuery.of(context).padding.bottom,
+            ),
+            children: <Widget>[
+              _getTermOverall(),
+              _getOverallChart(isLight),
+              Divider(),
+              _getPieChart(),
+              Divider(),
+              _getChart(Category.KU, isLight),
+              Divider(),
+              _getChart(Category.T, isLight),
+              Divider(),
+              _getChart(Category.C, isLight),
+              Divider(),
+              _getChart(Category.A, isLight),
+            ],
+          )
         : Center(
             child: Text(
               Strings.get("statistics_unavailable"),

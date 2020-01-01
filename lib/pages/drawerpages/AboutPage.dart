@@ -81,7 +81,7 @@ class _AboutPageState extends BetterState<AboutPage> {
               ),
             ),
             SizedBox(
-              height: max(30, min(getScreenHeight(context)-500, 200)),
+              height: max(30, min(getScreenHeight(context) - 500, 200)),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

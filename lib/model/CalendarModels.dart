@@ -13,7 +13,7 @@ class Event {
 List<Event> readCalendar() {
   var str = prefs.getString("calendar");
   var list = <Event>[];
-  if(str==null) return list;
+  if (str == null) return list;
   jsonDecode(str).forEach((obj) {
     var event = Event();
     obj["name"].forEach((language, name) {
