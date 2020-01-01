@@ -12,6 +12,16 @@ class AssignmentAddedWidget extends StatelessWidget {
 
   AssignmentAddedWidget(this.update) : super(key: Key(update.hashCode.toString()));
 
+  String getDescriptionText(){
+    if(update.assignmentAvg != 100){
+      return sprintf(Strings.get("u_got_avg_in_this_assi"), [num2Str(update.assignmentAvg)]);
+    }else if(update.assignment.onlyHaveOneSmallMarkGroup){
+      return Strings.get("u_got_full_in_this_assi");
+    }else{
+      return Strings.get("u_got_full_marks_in_this_assi");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,9 +43,7 @@ class AssignmentAddedWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: Text(
-              update.assignmentAvg != 100
-                  ? sprintf(Strings.get("u_got_avg_in_this_assi"), [num2Str(update.assignmentAvg)])
-                  : Strings.get("u_got_full_in_this_assi"),
+              getDescriptionText(),
               style: TextStyle(fontSize: 16),
             ),
           ),

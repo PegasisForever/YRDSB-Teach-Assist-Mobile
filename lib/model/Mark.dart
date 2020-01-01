@@ -126,6 +126,19 @@ class Assignment {
     return true;
   }
 
+  bool get onlyHaveOneSmallMarkGroup{
+    var count=0;
+    for (final entry in smallMarkGroups.entries){
+      if (entry.value!=null && entry.value.smallMarks.isNotEmpty){
+        count++;
+      }
+      if (count>1){
+        return false;
+      }
+    }
+    return count==1;
+  }
+
   SmallMarkGroup operator [](Category category) => smallMarkGroups[category];
 
   void operator []=(Category category, SmallMarkGroup smallMarkGroup) =>

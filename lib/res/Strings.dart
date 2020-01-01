@@ -144,6 +144,7 @@ class Strings {
       "developed_by_students_for_students": "Developed by students for students.",
       "u_got_avg_in_this_assi": "You got average %s%% in this new assessment.",
       "u_got_full_in_this_assi": "You got full mark in this new assessment.",
+      "u_got_full_marks_in_this_assi": "You got full marks in this new assessment.",
       "ur_new_avg_of_this_assi": "Your new average of this assessment is %s%%.",
       "ur_avg_of_this_assi_dropped": "Your average of this assessment dropped from %s%% to %s%%.",
       "ur_avg_of_this_assi_increased":
@@ -332,6 +333,7 @@ class Strings {
       "developed_by_students_for_students": "Developed by students for students.",
       "u_got_avg_in_this_assi": "你在这项作业中获得了平均%s分。",
       "u_got_full_in_this_assi": "你在这项作业中获得了满分。",
+      "u_got_full_marks_in_this_assi": "你在这项作业中获得了满分。",
       "ur_new_avg_of_this_assi": "这项作业的新平均分是%s分。",
       "ur_avg_of_this_assi_dropped": "这项作业的平均分从%s分下降到了%s分。",
       "ur_avg_of_this_assi_increased": "这项作业的平均分从%s分提高到了%s分。",
