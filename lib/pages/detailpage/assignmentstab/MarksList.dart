@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fragment/fragment.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/model/Mark.dart';
@@ -23,8 +24,7 @@ class MarksList extends StatefulWidget {
   MarksListState createState() => MarksListState();
 }
 
-class MarksListState extends State<MarksList>
-    with AutomaticKeepAliveClientMixin {
+class MarksListState extends State<MarksList> with AutomaticKeepAliveClientMixin {
   var showTips = prefs.getBool("show_tap_to_view_detail_tip") ?? true;
 
   @override
@@ -101,12 +101,17 @@ class MarksListState extends State<MarksList>
               ],
             ),
             itemBuilder: (context, assignment) {
-              return MarksListTile(
-                assignment,
-                course.weightTable,
-                whatIfMode,
-                editAssignment: editAssignment,
-                removeAssignment: removeAssignment,
+              return Fragment(
+                (context, _, __) {
+                  return MarksListTile(
+                    assignment,
+                    course.weightTable,
+                    whatIfMode,
+                    editAssignment: editAssignment,
+                    removeAssignment: removeAssignment,
+                  );
+                },
+                keys: [assignment, course.weightTable, whatIfMode],
               );
             },
           )
