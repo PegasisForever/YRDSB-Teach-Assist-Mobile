@@ -140,6 +140,7 @@ class _DetailPageState extends BetterState<DetailPage>
                                   }
                                   showWhatIfTips = false;
                                   prefs.setBool("show_what_if_tip", false);
+                                  await asyncWait(300);
                                 }
                                 setState(() {
                                   whatIfMode = !whatIfMode;

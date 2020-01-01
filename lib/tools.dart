@@ -216,3 +216,7 @@ enum Direction {
 }
 
 typedef TwoValueChanged<T,R> = void Function(T value,R value2);
+
+Future asyncWait(int milliseconds){
+  return Future.delayed(Duration(milliseconds: milliseconds));
+}
