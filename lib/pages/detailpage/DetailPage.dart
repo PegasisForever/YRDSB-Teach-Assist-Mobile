@@ -1,13 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fragment/fragment.dart';
-import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/abouttab/AboutTab.dart';
 import 'package:ta/pages/detailpage/assignmentstab/MarksList.dart';
 import 'package:ta/pages/detailpage/statisticstab/StatisticsList.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/res/CustomIcons.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';

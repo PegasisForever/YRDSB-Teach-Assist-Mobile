@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
-import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/detailpage/assignmentstab/MarksListTile.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 

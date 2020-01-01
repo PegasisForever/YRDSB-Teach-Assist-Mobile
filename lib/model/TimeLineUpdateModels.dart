@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/model/Mark.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/prasers/ParsersCollection.dart';
 
 class TAUpdate {

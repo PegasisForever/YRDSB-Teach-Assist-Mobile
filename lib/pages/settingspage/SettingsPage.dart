@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_extend/share_extend.dart';
-import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/main.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/settingspage/SelectColorDialog.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 

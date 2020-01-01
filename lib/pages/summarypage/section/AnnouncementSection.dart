@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/pages/drawerpages/openCustomTab.dart';
 import 'package:ta/pages/summarypage/section/Section.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/CrossFade.dart';
 

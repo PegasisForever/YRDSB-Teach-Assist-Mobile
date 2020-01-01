@@ -2,9 +2,9 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:ta/plugins/firebase.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
+import 'package:ta/plugins/firebase.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
