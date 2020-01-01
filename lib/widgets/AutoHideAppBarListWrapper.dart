@@ -31,7 +31,7 @@ class AutoHideAppBarListWrapperState extends State<AutoHideAppBarListWrapper>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: 200),
       vsync: this,
     );
     _tween = Tween(begin: 0, end: widget.maxOffsetY);
