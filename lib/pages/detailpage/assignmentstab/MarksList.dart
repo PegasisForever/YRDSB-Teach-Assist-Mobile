@@ -14,7 +14,7 @@ import 'package:ta/widgets/CrossFade.dart';
 import 'package:ta/widgets/TipsCard.dart';
 
 class MarksList extends StatefulWidget {
-  MarksList({this.course, this.whatIfMode, this.updateCourse});
+  MarksList({Course course, this.whatIfMode, this.updateCourse}) : course = course.copy();
 
   final Function updateCourse;
   final Course course;
