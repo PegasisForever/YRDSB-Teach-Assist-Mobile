@@ -36,7 +36,7 @@ class MarksListState extends State<MarksList>
     var whatIfMode = widget.whatIfMode;
     var course = widget.course;
     var sidePadding = (widthOf(context) - 500) / 2;
-    return  Stack(
+    return Stack(
       children: <Widget>[
         if (course.overallMark == null || course.assignments.length == 0)
           Center(

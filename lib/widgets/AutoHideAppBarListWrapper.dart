@@ -77,17 +77,19 @@ class AutoHideAppBarListWrapperState extends State<AutoHideAppBarListWrapper>
           }
         } else if (noti is ScrollEndNotification) {
           if (scrollDirection == Direction.UP) {
-            if (scrollPosition > -widget.maxOffsetY) {
+            if (scrollPosition > -widget.maxOffsetY && appBarOffsetY != widget.maxOffsetY) {
               _tween.begin = appBarOffsetY;
               _tween.end = widget.maxOffsetY;
               _animationController.reset();
               _animationController.forward();
             }
           } else {
-            _tween.begin = appBarOffsetY;
-            _tween.end = 0;
-            _animationController.reset();
-            _animationController.forward();
+            if (appBarOffsetY != widget.maxOffsetY) {
+              _tween.begin = appBarOffsetY;
+              _tween.end = 0;
+              _animationController.reset();
+              _animationController.forward();
+            }
           }
         }
 
