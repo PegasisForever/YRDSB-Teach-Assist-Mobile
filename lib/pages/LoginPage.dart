@@ -145,7 +145,7 @@ class _LoginPageState extends BetterState<LoginPage> {
       addUser(user);
       setCurrentUser(user);
       await getAndSaveCalendar();
-      Navigator.pushNamed(
+      Navigator.pushReplacementNamed(
         context,
         "/summary",
       );
