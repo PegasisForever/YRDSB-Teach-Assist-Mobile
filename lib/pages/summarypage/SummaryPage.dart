@@ -191,19 +191,19 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
         ShortcutItem(
             type: 'action_moodle',
             localizedTitle: Strings.get("moodle", context),
-            icon: 'ic_moodle'),
+            icon: '@drawable/ic_moodle'),
         ShortcutItem(
             type: 'action_archived',
             localizedTitle: Strings.get("archived_marks", context),
-            icon: 'ic_archived'),
+            icon: '@drawable/ic_archived'),
         ShortcutItem(
             type: 'action_updates',
             localizedTitle: Strings.get("updates", context),
-            icon: 'ic_updates'),
+            icon: '@drawable/ic_updates'),
         ShortcutItem(
             type: 'action_calendar',
             localizedTitle: Strings.get("calendar", context),
-            icon: 'ic_calendar'),
+            icon: '@drawable/ic_calendar'),
       ]);
     }
 
