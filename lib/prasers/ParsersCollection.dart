@@ -15,8 +15,11 @@ const _JSONCourseListParsers = {
   9: CourseListParserV8.parseJSONCourseList,
 };
 
-List<Course> parseCourseList(dynamic json) {
+List<Course> parseCourseList(Map<String,dynamic> json) {
   try {
+    if(json.length==0){
+      return List<Course>();
+    }
     var version = json["version"];
     var data = json["data"];
     return _JSONCourseListParsers[version](data);
@@ -35,7 +38,7 @@ const _jsonTimelineParsers = {
   9: TimelineParserV9.parseTimeline,
 };
 
-List<TAUpdate> parseTimeLine(dynamic json) {
+List<TAUpdate> parseTimeLine(Map<String,dynamic> json) {
   try {
     var version = json["version"];
     var data = json["data"];

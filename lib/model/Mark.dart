@@ -435,7 +435,7 @@ class CourseAnalysis {
 }
 
 List<Course> getCourseListOf(String number) {
-  var json = jsonDecode(prefs.getString("$number-mark") ?? "[]");
+  var json = jsonDecode(prefs.getString("$number-mark") ?? "{}");
   return parseCourseList(json);
 }
 
@@ -445,7 +445,7 @@ saveCourseListOf(String number, Map<String, dynamic> json, {DateTime time}) {
 }
 
 List<Course> getArchivedCourseListOf(String number) {
-  var json = jsonDecode(prefs.getString("$number-archived") ?? "[]");
+  var json = jsonDecode(prefs.getString("$number-archived") ?? "{}");
   return parseCourseList(json);
 }
 
