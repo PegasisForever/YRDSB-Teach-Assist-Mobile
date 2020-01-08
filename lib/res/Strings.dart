@@ -203,6 +203,8 @@ class Strings {
       "cached_info":
           "The mark of this course was hidden by the teacher. The APP is displaying the old data.",
       "announcement": "Announcement",
+      "nightly":"Nightly",
+      "build_number:":"Build: "
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -390,6 +392,8 @@ class Strings {
       "refresh_failed": "刷新失败",
       "cached_info": "这门课的成绩已在官网上被老师隐藏，APP中显示的是以前的缓存数据",
       "announcement": "公告",
+      "nightly":"每夜版",
+      "build_number:":"编号："
     }
   };
 

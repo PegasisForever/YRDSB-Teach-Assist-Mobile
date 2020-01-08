@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:ta/nightly.dart';
 import 'package:ta/pages/drawerpages/openCustomTab.dart';
 import 'package:ta/plugins/packageinfo.dart';
 import 'package:ta/res/Strings.dart';
@@ -56,6 +57,17 @@ class _AboutPageState extends BetterState<AboutPage> {
                     color: isLightMode(context: context) ? Colors.grey[600] : Colors.grey[400]),
               ),
             ),
+            if (nightly)
+              Center(
+                child: Text(
+                  Strings.get("nightly") +
+                      " | " +
+                      Strings.get("build_number:") +
+                      packageInfo.buildNumber,
+                  style: TextStyle(
+                      color: isLightMode(context: context) ? Colors.grey[600] : Colors.grey[400]),
+                ),
+              ),
             SizedBox(
               height: 30,
             ),
