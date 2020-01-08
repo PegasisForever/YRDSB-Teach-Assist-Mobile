@@ -158,7 +158,7 @@ class Strings {
       "assi_edit_tip": "Drag vertically to edit, long press to disable/enable.",
       "hide_in_app_switcher_android": "Hide contents in app switcher and disable screenshots",
       "hide_in_app_switcher_ios": "Hide contents in app switcher",
-      "fire_info": "This fire will appear when you got over 10% on the course.",
+      "fire_info": "This fire will appear when you got over 90% on the course.",
       "diamond_info": "This diamond will appear when you got over 99% on the course.",
       "privacy_mode": "Privacy mode",
       "export_data": "Export data",
