@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,22 +26,19 @@ import 'package:ta/plugins/packageinfo.dart';
 import 'package:ta/res/Themes.dart';
 import 'package:ta/widgets/ZoomPageTransition.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  FlutterError.onError = Crashlytics.instance.recordFlutterError;
-  runZoned<Future<void>>(() async {
-    await initPref();
-    SyncfusionLicense.registerLicense(SyncfusionCommunityLicenceKey);
-    initPackageInfo();
-    initFirebaseMsg();
-    if (Config.hideAppContent) {
-      FlutterPrivacyScreen.enablePrivacyScreen();
-    }
-    initUser();
+  await initPref();
+  SyncfusionLicense.registerLicense(SyncfusionCommunityLicenceKey);
+  initPackageInfo();
+  initFirebaseMsg();
+  if (Config.hideAppContent) {
+    FlutterPrivacyScreen.enablePrivacyScreen();
+  }
+  initUser();
 
-    runApp(App());
-  }, onError: Crashlytics.instance.recordError);
+  runApp(App());
 }
 
 class App extends StatefulWidget {
