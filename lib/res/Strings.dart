@@ -204,7 +204,8 @@ class Strings {
           "The mark of this course was hidden by the teacher. The APP is displaying the old data.",
       "announcement": "Announcement",
       "nightly":"Nightly",
-      "build_number:":"Build: "
+      "build_number:":"Build: ",
+      "unavaliable_assi":"Teacher didn't finish marking or you didn't hand in this assessment.",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -393,7 +394,8 @@ class Strings {
       "cached_info": "这门课的成绩已在官网上被老师隐藏，APP中显示的是以前的缓存数据",
       "announcement": "公告",
       "nightly":"每夜版",
-      "build_number:":"编号："
+      "build_number:":"编号：",
+      "unavaliable_assi":"老师未完成批改或您未上交这项作业。",
     }
   };
 
