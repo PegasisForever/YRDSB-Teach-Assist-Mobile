@@ -68,6 +68,10 @@ String testBlank(String str) {
   }
 }
 
+bool isBlank(String str){
+  return str == null || str.isEmpty;
+}
+
 bool isZeroOrNull(num n) {
   return n == 0 || n == null;
 }

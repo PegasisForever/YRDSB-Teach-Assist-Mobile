@@ -14,6 +14,7 @@ class EditText extends StatefulWidget {
       this.nextFocusNode,
       this.textInputAction,
       this.onSubmitted,
+      this.onChanged,
       this.autoFocus = false});
 
   final TextEditingController controller;
@@ -27,6 +28,7 @@ class EditText extends StatefulWidget {
   final FocusNode nextFocusNode;
   final TextInputAction textInputAction;
   final ValueChanged<String> onSubmitted;
+  final ValueChanged<String> onChanged;
   final bool autoFocus;
 
   @override
@@ -85,6 +87,7 @@ class _EditTextState extends State<EditText> {
           _errorText.text = null;
           _clearBtnVisibility = str != "";
         });
+        if (widget.onChanged != null) widget.onChanged(str);
       },
       decoration: InputDecoration(
           prefixIcon: _icon,
