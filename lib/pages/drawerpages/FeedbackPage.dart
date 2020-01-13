@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
@@ -13,7 +14,7 @@ class FeedbackPage extends StatefulWidget {
 }
 
 class _FeedbackPageState extends BetterState<FeedbackPage> {
-  final _contactInfoController = TextEditingController();
+  final _contactInfoController = TextEditingController(text: currentUser.number+"@gapps.yrdsb.ca");
   final _feedbackController = TextEditingController();
   final _contactInfoFocusNode = FocusNode();
   final _feedbackFocusNode = FocusNode();
@@ -37,9 +38,7 @@ class _FeedbackPageState extends BetterState<FeedbackPage> {
                         Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: CircularProgressIndicator(
-                            backgroundColor: Color(0x66FFFFFF),
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                Theme.of(context).colorScheme.onPrimary),
+                            valueColor: AlwaysStoppedAnimation<Color>(getPrimary()),
                           ),
                         )
                       ],

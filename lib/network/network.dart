@@ -8,6 +8,7 @@ import 'package:ta/model/Mark.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/plugins/dataStore.dart';
+import 'package:ta/plugins/packageinfo.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
@@ -116,7 +117,13 @@ Future<String> getArchived(User user) async {
 
 Future<void> sendFeedBack(String contactInfo, String feedback) async {
   var res = await _postWithMetric(
-      baseUrl + "feedback", jsonEncode({"contact_info": contactInfo, "feedback": feedback}));
+      baseUrl + "feedback",
+      jsonEncode({
+        "contact_info": contactInfo,
+        "feedback": feedback,
+        "platform": isAndroid() ? "Android" : "iOS",
+        "version": packageInfo.version + " " + packageInfo.buildNumber,
+      }));
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {

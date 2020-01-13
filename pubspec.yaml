@@ -1,6 +1,6 @@
 name: ta
 description: YRDSB Teach Assist
-version: 1.7.8+42
+version: 1.7.8+43
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
