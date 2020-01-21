@@ -16,7 +16,7 @@ enum Category {
 }
 
 class SmallMark {
-  bool enabled; //only used in what if mode editor
+  bool enabled = true; //only used in what if mode editor
   bool finished;
   double total;
   double get;
@@ -48,20 +48,21 @@ class SmallMark {
 class SmallMarkGroup {
   List<SmallMark> smallMarks = List();
 
-  bool get available => smallMarks.length > 0;
+  bool get available => find(smallMarks, (SmallMark it) => it?.enabled == true) != null;
 
-  bool get hasFinished => find(smallMarks, (SmallMark it) => it?.finished == true) != null;
+  bool get hasFinished =>
+      find(smallMarks, (SmallMark it) => it?.enabled == true && it?.finished == true) != null;
 
   bool get allFinished => find(smallMarks, (SmallMark it) => !(it?.finished == true)) == null;
 
   bool get hasWeight =>
-      find(smallMarks, (SmallMark it) => it != null ? it.weight > 0 : false) != null;
+      find(smallMarks, (SmallMark it) => it?.enabled==true ? it.weight > 0 : false) != null;
 
-  double get allGet => sum(smallMarks, (SmallMark it) => it?.finished == true ? it.get : 0.0);
+  double get allGet => sum(smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled==true) ? it.get : 0.0);
 
-  double get allTotal => sum(smallMarks, (SmallMark it) => it?.finished == true ? it.total : 0.0);
+  double get allTotal => sum(smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled==true) ? it.total : 0.0);
 
-  double get allWeight => sum(smallMarks, (SmallMark it) => it?.finished == true ? it.weight : 0.0);
+  double get allWeight => sum(smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled==true) ? it.weight : 0.0);
 
   double get percentage {
     var get = 0.0;
