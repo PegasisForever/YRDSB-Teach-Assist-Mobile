@@ -44,9 +44,10 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
     lightColorMap[Category.F] = primaryColorOf(context);
 
     var _course = widget.course;
+    var analysis = _course.getCourseAnalysis();
     var isLight = isLightMode(context: context);
     var sidePadding = (widthOf(context) - 500) / 2;
-    return (_course.overallMark != null && _course.assignments.length > 0)
+    return (_course.overallMark != null && analysis.overallList.last != null)
         ? ListView(
             padding: EdgeInsets.only(
               top: 56,
@@ -55,18 +56,18 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
               bottom: MediaQuery.of(context).padding.bottom,
             ),
             children: <Widget>[
-              _getTermOverall(),
-              _getOverallChart(isLight),
+              _getTermOverall(analysis),
+              _getOverallChart(isLight, analysis),
               Divider(),
-              _getPieChart(),
+              _getPieChart(analysis),
               Divider(),
-              _getChart(Category.KU, isLight),
+              _getChart(Category.KU, isLight, analysis),
               Divider(),
-              _getChart(Category.T, isLight),
+              _getChart(Category.T, isLight, analysis),
               Divider(),
-              _getChart(Category.C, isLight),
+              _getChart(Category.C, isLight, analysis),
               Divider(),
-              _getChart(Category.A, isLight),
+              _getChart(Category.A, isLight, analysis),
             ],
           )
         : Center(
@@ -77,7 +78,7 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
           );
   }
 
-  Widget _getPieChart() {
+  Widget _getPieChart(CourseAnalysis analysis) {
     var _course = widget.course;
     return Stack(
       children: <Widget>[
@@ -86,7 +87,7 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
             width: double.maxFinite,
             height: 250,
             child: SfCircularChart(
-              series: _getPieSeries(),
+              series: _getPieSeries(analysis),
             ),
           ),
           secondChild: Center(
@@ -131,9 +132,8 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
     );
   }
 
-  List<PieSeries<_PieData, String>> _getPieSeries() {
+  List<PieSeries<_PieData, String>> _getPieSeries(CourseAnalysis analysis) {
     var _course = widget.course;
-    var analysis = widget.whatIfMode ? _course.getCourseAnalysis() : null;
     final List<_PieData> chartData = widget.whatIfMode
         ? [
             for (final category in Category.values)
@@ -172,9 +172,9 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
     ];
   }
 
-  Widget _getTermOverall() {
+  Widget _getTermOverall(CourseAnalysis analysis) {
     var _course = widget.course;
-    var newOverall = _course.getCourseAnalysis().overallList.last;
+    var newOverall = analysis.overallList.last;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Column(
@@ -238,7 +238,7 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
     );
   }
 
-  Widget _getOverallChart(bool isLight) {
+  Widget _getOverallChart(bool isLight, CourseAnalysis analysis) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -248,14 +248,14 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
           SizedBox(
             width: double.maxFinite,
             height: 200,
-            child: _getDefaultSplineChart(_getChartData(null, isLight, isOverall: true)),
+            child: _getDefaultSplineChart(_getChartData(null, isLight, analysis, isOverall: true)),
           ),
         ],
       ),
     );
   }
 
-  Widget _getChart(Category category, bool isLight) {
+  Widget _getChart(Category category, bool isLight, CourseAnalysis analysis) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -271,21 +271,22 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
           SizedBox(
             width: double.maxFinite,
             height: 200,
-            child: _getDefaultSplineChart(_getChartData(category, isLight)),
+            child: _getDefaultSplineChart(_getChartData(category, isLight, analysis)),
           ),
         ],
       ),
     );
   }
 
-  List<SplineSeries<Assignment, String>> _getChartData(Category category, bool isLight,
+  List<SplineSeries<Assignment, String>> _getChartData(
+      Category category, bool isLight, CourseAnalysis analysis,
       {bool isOverall = false}) {
     var _course = widget.course;
     Color color;
     ChartValueMapper<Assignment, num> yValueMapper;
 
     if (isOverall) {
-      var overallList = _course.getCourseAnalysis().overallList;
+      var overallList = analysis.overallList;
       yValueMapper = (_, index) {
         return num2Round(overallList[index]);
       };
