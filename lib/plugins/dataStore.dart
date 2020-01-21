@@ -68,4 +68,12 @@ class Config {
   static set hideAppContent(bool v) {
     prefs.setBool("hide_app_content", v);
   }
+
+  static bool get showRecentUpdates {
+    return prefs.getBool("show_recent_updates") ?? false;
+  }
+
+  static set showRecentUpdates(bool v) {
+    prefs.setBool("show_recent_updates", v);
+  }
 }

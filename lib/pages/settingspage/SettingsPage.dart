@@ -111,6 +111,28 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           ListTile(
+            title: Text(Strings.get("show_recent_updates")),
+            leading: Icon(Icons.new_releases),
+            trailing: Switch(
+              value: Config.showRecentUpdates,
+              onChanged: (v) {
+                setState(() {
+                  Config.showRecentUpdates = v;
+                  if (Config.showRecentUpdates) {
+                    FlutterPrivacyScreen.enablePrivacyScreen();
+                  } else {
+                    FlutterPrivacyScreen.disablePrivacyScreen();
+                  }
+                });
+              },
+            ),
+            onTap: () {
+              setState(() {
+                Config.showRecentUpdates = !Config.showRecentUpdates;
+              });
+            },
+          ),
+          ListTile(
             title: Text(Strings.get("privacy_mode")),
             subtitle:
                 Text(Strings.get("hide_in_app_switcher_" + (isAndroid() ? "android" : "ios"))),

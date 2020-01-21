@@ -145,7 +145,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
                 children: getSectionWidgets([
                   AnnouncementSection(),
                   CalendarSection(),
-                  UpdatesSection(),
+                  if (Config.showRecentUpdates) UpdatesSection(),
                 ]),
               ),
               SummaryCourseList()
