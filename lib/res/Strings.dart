@@ -114,11 +114,11 @@ class Strings {
       "what_if_description":
           "In What If Mode, you can edit your assessments without any limitation and see how does it affect your course overall.",
       "enable_what_if_mode": "Enable What If Mode",
-      "what_if_mode_activated": "What If Mode Activated",
+      "what_if_mode_activated": "Assessment Calculator Activated",
       "new_assignment": "New Assessment",
       "feedback:": "Feedback: ",
       "remove_assignment": "Remove Assessment \"%s\"?",
-      "it_will_be_restored": "It will be restored after disabling what if mode.",
+      "it_will_be_restored": "It will be restored after disabling Assessment Calculator.",
       "assignment_title": "Assessment Title",
       "average_short": "Average",
       "advanced_mode": "Advanced Mode",

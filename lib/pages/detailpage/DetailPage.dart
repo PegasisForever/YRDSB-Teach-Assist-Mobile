@@ -127,20 +127,8 @@ class _DetailPageState extends BetterState<DetailPage>
                         actions: <Widget>[
                           if (_course.overallMark != null)
                             IconButton(
-                              icon: Icon(whatIfMode
-                                  ? CustomIcons.lightbulb_filled
-                                  : Icons.lightbulb_outline),
+                              icon: Icon(CustomIcons.calculator),
                               onPressed: () async {
-                                if (showWhatIfTips) {
-                                  var isEnableWhatIf =
-                                      await Navigator.pushNamed(context, "/detail/whatif_welcome");
-                                  if (isEnableWhatIf != true) {
-                                    return;
-                                  }
-                                  showWhatIfTips = false;
-                                  prefs.setBool("show_what_if_tip", false);
-                                  await asyncWait(300);
-                                }
                                 setState(() {
                                   whatIfMode = !whatIfMode;
                                   if (!whatIfMode) {
