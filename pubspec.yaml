@@ -61,3 +61,6 @@ flutter:
     - family: CustomIcons
       fonts:
         - asset: assets/fonts/icon.ttf
+    - family: CustomIcons2
+      fonts:
+          - asset: assets/fonts/icon2.ttf
