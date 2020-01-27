@@ -15,7 +15,7 @@ import 'package:ta/tools.dart';
 const String baseUrl = (kReleaseMode || kProfileMode)
     ? "https://api.pegasis.site/yrdsb_ta/"
     : "http://192.168.1.22:5004/";
-const int apiVersion = 9;
+const int apiVersion = 10;
 
 class HttpResponse {
   String body = "";

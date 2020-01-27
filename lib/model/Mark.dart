@@ -56,13 +56,16 @@ class SmallMarkGroup {
   bool get allFinished => find(smallMarks, (SmallMark it) => !(it?.finished == true)) == null;
 
   bool get hasWeight =>
-      find(smallMarks, (SmallMark it) => it?.enabled==true ? it.weight > 0 : false) != null;
+      find(smallMarks, (SmallMark it) => it?.enabled == true ? it.weight > 0 : false) != null;
 
-  double get allGet => sum(smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled==true) ? it.get : 0.0);
+  double get allGet => sum(
+      smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled == true) ? it.get : 0.0);
 
-  double get allTotal => sum(smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled==true) ? it.total : 0.0);
+  double get allTotal => sum(
+      smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled == true) ? it.total : 0.0);
 
-  double get allWeight => sum(smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled==true) ? it.weight : 0.0);
+  double get allWeight => sum(smallMarks,
+      (SmallMark it) => (it?.finished == true && it?.enabled == true) ? it.weight : 0.0);
 
   double get percentage {
     var get = 0.0;
@@ -302,6 +305,7 @@ class Course {
   String room;
   double overallMark;
   bool cached;
+  int id;
 
   String get displayName {
     if (name != null) {
@@ -324,7 +328,8 @@ class Course {
       ..block = block
       ..room = room
       ..overallMark = overallMark
-      ..cached = cached;
+      ..cached = cached
+      ..id = id;
 
     if (overallMark != null) {
       course.assignments = List<Assignment>();
@@ -406,7 +411,8 @@ class Course {
         block == other.block &&
         room == other.room &&
         overallMark == other.overallMark &&
-        cached == cached;
+        cached == other.cached &&
+        id == other.id;
   }
 
   @override
