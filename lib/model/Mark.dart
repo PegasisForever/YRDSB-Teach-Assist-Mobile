@@ -363,7 +363,7 @@ class Course {
       Category.F: 0.0,
     };
 
-    assignments.forEach((assi) {
+    assignments?.forEach((assi) {
       assi.smallMarkGroups.forEach((category, smallMarkGroup) {
         if (smallMarkGroup.hasFinished && smallMarkGroup.available && smallMarkGroup.hasWeight) {
           gets[category] += smallMarkGroup.percentage * smallMarkGroup.allWeight;
