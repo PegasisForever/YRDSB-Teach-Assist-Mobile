@@ -12,7 +12,7 @@ class CrossFade extends StatelessWidget {
     return AnimatedCrossFade(
       key: Key("tip"),
       firstChild: firstChild,
-      secondChild: secondChild,
+      secondChild: secondChild ?? Container(),
       crossFadeState: showFirst ? CrossFadeState.showFirst : CrossFadeState.showSecond,
       duration: const Duration(milliseconds: 300),
       firstCurve: Curves.easeInOutCubic,

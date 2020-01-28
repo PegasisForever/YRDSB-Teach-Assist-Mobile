@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart' hide LinearProgressIndicator;
+import 'package:ta/model/HiddenCourse.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/summarypage/CourseCard.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
+import 'package:ta/widgets/CrossFade.dart';
 import 'package:ta/widgets/LinearProgressIndicator.dart';
+import 'package:ta/widgets/WithContextMenu.dart';
 
-class SummaryCourseList extends StatelessWidget {
+class SummaryCourseList extends StatefulWidget {
+  @override
+  _SummaryCourseListState createState() => _SummaryCourseListState();
+}
+
+class _SummaryCourseListState extends State<SummaryCourseList> {
   final List<Course> courses = getCourseListOf(currentUser.number);
 
   @override
@@ -15,6 +23,7 @@ class SummaryCourseList extends StatelessWidget {
 
     var total = 0.0;
     var availableCourseCount = 0;
+    var hiddenCourseList = HiddenCourse.getAll();
 
     courses.forEach((course) {
       if (course.overallMark != null) {
@@ -22,16 +31,29 @@ class SummaryCourseList extends StatelessWidget {
         availableCourseCount++;
       }
 
-      list.add(CourseCard(
-        showPadding: false,
-        course: course,
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            "/detail",
-            arguments: [course],
-          );
-        },
+      list.add(CrossFade(
+        showFirst: !HiddenCourse.isInList(hiddenCourseList, course),
+        firstChild: WithContextMenu(
+          menuItems: {
+            "Hide this course": () {
+              setState(() {
+                HiddenCourse.add(course);
+              });
+              Navigator.pop(context);
+            },
+          },
+          child: CourseCard(
+            showPadding: false,
+            course: course,
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                "/detail",
+                arguments: [course],
+              );
+            },
+          ),
+        ),
       ));
     });
 
