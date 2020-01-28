@@ -206,7 +206,10 @@ class Strings {
       "nightly":"Nightly",
       "build_number:":"Build: ",
       "unavaliable_assi":"Teacher didn't finish marking or you didn't hand in this assessment.",
-      "show_recent_updates":"Show recent updates in home page"
+      "show_recent_updates":"Show recent updates in home page",
+      "hide_this_course":"Hide this course",
+      "restore_this_course":"Restore this course",
+      "hidden_courses":"Hidden courses",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -398,6 +401,9 @@ class Strings {
       "build_number:":"编号：",
       "unavaliable_assi":"老师未完成批改或您未上交这项作业。",
       "show_recent_updates":"在主页显示最近更新",
+      "hide_this_course":"隐藏这节课",
+      "restore_this_course":"取消隐藏这节课",
+      "hidden_courses":"已隐藏的课程",
     }
   };
 

@@ -4,6 +4,7 @@ import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/summarypage/courselist/AllCourseAverage.dart';
 import 'package:ta/pages/summarypage/courselist/HidableCourseCard.dart';
+import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/ExpansionTile.dart';
 
 class SummaryCourseList extends StatefulWidget {
@@ -34,7 +35,7 @@ class _SummaryCourseListState extends State<SummaryCourseList> {
       list.add(HidableCourseCard(
         course: course,
         isShow: isShow,
-        menuText: "Hide this course",
+        menuText: Strings.get("hide_this_course"),
         onMenuTap: () => setState(() {
           HiddenCourse.add(course);
         }),
@@ -52,7 +53,7 @@ class _SummaryCourseListState extends State<SummaryCourseList> {
         hiddenCourseCards.add(HidableCourseCard(
           course: course,
           isShow: HiddenCourse.isInList(hiddenCourseList, course),
-          menuText: "Restore this course",
+          menuText: Strings.get("restore_this_course"),
           onMenuTap: () => setState(() {
             HiddenCourse.remove(course);
           }),
@@ -60,7 +61,7 @@ class _SummaryCourseListState extends State<SummaryCourseList> {
       });
 
       list.add(ExpansionTile(
-        title: Text("Hidden Courses"),
+        title: Text(Strings.get("hidden_courses")),
         children: hiddenCourseCards,
         shouldShowTile: hiddenCourseCount>0,
       ));
