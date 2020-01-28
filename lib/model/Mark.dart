@@ -402,7 +402,8 @@ class Course {
   @override
   bool operator ==(other) {
     return (other is Course) &&
-        hashObjects(assignments) == hashObjects(other.assignments) &&
+        assignments == other.assignments &&
+        assignments != null ? (hashObjects(assignments) == hashObjects(other.assignments)) : true &&
         weightTable == other.weightTable &&
         startTime == other.startTime &&
         endTime == other.endTime &&
