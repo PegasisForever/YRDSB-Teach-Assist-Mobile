@@ -402,8 +402,7 @@ class Course {
   @override
   bool operator ==(other) {
     return (other is Course) &&
-        assignments == other.assignments &&
-        assignments != null ? (hashObjects(assignments) == hashObjects(other.assignments)) : true &&
+        hashNullableObjects(assignments) == hashNullableObjects(other.assignments)&&
         weightTable == other.weightTable &&
         startTime == other.startTime &&
         endTime == other.endTime &&
@@ -418,7 +417,7 @@ class Course {
 
   @override
   int get hashCode => hash4(
-      hash4(hash4(hashObjects(assignments), weightTable, startTime, endTime), name, code, block),
+      hash4(hash4(hashNullableObjects(assignments), weightTable, startTime, endTime), name, code, block),
       room,
       overallMark,
       cached);

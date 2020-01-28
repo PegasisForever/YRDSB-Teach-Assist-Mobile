@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:quiver/core.dart';
 import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/res/Strings.dart';
 
@@ -223,4 +224,12 @@ typedef TwoValueChanged<T, R> = void Function(T value, R value2);
 
 Future asyncWait(int milliseconds) {
   return Future.delayed(Duration(milliseconds: milliseconds));
+}
+
+int hashNullableObjects(Iterable objects){
+  if(objects==null){
+    return null.hashCode;
+  }else{
+    return hashObjects(objects);
+  }
 }

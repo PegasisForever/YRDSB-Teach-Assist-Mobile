@@ -12,7 +12,7 @@ import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/pages/drawerpages/SearchPage.dart';
 import 'package:ta/pages/drawerpages/TADrawer.dart';
-import 'package:ta/pages/summarypage/SummaryCourseList.dart';
+import 'package:ta/pages/summarypage/courselist/SummaryCourseList.dart';
 import 'package:ta/pages/summarypage/section/AnnouncementSection.dart';
 import 'package:ta/pages/summarypage/section/CalendarSection.dart';
 import 'package:ta/pages/summarypage/section/Section.dart';
