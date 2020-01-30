@@ -13,10 +13,9 @@ class SummaryCourseList extends StatefulWidget {
 }
 
 class _SummaryCourseListState extends State<SummaryCourseList> {
-  final List<Course> courses = getCourseListOf(currentUser.number);
-
   @override
   Widget build(BuildContext context) {
+    List<Course> courses = getCourseListOf(currentUser.number);
     var list = List<Widget>();
 
     var total = 0.0;
