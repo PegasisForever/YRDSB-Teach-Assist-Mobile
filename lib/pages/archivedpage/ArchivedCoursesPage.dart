@@ -38,12 +38,14 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
     var silver = 0;
     var gold = 0;
     archivedCourses.forEach((course) {
-      if (course.overallMark >= 99) {
-        gold++;
-      } else if (course.overallMark >= 90) {
-        silver++;
-      } else if (course.overallMark >= 80) {
-        bronze++;
+      if(course.overallMark!=null){
+        if (course.overallMark >= 99) {
+          gold++;
+        } else if (course.overallMark >= 90) {
+          silver++;
+        } else if (course.overallMark >= 80) {
+          bronze++;
+        }
       }
     });
 
