@@ -185,7 +185,7 @@ regiAndSave(User user) async {
 getAndSaveCalendar() async {
   var lastCalendarUpdateTime = prefs.getString("last_update_calendar");
   if (lastCalendarUpdateTime != null &&
-      DateTime.now().difference(DateTime.parse(lastCalendarUpdateTime)).inDays < 30) {
+      DateTime.now().difference(DateTime.parse(lastCalendarUpdateTime)).inHours < 2) {
     return;
   }
 
