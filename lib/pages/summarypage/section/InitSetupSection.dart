@@ -28,6 +28,7 @@ class _InitSetupSectionState extends State<InitSetupSection> {
         trailing: SmallIconButton(
           icon: Icon(Icons.arrow_forward),
           onPressed: () {
+            Navigator.pushNamed(context, "/setup");
             setState(() {
 //              showTips = false;
 //              prefs.setBool("show_assi_edit_tip", false);

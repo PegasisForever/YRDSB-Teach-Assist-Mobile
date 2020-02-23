@@ -18,6 +18,7 @@ import 'package:ta/pages/drawerpages/AccountsList.dart';
 import 'package:ta/pages/drawerpages/EditAccount.dart';
 import 'package:ta/pages/drawerpages/FeedbackPage.dart';
 import 'package:ta/pages/settingspage/SettingsPage.dart';
+import 'package:ta/pages/setuppage/SetupPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 import 'package:ta/pages/updatespage/UpdatesPage.dart';
 import 'package:ta/plugins/dataStore.dart';
@@ -148,6 +149,8 @@ class _AppState extends State<App> {
         return _createRoute(ArchivedCoursesPage());
       case "/settings":
         return _createRoute(SettingsPage());
+      case "/setup":
+        return _createRoute(SetupPage());
     }
   }
 
