@@ -3,6 +3,7 @@ import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/summarypage/section/Section.dart';
 import 'package:ta/pages/updatespage/updatecontents/getUpdateWidget.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
@@ -14,6 +15,8 @@ class UpdatesSection extends SectionCandidate {
 
   @override
   bool shouldDisplay() {
+    if (!Config.showRecentUpdates) return false;
+
     timeline.clear();
     timeline.addAll(getTimelineOf(currentUser.number));
 
@@ -34,7 +37,8 @@ class _UpdatesSectionState extends State<UpdatesSection> {
     DateTime lastContentDate;
     for (final TAUpdate update in widget.timeline.reversed) {
       if (cardWidgets.length < 2 &&
-          (lastContentDate == null || isSameDay(lastContentDate, update.time))) {
+          (lastContentDate == null ||
+              isSameDay(lastContentDate, update.time))) {
         addIfNotNull(cardWidgets, getUpdateWidget(update));
         lastContentDate = update.time;
       } else {

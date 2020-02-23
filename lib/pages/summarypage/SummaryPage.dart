@@ -15,6 +15,7 @@ import 'package:ta/pages/drawerpages/TADrawer.dart';
 import 'package:ta/pages/summarypage/courselist/SummaryCourseList.dart';
 import 'package:ta/pages/summarypage/section/AnnouncementSection.dart';
 import 'package:ta/pages/summarypage/section/CalendarSection.dart';
+import 'package:ta/pages/summarypage/section/InitSetupSection.dart';
 import 'package:ta/pages/summarypage/section/Section.dart';
 import 'package:ta/pages/summarypage/section/UpdatesSection.dart';
 import 'package:ta/plugins/dataStore.dart';
@@ -143,9 +144,10 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: getSectionWidgets([
+                  InitSetupSection(),
                   AnnouncementSection(),
                   CalendarSection(),
-                  if (Config.showRecentUpdates) UpdatesSection(),
+                  UpdatesSection(),
                 ]),
               ),
               SummaryCourseList()
