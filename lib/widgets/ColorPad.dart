@@ -35,11 +35,16 @@ class _ColorItem extends StatelessWidget {
   }
 }
 
-class ColorPad extends StatelessWidget {
+class ColorPad extends StatefulWidget {
   final VoidCallback onColorChose;
 
   ColorPad({this.onColorChose});
 
+  @override
+  _ColorPadState createState() => _ColorPadState();
+}
+
+class _ColorPadState extends State<ColorPad> {
   @override
   Widget build(BuildContext context) {
     var colorItems = List<Widget>();
@@ -48,8 +53,10 @@ class ColorPad extends StatelessWidget {
       colorItems.add(_ColorItem(
         color: color,
         onTap: () {
-          App.updateColor(color);
-          if (onColorChose != null) onColorChose();
+          setState(() {
+            App.updateColor(color);
+            if (widget.onColorChose != null) widget.onColorChose();
+          });
         },
         selected: color == primaryColor,
       ));
