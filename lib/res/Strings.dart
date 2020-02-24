@@ -211,6 +211,7 @@ class Strings {
       "restore_this_course":"Restore this course",
       "hidden_courses":"Hidden courses",
       "init_setup_text":"Customize and learn new features.",
+      "show_recent_updates?":"Show recent updates in home page?",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -406,6 +407,7 @@ class Strings {
       "restore_this_course":"取消隐藏这节课",
       "hidden_courses":"已隐藏的课程",
       "init_setup_text":"自定义此App & 了解新功能",
+      "show_recent_updates?":"是否在主页显示最近动态？",
     }
   };
 

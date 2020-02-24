@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ta/pages/setuppage/SetColor.dart';
+import 'package:ta/pages/setuppage/SetShowRecentUpdate.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
 
@@ -37,9 +38,23 @@ class _SetupPageState extends BetterState<SetupPage>
           },
           isLast: false,
         ),
-        Container(
-          width: double.infinity,
-          color: Colors.blue,
+        _PageWrapper(
+          child: SetShowRecentUpdate(),
+          goPrevious: () {
+            pageController.animateToPage(
+              0,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeOutCubic,
+            );
+          },
+          goNext: () {
+            pageController.animateToPage(
+              2,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeOutCubic,
+            );
+          },
+          isLast: false,
         ),
         Container(
           width: double.infinity,
@@ -58,8 +73,12 @@ class _SetupPageState extends BetterState<SetupPage>
           backgroundColor: Colors.black26,
           valueColor: AlwaysStoppedAnimation<Color>(getPrimary()),
         ),
-        textTheme: Theme.of(context).textTheme,
-        iconTheme: Theme.of(context).iconTheme,
+        textTheme: Theme
+            .of(context)
+            .textTheme,
+        iconTheme: Theme
+            .of(context)
+            .iconTheme,
       ),
       body: NotificationListener<ScrollUpdateNotification>(
         child: PageView(
@@ -69,8 +88,8 @@ class _SetupPageState extends BetterState<SetupPage>
         onNotification: (noti) {
           setState(() {
             percent = (noti.metrics.pixels / getScreenWidth(context)) /
-                    (pages.length - 1) *
-                    0.99 +
+                (pages.length - 1) *
+                0.99 +
                 0.01;
           });
           return true;
@@ -110,17 +129,20 @@ class _PageWrapper extends StatelessWidget {
                 goPrevious == null
                     ? Container()
                     : FlatButton(
-                        child: Text("Previous"),
-                        onPressed: goPrevious,
-                      ),
+                  child: Text("Previous"),
+                  onPressed: goPrevious,
+                ),
                 goNext == null
                     ? Container()
                     : RaisedButton(
-                        child: Text(isLast ? "Done" : "Next"),
-                        color: Theme.of(context).colorScheme.primary,
-                        textColor: Colors.white,
-                        onPressed: goNext,
-                      )
+                  child: Text(isLast ? "Done" : "Next"),
+                  color: Theme
+                      .of(context)
+                      .colorScheme
+                      .primary,
+                  textColor: Colors.white,
+                  onPressed: goNext,
+                )
               ],
             ),
           ),

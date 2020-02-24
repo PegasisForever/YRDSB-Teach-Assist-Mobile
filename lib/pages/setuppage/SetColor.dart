@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/widgets/ColorPad.dart';
 
-class SetColor extends StatefulWidget {
-  @override
-  _SetColorState createState() => _SetColorState();
-}
-
-class _SetColorState extends State<SetColor> {
+class SetColor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
