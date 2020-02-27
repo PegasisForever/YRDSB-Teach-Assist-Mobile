@@ -43,7 +43,7 @@ class _AboutPageState extends BetterState<AboutPage> {
             ),
             Center(
               child: Text(
-                "YRDSB Teach Assist",
+                "YRDSB Teach Assist Pro",
                 style: TextStyle(fontSize: 25),
               ),
             ),
