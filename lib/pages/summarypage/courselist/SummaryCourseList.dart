@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart' hide LinearProgressIndicator,ExpansionTile;
+import 'package:flutter/material.dart'
+    hide LinearProgressIndicator, ExpansionTile;
 import 'package:ta/model/HiddenCourse.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
@@ -24,7 +25,7 @@ class _SummaryCourseListState extends State<SummaryCourseList> {
     var hiddenCourseCount = 0;
 
     courses.forEach((course) {
-      if (course.overallMark != null) {
+      if (course.overallMark != null && course.overallMark != 0) {
         total += course.overallMark;
         availableCourseCount++;
       }
@@ -46,25 +47,23 @@ class _SummaryCourseListState extends State<SummaryCourseList> {
       list.insert(0, AllCourseAverage(avg));
     }
 
-
-      var hiddenCourseCards = <Widget>[];
-      courses.forEach((course) {
-        hiddenCourseCards.add(HidableCourseCard(
-          course: course,
-          isShow: HiddenCourse.isInList(hiddenCourseList, course),
-          menuText: Strings.get("restore_this_course"),
-          onMenuTap: () => setState(() {
-            HiddenCourse.remove(course);
-          }),
-        ));
-      });
-
-      list.add(ExpansionTile(
-        title: Text(Strings.get("hidden_courses")),
-        children: hiddenCourseCards,
-        shouldShowTile: hiddenCourseCount>0,
+    var hiddenCourseCards = <Widget>[];
+    courses.forEach((course) {
+      hiddenCourseCards.add(HidableCourseCard(
+        course: course,
+        isShow: HiddenCourse.isInList(hiddenCourseList, course),
+        menuText: Strings.get("restore_this_course"),
+        onMenuTap: () => setState(() {
+          HiddenCourse.remove(course);
+        }),
       ));
+    });
 
+    list.add(ExpansionTile(
+      title: Text(Strings.get("hidden_courses")),
+      children: hiddenCourseCards,
+      shouldShowTile: hiddenCourseCount > 0,
+    ));
 
     return Column(
       children: list,
