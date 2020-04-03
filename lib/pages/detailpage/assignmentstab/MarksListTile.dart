@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/assignmentstab/SmallMarkChart.dart';
 import 'package:ta/pages/detailpage/assignmentstab/SmallMarkChartDetail.dart';
@@ -63,9 +62,6 @@ class MarksListTileState extends State<MarksListTile>
                   height: 4,
                 ),
                 avgText,
-                if (_assignment.time!=null)
-                  Text(DateFormat("EEE, MMM d").format(_assignment.time),
-                      style: TextStyle(fontSize: 16, color: getGrey(100, context: context))),
                 if (_assignment.isNoWeight)
                   Text(Strings.get("no_weight"),
                       style: TextStyle(fontSize: 16, color: getGrey(100, context: context))),

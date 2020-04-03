@@ -1,1 +1,1 @@
-const nightly = true;
+const nightly = false;
