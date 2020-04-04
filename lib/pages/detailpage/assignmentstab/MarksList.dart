@@ -51,7 +51,7 @@ class MarksListState extends State<MarksList> with AutomaticKeepAliveClientMixin
               top: 56,
               left: sidePadding > 0 ? sidePadding : 0,
               right: sidePadding > 0 ? sidePadding : 0,
-              bottom: MediaQuery.of(context).padding.bottom,
+              bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
             list: course.assignments.reversed.toList(),
             header: Column(

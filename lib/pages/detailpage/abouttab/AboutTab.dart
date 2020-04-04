@@ -46,7 +46,7 @@ class AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin {
         top: 56 + 16.0,
         left: max(sidePadding, 14),
         right: max(sidePadding, 14),
-        bottom: MediaQuery.of(context).padding.bottom + 16,
+        bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
       children: <Widget>[
         Padding(

@@ -53,7 +53,7 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
               top: 56,
               left: sidePadding > 0 ? sidePadding : 0,
               right: sidePadding > 0 ? sidePadding : 0,
-              bottom: MediaQuery.of(context).padding.bottom,
+              bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
             children: <Widget>[
               _getTermOverall(analysis),

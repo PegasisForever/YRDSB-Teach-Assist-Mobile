@@ -22,8 +22,7 @@ class DetailPage extends StatefulWidget {
   _DetailPageState createState() => _DetailPageState(course);
 }
 
-class _DetailPageState extends BetterState<DetailPage>
-    with SingleTickerProviderStateMixin, Fragments {
+class _DetailPageState extends BetterState<DetailPage> with SingleTickerProviderStateMixin, Fragments {
   Course _course;
   Course _originalCourse;
   var whatIfMode = false;
@@ -68,6 +67,7 @@ class _DetailPageState extends BetterState<DetailPage>
     super.build(context);
 
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: DefaultTabController(
       length: 3,
       child: NotificationListener<ScrollUpdateNotification>(
@@ -169,8 +169,10 @@ class _DetailPageState extends BetterState<DetailPage>
                         child: Center(
                             child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(Strings.get("what_if_mode_activated"),
-                              style: TextStyle(color: Colors.black)),
+                          child: Text(
+                            Strings.get("what_if_mode_activated"),
+                            style: TextStyle(color: Colors.black),
+                          ),
                         )),
                       ),
                       secondChild: Container(),
@@ -234,8 +236,7 @@ class _DetailPageState extends BetterState<DetailPage>
                 appBarOffsetY = 0;
               }
 
-              appBarElevation =
-                  (1 - (percent - 1)) * statisticsElevation + (percent - 1) * aboutElevation;
+              appBarElevation = (1 - (percent - 1)) * statisticsElevation + (percent - 1) * aboutElevation;
               if (appBarElevation > 4) {
                 appBarElevation = 4;
               } else if (appBarElevation < 0) {

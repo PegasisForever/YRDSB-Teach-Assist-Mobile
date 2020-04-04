@@ -15,7 +15,6 @@ import 'package:ta/pages/drawerpages/openCustomTab.dart';
 import 'package:ta/pages/summarypage/courselist/SummaryCourseList.dart';
 import 'package:ta/pages/summarypage/section/AnnouncementSection.dart';
 import 'package:ta/pages/summarypage/section/CalendarSection.dart';
-import 'package:ta/pages/summarypage/section/InitSetupSection.dart';
 import 'package:ta/pages/summarypage/section/Section.dart';
 import 'package:ta/pages/summarypage/section/UpdatesSection.dart';
 import 'package:ta/plugins/dataStore.dart';
@@ -48,15 +47,13 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
         if (timePassed.inMinutes == 1) {
           updateText = Strings.get("last_update") + Strings.get("1_min_ago");
         } else {
-          updateText = sprintf(Strings.get("last_update") + Strings.get("min_ago"),
-              [timePassed.inMinutes.toString()]);
+          updateText = sprintf(Strings.get("last_update") + Strings.get("min_ago"), [timePassed.inMinutes.toString()]);
         }
       } else if (timePassed.inHours < 24) {
         if (timePassed.inHours == 1) {
           updateText = Strings.get("last_update") + Strings.get("1_hr_ago");
         } else {
-          updateText = sprintf(
-              Strings.get("last_update") + Strings.get("hr_ago"), [timePassed.inHours.toString()]);
+          updateText = sprintf(Strings.get("last_update") + Strings.get("hr_ago"), [timePassed.inHours.toString()]);
         }
       } else {
         updateText = Strings.get("last_update") + "${lastUpdateTime.month}/${lastUpdateTime.day}";
@@ -76,6 +73,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
 
     return Scaffold(
       key: scaffoldKey,
+      resizeToAvoidBottomInset: false,
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxScrolled) => [
           SliverAppBar(
@@ -138,7 +136,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
             padding: EdgeInsets.only(
               left: max(sidePadding, 14),
               right: max(sidePadding, 14),
-              bottom: MediaQuery.of(context).padding.bottom + 16,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 16,
             ),
             children: <Widget>[
               Column(
@@ -270,8 +268,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
 
   autoRefresh({bool noFetch, VoidCallback callBack}) async {
     var lastUpdateTime = prefs.getString("last_update-${currentUser.number}");
-    if (!(lastUpdateTime != null &&
-        DateTime.now().difference(DateTime.parse(lastUpdateTime)).inMinutes < 5)) {
+    if (!(lastUpdateTime != null && DateTime.now().difference(DateTime.parse(lastUpdateTime)).inMinutes < 5)) {
       try {
         await Future.wait(
           <Future>[
@@ -307,7 +304,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
                 FlatButton(
                   child: Text(Strings.get("update").toUpperCase()),
                   onPressed: () {
-                    openCustomTab(context,"https://ta-yrdsb.web.app/update");
+                    openCustomTab(context, "https://ta-yrdsb.web.app/update");
                     Navigator.pop(context);
                   },
                 ),
