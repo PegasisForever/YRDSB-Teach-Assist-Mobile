@@ -23,6 +23,7 @@ import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/plugins/firebase.dart';
 import 'package:ta/plugins/packageinfo.dart';
 import 'package:ta/res/Themes.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/ZoomPageTransition.dart';
 
 void main() async {
@@ -52,6 +53,7 @@ class _AppState extends State<App> {
   _updateBrightness(int v) {
     setState(() {
       Config.darkMode = v;
+      updateNavigationBarBrightness();
     });
   }
 

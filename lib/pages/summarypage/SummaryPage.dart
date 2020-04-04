@@ -11,6 +11,7 @@ import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/pages/drawerpages/SearchPage.dart';
 import 'package:ta/pages/drawerpages/TADrawer.dart';
+import 'package:ta/pages/drawerpages/openCustomTab.dart';
 import 'package:ta/pages/summarypage/courselist/SummaryCourseList.dart';
 import 'package:ta/pages/summarypage/section/AnnouncementSection.dart';
 import 'package:ta/pages/summarypage/section/CalendarSection.dart';
@@ -143,7 +144,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: getSectionWidgets([
-                  InitSetupSection(),
+//                  InitSetupSection(),
                   AnnouncementSection(),
                   CalendarSection(),
                   UpdatesSection(),
@@ -306,9 +307,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
                 FlatButton(
                   child: Text(Strings.get("update").toUpperCase()),
                   onPressed: () {
-                    //TODO
-//                    OpenAppstore.launch(
-//                        androidAppId: "site.pegasis.yrdsb.ta", iOSAppId: "1483082868");
+                    openCustomTab(context,"https://ta-yrdsb.web.app/update");
                     Navigator.pop(context);
                   },
                 ),
