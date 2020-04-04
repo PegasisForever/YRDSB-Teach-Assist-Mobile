@@ -123,8 +123,7 @@ class _AppState extends State<App> {
 
     switch (settings.name) {
       case "/":
-        return _createRoute(userList.length == 0 ? LoginPage() : SummaryPage(),
-            showEnterAnimation: false);
+        return _createRoute(userList.length == 0 ? LoginPage() : SummaryPage(), showEnterAnimation: false);
       case "/summary":
         return _createRoute(SummaryPage());
       case "/login":
@@ -155,17 +154,19 @@ class _AppState extends State<App> {
   }
 
   Route _createRoute(Widget page, {bool showEnterAnimation = true}) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return ZoomPageTransition(
-          animation: animation,
-          secondaryAnimation: secondaryAnimation,
-          child: child,
-          showEnterAnimation: showEnterAnimation,
-        );
-      },
-    );
+    return isAndroid()
+        ? PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => page,
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              return ZoomPageTransition(
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                child: child,
+                showEnterAnimation: showEnterAnimation,
+              );
+            },
+          )
+        : MaterialPageRoute(builder: (context) => page);
   }
 
   ThemeData getLightTheme(MaterialColor color) {
