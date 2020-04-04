@@ -81,6 +81,10 @@ String unGzip(Uint8List bytes) {
   return Utf8Decoder().convert(GZipDecoder().decodeBytes(bytes));
 }
 
+double getTopPadding(BuildContext context) {
+  return MediaQuery.of(context).padding.top;
+}
+
 double getBottomPadding(BuildContext context) {
   var query = MediaQuery.of(context);
   return query.padding.bottom + query.viewInsets.bottom;
@@ -100,8 +104,7 @@ void updateNavigationBarBrightness({BuildContext context}) {
 
 bool isLightMode({BuildContext context}) {
   if (context != null) {
-    currentBrightness =
-        MediaQuery.of(context).platformBrightness ?? currentBrightness;
+    currentBrightness = MediaQuery.of(context).platformBrightness ?? currentBrightness;
   }
   switch (Config.darkMode) {
     case 0:
@@ -115,9 +118,7 @@ bool isLightMode({BuildContext context}) {
 
 SystemUiOverlayStyle getSystemUiOverlayStyle(BuildContext context) {
   var brightness = MediaQuery.of(context).platformBrightness;
-  return brightness == Brightness.light
-      ? SystemUiOverlayStyle.light
-      : SystemUiOverlayStyle.dark;
+  return brightness == Brightness.light ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark;
 }
 
 bool isSameDay(DateTime d1, DateTime d2) {
@@ -156,10 +157,6 @@ Color primaryColorOf(BuildContext context) {
   return Theme.of(context).colorScheme.primary;
 }
 
-double widthOf(BuildContext context) {
-  return MediaQuery.of(context).size.width;
-}
-
 T find<T>(List<T> list, bool f(T it)) {
   for (var item in list) {
     if (f(item)) {
@@ -178,18 +175,14 @@ double sum<T>(List<T> list, double f(T it)) {
 }
 
 Color getGrey(int contrast, {BuildContext context}) {
-  return isLightMode(context: context)
-      ? Colors.grey[500 + contrast]
-      : Colors.grey[500 - contrast];
+  return isLightMode(context: context) ? Colors.grey[500 + contrast] : Colors.grey[500 - contrast];
 }
 
 String period2Str(DateTime date1, DateTime date2) {
   if (date1.year == date2.year) {
     return date2Str(date1) + " - " + date2Str(date2);
   } else {
-    return date2Str(date1, keepYear: true) +
-        " - " +
-        date2Str(date2, keepYear: true);
+    return date2Str(date1, keepYear: true) + " - " + date2Str(date2, keepYear: true);
   }
 }
 
@@ -204,8 +197,7 @@ String date2Str(DateTime date, {bool keepYear = false}) {
 // example input: 2019-5-20
 DateTime str2Date(String str) {
   var numberList = str.split("-");
-  return DateTime(
-      numberList[0].toInt(), numberList[1].toInt(), numberList[2].toInt());
+  return DateTime(numberList[0].toInt(), numberList[1].toInt(), numberList[2].toInt());
 }
 
 extension on String {

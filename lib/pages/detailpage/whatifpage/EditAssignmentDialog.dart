@@ -230,7 +230,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
     OverlayState overlayState = Overlay.of(context);
     overlayEntry = OverlayEntry(builder: (context) {
       return Positioned(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
+          bottom: getBottomPadding(context),
           right: 0.0,
           left: 0.0,
           child: InputDoneView());

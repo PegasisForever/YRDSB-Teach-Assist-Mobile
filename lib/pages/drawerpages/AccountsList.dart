@@ -15,8 +15,9 @@ class _AccountsListState extends BetterState<AccountsList> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    var sidePadding = (widthOf(context) - 500) / 2;
+    var sidePadding = (getScreenWidth(context) - 500) / 2;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(Strings.get("accounts_list")),
         actions: <Widget>[
@@ -38,7 +39,7 @@ class _AccountsListState extends BetterState<AccountsList> {
         padding: EdgeInsets.only(
           left: max(sidePadding, 0),
           right: max(sidePadding, 0),
-          bottom: MediaQuery.of(context).padding.bottom,
+          bottom: getBottomPadding(context),
         ),
         onReorder: (oldIndex, newIndex) {
           setState(() {

@@ -23,7 +23,7 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
 
   @override
   Widget build(BuildContext context) {
-    var sidePadding = (widthOf(context) - 500) / 2;
+    var sidePadding = (getScreenWidth(context) - 500) / 2;
     return archivedCourses.length == 0
         ? _noDataView(
             sidePadding: sidePadding,
@@ -50,6 +50,7 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
     });
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxScrolled) => [
           SliverAppBar(
@@ -74,7 +75,7 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
             padding: EdgeInsets.only(
               left: max(sidePadding, 6),
               right: max(sidePadding, 6),
-              bottom: MediaQuery.of(context).padding.bottom + 16,
+              bottom: getBottomPadding(context) + 16,
             ),
             itemCount: archivedCourses.length + 1,
             itemBuilder: (context, index) {

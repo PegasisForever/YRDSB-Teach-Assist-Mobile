@@ -75,7 +75,7 @@ class _DetailPageState extends BetterState<DetailPage> with SingleTickerProvider
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + _animation.value,
+                top: getTopPadding(context) + _animation.value,
               ),
               child: TabBarView(
                 children: [
@@ -153,7 +153,7 @@ class _DetailPageState extends BetterState<DetailPage> with SingleTickerProvider
                       ),
                     ),
                     TabBar(
-                      isScrollable: widthOf(context) > 500,
+                      isScrollable: getScreenWidth(context) > 500,
                       indicatorColor: getPrimary(),
                       labelColor: Theme.of(context).textTheme.title.color,
                       tabs: [

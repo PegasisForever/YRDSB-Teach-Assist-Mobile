@@ -20,7 +20,7 @@ class _AboutPageState extends BetterState<AboutPage> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    var sidePadding = (widthOf(context) - 500) / 2;
+    var sidePadding = (getScreenWidth(context) - 500) / 2;
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.get("about")),

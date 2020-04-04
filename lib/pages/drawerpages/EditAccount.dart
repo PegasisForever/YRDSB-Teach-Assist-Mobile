@@ -47,8 +47,9 @@ class _EditAccountState extends BetterState<EditAccount> {
   Widget build(BuildContext context) {
     super.build(context);
     var _oldUser = widget.user;
-    var sidePadding = (widthOf(context) - 500) / 2;
+    var sidePadding = (getScreenWidth(context) - 500) / 2;
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(_oldUser.number != ""
               ? Strings.get("edit") + " " + _oldUser.number
@@ -230,7 +231,7 @@ class _EditAccountState extends BetterState<EditAccount> {
             top: 4,
             left: max(sidePadding, 16),
             right: max(sidePadding, 16),
-            bottom: MediaQuery.of(context).padding.bottom + 16,
+            bottom: getBottomPadding(context) + 16,
           ),
           children: <Widget>[
             EditText(

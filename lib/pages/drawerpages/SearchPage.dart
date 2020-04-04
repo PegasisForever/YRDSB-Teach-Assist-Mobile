@@ -86,7 +86,7 @@ class AssignmentSearchDelegate extends SearchDelegate {
           onSelectHistory: onSelectHistory);
     }
 
-    var sidePadding = (widthOf(context) - 500) / 2;
+    var sidePadding = (getScreenWidth(context) - 500) / 2;
     var listItems = List<Widget>();
     getCourseListOf(currentUser.number).forEach((course) {
       var matchedItems = List<Widget>();
@@ -125,7 +125,7 @@ class AssignmentSearchDelegate extends SearchDelegate {
     if (listItems.length > 0) {
       return ListView(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).padding.bottom,
+          bottom: getBottomPadding(context),
         ),
         children: listItems,
       );
@@ -202,7 +202,7 @@ class _SearchHistoryListState extends State<_SearchHistoryList> {
       ));
     }
 
-    var sidePadding = (widthOf(context) - 500) / 2;
+    var sidePadding = (getScreenWidth(context) - 500) / 2;
     return ListView(
       padding: EdgeInsets.symmetric(
         horizontal: sidePadding > 0 ? sidePadding : 0,

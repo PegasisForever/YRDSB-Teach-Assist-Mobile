@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:ta/tools.dart';
 
 class AccountDetails extends StatefulWidget {
   const AccountDetails({
@@ -61,7 +62,7 @@ class AccountDetailsState extends State<AccountDetails> with SingleTickerProvide
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: MediaQuery.of(context).padding.top + 4,
+        top: getTopPadding(context) + 4,
       ),
       child: InkWell(
         onTap: widget.onTap,

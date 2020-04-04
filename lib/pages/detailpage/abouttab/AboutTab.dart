@@ -26,7 +26,7 @@ class AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin {
     var course = widget.course;
 
     super.build(context);
-    var sidePadding = (widthOf(context) - 500) / 2;
+    var sidePadding = (getScreenWidth(context) - 500) / 2;
     var courseInfoText = Strings.get("course_about_name:") + testBlank(course.name) + "\n";
     courseInfoText += Strings.get("course_about_code:") + testBlank(course.code) + "\n";
     courseInfoText += Strings.get("course_about_period:") + testBlank(course.block) + "\n";
@@ -46,7 +46,7 @@ class AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin {
         top: 56 + 16.0,
         left: max(sidePadding, 14),
         right: max(sidePadding, 14),
-        bottom: MediaQuery.of(context).viewInsets.bottom,
+        bottom: getBottomPadding(context),
       ),
       children: <Widget>[
         Padding(

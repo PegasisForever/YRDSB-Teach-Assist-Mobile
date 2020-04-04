@@ -35,7 +35,7 @@ class MarksListState extends State<MarksList> with AutomaticKeepAliveClientMixin
     super.build(context);
     var whatIfMode = widget.whatIfMode;
     var course = widget.course;
-    var sidePadding = (widthOf(context) - 500) / 2;
+    var sidePadding = (getScreenWidth(context) - 500) / 2;
     return Stack(
       children: <Widget>[
         if (course.overallMark == null || course.assignments.length == 0)
@@ -51,7 +51,7 @@ class MarksListState extends State<MarksList> with AutomaticKeepAliveClientMixin
               top: 56,
               left: sidePadding > 0 ? sidePadding : 0,
               right: sidePadding > 0 ? sidePadding : 0,
-              bottom: MediaQuery.of(context).viewInsets.bottom,
+              bottom: getBottomPadding(context),
             ),
             list: course.assignments.reversed.toList(),
             header: Column(

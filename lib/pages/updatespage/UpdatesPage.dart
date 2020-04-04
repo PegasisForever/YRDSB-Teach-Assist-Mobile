@@ -17,23 +17,23 @@ class _UpdatesPageState extends BetterState<UpdatesPage> {
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          title: Text(Strings.get("updates")),
-          floating: true,
-          snap: true,
-          textTheme: Theme.of(context).textTheme,
-          iconTheme: Theme.of(context).iconTheme,
-        ),
-        SliverList(
-          delegate: SliverChildListDelegate(
-            _getTimelineCards(getTimelineOf(currentUser.number))
-              ..add(SizedBox(height: MediaQuery.of(context).padding.bottom)),
-          ),
-        )
-      ],
-    ));
+          slivers: <Widget>[
+            SliverAppBar(
+              title: Text(Strings.get("updates")),
+              floating: true,
+              snap: true,
+              textTheme: Theme.of(context).textTheme,
+              iconTheme: Theme.of(context).iconTheme,
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                _getTimelineCards(getTimelineOf(currentUser.number))..add(SizedBox(height: getBottomPadding(context))),
+              ),
+            )
+          ],
+        ));
   }
 
   List<Widget> _getTimelineCards(List<TAUpdate> timeline) {
@@ -78,8 +78,7 @@ class _UpdatesPageState extends BetterState<UpdatesPage> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 6),
-            child: Text(DateFormat("EEE, MMM d").format(time),
-                style: Theme.of(context).textTheme.title),
+            child: Text(DateFormat("EEE, MMM d").format(time), style: Theme.of(context).textTheme.title),
           ),
           SizedBox(
             height: 4,

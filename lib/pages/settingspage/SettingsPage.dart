@@ -21,7 +21,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    var sidePadding = (widthOf(context) - 500) / 2;
+    var sidePadding = (getScreenWidth(context) - 500) / 2;
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.get("settings")),
@@ -32,7 +32,7 @@ class _SettingsPageState extends State<SettingsPage> {
         padding: EdgeInsets.only(
           left: max(sidePadding, 0),
           right: max(sidePadding, 0),
-          bottom: MediaQuery.of(context).padding.bottom,
+          bottom: getBottomPadding(context),
         ),
         children: <Widget>[
           ListTile(

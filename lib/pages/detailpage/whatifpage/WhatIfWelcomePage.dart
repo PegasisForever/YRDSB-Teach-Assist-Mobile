@@ -15,8 +15,8 @@ class _WhatIfWelcomePageState extends BetterState<WhatIfWelcomePage> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    var sidePadding = (widthOf(context) - 400) / 2;
-    var topPadding = MediaQuery.of(context).padding.top;
+    var sidePadding = (getScreenWidth(context) - 400) / 2;
+    var topPadding = getTopPadding(context);
 
     return Scaffold(
       body: Stack(

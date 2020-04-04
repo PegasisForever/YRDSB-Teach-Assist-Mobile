@@ -69,7 +69,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
   Widget build(BuildContext context) {
     super.build(context);
 
-    var sidePadding = (widthOf(context) - 500) / 2;
+    var sidePadding = (getScreenWidth(context) - 500) / 2;
 
     return Scaffold(
       key: scaffoldKey,
@@ -136,7 +136,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
             padding: EdgeInsets.only(
               left: max(sidePadding, 14),
               right: max(sidePadding, 14),
-              bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+              bottom: getBottomPadding(context) + 16,
             ),
             children: <Widget>[
               Column(
