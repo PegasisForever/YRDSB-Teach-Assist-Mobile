@@ -14,12 +14,7 @@ class CourseCard extends StatelessWidget {
   final bool showAnimations;
   final bool showPadding;
 
-  CourseCard(
-      {this.onTap,
-      this.course,
-      this.showIcons = true,
-      this.showAnimations = true,
-      this.showPadding = true})
+  CourseCard({this.onTap, this.course, this.showIcons = true, this.showAnimations = true, this.showPadding = true})
       : super(key: Key(course.displayName));
 
   @override
@@ -74,42 +69,43 @@ class CourseCard extends StatelessWidget {
                             )),
                     if (course.cached && showIcons)
                       WidgetSpan(
-                          child: Container(
-                        padding: const EdgeInsets.all(1),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 1),
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                        ),
-                        child: TapTooltip(
-                          message: Strings.get("cached_info"),
-                          padding: const EdgeInsets.all(16),
-                          margin: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            Strings.get("cached"),
-                            style: TextStyle(color: getGrey(100, context: context)),
-                          ),
-                        ),
-                      ))
+                          child: TapTooltip(
+                            message: Strings.get("cached_info"),
+                            padding: const EdgeInsets.all(16),
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 6),
+                              child: Container(
+                                padding: const EdgeInsets.all(1),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey, width: 1),
+                                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                                ),
+                                child: Text(
+                                  Strings.get("cached"),
+                                  style: TextStyle(color: getGrey(100, context: context)),
+                                ),
+                              ),
+                            ),
+                          )
+                      ),
                   ]),
                 ),
                 SizedBox(height: 4),
-                if (infoStr.length > 0)
-                  Text(infoStr.join("  -  "), style: Theme.of(context).textTheme.subhead),
+                if (infoStr.length > 0) Text(infoStr.join("  -  "), style: Theme.of(context).textTheme.subhead),
                 SizedBox(height: 16),
                 course.overallMark != null
                     ? LPI.LinearProgressIndicator(
                         lineHeight: 20.0,
                         animationDuration: showAnimations ? 700 : 0,
                         value1: course.overallMark / 100,
-                        center: Text(num2Str(course.overallMark) + "%",
-                            style: TextStyle(color: Colors.black)),
+                        center: Text(num2Str(course.overallMark) + "%", style: TextStyle(color: Colors.black)),
                         value1Color: Theme.of(context).colorScheme.secondary,
                       )
                     : LPI.LinearProgressIndicator(
                         lineHeight: 20.0,
                         value1: 0,
-                        center: Text(Strings.get("marks_unavailable"),
-                            style: TextStyle(color: Colors.black)),
+                        center: Text(Strings.get("marks_unavailable"), style: TextStyle(color: Colors.black)),
                       ),
               ],
             ),
