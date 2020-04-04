@@ -5,7 +5,6 @@ import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:open_appstore/open_appstore.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:ta/model/User.dart';
@@ -307,8 +306,9 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
                 FlatButton(
                   child: Text(Strings.get("update").toUpperCase()),
                   onPressed: () {
-                    OpenAppstore.launch(
-                        androidAppId: "site.pegasis.yrdsb.ta", iOSAppId: "1483082868");
+                    //TODO
+//                    OpenAppstore.launch(
+//                        androidAppId: "site.pegasis.yrdsb.ta", iOSAppId: "1483082868");
                     Navigator.pop(context);
                   },
                 ),
