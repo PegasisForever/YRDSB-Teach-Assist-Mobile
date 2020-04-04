@@ -47,10 +47,10 @@ class _LoginPageState extends BetterState<LoginPage> {
                 Center(
                   child: Text(
                     "YRDSB",
-                    style: TextStyle(fontSize: 24),
+                    style: TextStyle(fontSize: 26),
                   ),
                 ),
-                Center(child: Text("Teach Assist", style: TextStyle(fontSize: 24))),
+                Center(child: Text("Teach Assist Pro", style: TextStyle(fontSize: 24))),
                 SizedBox(
                   height: 80,
                 ),

@@ -193,6 +193,8 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
           });
     }
 
+    firebaseRequestNotificationPermissions();
+
     startAutoRefresh();
   }
 
