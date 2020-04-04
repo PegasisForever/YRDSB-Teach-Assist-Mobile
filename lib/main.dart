@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,6 +32,7 @@ import 'package:ta/widgets/ZoomPageTransition.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
   await initPref();
   SyncfusionLicense.registerLicense(SyncfusionCommunityLicenceKey);
   initPackageInfo();
@@ -38,7 +42,9 @@ void main() async {
   }
   initUser();
 
-  runApp(App());
+  runZoned(() {
+    runApp(App());
+  }, onError: Crashlytics.instance.recordError);
 }
 
 class App extends StatefulWidget {
