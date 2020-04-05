@@ -10,7 +10,6 @@ class CrossFade extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedCrossFade(
-      key: Key("tip"),
       firstChild: firstChild,
       secondChild: secondChild ?? Container(),
       crossFadeState: showFirst ? CrossFadeState.showFirst : CrossFadeState.showSecond,
