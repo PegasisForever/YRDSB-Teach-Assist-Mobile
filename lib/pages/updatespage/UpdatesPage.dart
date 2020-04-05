@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
@@ -16,6 +18,7 @@ class _UpdatesPageState extends BetterState<UpdatesPage> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    var sidePadding = (getScreenWidth(context) - 500) / 2;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: CustomScrollView(
@@ -27,9 +30,16 @@ class _UpdatesPageState extends BetterState<UpdatesPage> {
               textTheme: Theme.of(context).textTheme,
               iconTheme: Theme.of(context).iconTheme,
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                _getTimelineCards(getTimelineOf(currentUser.number))..add(SizedBox(height: getBottomPadding(context))),
+            SliverPadding(
+              padding: EdgeInsets.only(
+                left: max(sidePadding, 0),
+                right: max(sidePadding, 0),
+                bottom: getBottomPadding(context),
+              ),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate(
+                  _getTimelineCards(getTimelineOf(currentUser.number)),
+                ),
               ),
             )
           ],
