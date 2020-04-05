@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ta/pages/setuppage/FinishedPage.dart';
 import 'package:ta/pages/setuppage/SetColor.dart';
 import 'package:ta/pages/setuppage/SetShowMoreDecimalPlaces.dart';
 import 'package:ta/pages/setuppage/SetShowRecentUpdate.dart';
@@ -29,7 +30,6 @@ class _SetupPageState extends BetterState<SetupPage>
       pages = <Widget>[
         _PageWrapper(
           child: SetColor(),
-          goPrevious: null,
           goNext: () {
             pageController.animateToPage(
               1,
@@ -75,9 +75,19 @@ class _SetupPageState extends BetterState<SetupPage>
           },
           isLast: false,
         ),
-        Container(
-          width: double.infinity,
-          color: Colors.amber,
+        _PageWrapper(
+          child: FinishedPage(),
+          goPrevious: () {
+            pageController.animateToPage(
+              1,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeOutCubic,
+            );
+          },
+          goNext: (){
+            Navigator.pop(context);
+          },
+          isLast: true,
         ),
       ];
 

@@ -211,8 +211,11 @@ class Strings {
       "hide_this_course":"Hide this course",
       "restore_this_course":"Restore this course",
       "hidden_courses":"Hidden courses",
-      "init_setup_text":"Customize and learn new features.",
+      "init_setup_text":"Customize this app.",
       "show_recent_updates?":"Show recent updates in home page?",
+      "setup_wizard_finished":"Setup wizard finished.",
+      "u_can_reopen_this_page_later_in_the_settings":"You can re-open this page later in the settings.",
+      "setup_wizard":"Setup Wizard",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -408,8 +411,11 @@ class Strings {
       "hide_this_course":"隐藏这节课",
       "restore_this_course":"取消隐藏这节课",
       "hidden_courses":"已隐藏的课程",
-      "init_setup_text":"自定义此App & 了解新功能",
+      "init_setup_text":"自定义此App",
       "show_recent_updates?":"是否在主页显示最近动态？",
+      "setup_wizard_finished":"设置向导已完成",
+      "u_can_reopen_this_page_later_in_the_settings":"您可以在设置中再次打开此页面",
+      "setup_wizard":"设置向导",
     }
   };
 

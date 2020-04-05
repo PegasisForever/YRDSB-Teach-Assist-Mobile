@@ -134,8 +134,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ListTile(
             title: Text(Strings.get("privacy_mode")),
-            subtitle:
-                Text(Strings.get("hide_in_app_switcher_" + (isAndroid() ? "android" : "ios"))),
+            subtitle: Text(Strings.get("hide_in_app_switcher_" + (isAndroid() ? "android" : "ios"))),
             leading: Icon(Icons.visibility_off),
             trailing: Switch(
               value: Config.hideAppContent,
@@ -178,6 +177,14 @@ class _SettingsPageState extends State<SettingsPage> {
               });
             },
           ),
+          ListTile(
+            title: Text(Strings.get("setup_wizard")),
+            leading: Icon(Icons.settings),
+            trailing: Icon(Icons.arrow_right),
+            onTap: () {
+              Navigator.pushNamed(context, "/setup");
+            },
+          ),
           Builder(builder: (context) {
             return ListTile(
               title: Text(Strings.get("reset_all_tips")),
@@ -195,15 +202,10 @@ class _SettingsPageState extends State<SettingsPage> {
             leading: Icon(Icons.save),
             onTap: () async {
               var markJSON = jsonDecode(prefs.getString("${currentUser.number}-mark") ?? "[]");
-              var archivedJSON =
-                  jsonDecode(prefs.getString("${currentUser.number}-archived") ?? "[]");
-              var timelineJSON =
-                  jsonDecode(prefs.getString("${currentUser.number}-timeline") ?? "[]");
-              var exportJSONString = jsonEncode({
-                "courses": markJSON,
-                "archived_courses": archivedJSON,
-                "timeline": timelineJSON
-              });
+              var archivedJSON = jsonDecode(prefs.getString("${currentUser.number}-archived") ?? "[]");
+              var timelineJSON = jsonDecode(prefs.getString("${currentUser.number}-timeline") ?? "[]");
+              var exportJSONString =
+                  jsonEncode({"courses": markJSON, "archived_courses": archivedJSON, "timeline": timelineJSON});
 
               Directory dir = await getApplicationDocumentsDirectory();
               File testFile = new File("${dir.path}/export.json");
