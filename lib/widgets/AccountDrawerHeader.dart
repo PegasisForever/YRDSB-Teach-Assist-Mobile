@@ -85,10 +85,13 @@ class AccountDetailsState extends State<AccountDetails> with SingleTickerProvide
                     ),
                   ),
                   if (widget.accountSubName != null)
+                    SizedBox(height: 4),
+                  if (widget.accountSubName != null)
                     Text(
                       widget.accountSubName,
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 13,
+                        color: getGrey(200)
                       ),
                     ),
                 ],

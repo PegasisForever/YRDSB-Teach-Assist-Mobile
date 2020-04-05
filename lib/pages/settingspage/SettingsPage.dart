@@ -38,6 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             title: Text(Strings.get("manage_accounts_alt")),
             leading: Icon(Icons.account_circle),
+            trailing: Icon(Icons.arrow_right),
             onTap: () {
               Navigator.pushNamed(context, "/accounts_list");
             },
@@ -188,7 +189,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Builder(builder: (context) {
             return ListTile(
               title: Text(Strings.get("reset_all_tips")),
-              leading: Icon(Icons.assistant),
+              leading: Icon(Icons.settings_backup_restore),
               onTap: () {
                 prefs.setBool("show_what_if_tip", true);
                 prefs.setBool("show_tap_to_view_detail_tip", true);
