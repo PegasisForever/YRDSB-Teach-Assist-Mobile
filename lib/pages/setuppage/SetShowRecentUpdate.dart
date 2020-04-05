@@ -14,48 +14,57 @@ class _SetShowRecentUpdateState extends State<SetShowRecentUpdate> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(
-          Strings.get("show_recent_updates?"),
-          style: TextStyle(fontSize: 24),
-          textAlign: TextAlign.center,
+        Flexible(
+          flex: 0,
+          child: SizedBox(height: 32),
         ),
-        SizedBox(height: 70),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            TwoWidgetChooser(
-              width: 124,
-              height: 218,
-              value: false,
-              groupValue: Config.showRecentUpdates,
-              selected: !Config.showRecentUpdates,
-              child: Image.asset(
-                "assets/icons/dont_show_recent_updates_${isLightMode(context: context) ? "light" : "dark"}.png",
-                width: 120,
-              ),
-              onSelected: (value) => setState(() {
-                Config.showRecentUpdates = !value;
-              }),
+        Flexible(
+          flex: 0,
+          child: Text(
+            Strings.get("show_recent_updates?"),
+            style: TextStyle(fontSize: 24),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Expanded(
+          child: Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                TwoWidgetChooser(
+                  width: 124,
+                  height: 218,
+                  value: false,
+                  groupValue: Config.showRecentUpdates,
+                  selected: !Config.showRecentUpdates,
+                  child: Image.asset(
+                    "assets/icons/dont_show_recent_updates_${isLightMode(context: context) ? "light" : "dark"}.png",
+                    width: 120,
+                  ),
+                  onSelected: (value) => setState(() {
+                    Config.showRecentUpdates = !value;
+                  }),
+                ),
+                SizedBox(width: 32),
+                TwoWidgetChooser(
+                  width: 124,
+                  height: 218,
+                  value: true,
+                  groupValue: Config.showRecentUpdates,
+                  selected: Config.showRecentUpdates,
+                  child: Image.asset(
+                    "assets/icons/show_recent_updates_${isLightMode(context: context) ? "light" : "dark"}.png",
+                    width: 120,
+                  ),
+                  onSelected: (value) => setState(() {
+                    Config.showRecentUpdates = value;
+                  }),
+                ),
+              ],
             ),
-            SizedBox(width: 32),
-            TwoWidgetChooser(
-              width: 124,
-              height: 218,
-              value: true,
-              groupValue: Config.showRecentUpdates,
-              selected: Config.showRecentUpdates,
-              child: Image.asset(
-                "assets/icons/show_recent_updates_${isLightMode(context: context) ? "light" : "dark"}.png",
-                width: 120,
-              ),
-              onSelected: (value) => setState(() {
-                Config.showRecentUpdates = value;
-              }),
-            ),
-          ],
+          ),
         ),
       ],
     );

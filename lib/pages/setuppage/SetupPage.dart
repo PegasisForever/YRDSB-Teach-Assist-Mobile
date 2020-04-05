@@ -128,10 +128,7 @@ class _PageWrapper extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: child,
-            ),
+            child: child,
           ),
         ),
         Flexible(

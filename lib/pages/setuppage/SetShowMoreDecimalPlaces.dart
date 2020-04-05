@@ -12,58 +12,67 @@ class _SetShowMoreDecimalPlacesState extends State<SetShowMoreDecimalPlaces> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(
-          Strings.get("show_more_decimal_places?"),
-          style: TextStyle(fontSize: 24),
-          textAlign: TextAlign.center,
+        Flexible(
+          flex: 0,
+          child: SizedBox(height: 32),
         ),
-        SizedBox(height: 70),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            TwoWidgetChooser(
-              width: 124,
-              height: 64,
-              value: false,
-              groupValue: Config.showMoreDecimal,
-              selected: !Config.showMoreDecimal,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "99.9%",
-                  style: TextStyle(
-                    fontSize: 32,
+        Flexible(
+          flex: 0,
+          child: Text(
+            Strings.get("show_more_decimal_places?"),
+            style: TextStyle(fontSize: 24),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Expanded(
+          child: Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                TwoWidgetChooser(
+                  width: 124,
+                  height: 64,
+                  value: false,
+                  groupValue: Config.showMoreDecimal,
+                  selected: !Config.showMoreDecimal,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "99.9%",
+                      style: TextStyle(
+                        fontSize: 32,
+                      ),
+                    ),
                   ),
+                  onSelected: (value) => setState(() {
+                    Config.showMoreDecimal = !value;
+                  }),
                 ),
-              ),
-              onSelected: (value) => setState(() {
-                Config.showMoreDecimal = !value;
-              }),
-            ),
-            SizedBox(width: 32),
-            TwoWidgetChooser(
-              width: 124,
-              height: 64,
-              value: true,
-              groupValue: Config.showMoreDecimal,
-              selected: Config.showMoreDecimal,
-              child:  Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "99.99%",
-                  style: TextStyle(
-                    fontSize: 32,
+                SizedBox(width: 32),
+                TwoWidgetChooser(
+                  width: 124,
+                  height: 64,
+                  value: true,
+                  groupValue: Config.showMoreDecimal,
+                  selected: Config.showMoreDecimal,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "99.99%",
+                      style: TextStyle(
+                        fontSize: 32,
+                      ),
+                    ),
                   ),
+                  onSelected: (value) => setState(() {
+                    Config.showMoreDecimal = value;
+                  }),
                 ),
-              ),
-              onSelected: (value) => setState(() {
-                Config.showMoreDecimal = value;
-              }),
+              ],
             ),
-          ],
+          ),
         ),
       ],
     );

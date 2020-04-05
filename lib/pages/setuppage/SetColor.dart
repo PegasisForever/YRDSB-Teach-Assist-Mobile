@@ -6,14 +6,25 @@ class SetColor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(
-          Strings.get("select_a_primary_color"),
-          style: TextStyle(fontSize: 24),
+        Flexible(
+          flex: 0,
+          child: SizedBox(height: 32),
         ),
-        SizedBox(height: 150),
-        ColorPad(),
+        Flexible(
+          flex: 0,
+          child: Text(
+            Strings.get("select_a_primary_color"),
+            style: TextStyle(fontSize: 24),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Expanded(
+          child: Center(
+            child: ColorPad(),
+          ),
+        ),
       ],
     );
   }
