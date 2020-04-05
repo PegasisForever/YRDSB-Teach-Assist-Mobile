@@ -67,7 +67,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
     var smallMarkEditors = <SmallMarkEditor>[];
     for (final category in Category.values) {
       var smallMarkGroup = assignment[category];
-      if (smallMarkGroup.available) {
+      if (smallMarkGroup.smallMarks.length > 0) {
         for (int i = 0; i < smallMarkGroup.smallMarks.length; i++) {
           smallMarkEditors.add(SmallMarkEditor(
             smallMark: smallMarkGroup.smallMarks[i],
@@ -139,8 +139,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       TextField(
-                        keyboardAppearance:
-                            isLightMode(context: context) ? Brightness.light : Brightness.dark,
+                        keyboardAppearance: isLightMode(context: context) ? Brightness.light : Brightness.dark,
                         controller: _titleController,
                         decoration: InputDecoration(
                           hintText: Strings.get("assignment_title"),
@@ -188,15 +187,13 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
                     RaisedButton(
                       color: Theme.of(context).colorScheme.primary,
                       child: Text(
-                        isAdd
-                            ? Strings.get("add").toUpperCase()
-                            : Strings.get("save").toUpperCase(),
+                        isAdd ? Strings.get("add").toUpperCase() : Strings.get("save").toUpperCase(),
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
                         assignment.smallMarkGroups.forEach((_, smallMarkGroup) {
-                          smallMarkGroup.smallMarks.removeWhere(
-                              (smallMark) => smallMark == null || smallMark.enabled == false);
+                          smallMarkGroup.smallMarks
+                              .removeWhere((smallMark) => smallMark == null || smallMark.enabled == false);
                         });
                         Navigator.of(context).pop(assignment);
                       },
@@ -229,11 +226,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> {
     if (overlayEntry != null) return;
     OverlayState overlayState = Overlay.of(context);
     overlayEntry = OverlayEntry(builder: (context) {
-      return Positioned(
-          bottom: getBottomPadding(context),
-          right: 0.0,
-          left: 0.0,
-          child: InputDoneView());
+      return Positioned(bottom: getBottomPadding(context), right: 0.0, left: 0.0, child: InputDoneView());
     });
 
     overlayState.insert(overlayEntry);
