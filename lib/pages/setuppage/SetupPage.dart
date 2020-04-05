@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ta/pages/setuppage/SetColor.dart';
+import 'package:ta/pages/setuppage/SetShowMoreDecimalPlaces.dart';
 import 'package:ta/pages/setuppage/SetShowRecentUpdate.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
@@ -56,9 +57,23 @@ class _SetupPageState extends BetterState<SetupPage>
           },
           isLast: false,
         ),
-        Container(
-          width: double.infinity,
-          color: Colors.green,
+        _PageWrapper(
+          child: SetShowMoreDecimalPlaces(),
+          goPrevious: () {
+            pageController.animateToPage(
+              1,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeOutCubic,
+            );
+          },
+          goNext: () {
+            pageController.animateToPage(
+              3,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeOutCubic,
+            );
+          },
+          isLast: false,
         ),
         Container(
           width: double.infinity,
