@@ -219,6 +219,8 @@ class Strings {
       "pervious":"Pervious",
       "next":"Next",
       "done":"Done",
+      "edit_mark":"Edit %s Mark",
+      "finished":"Finished",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -422,6 +424,8 @@ class Strings {
       "pervious":"上一项",
       "next":"下一项",
       "done":"完成",
+      "edit_mark":"编辑 %s 得分",
+      "finished":"已完成",
     }
   };
 

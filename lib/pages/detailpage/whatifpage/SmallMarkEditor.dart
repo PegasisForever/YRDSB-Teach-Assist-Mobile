@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/pages/detailpage/whatifpage/SmallMarkBar.dart';
+import 'package:ta/pages/detailpage/whatifpage/SmallMarkDetailEditDialog.dart';
 import 'package:ta/tools.dart';
 
 class SmallMarkEditor extends StatefulWidget {
@@ -83,11 +84,20 @@ class _SmallMarkEditorState extends State<SmallMarkEditor> {
                     _percentage = 0;
                     _weightTextController.text = "10";
                   }
-                  smallMark.get =
-                      (smallMark.total * max(_percentage, 0) / 100 * 2).floorToDouble() / 2;
+                  smallMark.get = (smallMark.total * max(_percentage, 0) / 100 * 2).floorToDouble() / 2;
                 }
 
                 widget.onChanged(smallMark);
+              },
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return SmallMarkDetailEditDialog(
+                        category: widget.category,
+                        smallMark: smallMark.copy(),
+                      );
+                    });
               },
             ),
           ),
