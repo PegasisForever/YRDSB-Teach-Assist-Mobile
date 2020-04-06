@@ -12,7 +12,8 @@ class SetupPage extends StatefulWidget {
   _SetupPageState createState() => _SetupPageState();
 }
 
-class _SetupPageState extends BetterState<SetupPage> with SingleTickerProviderStateMixin {
+class _SetupPageState extends BetterState<SetupPage>
+    with SingleTickerProviderStateMixin {
   PageController pageController = PageController();
   double percent = 0.01;
   List<Widget> pages;
@@ -108,7 +109,10 @@ class _SetupPageState extends BetterState<SetupPage> with SingleTickerProviderSt
         ),
         onNotification: (noti) {
           setState(() {
-            percent = (noti.metrics.pixels / getScreenWidth(context)) / (pages.length - 1) * 0.99 + 0.01;
+            percent = (noti.metrics.pixels / getScreenWidth(context)) /
+                    (pages.length - 1) *
+                    0.99 +
+                0.01;
           });
           return true;
         },
@@ -137,7 +141,11 @@ class _PageWrapper extends StatelessWidget {
         Flexible(
           flex: 0,
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.only(
+                top: 24,
+                left: 24,
+                right: 24,
+                bottom: 24 + getBottomPadding(context)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -150,7 +158,8 @@ class _PageWrapper extends StatelessWidget {
                 goNext == null
                     ? Container()
                     : RaisedButton(
-                        child: Text(isLast ? Strings.get("done") : Strings.get("next")),
+                        child: Text(
+                            isLast ? Strings.get("done") : Strings.get("next")),
                         color: Theme.of(context).colorScheme.primary,
                         textColor: Colors.white,
                         onPressed: goNext,
