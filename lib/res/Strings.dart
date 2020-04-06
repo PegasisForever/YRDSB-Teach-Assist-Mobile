@@ -216,6 +216,9 @@ class Strings {
       "setup_wizard_finished":"Setup wizard finished.",
       "u_can_reopen_this_page_later_in_the_settings":"You can re-open this page later in the settings.",
       "setup_wizard":"Setup Wizard",
+      "pervious":"Pervious",
+      "next":"Next",
+      "done":"Done",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -416,6 +419,9 @@ class Strings {
       "setup_wizard_finished":"设置向导已完成",
       "u_can_reopen_this_page_later_in_the_settings":"您可以在设置中再次打开此页面",
       "setup_wizard":"设置向导",
+      "pervious":"上一项",
+      "next":"下一项",
+      "done":"完成",
     }
   };
 

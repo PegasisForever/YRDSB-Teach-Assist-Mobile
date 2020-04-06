@@ -3,6 +3,7 @@ import 'package:ta/pages/setuppage/FinishedPage.dart';
 import 'package:ta/pages/setuppage/SetColor.dart';
 import 'package:ta/pages/setuppage/SetShowMoreDecimalPlaces.dart';
 import 'package:ta/pages/setuppage/SetShowRecentUpdate.dart';
+import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
 
@@ -11,8 +12,7 @@ class SetupPage extends StatefulWidget {
   _SetupPageState createState() => _SetupPageState();
 }
 
-class _SetupPageState extends BetterState<SetupPage>
-    with SingleTickerProviderStateMixin {
+class _SetupPageState extends BetterState<SetupPage> with SingleTickerProviderStateMixin {
   PageController pageController = PageController();
   double percent = 0.01;
   List<Widget> pages;
@@ -84,7 +84,7 @@ class _SetupPageState extends BetterState<SetupPage>
               curve: Curves.easeOutCubic,
             );
           },
-          goNext: (){
+          goNext: () {
             Navigator.pop(context);
           },
           isLast: true,
@@ -98,12 +98,8 @@ class _SetupPageState extends BetterState<SetupPage>
           backgroundColor: Colors.black26,
           valueColor: AlwaysStoppedAnimation<Color>(getPrimary()),
         ),
-        textTheme: Theme
-            .of(context)
-            .textTheme,
-        iconTheme: Theme
-            .of(context)
-            .iconTheme,
+        textTheme: Theme.of(context).textTheme,
+        iconTheme: Theme.of(context).iconTheme,
       ),
       body: NotificationListener<ScrollUpdateNotification>(
         child: PageView(
@@ -112,10 +108,7 @@ class _SetupPageState extends BetterState<SetupPage>
         ),
         onNotification: (noti) {
           setState(() {
-            percent = (noti.metrics.pixels / getScreenWidth(context)) /
-                (pages.length - 1) *
-                0.99 +
-                0.01;
+            percent = (noti.metrics.pixels / getScreenWidth(context)) / (pages.length - 1) * 0.99 + 0.01;
           });
           return true;
         },
@@ -151,20 +144,17 @@ class _PageWrapper extends StatelessWidget {
                 goPrevious == null
                     ? Container()
                     : FlatButton(
-                  child: Text("Previous"),
-                  onPressed: goPrevious,
-                ),
+                        child: Text(Strings.get("pervious")),
+                        onPressed: goPrevious,
+                      ),
                 goNext == null
                     ? Container()
                     : RaisedButton(
-                  child: Text(isLast ? "Done" : "Next"),
-                  color: Theme
-                      .of(context)
-                      .colorScheme
-                      .primary,
-                  textColor: Colors.white,
-                  onPressed: goNext,
-                )
+                        child: Text(isLast ? Strings.get("done") : Strings.get("next")),
+                        color: Theme.of(context).colorScheme.primary,
+                        textColor: Colors.white,
+                        onPressed: goNext,
+                      )
               ],
             ),
           ),

@@ -32,7 +32,7 @@ class _SetShowMoreDecimalPlacesState extends State<SetShowMoreDecimalPlaces> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 TwoWidgetChooser(
-                  width: 130,
+                  width: 135,
                   height: 64,
                   value: false,
                   groupValue: Config.showMoreDecimal,
@@ -52,7 +52,7 @@ class _SetShowMoreDecimalPlacesState extends State<SetShowMoreDecimalPlaces> {
                 ),
                 SizedBox(width: 32),
                 TwoWidgetChooser(
-                  width: 130,
+                  width: 135,
                   height: 64,
                   value: true,
                   groupValue: Config.showMoreDecimal,
