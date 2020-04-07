@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
+import 'package:ta/pages/InitPage.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/BetterState.dart';
@@ -16,7 +18,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends BetterState<LoginPage> {
+class _LoginPageState extends BetterState<LoginPage> with AfterLayoutMixin {
   final _studentNumberController = TextEditingController();
   final _passwordController = TextEditingController();
   final _studentNumberFocusNode = FocusNode();
@@ -56,8 +58,7 @@ class _LoginPageState extends BetterState<LoginPage> {
                 ),
                 Center(
                   widthFactor: 0,
-                  child: Text(Strings.get("login_your_account", context),
-                      style: Theme.of(context).textTheme.title),
+                  child: Text(Strings.get("login_your_account", context), style: Theme.of(context).textTheme.title),
                 ),
                 SizedBox(height: 18),
                 EditText(
@@ -120,6 +121,11 @@ class _LoginPageState extends BetterState<LoginPage> {
     ));
   }
 
+  @override
+  void afterFirstLayout(BuildContext context) {
+    appLoadDone();
+  }
+
   _startLogin(BuildContext context) async {
     if (_studentNumberController.text == "") {
       setState(() {
@@ -162,8 +168,7 @@ class _LoginPageState extends BetterState<LoginPage> {
       if (e.message == "Connection failed" || e.osError.message == "Connection refused") {
         showSnackBar(context, Strings.get("connection_failed"));
       } else {
-        showSnackBar(
-            context, Strings.get("error") + (e.message != "" ? e.message : e.osError.message));
+        showSnackBar(context, Strings.get("error") + (e.message != "" ? e.message : e.osError.message));
       }
     } else if (e is HttpException) {
       switch (e.message) {

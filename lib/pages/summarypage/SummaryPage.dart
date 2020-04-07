@@ -9,6 +9,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
+import 'package:ta/pages/InitPage.dart';
 import 'package:ta/pages/drawerpages/SearchPage.dart';
 import 'package:ta/pages/drawerpages/TADrawer.dart';
 import 'package:ta/pages/drawerpages/openCustomTab.dart';
@@ -194,8 +195,8 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
           });
     }
 
+    appLoadDone();
     firebaseRequestNotificationPermissions();
-
     startAutoRefresh();
   }
 

@@ -9,6 +9,8 @@ import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/plugins/firebase.dart';
 import 'package:ta/plugins/packageinfo.dart';
 
+Function appLoadDone;
+
 class InitPage extends StatefulWidget {
   @override
   _InitPageState createState() => _InitPageState();
@@ -16,7 +18,14 @@ class InitPage extends StatefulWidget {
 
 class _InitPageState extends State<InitPage> with AfterLayoutMixin {
   var opacity = 0.0;
+  var appLoaded = false;
   Widget app = Container();
+
+  @override
+  void initState() {
+    super.initState();
+    appLoadDone = this._appLoadDone;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +43,7 @@ class _InitPageState extends State<InitPage> with AfterLayoutMixin {
 
   @override
   void afterFirstLayout(BuildContext context) async {
+    if (appLoaded) return;
     await initPref();
     SyncfusionLicense.registerLicense(SyncfusionCommunityLicenceKey);
     initPackageInfo();
@@ -43,8 +53,15 @@ class _InitPageState extends State<InitPage> with AfterLayoutMixin {
       FlutterPrivacyScreen.enablePrivacyScreen();
     }
     setState(() {
-      opacity = 1.0;
       app = App();
     });
+  }
+
+  void _appLoadDone() {
+    if (appLoaded) return;
+    setState(() {
+      opacity = 1.0;
+    });
+    appLoaded = true;
   }
 }
