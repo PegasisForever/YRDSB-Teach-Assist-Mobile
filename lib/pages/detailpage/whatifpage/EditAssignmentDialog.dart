@@ -29,7 +29,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> with AfterL
   var _titleController = TextEditingController();
   bool isAdd;
   OverlayEntry overlayEntry;
-  var showTips = prefs.getBool("show_assi_edit_tip") ?? true;
+  var showTips = prefs.getBool("show_assi_edit_tip_2") ?? true;
 
   @override
   void initState() {
@@ -124,7 +124,7 @@ class _EditAssignmentDialogState extends State<EditAssignmentDialog> with AfterL
                 onPressed: () {
                   setState(() {
                     showTips = false;
-                    prefs.setBool("show_assi_edit_tip", false);
+                    prefs.setBool("show_assi_edit_tip_2", false);
                   });
                 },
               ),

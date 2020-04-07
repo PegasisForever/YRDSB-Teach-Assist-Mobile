@@ -147,6 +147,7 @@ class _SmallMarkDetailEditDialogState extends State<SmallMarkDetailEditDialog> {
                   width: 60,
                   child: TextField(
                     controller: _getTextController,
+                    autofocus: true,
                     enabled: smallMark.enabled && smallMark.finished,
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -280,7 +281,7 @@ class _SmallMarkDetailEditDialogState extends State<SmallMarkDetailEditDialog> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: <Widget>[
-                Text("Weight: "),
+                Text(Strings.get("weight:")),
                 SizedBox(
                   width: 60,
                   child: TextField(
