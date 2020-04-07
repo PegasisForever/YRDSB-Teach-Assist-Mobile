@@ -89,15 +89,23 @@ class _SmallMarkEditorState extends State<SmallMarkEditor> {
 
                 widget.onChanged(smallMark);
               },
-              onTap: () {
-                showDialog(
+              onTap: () async {
+                var newSmallMark = await showDialog(
                     context: context,
                     builder: (context) {
                       return SmallMarkDetailEditDialog(
                         category: widget.category,
-                        smallMark: smallMark.copy(),
+                        smallMark: (smallMark != null) ? smallMark.copy() : null,
                       );
                     });
+                if (newSmallMark != null) {
+                  setState(() {
+                    smallMark = newSmallMark;
+                    _weightTextController.text = getRoundString(smallMark.weight, 2);
+                    _percentage = smallMark.percentage * 100;
+                    widget.onChanged(smallMark);
+                  });
+                }
               },
             ),
           ),

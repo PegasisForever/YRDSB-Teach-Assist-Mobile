@@ -27,6 +27,7 @@ class SmallMark {
   SmallMark.blank();
 
   SmallMark copy() => SmallMark.blank()
+    ..enabled = enabled
     ..finished = finished
     ..total = total
     ..get = get
@@ -50,22 +51,19 @@ class SmallMarkGroup {
 
   bool get available => find(smallMarks, (SmallMark it) => it?.enabled == true) != null;
 
-  bool get hasFinished =>
-      find(smallMarks, (SmallMark it) => it?.enabled == true && it?.finished == true) != null;
+  bool get hasFinished => find(smallMarks, (SmallMark it) => it?.enabled == true && it?.finished == true) != null;
 
   bool get allFinished => find(smallMarks, (SmallMark it) => !(it?.finished == true)) == null;
 
-  bool get hasWeight =>
-      find(smallMarks, (SmallMark it) => it?.enabled == true ? it.weight > 0 : false) != null;
+  bool get hasWeight => find(smallMarks, (SmallMark it) => it?.enabled == true ? it.weight > 0 : false) != null;
 
-  double get allGet => sum(
-      smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled == true) ? it.get : 0.0);
+  double get allGet => sum(smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled == true) ? it.get : 0.0);
 
-  double get allTotal => sum(
-      smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled == true) ? it.total : 0.0);
+  double get allTotal =>
+      sum(smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled == true) ? it.total : 0.0);
 
-  double get allWeight => sum(smallMarks,
-      (SmallMark it) => (it?.finished == true && it?.enabled == true) ? it.weight : 0.0);
+  double get allWeight =>
+      sum(smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled == true) ? it.weight : 0.0);
 
   double get percentage {
     var get = 0.0;
@@ -145,8 +143,7 @@ class Assignment {
 
   SmallMarkGroup operator [](Category category) => smallMarkGroups[category];
 
-  void operator []=(Category category, SmallMarkGroup smallMarkGroup) =>
-      smallMarkGroups[category] = smallMarkGroup;
+  void operator []=(Category category, SmallMarkGroup smallMarkGroup) => smallMarkGroups[category] = smallMarkGroup;
 
   Assignment(this.smallMarkGroups, this.name, String date) {
     if (date != null) {
@@ -228,8 +225,7 @@ class Assignment {
   }
 
   @override
-  int get hashCode =>
-      hash2(hash4(name, feedback, time, edited), hashObjects(smallMarkGroups.values));
+  int get hashCode => hash2(hash4(name, feedback, time, edited), hashObjects(smallMarkGroups.values));
 }
 
 class Weight {
@@ -402,7 +398,7 @@ class Course {
   @override
   bool operator ==(other) {
     return (other is Course) &&
-        hashNullableObjects(assignments) == hashNullableObjects(other.assignments)&&
+        hashNullableObjects(assignments) == hashNullableObjects(other.assignments) &&
         weightTable == other.weightTable &&
         startTime == other.startTime &&
         endTime == other.endTime &&
