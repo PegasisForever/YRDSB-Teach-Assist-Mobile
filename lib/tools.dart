@@ -92,11 +92,15 @@ double getBottomPadding(BuildContext context) {
 
 Brightness currentBrightness = Brightness.light;
 
+bool editorDialogOpened = false;
+
 void updateNavigationBarBrightness({BuildContext context}) {
   if (isLightMode(context: context)) {
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(editorDialogOpened);
     FlutterStatusbarcolor.setNavigationBarColor(Color(0xFFFAFAFA), animate: true);
     FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
   } else {
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
     FlutterStatusbarcolor.setNavigationBarColor(Color(0xFF303030), animate: false);
     FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
   }

@@ -148,6 +148,7 @@ class MarksListState extends State<MarksList> with AutomaticKeepAliveClientMixin
 
   editAssignment(BuildContext context, Assignment assignment) async {
     var index = widget.course.assignments.indexOf(assignment);
+    editorDialogOpened = true;
     var newAssignment = await showDialog<Assignment>(
         context: context,
         builder: (context) {
@@ -156,6 +157,8 @@ class MarksListState extends State<MarksList> with AutomaticKeepAliveClientMixin
             assignment: assignment,
           );
         });
+    editorDialogOpened = false;
+    updateNavigationBarBrightness();
     if (newAssignment != null) {
       widget.course.assignments.removeAt(index);
       widget.course.assignments.insert(index, newAssignment);
@@ -164,11 +167,14 @@ class MarksListState extends State<MarksList> with AutomaticKeepAliveClientMixin
   }
 
   addAssignment(BuildContext context) async {
+    editorDialogOpened = true;
     var newAssignment = await showDialog<Assignment>(
         context: context,
         builder: (context) {
           return EditAssignmentDialog(course: widget.course);
         });
+    editorDialogOpened = false;
+    updateNavigationBarBrightness();
     if (newAssignment != null) {
       widget.course.assignments.add(newAssignment);
       widget.updateCourse(widget.course);

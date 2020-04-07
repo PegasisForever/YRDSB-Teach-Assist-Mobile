@@ -7,6 +7,7 @@ import 'package:ta/pages/detailpage/whatifpage/SmallMarkEditor.dart';
 import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
+import 'package:ta/widgets/BetterState.dart';
 import 'package:ta/widgets/CrossFade.dart';
 import 'package:ta/widgets/InputDoneView.dart';
 import 'package:ta/widgets/NoBackgroundDialog.dart';
@@ -23,7 +24,7 @@ class EditAssignmentDialog extends StatefulWidget {
   _EditAssignmentDialogState createState() => _EditAssignmentDialogState();
 }
 
-class _EditAssignmentDialogState extends State<EditAssignmentDialog> with AfterLayoutMixin<EditAssignmentDialog> {
+class _EditAssignmentDialogState extends BetterState<EditAssignmentDialog> with AfterLayoutMixin<EditAssignmentDialog> {
   Assignment assignment;
   var isAdvanced = false;
   var _titleController = TextEditingController();

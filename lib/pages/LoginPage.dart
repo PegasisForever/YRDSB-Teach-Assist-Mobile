@@ -28,96 +28,97 @@ class _LoginPageState extends BetterState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(body: Builder(
-      builder: (BuildContext context) {
-        return Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 400),
-            child: ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              children: <Widget>[
-                SizedBox(
-                  height: 28,
-                ),
-                Image.asset(
-                  "assets/icons/app_logo.png",
-                  height: 130,
-                ),
-                Center(
-                  child: Text(
-                    "YRDSB",
-                    style: TextStyle(fontSize: 26),
+    return Scaffold(
+      body: Builder(
+        builder: (BuildContext context) {
+          return Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 400),
+              child: ListView(
+                shrinkWrap: true,
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                children: <Widget>[
+                  SizedBox(
+                    height: 28,
                   ),
-                ),
-                Center(child: Text("Teach Assist Pro", style: TextStyle(fontSize: 24))),
-                SizedBox(
-                  height: 80,
-                ),
-                Center(
-                  widthFactor: 0,
-                  child: Text(Strings.get("login_your_account", context),
-                      style: Theme.of(context).textTheme.title),
-                ),
-                SizedBox(height: 18),
-                EditText(
-                  textInputAction: TextInputAction.next,
-                  nextFocusNode: _passwordFocusNode,
-                  focusNode: _studentNumberFocusNode,
-                  controller: _studentNumberController,
-                  hint: Strings.get("student_number"),
-                  errorText: _studentNumberErrorText,
-                  icon: Icons.account_circle,
-                  inputType: TextInputType.numberWithOptions(signed: false, decimal: false),
-                ),
-                SizedBox(height: 12),
-                EditText(
-                  textInputAction: TextInputAction.done,
-                  focusNode: _passwordFocusNode,
-                  controller: _passwordController,
-                  hint: Strings.get("password"),
-                  errorText: _passwordErrorText,
-                  icon: Icons.lock,
-                  isPassword: true,
-                  onSubmitted: (s) {
-                    if (!_isLoading) {
-                      _startLogin(context);
-                    }
-                  },
-                ),
-                ButtonBar(
-                  children: <Widget>[
-                    _isLoading
-                        ? CircularProgressIndicator()
-                        : Placeholder(
-                            fallbackWidth: 0,
-                            fallbackHeight: 0,
-                          ),
-                    RaisedButton(
-                      color: Theme.of(context).colorScheme.primary,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                      child: Text(
-                        Strings.get("login").toUpperCase(),
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: !_isLoading
-                          ? () {
-                              FocusScope.of(context).unfocus();
-                              _startLogin(context);
-                            }
-                          : null,
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-              ],
+                  Image.asset(
+                    "assets/icons/app_logo.png",
+                    height: 130,
+                  ),
+                  Center(
+                    child: Text(
+                      "YRDSB",
+                      style: TextStyle(fontSize: 26),
+                    ),
+                  ),
+                  Center(child: Text("Teach Assist Pro", style: TextStyle(fontSize: 24))),
+                  SizedBox(
+                    height: 80,
+                  ),
+                  Center(
+                    widthFactor: 0,
+                    child: Text(Strings.get("login_your_account", context), style: Theme.of(context).textTheme.title),
+                  ),
+                  SizedBox(height: 18),
+                  EditText(
+                    textInputAction: TextInputAction.next,
+                    nextFocusNode: _passwordFocusNode,
+                    focusNode: _studentNumberFocusNode,
+                    controller: _studentNumberController,
+                    hint: Strings.get("student_number"),
+                    errorText: _studentNumberErrorText,
+                    icon: Icons.account_circle,
+                    inputType: TextInputType.numberWithOptions(signed: false, decimal: false),
+                  ),
+                  SizedBox(height: 12),
+                  EditText(
+                    textInputAction: TextInputAction.done,
+                    focusNode: _passwordFocusNode,
+                    controller: _passwordController,
+                    hint: Strings.get("password"),
+                    errorText: _passwordErrorText,
+                    icon: Icons.lock,
+                    isPassword: true,
+                    onSubmitted: (s) {
+                      if (!_isLoading) {
+                        _startLogin(context);
+                      }
+                    },
+                  ),
+                  ButtonBar(
+                    children: <Widget>[
+                      _isLoading
+                          ? CircularProgressIndicator()
+                          : Placeholder(
+                              fallbackWidth: 0,
+                              fallbackHeight: 0,
+                            ),
+                      RaisedButton(
+                        color: Theme.of(context).colorScheme.primary,
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        child: Text(
+                          Strings.get("login").toUpperCase(),
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: !_isLoading
+                            ? () {
+                                FocusScope.of(context).unfocus();
+                                _startLogin(context);
+                              }
+                            : null,
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
-    ));
+          );
+        },
+      ),
+    );
   }
 
   _startLogin(BuildContext context) async {
@@ -162,8 +163,7 @@ class _LoginPageState extends BetterState<LoginPage> {
       if (e.message == "Connection failed" || e.osError.message == "Connection refused") {
         showSnackBar(context, Strings.get("connection_failed"));
       } else {
-        showSnackBar(
-            context, Strings.get("error") + (e.message != "" ? e.message : e.osError.message));
+        showSnackBar(context, Strings.get("error") + (e.message != "" ? e.message : e.osError.message));
       }
     } else if (e is HttpException) {
       switch (e.message) {
