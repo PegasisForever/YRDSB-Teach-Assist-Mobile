@@ -1,0 +1,30 @@
+diff --git a/packages/flutter/lib/src/material/page.dart b/packages/flutter/lib/src/material/page.dart
+index bea922037..ac28ce302 100644
+--- a/packages/flutter/lib/src/material/page.dart
++++ b/packages/flutter/lib/src/material/page.dart
+@@ -43,6 +43,7 @@ class MaterialPageRoute<T> extends PageRoute<T> {
+   MaterialPageRoute({
+     @required this.builder,
+     RouteSettings settings,
++    this.duration = const Duration(milliseconds: 300),
+     this.maintainState = true,
+     bool fullscreenDialog = false,
+   }) : assert(builder != null),
+@@ -51,6 +52,8 @@ class MaterialPageRoute<T> extends PageRoute<T> {
+        assert(opaque),
+        super(settings: settings, fullscreenDialog: fullscreenDialog);
+ 
++  final Duration duration;
++
+   /// Builds the primary contents of the route.
+   final WidgetBuilder builder;
+ 
+@@ -58,7 +61,7 @@ class MaterialPageRoute<T> extends PageRoute<T> {
+   final bool maintainState;
+ 
+   @override
+-  Duration get transitionDuration => const Duration(milliseconds: 300);
++  Duration get transitionDuration => duration;
+ 
+   @override
+   Color get barrierColor => null;

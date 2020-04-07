@@ -3,12 +3,11 @@ import 'dart:async';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
-import 'package:syncfusion_flutter_core/core.dart';
-import 'package:ta/licence.dart';
 import 'package:ta/model/User.dart';
+import 'package:ta/pages/InitPage.dart';
 import 'package:ta/pages/LoginPage.dart';
 import 'package:ta/pages/archivedpage/ArchivedCoursesPage.dart';
 import 'package:ta/pages/calendarpage/CalendarPage.dart';
@@ -23,27 +22,14 @@ import 'package:ta/pages/setuppage/SetupPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
 import 'package:ta/pages/updatespage/UpdatesPage.dart';
 import 'package:ta/plugins/dataStore.dart';
-import 'package:ta/plugins/firebase.dart';
-import 'package:ta/plugins/packageinfo.dart';
 import 'package:ta/res/Themes.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/ZoomPageTransition.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
-  await initPref();
-  SyncfusionLicense.registerLicense(SyncfusionCommunityLicenceKey);
-  initPackageInfo();
-  initFirebaseMsg();
-  if (Config.hideAppContent) {
-    FlutterPrivacyScreen.enablePrivacyScreen();
-  }
-  initUser();
-
   runZoned(() {
-    runApp(App());
+    runApp(InitPage());
   }, onError: Crashlytics.instance.recordError);
 }
 
@@ -102,9 +88,9 @@ class _AppState extends State<App> {
         break;
     }
 
-    return new MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'YRDSB Teach Assist Pro',
+      title: "YRDSB Teach Assist Pro",
       theme: lightTheme,
       darkTheme: darkTheme,
       builder: (context, child) {
@@ -172,7 +158,10 @@ class _AppState extends State<App> {
               );
             },
           )
-        : MaterialPageRoute(builder: (context) => page);
+        : MaterialPageRoute(
+            builder: (context) => page,
+            duration: showEnterAnimation ? const Duration(milliseconds: 300) : Duration.zero,
+          );
   }
 
   ThemeData getLightTheme(MaterialColor color) {
