@@ -222,6 +222,7 @@ class Strings {
       "finished": "Finished",
       "weight:": "Weight: ",
       "midterm_mark:": "Midterm Mark: ",
+      "midterm": "Midterm",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -431,6 +432,7 @@ class Strings {
       "finished": "已完成",
       "weight:": "权重：",
       "midterm_mark:": "期中成绩：",
+      "midterm": "期中成绩",
     }
   };
 

@@ -56,6 +56,8 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
               bottom: getBottomPadding(context),
             ),
             children: <Widget>[
+              if (_course.midTermMark != null) _getMidterm(_course.midTermMark),
+              if (_course.midTermMark != null) Divider(),
               _getTermOverall(analysis),
               _getOverallChart(isLight, analysis),
               Divider(),
@@ -138,17 +140,14 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
         ? [
             for (final category in Category.values)
               if (category != Category.O || _course.weightTable[Category.O].CW > 0)
-                _PieData(Strings.get(describeEnum(category).toLowerCase()),
-                    _course.weightTable[category].CW, analysis[category], lightColorMap[category])
+                _PieData(Strings.get(describeEnum(category).toLowerCase()), _course.weightTable[category].CW,
+                    analysis[category], lightColorMap[category])
           ]
         : [
             for (final category in Category.values)
               if (category != Category.O || _course.weightTable[Category.O].CW > 0)
-                _PieData(
-                    Strings.get(describeEnum(category).toLowerCase()),
-                    _course.weightTable[category].CW,
-                    _course.weightTable[category].SA,
-                    lightColorMap[category])
+                _PieData(Strings.get(describeEnum(category).toLowerCase()), _course.weightTable[category].CW,
+                    _course.weightTable[category].SA, lightColorMap[category])
           ];
     return <PieSeries<_PieData, String>>[
       PieSeries<_PieData, String>(
@@ -164,12 +163,35 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
           endAngle: 90,
           pointRadiusMapper: (data, _) => ((data.get) * 0.7 + 20).toString() + "%",
           dataLabelSettings: DataLabelSettings(
-              textStyle: ChartTextStyle(
-                  color: isLightMode(context: context) ? Colors.black : Colors.white),
+              textStyle: ChartTextStyle(color: isLightMode(context: context) ? Colors.black : Colors.white),
               isVisible: true,
               labelPosition: ChartDataLabelPosition.outside,
               labelIntersectAction: LabelIntersectAction.none))
     ];
+  }
+
+  Widget _getMidterm(double midtermMark) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      child: Column(
+        children: <Widget>[
+          Text(
+            Strings.get("midterm"),
+            style: Theme.of(context).textTheme.title,
+          ),
+          Text(
+            num2Str(midtermMark) + "%",
+            style: TextStyle(fontSize: 60),
+          ),
+          LinearProgressIndicator(
+            key: Key("c"),
+            lineHeight: 20.0,
+            value1: midtermMark / 100,
+            value1Color: Theme.of(context).colorScheme.primary,
+          )
+        ],
+      ),
+    );
   }
 
   Widget _getTermOverall(CourseAnalysis analysis) {
@@ -278,8 +300,7 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
     );
   }
 
-  List<SplineSeries<Assignment, String>> _getChartData(
-      Category category, bool isLight, CourseAnalysis analysis,
+  List<SplineSeries<Assignment, String>> _getChartData(Category category, bool isLight, CourseAnalysis analysis,
       {bool isOverall = false}) {
     var _course = widget.course;
     Color color;
@@ -293,9 +314,8 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
       color = primaryColorOf(context);
     } else {
       color = isLight ? darkColorMap[category] : lightColorMap[category];
-      yValueMapper = (Assignment assignment, _) => assignment[category].hasFinished
-          ? num2Round(assignment[category].percentage * 100)
-          : null;
+      yValueMapper = (Assignment assignment, _) =>
+          assignment[category].hasFinished ? num2Round(assignment[category].percentage * 100) : null;
     }
 
     return [
