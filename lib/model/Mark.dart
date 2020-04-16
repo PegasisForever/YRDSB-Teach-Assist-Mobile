@@ -300,6 +300,7 @@ class Course {
   String block;
   String room;
   double overallMark;
+  double midTermMark;
   bool cached;
   int id;
 
@@ -324,6 +325,7 @@ class Course {
       ..block = block
       ..room = room
       ..overallMark = overallMark
+      ..midTermMark = midTermMark
       ..cached = cached
       ..id = id;
 
