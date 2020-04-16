@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
 import 'package:syncfusion_flutter_core/core.dart';
 import 'package:ta/licence.dart';
 import 'package:ta/model/User.dart';
+import 'package:ta/network/remoteFetch.dart';
 import 'package:ta/pages/LoginPage.dart';
 import 'package:ta/pages/archivedpage/ArchivedCoursesPage.dart';
 import 'package:ta/pages/calendarpage/CalendarPage.dart';
@@ -29,6 +31,12 @@ import 'package:ta/res/Themes.dart';
 import 'package:ta/tools.dart';
 import 'package:ta/widgets/ZoomPageTransition.dart';
 
+void backgroundFetchHeadlessTask(String taskId) async {
+  print('[BackgroundFetch] Headless event received.');
+  await remoteFetch();
+  BackgroundFetch.finish(taskId);
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -45,6 +53,7 @@ void main() async {
   runZoned(() {
     runApp(App());
   }, onError: Crashlytics.instance.recordError);
+  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
 
 class App extends StatefulWidget {
@@ -74,6 +83,26 @@ class _AppState extends State<App> {
     super.initState();
     App.updateBrightness = _updateBrightness;
     App.updateColor = _updateColor;
+
+    BackgroundFetch.configure(BackgroundFetchConfig(
+        minimumFetchInterval: 15,
+        stopOnTerminate: false,
+        enableHeadless: true,
+        requiresBatteryNotLow: true,
+        requiresCharging: false,
+        requiresStorageNotLow: false,
+        requiresDeviceIdle: false,
+        startOnBoot: true,
+        requiredNetworkType: NetworkType.UNMETERED
+    ), (String taskId) async {
+      print("[BackgroundFetch] Event received $taskId");
+      await remoteFetch();
+      BackgroundFetch.finish(taskId);
+    }).then((int status) {
+      print('[BackgroundFetch] configure success: $status');
+    }).catchError((e) {
+      print('[BackgroundFetch] configure ERROR: $e');
+    });
   }
 
   @override

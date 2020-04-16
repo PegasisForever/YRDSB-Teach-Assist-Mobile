@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:ta/network/WebSocket.dart';
 import 'package:ta/network/network.dart';
 
-void remoteFetch() async {
+Future remoteFetch() async {
   final ws = WebSocket();
   ws.connect(baseWsUrl + 'remote_fetch/v10');
   Socket socket;

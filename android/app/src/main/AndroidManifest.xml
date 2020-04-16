@@ -1,7 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="site.pegasis.yrdsb.ta">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
+            tools:replace="android:label"
             android:name="io.flutter.app.FlutterApplication"
             android:label="YRDSB Teach Assist Pro"
             android:icon="@mipmap/ic_launcher">
