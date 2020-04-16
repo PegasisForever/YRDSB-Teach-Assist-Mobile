@@ -12,9 +12,12 @@ import 'package:ta/plugins/packageinfo.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
-const String baseUrl = (kReleaseMode || kProfileMode || true)
+const String baseUrl = (kReleaseMode || kProfileMode)
     ? "https://api.pegasis.site/yrdsb_ta/"
     : "http://192.168.1.22:5004/";
+const String baseWsUrl = (kReleaseMode || kProfileMode)
+    ? "wss://api.pegasis.site/yrdsb_ta/"
+    : "ws://192.168.1.22:5004/";
 const int apiVersion = 10;
 
 class HttpResponse {
