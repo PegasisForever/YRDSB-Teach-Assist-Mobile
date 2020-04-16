@@ -220,7 +220,8 @@ class Strings {
       "done": "Done",
       "edit_mark": "Edit %s Mark",
       "finished": "Finished",
-      "weight:":"Weight: ",
+      "weight:": "Weight: ",
+      "midterm_mark:": "Midterm Mark: ",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -428,7 +429,8 @@ class Strings {
       "done": "完成",
       "edit_mark": "编辑%s得分",
       "finished": "已完成",
-      "weight:":"权重：",
+      "weight:": "权重：",
+      "midterm_mark:": "期中成绩：",
     }
   };
 

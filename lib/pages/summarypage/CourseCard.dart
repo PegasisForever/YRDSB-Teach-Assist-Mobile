@@ -26,6 +26,40 @@ class CourseCard extends StatelessWidget {
     if (course.room != null) {
       infoStr.add(sprintf(Strings.get("room_number"), [course.room]));
     }
+
+    var courseMarkIndicators = <Widget>[];
+    if (course.overallMark != null) {
+      courseMarkIndicators.add(SizedBox(height: 16));
+      courseMarkIndicators.add(LPI.LinearProgressIndicator(
+        lineHeight: 20.0,
+        animationDuration: showAnimations ? 700 : 0,
+        value1: course.overallMark / 100,
+        center: Text(num2Str(course.overallMark) + "%", style: TextStyle(color: Colors.black)),
+        value1Color: Theme.of(context).colorScheme.secondary,
+      ));
+    }
+    if (course.midTermMark != null) {
+      courseMarkIndicators.add(SizedBox(height: 16));
+      courseMarkIndicators.add(LPI.LinearProgressIndicator(
+        lineHeight: 20.0,
+        animationDuration: showAnimations ? 700 : 0,
+        value1: course.midTermMark / 100,
+        center: Text(
+          Strings.get("midterm_mark:") + num2Str(course.midTermMark) + "%",
+          style: TextStyle(color: Colors.black),
+        ),
+        value1Color: Theme.of(context).colorScheme.secondary,
+      ));
+    }
+    if (courseMarkIndicators.isEmpty) {
+      courseMarkIndicators.add(SizedBox(height: 16));
+      courseMarkIndicators.add(LPI.LinearProgressIndicator(
+        lineHeight: 20.0,
+        value1: 0,
+        center: Text(Strings.get("marks_unavailable"), style: TextStyle(color: Colors.black)),
+      ));
+    }
+
     return Padding(
       padding: showPadding ? const EdgeInsets.fromLTRB(8, 8, 8, 0) : EdgeInsets.zero,
       child: Card(
@@ -70,43 +104,32 @@ class CourseCard extends StatelessWidget {
                     if (course.cached && showIcons)
                       WidgetSpan(
                           child: TapTooltip(
-                            message: Strings.get("cached_info"),
-                            padding: const EdgeInsets.all(16),
-                            margin: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 6),
-                              child: Container(
-                                padding: const EdgeInsets.all(1),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey, width: 1),
-                                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                                ),
-                                child: Text(
-                                  Strings.get("cached"),
-                                  style: TextStyle(color: getGrey(100, context: context)),
-                                ),
-                              ),
+                        message: Strings.get("cached_info"),
+                        padding: const EdgeInsets.all(16),
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 6),
+                          child: Container(
+                            padding: const EdgeInsets.all(1),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                              borderRadius: BorderRadius.all(Radius.circular(4)),
                             ),
-                          )
-                      ),
+                            child: Text(
+                              Strings.get("cached"),
+                              style: TextStyle(color: getGrey(100, context: context)),
+                            ),
+                          ),
+                        ),
+                      )),
                   ]),
                 ),
                 SizedBox(height: 4),
                 if (infoStr.length > 0) Text(infoStr.join("  -  "), style: Theme.of(context).textTheme.subhead),
-                SizedBox(height: 16),
-                course.overallMark != null
-                    ? LPI.LinearProgressIndicator(
-                        lineHeight: 20.0,
-                        animationDuration: showAnimations ? 700 : 0,
-                        value1: course.overallMark / 100,
-                        center: Text(num2Str(course.overallMark) + "%", style: TextStyle(color: Colors.black)),
-                        value1Color: Theme.of(context).colorScheme.secondary,
-                      )
-                    : LPI.LinearProgressIndicator(
-                        lineHeight: 20.0,
-                        value1: 0,
-                        center: Text(Strings.get("marks_unavailable"), style: TextStyle(color: Colors.black)),
-                      ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: courseMarkIndicators,
+                ),
               ],
             ),
           ),
