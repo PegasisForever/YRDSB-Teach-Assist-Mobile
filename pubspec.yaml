@@ -1,6 +1,6 @@
 name: ta
 description: YRDSB Teach Assist
-version: 1.7.23+66
+version: 1.7.24+67
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -16,7 +16,7 @@ dependencies:
   flutter_cupertino_localizations: ^1.0.1
   http: ^0.12.0+2
   sprintf: ^4.0.2
-  syncfusion_flutter_charts: ^18.1.42
+  syncfusion_flutter_charts: ^18.1.52
   flutter_selectable_text: ^0.3.1
   firebase_analytics: ^5.0.11
   intl: ^0.16.0
