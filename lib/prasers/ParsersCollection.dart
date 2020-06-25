@@ -4,6 +4,7 @@ import 'package:ta/prasers/JSONCourseListParserV4.dart' as CourseListParserV4;
 import 'package:ta/prasers/JSONCourseListParserV8.dart' as CourseListParserV8;
 import 'package:ta/prasers/JSONCourseListParserV10.dart' as CourseListParserV10;
 import 'package:ta/prasers/JSONCourseListParserV11.dart' as CourseListParserV11;
+import 'package:ta/prasers/JSONCourseListParserV12.dart' as CourseListParserV12;
 import 'package:ta/prasers/JSONTimelineParserV4.dart' as TimelineParserV4;
 import 'package:ta/prasers/JSONTimelineParserV6.dart' as TimelineParserV6;
 import 'package:ta/prasers/JSONTimelineParserV9.dart' as TimelineParserV9;
@@ -17,11 +18,12 @@ const _JSONCourseListParsers = {
   9: CourseListParserV8.parseJSONCourseList,
   10: CourseListParserV10.parseJSONCourseList,
   11: CourseListParserV11.parseJSONCourseList,
+  12: CourseListParserV12.parseJSONCourseList,
 };
 
-List<Course> parseCourseList(Map<String,dynamic> json) {
+List<Course> parseCourseList(Map<String, dynamic> json) {
   try {
-    if(json.length==0){
+    if (json.length == 0) {
       return List<Course>();
     }
     var version = json["version"];
@@ -42,9 +44,10 @@ const _jsonTimelineParsers = {
   9: TimelineParserV9.parseTimeline,
   10: TimelineParserV9.parseTimeline,
   11: TimelineParserV9.parseTimeline,
+  12: TimelineParserV9.parseTimeline,
 };
 
-List<TAUpdate> parseTimeLine(Map<String,dynamic> json) {
+List<TAUpdate> parseTimeLine(Map<String, dynamic> json) {
   try {
     var version = json["version"];
     var data = json["data"];

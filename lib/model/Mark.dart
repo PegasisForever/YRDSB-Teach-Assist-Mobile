@@ -369,6 +369,7 @@ class Course {
   String room;
   double overallMark;
   ExtraMarks extraMarks;
+  bool noCredit;
   bool cached;
   int id;
 
@@ -394,6 +395,7 @@ class Course {
       ..room = room
       ..overallMark = overallMark
       ..extraMarks = extraMarks?.copy()
+      ..noCredit = noCredit
       ..cached = cached
       ..id = id;
 
@@ -481,6 +483,7 @@ class Course {
         room == other.room &&
         overallMark == other.overallMark &&
         extraMarks == other.extraMarks &&
+        noCredit == other.noCredit &&
         cached == other.cached &&
         id == other.id;
   }
@@ -497,6 +500,7 @@ class Course {
         room,
         overallMark,
         extraMarks,
+        noCredit,
         cached,
         id,
       ]);
