@@ -35,12 +35,16 @@ class CourseCard extends StatelessWidget {
     var courseMarkIndicators = <Widget>[];
     if (course.overallMark != null) {
       courseMarkIndicators.add(SizedBox(height: 16));
+      var markText = num2Str(course.overallMark) + "%";
+      if (course.noCredit == true) {
+        markText += " " + Strings.get("(no_credit)");
+      }
       courseMarkIndicators.add(LPI.LinearProgressIndicator(
         lineHeight: 20.0,
         animationDuration: showAnimations ? 700 : 0,
         value1: course.overallMark / 100,
         center: Text(
-          num2Str(course.overallMark) + "%",
+          markText,
           style: TextStyle(color: Colors.black),
         ),
         value1Color: Theme.of(context).colorScheme.secondary,

@@ -223,6 +223,7 @@ class Strings {
       "weight:": "Weight: ",
       "midterm_mark:": "Midterm Mark: ",
       "midterm": "Midterm",
+      "(no_credit)":"(No Credit)",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -433,6 +434,7 @@ class Strings {
       "weight:": "权重：",
       "midterm_mark:": "期中成绩：",
       "midterm": "期中成绩",
+      "(no_credit)":"（无学分）",
     }
   };
 

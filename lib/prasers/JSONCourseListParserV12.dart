@@ -57,7 +57,7 @@ ExtraMark _parseExtraMark(Map<String, dynamic> json) {
 
 ExtraMarks _parseExtraMarks(List<dynamic> json) {
   var extraMarks = ExtraMarks.blank();
-  json.forEach((map) {
+  json?.forEach((map) {
     extraMarks.list.add(_parseExtraMark(map));
   });
   return extraMarks;
