@@ -39,26 +39,34 @@ class CourseCard extends StatelessWidget {
       if (course.noCredit == true) {
         markText += " " + Strings.get("(no_credit)");
       }
+      var textColor = Colors.black;
+      if (!isLightMode(context: context) && course.overallMark < 50) {
+        textColor = Colors.white;
+      }
       courseMarkIndicators.add(LPI.LinearProgressIndicator(
         lineHeight: 20.0,
         animationDuration: showAnimations ? 700 : 0,
         value1: course.overallMark / 100,
         center: Text(
           markText,
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: textColor),
         ),
         value1Color: Theme.of(context).colorScheme.secondary,
       ));
     }
     course.extraMarks.list.forEach((em) {
       courseMarkIndicators.add(SizedBox(height: 16));
+      var textColor = Colors.black;
+      if (!isLightMode(context: context) && em.mark < 50) {
+        textColor = Colors.white;
+      }
       courseMarkIndicators.add(LPI.LinearProgressIndicator(
         lineHeight: 20.0,
         animationDuration: showAnimations ? 700 : 0,
         value1: em.mark / 100,
         center: Text(
           em.name + ": " + num2Str(em.mark) + "%",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: textColor),
         ),
         value1Color: Theme.of(context).colorScheme.secondary,
       ));
@@ -70,7 +78,7 @@ class CourseCard extends StatelessWidget {
         lineHeight: 20.0,
         value1: 0,
         center: Text(Strings.get("marks_unavailable"),
-            style: TextStyle(color: Colors.black)),
+            style: TextStyle(color: isLightMode(context: context)?Colors.black:Colors.white)),
       ));
     }
 
