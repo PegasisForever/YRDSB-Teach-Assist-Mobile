@@ -249,6 +249,8 @@ int hashNullableObjects(Iterable objects) {
 }
 
 bool listsEqual(List list1, List list2) {
+  if ((list1 == null || list1.isEmpty) && (list2 == null || list2.isEmpty))
+    return true;
   if (list1.length != list2.length) return false;
 
   for (var i = 0; i < list1.length; i++) {

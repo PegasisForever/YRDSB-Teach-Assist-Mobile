@@ -17,7 +17,8 @@ class StatisticsList extends StatefulWidget {
   StatisticsListState createState() => StatisticsListState();
 }
 
-class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveClientMixin {
+class StatisticsListState extends State<StatisticsList>
+    with AutomaticKeepAliveClientMixin {
   final Map<Category, Color> darkColorMap = const {
     Category.KU: const Color(0xffc49000),
     Category.T: const Color(0xff388e3c),
@@ -47,43 +48,43 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
     var analysis = _course.getCourseAnalysis();
     var isLight = isLightMode(context: context);
     var sidePadding = (getScreenWidth(context) - 500) / 2;
-
-    var widgets=<Widget>[];
-    _course.extraMarks.list.forEach((em) {
-      widgets.add(_getExtraMarkUI(em));
-      widgets.add(Divider());
-    });
-    widgets.addAll([
-      _getTermOverall(analysis),
-      _getOverallChart(isLight, analysis),
-      Divider(),
-      _getPieChart(analysis),
-      Divider(),
-      _getChart(Category.KU, isLight, analysis),
-      Divider(),
-      _getChart(Category.T, isLight, analysis),
-      Divider(),
-      _getChart(Category.C, isLight, analysis),
-      Divider(),
-      _getChart(Category.A, isLight, analysis),
-    ]);
-
-    return (_course.overallMark != null && analysis.overallList.last != null)
-        ? ListView(
-            padding: EdgeInsets.only(
-              top: 56,
-              left: sidePadding > 0 ? sidePadding : 0,
-              right: sidePadding > 0 ? sidePadding : 0,
-              bottom: getBottomPadding(context),
-            ),
-            children: widgets,
-          )
-        : Center(
-            child: Text(
-              Strings.get("statistics_unavailable"),
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          );
+    if (_course.overallMark != null && analysis.overallList.last != null) {
+      var widgets = <Widget>[];
+      _course.extraMarks.list.forEach((em) {
+        widgets.add(_getExtraMarkUI(em));
+        widgets.add(Divider());
+      });
+      widgets.addAll([
+        _getTermOverall(analysis),
+        _getOverallChart(isLight, analysis),
+        Divider(),
+        _getPieChart(analysis),
+        Divider(),
+        _getChart(Category.KU, isLight, analysis),
+        Divider(),
+        _getChart(Category.T, isLight, analysis),
+        Divider(),
+        _getChart(Category.C, isLight, analysis),
+        Divider(),
+        _getChart(Category.A, isLight, analysis),
+      ]);
+      return ListView(
+        padding: EdgeInsets.only(
+          top: 56,
+          left: sidePadding > 0 ? sidePadding : 0,
+          right: sidePadding > 0 ? sidePadding : 0,
+          bottom: getBottomPadding(context),
+        ),
+        children: widgets,
+      );
+    } else {
+      return Center(
+        child: Text(
+          Strings.get("statistics_unavailable"),
+          style: Theme.of(context).textTheme.subhead,
+        ),
+      );
+    }
   }
 
   Widget _getPieChart(CourseAnalysis analysis) {
@@ -112,9 +113,12 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
               rows: [
                 for (final category in Category.values)
                   DataRow(cells: [
-                    DataCell(Text(Strings.get(describeEnum(category).toLowerCase()))),
-                    DataCell(Text(num2Str(_course.weightTable[category].W) + "%")),
-                    DataCell(Text(num2Str(_course.weightTable[category].CW) + "%")),
+                    DataCell(Text(
+                        Strings.get(describeEnum(category).toLowerCase()))),
+                    DataCell(
+                        Text(num2Str(_course.weightTable[category].W) + "%")),
+                    DataCell(
+                        Text(num2Str(_course.weightTable[category].CW) + "%")),
                   ])
               ],
             ),
@@ -145,31 +149,45 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
     final List<_PieData> chartData = widget.whatIfMode
         ? [
             for (final category in Category.values)
-              if (category != Category.O || _course.weightTable[Category.O].CW > 0)
-                _PieData(Strings.get(describeEnum(category).toLowerCase()), _course.weightTable[category].CW,
-                    analysis[category], lightColorMap[category])
+              if (category != Category.O ||
+                  _course.weightTable[Category.O].CW > 0)
+                _PieData(
+                    Strings.get(describeEnum(category).toLowerCase()),
+                    _course.weightTable[category].CW,
+                    analysis[category],
+                    lightColorMap[category])
           ]
         : [
             for (final category in Category.values)
-              if (category != Category.O || _course.weightTable[Category.O].CW > 0)
-                _PieData(Strings.get(describeEnum(category).toLowerCase()), _course.weightTable[category].CW,
-                    _course.weightTable[category].SA, lightColorMap[category])
+              if (category != Category.O ||
+                  _course.weightTable[Category.O].CW > 0)
+                _PieData(
+                    Strings.get(describeEnum(category).toLowerCase()),
+                    _course.weightTable[category].CW,
+                    _course.weightTable[category].SA,
+                    lightColorMap[category])
           ];
     return <PieSeries<_PieData, String>>[
       PieSeries<_PieData, String>(
           explodeAll: true,
           animationDuration: 0,
           dataSource: chartData,
-          pointColorMapper: (data, _) => data.get > 0 ? data.color : Colors.grey,
+          pointColorMapper: (data, _) =>
+              data.get > 0 ? data.color : Colors.grey,
           xValueMapper: (data, _) => data.name,
           yValueMapper: (data, _) => data.weight,
           enableSmartLabels: false,
-          dataLabelMapper: (data, _) => data.name + "\n" + num2Str(data.get) + "%",
+          dataLabelMapper: (data, _) =>
+              data.name + "\n" + num2Str(data.get) + "%",
           startAngle: 90,
           endAngle: 90,
-          pointRadiusMapper: (data, _) => ((data.get) * 0.7 + 20).toString() + "%",
+          pointRadiusMapper: (data, _) =>
+              ((data.get) * 0.7 + 20).toString() + "%",
           dataLabelSettings: DataLabelSettings(
-              textStyle: ChartTextStyle(color: isLightMode(context: context) ? Colors.black : Colors.white),
+              textStyle: ChartTextStyle(
+                  color: isLightMode(context: context)
+                      ? Colors.black
+                      : Colors.white),
               isVisible: true,
               labelPosition: ChartDataLabelPosition.outside,
               labelIntersectAction: LabelIntersectAction.none))
@@ -276,7 +294,8 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
           SizedBox(
             width: double.maxFinite,
             height: 200,
-            child: _getDefaultSplineChart(_getChartData(null, isLight, analysis, isOverall: true)),
+            child: _getDefaultSplineChart(
+                _getChartData(null, isLight, analysis, isOverall: true)),
           ),
         ],
       ),
@@ -299,14 +318,16 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
           SizedBox(
             width: double.maxFinite,
             height: 200,
-            child: _getDefaultSplineChart(_getChartData(category, isLight, analysis)),
+            child: _getDefaultSplineChart(
+                _getChartData(category, isLight, analysis)),
           ),
         ],
       ),
     );
   }
 
-  List<SplineSeries<Assignment, String>> _getChartData(Category category, bool isLight, CourseAnalysis analysis,
+  List<SplineSeries<Assignment, String>> _getChartData(
+      Category category, bool isLight, CourseAnalysis analysis,
       {bool isOverall = false}) {
     var _course = widget.course;
     Color color;
@@ -321,7 +342,9 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
     } else {
       color = isLight ? darkColorMap[category] : lightColorMap[category];
       yValueMapper = (Assignment assignment, _) =>
-          assignment[category].hasFinished ? num2Round(assignment[category].percentage * 100) : null;
+          assignment[category].hasFinished
+              ? num2Round(assignment[category].percentage * 100)
+              : null;
     }
 
     return [
@@ -339,12 +362,15 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
         emptyPointSettings: EmptyPointSettings(mode: EmptyPointMode.drop),
         xValueMapper: (Assignment assignment, _) => assignment.name,
         yValueMapper: yValueMapper,
-        name: Strings.get(isOverall ? "overall" : describeEnum(category).toLowerCase() + "_long"),
+        name: Strings.get(isOverall
+            ? "overall"
+            : describeEnum(category).toLowerCase() + "_long"),
       )
     ];
   }
 
-  SfCartesianChart _getDefaultSplineChart(List<SplineSeries<Assignment, String>> data) {
+  SfCartesianChart _getDefaultSplineChart(
+      List<SplineSeries<Assignment, String>> data) {
     return SfCartesianChart(
       plotAreaBorderWidth: 0,
       primaryXAxis: CategoryAxis(isVisible: false),
