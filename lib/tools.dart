@@ -97,18 +97,21 @@ bool editorDialogOpened = false;
 void updateNavigationBarBrightness({BuildContext context}) {
   if (isLightMode(context: context)) {
     FlutterStatusbarcolor.setStatusBarWhiteForeground(editorDialogOpened);
-    FlutterStatusbarcolor.setNavigationBarColor(Color(0xFFFAFAFA), animate: true);
+    FlutterStatusbarcolor.setNavigationBarColor(Color(0xFFFAFAFA),
+        animate: true);
     FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
   } else {
     FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
-    FlutterStatusbarcolor.setNavigationBarColor(Color(0xFF303030), animate: false);
+    FlutterStatusbarcolor.setNavigationBarColor(Color(0xFF303030),
+        animate: false);
     FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
   }
 }
 
 bool isLightMode({BuildContext context}) {
   if (context != null) {
-    currentBrightness = MediaQuery.of(context).platformBrightness ?? currentBrightness;
+    currentBrightness =
+        MediaQuery.of(context).platformBrightness ?? currentBrightness;
   }
   switch (Config.darkMode) {
     case 0:
@@ -122,7 +125,9 @@ bool isLightMode({BuildContext context}) {
 
 SystemUiOverlayStyle getSystemUiOverlayStyle(BuildContext context) {
   var brightness = MediaQuery.of(context).platformBrightness;
-  return brightness == Brightness.light ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark;
+  return brightness == Brightness.light
+      ? SystemUiOverlayStyle.light
+      : SystemUiOverlayStyle.dark;
 }
 
 bool isSameDay(DateTime d1, DateTime d2) {
@@ -179,14 +184,18 @@ double sum<T>(List<T> list, double f(T it)) {
 }
 
 Color getGrey(int contrast, {BuildContext context}) {
-  return isLightMode(context: context) ? Colors.grey[500 + contrast] : Colors.grey[500 - contrast];
+  return isLightMode(context: context)
+      ? Colors.grey[500 + contrast]
+      : Colors.grey[500 - contrast];
 }
 
 String period2Str(DateTime date1, DateTime date2) {
   if (date1.year == date2.year) {
     return date2Str(date1) + " - " + date2Str(date2);
   } else {
-    return date2Str(date1, keepYear: true) + " - " + date2Str(date2, keepYear: true);
+    return date2Str(date1, keepYear: true) +
+        " - " +
+        date2Str(date2, keepYear: true);
   }
 }
 
@@ -201,7 +210,8 @@ String date2Str(DateTime date, {bool keepYear = false}) {
 // example input: 2019-5-20
 DateTime str2Date(String str) {
   var numberList = str.split("-");
-  return DateTime(numberList[0].toInt(), numberList[1].toInt(), numberList[2].toInt());
+  return DateTime(
+      numberList[0].toInt(), numberList[1].toInt(), numberList[2].toInt());
 }
 
 extension on String {
@@ -236,4 +246,14 @@ int hashNullableObjects(Iterable objects) {
   } else {
     return hashObjects(objects);
   }
+}
+
+bool listsEqual(List list1, List list2) {
+  if (list1.length != list2.length) return false;
+
+  for (var i = 0; i < list1.length; i++) {
+    if (list1[i] != list2[i]) return false;
+  }
+
+  return true;
 }

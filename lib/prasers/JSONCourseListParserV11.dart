@@ -54,14 +54,19 @@ WeightTable _parseWeightTable(Map<String, dynamic> json) {
 Course _parseCourse(Map<String, dynamic> json) {
   var course = Course.blank();
 
-  course.startTime = json["start_time"] != null ? DateTime.parse(json["start_time"]) : null;
-  course.endTime = json["end_time"] != null ? DateTime.parse(json["end_time"]) : null;
+  course.startTime =
+      json["start_time"] != null ? DateTime.parse(json["start_time"]) : null;
+  course.endTime =
+      json["end_time"] != null ? DateTime.parse(json["end_time"]) : null;
   course.name = json["name"];
   course.code = json["code"];
   course.block = json["block"];
   course.room = json["room"];
   course.overallMark = json["overall_mark"];
-  course.midTermMark = json["midterm_mark"];
+  course.extraMarks = ExtraMarks.blank();
+  if (json["midterm_mark"] != null) {
+    course.extraMarks.list.add(ExtraMark("Midterm Mark", json["midterm_mark"]));
+  }
   course.cached = json["cached"];
   course.id = json["id"];
 

@@ -47,6 +47,27 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
     var analysis = _course.getCourseAnalysis();
     var isLight = isLightMode(context: context);
     var sidePadding = (getScreenWidth(context) - 500) / 2;
+
+    var widgets=<Widget>[];
+    _course.extraMarks.list.forEach((em) {
+      widgets.add(_getExtraMarkUI(em));
+      widgets.add(Divider());
+    });
+    widgets.addAll([
+      _getTermOverall(analysis),
+      _getOverallChart(isLight, analysis),
+      Divider(),
+      _getPieChart(analysis),
+      Divider(),
+      _getChart(Category.KU, isLight, analysis),
+      Divider(),
+      _getChart(Category.T, isLight, analysis),
+      Divider(),
+      _getChart(Category.C, isLight, analysis),
+      Divider(),
+      _getChart(Category.A, isLight, analysis),
+    ]);
+
     return (_course.overallMark != null && analysis.overallList.last != null)
         ? ListView(
             padding: EdgeInsets.only(
@@ -55,22 +76,7 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
               right: sidePadding > 0 ? sidePadding : 0,
               bottom: getBottomPadding(context),
             ),
-            children: <Widget>[
-              if (_course.midTermMark != null) _getMidterm(_course.midTermMark),
-              if (_course.midTermMark != null) Divider(),
-              _getTermOverall(analysis),
-              _getOverallChart(isLight, analysis),
-              Divider(),
-              _getPieChart(analysis),
-              Divider(),
-              _getChart(Category.KU, isLight, analysis),
-              Divider(),
-              _getChart(Category.T, isLight, analysis),
-              Divider(),
-              _getChart(Category.C, isLight, analysis),
-              Divider(),
-              _getChart(Category.A, isLight, analysis),
-            ],
+            children: widgets,
           )
         : Center(
             child: Text(
@@ -170,23 +176,23 @@ class StatisticsListState extends State<StatisticsList> with AutomaticKeepAliveC
     ];
   }
 
-  Widget _getMidterm(double midtermMark) {
+  Widget _getExtraMarkUI(ExtraMark extraMark) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Column(
         children: <Widget>[
           Text(
-            Strings.get("midterm"),
+            extraMark.name,
             style: Theme.of(context).textTheme.title,
           ),
           Text(
-            num2Str(midtermMark) + "%",
+            num2Str(extraMark.mark) + "%",
             style: TextStyle(fontSize: 60),
           ),
           LinearProgressIndicator(
             key: Key("c"),
             lineHeight: 20.0,
-            value1: midtermMark / 100,
+            value1: extraMark.mark / 100,
             value1Color: Theme.of(context).colorScheme.primary,
           )
         ],

@@ -14,7 +14,12 @@ class CourseCard extends StatelessWidget {
   final bool showAnimations;
   final bool showPadding;
 
-  CourseCard({this.onTap, this.course, this.showIcons = true, this.showAnimations = true, this.showPadding = true})
+  CourseCard(
+      {this.onTap,
+      this.course,
+      this.showIcons = true,
+      this.showAnimations = true,
+      this.showPadding = true})
       : super(key: Key(course.displayName));
 
   @override
@@ -34,34 +39,40 @@ class CourseCard extends StatelessWidget {
         lineHeight: 20.0,
         animationDuration: showAnimations ? 700 : 0,
         value1: course.overallMark / 100,
-        center: Text(num2Str(course.overallMark) + "%", style: TextStyle(color: Colors.black)),
-        value1Color: Theme.of(context).colorScheme.secondary,
-      ));
-    }
-    if (course.midTermMark != null) {
-      courseMarkIndicators.add(SizedBox(height: 16));
-      courseMarkIndicators.add(LPI.LinearProgressIndicator(
-        lineHeight: 20.0,
-        animationDuration: showAnimations ? 700 : 0,
-        value1: course.midTermMark / 100,
         center: Text(
-          Strings.get("midterm_mark:") + num2Str(course.midTermMark) + "%",
+          num2Str(course.overallMark) + "%",
           style: TextStyle(color: Colors.black),
         ),
         value1Color: Theme.of(context).colorScheme.secondary,
       ));
     }
+    course.extraMarks.list.forEach((em) {
+      courseMarkIndicators.add(SizedBox(height: 16));
+      courseMarkIndicators.add(LPI.LinearProgressIndicator(
+        lineHeight: 20.0,
+        animationDuration: showAnimations ? 700 : 0,
+        value1: em.mark / 100,
+        center: Text(
+          em.name + ": " + num2Str(em.mark) + "%",
+          style: TextStyle(color: Colors.black),
+        ),
+        value1Color: Theme.of(context).colorScheme.secondary,
+      ));
+    });
+
     if (courseMarkIndicators.isEmpty) {
       courseMarkIndicators.add(SizedBox(height: 16));
       courseMarkIndicators.add(LPI.LinearProgressIndicator(
         lineHeight: 20.0,
         value1: 0,
-        center: Text(Strings.get("marks_unavailable"), style: TextStyle(color: Colors.black)),
+        center: Text(Strings.get("marks_unavailable"),
+            style: TextStyle(color: Colors.black)),
       ));
     }
 
     return Padding(
-      padding: showPadding ? const EdgeInsets.fromLTRB(8, 8, 8, 0) : EdgeInsets.zero,
+      padding:
+          showPadding ? const EdgeInsets.fromLTRB(8, 8, 8, 0) : EdgeInsets.zero,
       child: Card(
         clipBehavior: Clip.antiAlias,
         child: InkWell(
@@ -77,13 +88,16 @@ class CourseCard extends StatelessWidget {
                       text: course.displayName + " ",
                       style: Theme.of(context).textTheme.title,
                     ),
-                    if (course.overallMark != null && course.overallMark >= 90 && showIcons)
+                    if (course.overallMark != null &&
+                        course.overallMark >= 90 &&
+                        showIcons)
                       (course.overallMark < 99)
                           ? WidgetSpan(
                               child: TapTooltip(
                               message: Strings.get("fire_info"),
                               padding: const EdgeInsets.all(16),
-                              margin: const EdgeInsets.symmetric(horizontal: 16),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               child: Icon(
                                 CustomIcons.fire,
                                 color: Colors.orange,
@@ -94,7 +108,8 @@ class CourseCard extends StatelessWidget {
                               child: TapTooltip(
                               message: Strings.get("diamond_info"),
                               padding: const EdgeInsets.all(16),
-                              margin: const EdgeInsets.symmetric(horizontal: 16),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               child: Icon(
                                 CustomIcons.diamond,
                                 color: Colors.lightBlue,
@@ -113,11 +128,13 @@ class CourseCard extends StatelessWidget {
                             padding: const EdgeInsets.all(1),
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey, width: 1),
-                              borderRadius: BorderRadius.all(Radius.circular(4)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
                             ),
                             child: Text(
                               Strings.get("cached"),
-                              style: TextStyle(color: getGrey(100, context: context)),
+                              style: TextStyle(
+                                  color: getGrey(100, context: context)),
                             ),
                           ),
                         ),
@@ -125,7 +142,9 @@ class CourseCard extends StatelessWidget {
                   ]),
                 ),
                 SizedBox(height: 4),
-                if (infoStr.length > 0) Text(infoStr.join("  -  "), style: Theme.of(context).textTheme.subhead),
+                if (infoStr.length > 0)
+                  Text(infoStr.join("  -  "),
+                      style: Theme.of(context).textTheme.subhead),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: courseMarkIndicators,

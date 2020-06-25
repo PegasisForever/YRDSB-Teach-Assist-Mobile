@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:quiver/core.dart';
 import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/prasers/ParsersCollection.dart';
@@ -49,21 +50,36 @@ class SmallMark {
 class SmallMarkGroup {
   List<SmallMark> smallMarks = List();
 
-  bool get available => find(smallMarks, (SmallMark it) => it?.enabled == true) != null;
+  bool get available =>
+      find(smallMarks, (SmallMark it) => it?.enabled == true) != null;
 
-  bool get hasFinished => find(smallMarks, (SmallMark it) => it?.enabled == true && it?.finished == true) != null;
+  bool get hasFinished =>
+      find(smallMarks,
+          (SmallMark it) => it?.enabled == true && it?.finished == true) !=
+      null;
 
-  bool get allFinished => find(smallMarks, (SmallMark it) => !(it?.finished == true)) == null;
+  bool get allFinished =>
+      find(smallMarks, (SmallMark it) => !(it?.finished == true)) == null;
 
-  bool get hasWeight => find(smallMarks, (SmallMark it) => it?.enabled == true ? it.weight > 0 : false) != null;
+  bool get hasWeight =>
+      find(smallMarks,
+          (SmallMark it) => it?.enabled == true ? it.weight > 0 : false) !=
+      null;
 
-  double get allGet => sum(smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled == true) ? it.get : 0.0);
+  double get allGet => sum(
+      smallMarks,
+      (SmallMark it) =>
+          (it?.finished == true && it?.enabled == true) ? it.get : 0.0);
 
-  double get allTotal =>
-      sum(smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled == true) ? it.total : 0.0);
+  double get allTotal => sum(
+      smallMarks,
+      (SmallMark it) =>
+          (it?.finished == true && it?.enabled == true) ? it.total : 0.0);
 
-  double get allWeight =>
-      sum(smallMarks, (SmallMark it) => (it?.finished == true && it?.enabled == true) ? it.weight : 0.0);
+  double get allWeight => sum(
+      smallMarks,
+      (SmallMark it) =>
+          (it?.finished == true && it?.enabled == true) ? it.weight : 0.0);
 
   double get percentage {
     var get = 0.0;
@@ -89,7 +105,8 @@ class SmallMarkGroup {
 
   @override
   bool operator ==(other) {
-    return (other is SmallMarkGroup) && hashObjects(smallMarks) == hashObjects(other.smallMarks);
+    return (other is SmallMarkGroup) &&
+        hashObjects(smallMarks) == hashObjects(other.smallMarks);
   }
 
   @override
@@ -143,7 +160,8 @@ class Assignment {
 
   SmallMarkGroup operator [](Category category) => smallMarkGroups[category];
 
-  void operator []=(Category category, SmallMarkGroup smallMarkGroup) => smallMarkGroups[category] = smallMarkGroup;
+  void operator []=(Category category, SmallMarkGroup smallMarkGroup) =>
+      smallMarkGroups[category] = smallMarkGroup;
 
   Assignment(this.smallMarkGroups, this.name, String date) {
     if (date != null) {
@@ -168,7 +186,9 @@ class Assignment {
 
     smallMarkGroups.forEach((category, smallMarkGroup) {
       if (smallMarkGroup.available && smallMarkGroup.hasFinished) {
-        get += smallMarkGroup.percentage * smallMarkGroup.allWeight * weights[category].CW;
+        get += smallMarkGroup.percentage *
+            smallMarkGroup.allWeight *
+            weights[category].CW;
         total += smallMarkGroup.allWeight * weights[category].CW;
       }
     });
@@ -225,7 +245,8 @@ class Assignment {
   }
 
   @override
-  int get hashCode => hash2(hash4(name, feedback, time, edited), hashObjects(smallMarkGroups.values));
+  int get hashCode => hash2(
+      hash4(name, feedback, time, edited), hashObjects(smallMarkGroups.values));
 }
 
 class Weight {
@@ -246,7 +267,10 @@ class Weight {
 
   @override
   bool operator ==(other) {
-    return (other is Weight) && W == other.W && CW == other.CW && SA == other.SA;
+    return (other is Weight) &&
+        W == other.W &&
+        CW == other.CW &&
+        SA == other.SA;
   }
 
   @override
@@ -265,7 +289,8 @@ class WeightTable {
 
   Weight operator [](Category category) => weights[category];
 
-  void operator []=(Category category, Weight weight) => weights[category] = weight;
+  void operator []=(Category category, Weight weight) =>
+      weights[category] = weight;
 
   WeightTable.blank();
 
@@ -290,6 +315,49 @@ class WeightTable {
   int get hashCode => hashObjects(weights.values);
 }
 
+class ExtraMark {
+  String name;
+  double mark;
+
+  ExtraMark(this.name, this.mark);
+
+  ExtraMark copy() {
+    return ExtraMark(name, mark);
+  }
+
+  @override
+  bool operator ==(other) {
+    if (!(other is ExtraMark)) return false;
+    return name == other.name && mark == other.mark;
+  }
+
+  @override
+  int get hashCode => hash2(name, mark);
+}
+
+class ExtraMarks {
+  List<ExtraMark> list = [];
+
+  ExtraMarks.blank();
+
+  ExtraMarks copy() {
+    var ems = ExtraMarks.blank();
+    list.forEach((em) {
+      ems.list.add(em.copy());
+    });
+    return ems;
+  }
+
+  @override
+  bool operator ==(other) {
+    if (!(other is ExtraMarks)) return false;
+    return listsEqual(list, other.list);
+  }
+
+  @override
+  int get hashCode => hashObjects(list);
+}
+
 class Course {
   List<Assignment> assignments;
   WeightTable weightTable;
@@ -300,7 +368,7 @@ class Course {
   String block;
   String room;
   double overallMark;
-  double midTermMark;
+  ExtraMarks extraMarks;
   bool cached;
   int id;
 
@@ -325,7 +393,7 @@ class Course {
       ..block = block
       ..room = room
       ..overallMark = overallMark
-      ..midTermMark = midTermMark
+      ..extraMarks = extraMarks?.copy()
       ..cached = cached
       ..id = id;
 
@@ -363,8 +431,11 @@ class Course {
 
     assignments?.forEach((assi) {
       assi.smallMarkGroups.forEach((category, smallMarkGroup) {
-        if (smallMarkGroup.hasFinished && smallMarkGroup.available && smallMarkGroup.hasWeight) {
-          gets[category] += smallMarkGroup.percentage * smallMarkGroup.allWeight;
+        if (smallMarkGroup.hasFinished &&
+            smallMarkGroup.available &&
+            smallMarkGroup.hasWeight) {
+          gets[category] +=
+              smallMarkGroup.percentage * smallMarkGroup.allWeight;
           totals[category] += smallMarkGroup.allWeight;
         }
       });
@@ -400,7 +471,7 @@ class Course {
   @override
   bool operator ==(other) {
     return (other is Course) &&
-        hashNullableObjects(assignments) == hashNullableObjects(other.assignments) &&
+        listsEqual(assignments, other.assignments) &&
         weightTable == other.weightTable &&
         startTime == other.startTime &&
         endTime == other.endTime &&
@@ -409,16 +480,26 @@ class Course {
         block == other.block &&
         room == other.room &&
         overallMark == other.overallMark &&
+        extraMarks == other.extraMarks &&
         cached == other.cached &&
         id == other.id;
   }
 
   @override
-  int get hashCode => hash4(
-      hash4(hash4(hashNullableObjects(assignments), weightTable, startTime, endTime), name, code, block),
-      room,
-      overallMark,
-      cached);
+  int get hashCode => hashNullableObjects([
+        assignments,
+        weightTable,
+        startTime,
+        endTime,
+        name,
+        code,
+        block,
+        room,
+        overallMark,
+        extraMarks,
+        cached,
+        id,
+      ]);
 }
 
 class CourseAnalysis {
