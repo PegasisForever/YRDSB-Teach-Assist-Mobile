@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:after_layout/after_layout.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sprintf/sprintf.dart';
+import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/pages/drawerpages/SearchPage.dart';
@@ -70,7 +72,53 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
   Widget build(BuildContext context) {
     super.build(context);
 
-    var sidePadding = (getScreenWidth(context) - 500) / 2;
+    final sidePadding = (getScreenWidth(context) - 500) / 2;
+    final hasActiveCourses = getCourseListOf(currentUser.number).length > 0;
+    var mainWidget;
+    if (hasActiveCourses) {
+      mainWidget = ListView(
+        padding: EdgeInsets.only(
+          left: max(sidePadding, 14),
+          right: max(sidePadding, 14),
+          bottom: getBottomPadding(context) + 16,
+        ),
+        children: <Widget>[
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: getSectionWidgets([
+              InitSetupSection(),
+              AnnouncementSection(),
+              CalendarSection(),
+              UpdatesSection(),
+            ]),
+          ),
+          SummaryCourseList()
+        ],
+      );
+    } else {
+      mainWidget = Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(children: [
+              TextSpan(
+                text: Strings.get("no_active_courses"),
+                style: Theme.of(context).textTheme.subhead,
+              ),
+              TextSpan(
+                text: Strings.get("archived_marks"),
+                recognizer: TapGestureRecognizer()..onTap = () => Navigator.pushNamed(context, "/archived"),
+                style: Theme.of(context).textTheme.subhead.copyWith(
+                      color: isLightMode(context: context) ? Colors.blue : Colors.blue[300],
+                      decoration: TextDecoration.underline,
+                    ),
+              ),
+            ]),
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       key: scaffoldKey,
@@ -117,8 +165,10 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
                 ),
               ),
             ],
-            floating: true,
-            snap: true,
+            floating: hasActiveCourses,
+            snap: hasActiveCourses,
+            elevation: hasActiveCourses ? null : 0,
+            pinned: !hasActiveCourses,
           ),
         ],
         body: SmartRefresher(
@@ -133,25 +183,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
           ),
           controller: _refreshController,
           onRefresh: manualRefresh,
-          child: ListView(
-            padding: EdgeInsets.only(
-              left: max(sidePadding, 14),
-              right: max(sidePadding, 14),
-              bottom: getBottomPadding(context) + 16,
-            ),
-            children: <Widget>[
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: getSectionWidgets([
-                  InitSetupSection(),
-                  AnnouncementSection(),
-                  CalendarSection(),
-                  UpdatesSection(),
-                ]),
-              ),
-              SummaryCourseList()
-            ],
-          ),
+          child: mainWidget,
         ),
       ),
       drawer: TADrawer(

@@ -223,7 +223,8 @@ class Strings {
       "weight:": "Weight: ",
       "midterm_mark:": "Midterm Mark: ",
       "midterm": "Midterm",
-      "(no_credit)":"(No Credit)",
+      "(no_credit)": "(No Credit)",
+      "no_active_courses": "No active courses, you may want to go to ",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -239,7 +240,7 @@ class Strings {
       "summary": "概要",
       "time_line": "动态",
       "share_marks": "分享分数",
-      "archived_marks": "已归档",
+      "archived_marks": "已归档的课程",
       "announcements": "通知",
       "feedback": "反馈",
       "settings": "设置",
@@ -434,7 +435,8 @@ class Strings {
       "weight:": "权重：",
       "midterm_mark:": "期中成绩：",
       "midterm": "期中成绩",
-      "(no_credit)":"（无学分）",
+      "(no_credit)": "（无学分）",
+      "no_active_courses": "没有正在进行的课程，你可能想去",
     }
   };
 
