@@ -19,7 +19,7 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
     with AfterLayoutMixin<ArchivedCoursesPage> {
   var _noDataRefreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   var _haveDataRefreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  var archivedCourses = getArchivedCourseListOf(currentUser.number);
+  var archivedCourses = getArchivedCourseListOf(currentUser.number).reversed.toList();
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
             try {
               await getAndSaveArchived(currentUser);
               setState(() {
-                archivedCourses = getArchivedCourseListOf(currentUser.number);
+                archivedCourses = getArchivedCourseListOf(currentUser.number).reversed.toList();
               });
             } catch (e) {}
           },
@@ -116,7 +116,7 @@ class _ArchivedCoursesPageState extends State<ArchivedCoursesPage>
           try {
             await getAndSaveArchived(currentUser);
             setState(() {
-              archivedCourses = getArchivedCourseListOf(currentUser.number);
+              archivedCourses = getArchivedCourseListOf(currentUser.number).reversed.toList();
             });
           } catch (e) {}
         },
