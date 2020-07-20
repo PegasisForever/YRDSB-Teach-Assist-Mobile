@@ -138,7 +138,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
               ),
             ),
             title: Image(
-              image: AssetImage("assets/icons/app_logo_64x.png"),
+              image: AssetImage("assets/icons/app_logo_${isAndroid()?"android":"ios"}_small.png"),
               height: 40,
               width: 40,
             ),

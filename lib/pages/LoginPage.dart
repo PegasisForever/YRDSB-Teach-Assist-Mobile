@@ -42,7 +42,7 @@ class _LoginPageState extends BetterState<LoginPage> {
                     height: 28,
                   ),
                   Image.asset(
-                    "assets/icons/app_logo.png",
+                    "assets/icons/app_logo_${isAndroid()?"android":"ios"}.png",
                     height: 130,
                   ),
                   Center(

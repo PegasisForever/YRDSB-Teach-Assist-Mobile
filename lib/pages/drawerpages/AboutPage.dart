@@ -36,7 +36,7 @@ class _AboutPageState extends BetterState<AboutPage> {
           children: <Widget>[
             FadeInImage(
               placeholder: MemoryImage(kTransparentImage),
-              image: AssetImage("assets/icons/app_logo.png"),
+              image: AssetImage("assets/icons/app_logo_${isAndroid()?"android":"ios"}.png"),
               height: 130,
               width: 130,
               fadeInDuration: const Duration(milliseconds: 100),
