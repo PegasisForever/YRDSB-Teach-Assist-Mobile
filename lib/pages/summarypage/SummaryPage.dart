@@ -96,6 +96,10 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
         ],
       );
     } else {
+      final theme = Theme.of(context);
+      final lightLinkColor = theme.primaryColor;
+      final darkLinkColor = theme.primaryColorLight;
+
       mainWidget = Center(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -110,7 +114,7 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
                 text: Strings.get("archived_marks"),
                 recognizer: TapGestureRecognizer()..onTap = () => Navigator.pushNamed(context, "/archived"),
                 style: Theme.of(context).textTheme.subhead.copyWith(
-                      color: isLightMode(context: context) ? Colors.blue : Colors.blue[300],
+                      color: isLightMode(context: context) ? lightLinkColor : darkLinkColor,
                       decoration: TextDecoration.underline,
                     ),
               ),

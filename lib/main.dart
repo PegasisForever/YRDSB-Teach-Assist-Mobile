@@ -189,6 +189,7 @@ class _AppState extends State<App> {
       accentColor: color,
       primaryColor: color,
       primaryColorDark: color[700],
+      primaryColorLight: color[300],
       toggleableActiveColor: color,
       appBarTheme: AppBarTheme(
         color: ThemeData.light().canvasColor,
@@ -230,6 +231,9 @@ class _AppState extends State<App> {
         secondary: color[300],
       ),
       accentColor: color,
+      primaryColor: color,
+      primaryColorDark: color[700],
+      primaryColorLight: color[300],
       toggleableActiveColor: color[300],
       appBarTheme: AppBarTheme(
         color: ThemeData.dark().canvasColor,

@@ -4,6 +4,7 @@ import 'package:ta/pages/drawerpages/openCustomTab.dart';
 import 'package:ta/pages/summarypage/section/Section.dart';
 import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/res/Strings.dart';
+import 'package:ta/tools.dart';
 import 'package:ta/widgets/CrossFade.dart';
 
 class AnnouncementSection extends SectionCandidate {
@@ -30,6 +31,10 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
   Widget build(BuildContext context) {
     var announcement = prefs.getString("announcement");
 
+    final theme = Theme.of(context);
+    final lightLinkColor = theme.primaryColor;
+    final darkLinkColor = theme.primaryColorLight;
+
     return CrossFade(
       firstChild: Section(
         title: Strings.get("announcement"),
@@ -46,6 +51,12 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
             padding: const EdgeInsets.all(16),
             child: MarkdownBody(
               fitContent: false,
+              styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(
+                a: TextStyle(
+                  color: isLightMode(context: context) ? lightLinkColor : darkLinkColor,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
               data: announcement,
               onTapLink: (url) {
                 openCustomTab(context, url);

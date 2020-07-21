@@ -21,6 +21,11 @@ class _AboutPageState extends BetterState<AboutPage> {
   Widget build(BuildContext context) {
     super.build(context);
     var sidePadding = (getScreenWidth(context) - 500) / 2;
+
+    final theme = Theme.of(context);
+    final lightLinkColor = theme.primaryColor;
+    final darkLinkColor = theme.primaryColorLight;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.get("about")),
@@ -86,7 +91,7 @@ class _AboutPageState extends BetterState<AboutPage> {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () => openCustomTab(context, "https://dev.pegasis.site/ta"),
                       style: TextStyle(
-                        color: isLightMode(context: context) ? Colors.blue : Colors.blue[300],
+                        color: isLightMode(context: context) ? lightLinkColor : darkLinkColor,
                         decoration: TextDecoration.underline,
                       )),
                 ]),
