@@ -61,8 +61,7 @@ class _EditAccountState extends BetterState<EditAccount> {
                     ? IconButton(
                         icon: Icon(Icons.delete),
                         onPressed: () async {
-                          var confirm = false;
-                          await showDialog(
+                          var confirm = await showDialog(
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
@@ -72,16 +71,17 @@ class _EditAccountState extends BetterState<EditAccount> {
                                       Strings.get("?")),
                                   actions: <Widget>[
                                     FlatButton(
-                                      child: Text(Strings.get("cancel").toUpperCase()),
+                                      child: Text(
+                                          Strings.get("cancel").toUpperCase()),
                                       onPressed: () {
-                                        Navigator.pop(context);
+                                        Navigator.pop(context, false);
                                       },
                                     ),
                                     FlatButton(
-                                      child: Text(Strings.get("remove").toUpperCase()),
+                                      child: Text(
+                                          Strings.get("remove").toUpperCase()),
                                       onPressed: () async {
-                                        Navigator.pop(context);
-                                        confirm = true;
+                                        Navigator.pop(context, true);
                                       },
                                     ),
                                   ],
@@ -95,11 +95,13 @@ class _EditAccountState extends BetterState<EditAccount> {
                                   return SimpleDialog(
                                     children: <Widget>[
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.symmetric(horizontal: 28, vertical: 8),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 28, vertical: 8),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: <Widget>[
                                             CircularProgressIndicator(),
                                             SizedBox(
@@ -107,7 +109,9 @@ class _EditAccountState extends BetterState<EditAccount> {
                                             ),
                                             Text(
                                               Strings.get("removing"),
-                                              style: Theme.of(context).textTheme.title,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .title,
                                             )
                                           ],
                                         ),
@@ -161,7 +165,8 @@ class _EditAccountState extends BetterState<EditAccount> {
                           }
                           if (_passwordController.text == "") {
                             setState(() {
-                              _passwordErrorText.text = Strings.get("plz_fill_in_ur_pwd");
+                              _passwordErrorText.text =
+                                  Strings.get("plz_fill_in_ur_pwd");
                             });
                             return;
                           }
@@ -169,10 +174,11 @@ class _EditAccountState extends BetterState<EditAccount> {
                           if (_addNew) {
                             var _dual = false;
                             userList.forEach((item) {
-                              if (item.number == _studentNumberController.text) {
+                              if (item.number ==
+                                  _studentNumberController.text) {
                                 setState(() {
-                                  _studentNumberErrorText.text =
-                                      Strings.get("this_account_already_exists");
+                                  _studentNumberErrorText.text = Strings.get(
+                                      "this_account_already_exists");
                                 });
                                 _dual = true;
                                 return;
@@ -183,7 +189,8 @@ class _EditAccountState extends BetterState<EditAccount> {
                             }
                           }
 
-                          if (_studentNumberController.text == _oldUser.number &&
+                          if (_studentNumberController.text ==
+                                  _oldUser.number &&
                               _passwordController.text == _oldUser.password &&
                               _aliasController.text == _oldUser.displayName &&
                               _receive == _oldUser.receiveNotification) {
@@ -195,8 +202,8 @@ class _EditAccountState extends BetterState<EditAccount> {
                             _isSaveLoading = true;
                           });
 
-                          var user = User(
-                              _studentNumberController.text, _passwordController.text, _receive,
+                          var user = User(_studentNumberController.text,
+                              _passwordController.text, _receive,
                               displayName: _aliasController.text);
 
                           try {
@@ -251,7 +258,8 @@ class _EditAccountState extends BetterState<EditAccount> {
               hint: Strings.get("student_number"),
               errorText: _studentNumberErrorText,
               icon: Icons.account_circle,
-              inputType: TextInputType.numberWithOptions(signed: false, decimal: false),
+              inputType: TextInputType.numberWithOptions(
+                  signed: false, decimal: false),
             ),
             SizedBox(height: 12),
             EditText(
@@ -274,8 +282,9 @@ class _EditAccountState extends BetterState<EditAccount> {
                         _receive = val;
                       });
                     },
-                    secondary:
-                        Icon(_receive ? Icons.notifications_active : Icons.notifications_off),
+                    secondary: Icon(_receive
+                        ? Icons.notifications_active
+                        : Icons.notifications_off),
                   )
                 : ListTile(
                     leading: Icon(Icons.info),
@@ -286,20 +295,24 @@ class _EditAccountState extends BetterState<EditAccount> {
         ));
   }
 
-  _handleError(Exception e, BuildContext context) {
+  _handleError(e, BuildContext context) {
     if (e is SocketException) {
-      if (e.message == "Connection failed" || e.osError.message == "Connection refused") {
+      if (e.message == "Connection failed" ||
+          e.osError.message == "Connection refused") {
         showSnackBar(context, Strings.get("connection_failed"));
       } else {
         showSnackBar(
-            context, Strings.get("error") + (e.message != "" ? e.message : e.osError.message));
+            context,
+            Strings.get("error") +
+                (e.message != "" ? e.message : e.osError.message));
       }
     } else if (e is HttpException) {
       switch (e.message) {
         case "401":
           {
             setState(() {
-              _passwordErrorText.text = Strings.get("student_number_or_password_incorrect");
+              _passwordErrorText.text =
+                  Strings.get("student_number_or_password_incorrect");
             });
             break;
           }

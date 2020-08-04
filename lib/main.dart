@@ -120,7 +120,10 @@ class _AppState extends State<App> {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [const Locale('en'), const Locale.fromSubtags(languageCode: 'zh')],
+      supportedLocales: [
+        const Locale('en'),
+        const Locale.fromSubtags(languageCode: 'zh')
+      ],
     );
   }
 
@@ -129,41 +132,48 @@ class _AppState extends State<App> {
 
     switch (settings.name) {
       case "/":
-        return _createRoute(userList.length == 0 ? LoginPage() : SummaryPage(), showEnterAnimation: false);
+        return _createRoute(
+          userList.length == 0 ? LoginPage() : SummaryPage(),
+          settings,
+          showEnterAnimation: false,
+        );
       case "/summary":
-        return _createRoute(SummaryPage());
+        return _createRoute(SummaryPage(), settings);
       case "/login":
-        return _createRoute(LoginPage());
+        return _createRoute(LoginPage(), settings);
       case "/updates":
-        return _createRoute(UpdatesPage());
+        return _createRoute(UpdatesPage(), settings);
       case "/calendar":
-        return _createRoute(CalendarPage());
+        return _createRoute(CalendarPage(), settings);
       case "/accounts_list":
-        return _createRoute(AccountsList());
+        return _createRoute(AccountsList(), settings);
       case "/accounts_list/edit":
-        return _createRoute(EditAccount(args[0], args[1]));
+        return _createRoute(EditAccount(args[0], args[1]), settings);
       case "/about":
-        return _createRoute(AboutPage());
+        return _createRoute(AboutPage(), settings);
       case "/feedback":
-        return _createRoute(FeedbackPage());
+        return _createRoute(FeedbackPage(), settings);
       case "/detail":
-        return _createRoute(DetailPage(args[0]));
+        return _createRoute(DetailPage(args[0]), settings);
       case "/detail/whatif_welcome":
-        return _createRoute(WhatIfWelcomePage());
+        return _createRoute(WhatIfWelcomePage(), settings);
       case "/archived":
-        return _createRoute(ArchivedCoursesPage());
+        return _createRoute(ArchivedCoursesPage(), settings);
       case "/settings":
-        return _createRoute(SettingsPage());
+        return _createRoute(SettingsPage(), settings);
       case "/setup":
-        return _createRoute(SetupPage());
+        return _createRoute(SetupPage(), settings);
     }
   }
 
-  Route _createRoute(Widget page, {bool showEnterAnimation = true}) {
+  Route _createRoute(Widget page, RouteSettings settings,
+      {bool showEnterAnimation = true}) {
     return isAndroid()
         ? PageRouteBuilder(
+            settings: settings,
             pageBuilder: (context, animation, secondaryAnimation) => page,
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
               return ZoomPageTransition(
                 animation: animation,
                 secondaryAnimation: secondaryAnimation,
@@ -172,7 +182,10 @@ class _AppState extends State<App> {
               );
             },
           )
-        : MaterialPageRoute(builder: (context) => page);
+        : MaterialPageRoute(
+            settings: settings,
+            builder: (context) => page,
+          );
   }
 
   ThemeData getLightTheme(MaterialColor color) {
@@ -214,7 +227,8 @@ class _AppState extends State<App> {
         thumbColor: color,
       ),
       dialogTheme: DialogTheme(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4))),
       ),
     );
   }
@@ -259,7 +273,8 @@ class _AppState extends State<App> {
         thumbColor: color,
       ),
       dialogTheme: DialogTheme(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4))),
       ),
     );
   }
