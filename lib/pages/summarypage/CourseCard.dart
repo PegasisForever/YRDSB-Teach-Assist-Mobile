@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:ta/model/Mark.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/res/CustomIcons.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
@@ -30,6 +31,9 @@ class CourseCard extends StatelessWidget {
     }
     if (course.room != null) {
       infoStr.add(sprintf(Strings.get("room_number"), [course.room]));
+    }
+    if (Config.showCourseCode && course.code != null && course.code.isNotEmpty) {
+      infoStr.add(course.code);
     }
 
     var courseMarkIndicators = <Widget>[];
@@ -78,7 +82,10 @@ class CourseCard extends StatelessWidget {
         lineHeight: 20.0,
         value1: 0,
         center: Text(Strings.get("marks_unavailable"),
-            style: TextStyle(color: isLightMode(context: context)?Colors.black:Colors.white)),
+            style: TextStyle(
+                color: isLightMode(context: context)
+                    ? Colors.black
+                    : Colors.white)),
       ));
     }
 

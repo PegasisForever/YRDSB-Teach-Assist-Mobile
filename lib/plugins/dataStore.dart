@@ -76,4 +76,12 @@ class Config {
   static set showRecentUpdates(bool v) {
     prefs.setBool("show_recent_updates", v);
   }
+
+  static bool get showCourseCode {
+    return prefs.getBool("show_course_code") ?? true;
+  }
+
+  static set showCourseCode(bool v) {
+    prefs.setBool("show_course_code", v);
+  }
 }

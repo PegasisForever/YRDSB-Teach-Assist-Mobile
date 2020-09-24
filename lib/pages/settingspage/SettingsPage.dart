@@ -112,6 +112,23 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           ListTile(
+            title: Text(Strings.get("show_course_code_in_home_page")),
+            leading: Icon(Icons.code),
+            trailing: Switch(
+              value: Config.showCourseCode,
+              onChanged: (v) {
+                setState(() {
+                  Config.showCourseCode = v;
+                });
+              },
+            ),
+            onTap: () {
+              setState(() {
+                Config.showCourseCode = !Config.showCourseCode;
+              });
+            },
+          ),
+          ListTile(
             title: Text(Strings.get("show_recent_updates")),
             leading: Icon(Icons.new_releases),
             trailing: Switch(

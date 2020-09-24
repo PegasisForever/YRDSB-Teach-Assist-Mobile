@@ -18,7 +18,8 @@ class Strings {
       "plz_fill_in_ur_student_number": "Please fill in your student number",
       "plz_fill_in_ur_pwd": "Please fill in your password",
       "connection_failed": "Connection failed",
-      "student_number_or_password_incorrect": "Student number or password incorrect",
+      "student_number_or_password_incorrect":
+          "Student number or password incorrect",
       "server_internal_error": "Server internal error",
       "error_code": "Error code: ",
       "summary": "Summary",
@@ -42,7 +43,8 @@ class Strings {
       "cancel": "Cancel",
       "remove": "Remove",
       "removing": "Removing...",
-      "long_press_and_drag_to_reorder_the_list": "Long press and drag to reorder the list",
+      "long_press_and_drag_to_reorder_the_list":
+          "Long press and drag to reorder the list",
       "report_for_student": "Report for %s",
       "room_number": "Room %s",
       "marks_unavailable": "Marks unavailable",
@@ -87,12 +89,14 @@ class Strings {
       "dismiss": "Dismiss",
       "tap_to_view_detail": "You can tap on an item to view its details",
       "google_play_services": "Google Play Services",
-      "no_google_play_warning_content": "Google Play services is not supported by your device. "
-          "You will not be able to receive notifications.",
+      "no_google_play_warning_content":
+          "Google Play services is not supported by your device. "
+              "You will not be able to receive notifications.",
       "ok": "OK",
       "moodle": "Moodle",
       "cached": "cached",
-      "project_description": "The next-gen Teach Assist client for YRDSB. Project link: ",
+      "project_description":
+          "The next-gen Teach Assist client for YRDSB. Project link: ",
       "contact_info": "Contact Infomation",
       "send_feedback": "Send Feedback",
       "plz_fill_in_ur_contact_info": "Please fill in your contact infomation",
@@ -105,9 +109,11 @@ class Strings {
       "no_results_found": "No results found",
       "results_from": "Results from \"%s\"",
       "timeline_blank_text": "No updates yet",
-      "version_no_longer_supported": "Your APP version is no longer supported, please update.",
+      "version_no_longer_supported":
+          "Your APP version is no longer supported, please update.",
       "ur_ta_pwd_has_changed": "Your TA Password Has Changed",
-      "u_need_to_update_your_password": "You need to update your password in order to view up-to-date marks.",
+      "u_need_to_update_your_password":
+          "You need to update your password in order to view up-to-date marks.",
       "update_password": "Update Password",
       "what_if...": "What if .....",
       "i_got_a_new_mark": "I got a new mark?",
@@ -119,7 +125,8 @@ class Strings {
       "new_assignment": "New Assessment",
       "feedback:": "Feedback: ",
       "remove_assignment": "Remove Assessment \"%s\"?",
-      "it_will_be_restored": "It will be restored after disabling Assessment Calculator.",
+      "it_will_be_restored":
+          "It will be restored after disabling Assessment Calculator.",
       "assignment_title": "Assessment Title",
       "average_short": "Average",
       "advanced_mode": "Advanced Mode",
@@ -143,24 +150,32 @@ class Strings {
       "select_a_primary_color": "Select a Primary Color",
       "reset_all_tips": "Reset all tips",
       "tips_reset": "Tips reset",
-      "developed_by_students_for_students": "Developed by students for students.",
+      "developed_by_students_for_students":
+          "Developed by students for students.",
       "u_got_avg_in_this_assi": "You got average %s%% in this new assessment.",
       "u_got_full_in_this_assi": "You got full mark in this new assessment.",
-      "u_got_full_marks_in_this_assi": "You got full marks in this new assessment.",
+      "u_got_full_marks_in_this_assi":
+          "You got full marks in this new assessment.",
       "ur_new_avg_of_this_assi": "Your new average of this assessment is %s%%.",
-      "ur_avg_of_this_assi_dropped": "Your average of this assessment dropped from %s%% to %s%%.",
-      "ur_avg_of_this_assi_increased": "Your average of this assessment increased from %s%% to %s%%.",
-      "ur_avg_of_this_assi_didnt_change": "Your average of this assessment didn't change.",
+      "ur_avg_of_this_assi_dropped":
+          "Your average of this assessment dropped from %s%% to %s%%.",
+      "ur_avg_of_this_assi_increased":
+          "Your average of this assessment increased from %s%% to %s%%.",
+      "ur_avg_of_this_assi_didnt_change":
+          "Your average of this assessment didn't change.",
       "privacy_policy": "Privacy Policy",
       "support": "Support",
       "update": "Update",
       "updates": "Updates",
       "language": "Language",
-      "assi_edit_tip": "Drag the bar to edit, long press to toggle availability, tap to open detailed editing dialog.",
-      "hide_in_app_switcher_android": "Hide contents in app switcher and disable screenshots",
+      "assi_edit_tip":
+          "Drag the bar to edit, long press to toggle availability, tap to open detailed editing dialog.",
+      "hide_in_app_switcher_android":
+          "Hide contents in app switcher and disable screenshots",
       "hide_in_app_switcher_ios": "Hide contents in app switcher",
       "fire_info": "This fire will appear when you got over 90% on the course.",
-      "diamond_info": "This diamond will appear when you got over 99% on the course.",
+      "diamond_info":
+          "This diamond will appear when you got over 99% on the course.",
       "privacy_mode": "Privacy mode",
       "export_data": "Export data",
       "category": "Category",
@@ -201,11 +216,13 @@ class Strings {
       "refreshing": "Refreshing",
       "refresh_completed": "Refresh Completed",
       "refresh_failed": "Refresh Failed",
-      "cached_info": "The mark of this course was hidden by the teacher. The APP is displaying the old data.",
+      "cached_info":
+          "The mark of this course was hidden by the teacher. The APP is displaying the old data.",
       "announcement": "Announcement",
       "nightly": "Nightly",
       "build_number:": "Build: ",
-      "unavaliable_assi": "Teacher didn't finish marking or you didn't hand in this assessment.",
+      "unavaliable_assi":
+          "Teacher didn't finish marking or you didn't hand in this assessment.",
       "show_recent_updates": "Show recent updates in home page",
       "hide_this_course": "Hide this course",
       "restore_this_course": "Restore this course",
@@ -213,7 +230,8 @@ class Strings {
       "init_setup_text": "Customize this app.",
       "show_recent_updates?": "Show recent updates in home page?",
       "setup_wizard_finished": "Setup wizard finished.",
-      "u_can_reopen_this_page_later_in_the_settings": "You can re-open this page later in the settings.",
+      "u_can_reopen_this_page_later_in_the_settings":
+          "You can re-open this page later in the settings.",
       "setup_wizard": "Setup Wizard",
       "pervious": "Pervious",
       "next": "Next",
@@ -225,6 +243,7 @@ class Strings {
       "midterm": "Midterm",
       "(no_credit)": "(No Credit)",
       "no_active_courses": "No active courses, you may want to go to ",
+      "show_course_code_in_home_page": "Show course code in home page",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -355,7 +374,8 @@ class Strings {
       "select_a_primary_color": "请选择一个主色调",
       "reset_all_tips": "重置所有提示",
       "tips_reset": "提示已重置",
-      "developed_by_students_for_students": "Developed by students for students.",
+      "developed_by_students_for_students":
+          "Developed by students for students.",
       "u_got_avg_in_this_assi": "你在这项作业中获得了平均%s分。",
       "u_got_full_in_this_assi": "你在这项作业中获得了满分。",
       "u_got_full_marks_in_this_assi": "你在这项作业中获得了满分。",
@@ -437,11 +457,13 @@ class Strings {
       "midterm": "期中成绩",
       "(no_credit)": "（无学分）",
       "no_active_courses": "没有正在进行的课程，你可能想去",
+      "show_course_code_in_home_page": "在主页显示课程代码",
     }
   };
 
   static updateCurrentLanguage(BuildContext context) {
-    currentLanguage = Config.language ?? Localizations.localeOf(context).languageCode;
+    currentLanguage =
+        Config.language ?? Localizations.localeOf(context).languageCode;
   }
 
   static String get(String id, [BuildContext context]) {
