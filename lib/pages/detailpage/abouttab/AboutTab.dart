@@ -1,10 +1,8 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ta/model/Mark.dart';
-import 'package:ta/pages/detailpage/abouttab/ContributeCard.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
@@ -67,8 +65,7 @@ class AboutTabState extends State<AboutTab> with AutomaticKeepAliveClientMixin {
               style: TextStyle(height: 1.7),
             ),
           ),
-        ),
-        if (isBlank(course.name) && !isBlank(course.code)) ContributeCard(courseCode: course.code),
+        )
       ],
     );
   }
