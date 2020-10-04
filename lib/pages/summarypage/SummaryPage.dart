@@ -5,15 +5,14 @@ import 'package:after_layout/after_layout.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:sprintf/sprintf.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/network/network.dart';
 import 'package:ta/pages/drawerpages/SearchPage.dart';
 import 'package:ta/pages/drawerpages/TADrawer.dart';
 import 'package:ta/pages/drawerpages/openCustomTab.dart';
+import 'package:ta/pages/summarypage/SummaryAppBar.dart';
 import 'package:ta/pages/summarypage/courselist/SummaryCourseList.dart';
 import 'package:ta/pages/summarypage/section/AnnouncementSection.dart';
 import 'package:ta/pages/summarypage/section/CalendarSection.dart';
@@ -31,42 +30,12 @@ class SummaryPage extends StatefulWidget {
   _SummaryPageState createState() => _SummaryPageState();
 }
 
-class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<SummaryPage> {
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
-  Timer timer;
+class _SummaryPageState extends BetterState<SummaryPage>
+    with AfterLayoutMixin<SummaryPage> {
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool autoRefreshing = false;
-
-  String getUpdateText() {
-    var lastUpdateStr = prefs.getString("last_update-${currentUser.number}");
-    var updateText = "";
-    if (lastUpdateStr != null) {
-      var lastUpdateTime = DateTime.parse(lastUpdateStr);
-      var timePassed = DateTime.now().difference(lastUpdateTime);
-
-      if (timePassed.inSeconds < 60) {
-        updateText = Strings.get("just_updated");
-      } else if (timePassed.inMinutes < 60) {
-        if (timePassed.inMinutes == 1) {
-          updateText = Strings.get("last_update") + Strings.get("1_min_ago");
-        } else {
-          updateText = sprintf(Strings.get("last_update") + Strings.get("min_ago"), [timePassed.inMinutes.toString()]);
-        }
-      } else if (timePassed.inHours < 24) {
-        if (timePassed.inHours == 1) {
-          updateText = Strings.get("last_update") + Strings.get("1_hr_ago");
-        } else {
-          updateText = sprintf(Strings.get("last_update") + Strings.get("hr_ago"), [timePassed.inHours.toString()]);
-        }
-      } else {
-        updateText = Strings.get("last_update") + "${lastUpdateTime.month}/${lastUpdateTime.day}";
-      }
-    } else {
-      updateText = Strings.get("last_update") + Strings.get("unknown");
-    }
-
-    return updateText;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,18 +51,19 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
           right: max(sidePadding, 14),
           bottom: getBottomPadding(context) + 16,
         ),
-        children: <Widget>[
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: getSectionWidgets([
-              InitSetupSection(),
-              AnnouncementSection(),
-              CalendarSection(),
-              UpdatesSection(),
-            ]),
-          ),
-          SummaryCourseList()
-        ],
+        children: getSectionWidgets([
+          InitSetupSection(),
+          AnnouncementSection(),
+          CalendarSection(),
+          UpdatesSection(),
+        ])
+          ..add(FlatButton(
+            child: Text("setState"),
+            onPressed: () {
+              setState(() {});
+            },
+          ))
+          ..add(SummaryCourseList()),
       );
     } else {
       final theme = Theme.of(context);
@@ -112,9 +82,12 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
               ),
               TextSpan(
                 text: Strings.get("archived_marks"),
-                recognizer: TapGestureRecognizer()..onTap = () => Navigator.pushNamed(context, "/archived"),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () => Navigator.pushNamed(context, "/archived"),
                 style: Theme.of(context).textTheme.subhead.copyWith(
-                      color: isLightMode(context: context) ? lightLinkColor : darkLinkColor,
+                      color: isLightMode(context: context)
+                          ? lightLinkColor
+                          : darkLinkColor,
                       decoration: TextDecoration.underline,
                     ),
               ),
@@ -129,50 +102,12 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
       resizeToAvoidBottomInset: false,
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxScrolled) => [
-          SliverAppBar(
-            centerTitle: true,
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: IconButton(
-                color: Theme.of(context).iconTheme.color,
-                icon: Icon(Icons.menu),
-                onPressed: () {
-                  scaffoldKey.currentState.openDrawer();
-                },
-              ),
-            ),
-            title: Image(
-              image: AssetImage("assets/icons/app_logo_${isAndroid()?"android":"ios"}_small.png"),
-              height: 40,
-              width: 40,
-            ),
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 14),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    if (autoRefreshing)
-                      SpinKitDualRing(
-                        color: getGrey(100, context: context),
-                        lineWidth: 1.5,
-                        size: 18,
-                        duration: const Duration(milliseconds: 700),
-                      ),
-                    SizedBox(width: 4),
-                    Text(
-                      getUpdateText(),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(color: getGrey(100, context: context)),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-            floating: hasActiveCourses,
-            snap: hasActiveCourses,
-            elevation: hasActiveCourses ? null : 0,
-            pinned: !hasActiveCourses,
+          SummaryPageAppBar(
+            onOpenDrawer: () {
+              scaffoldKey.currentState.openDrawer();
+            },
+            isAutoRefreshing: autoRefreshing,
+            hasActiveCourses: hasActiveCourses,
           ),
         ],
         body: SmartRefresher(
@@ -209,7 +144,8 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
 
   @override
   afterFirstLayout(BuildContext context) {
-    if (prefs.getBool("show_no_google_play_warning") ?? true && supportsGooglePlay() == false) {
+    if (prefs.getBool("show_no_google_play_warning") ??
+        true && supportsGooglePlay() == false) {
       showDialog(
           context: context,
           builder: (context) {
@@ -235,39 +171,16 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
     startAutoRefresh();
   }
 
-  startTimer() {
-    timer?.cancel();
-    timer = Timer.periodic(new Duration(minutes: 1), (timer) {
-      setState(() {}); //update "updateText"
-    });
-  }
-
-  stopTimer() {
-    timer?.cancel();
-    timer = null;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    startTimer();
-  }
-
   @override
   void dispose() {
     super.dispose();
-    stopTimer();
     _refreshController.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
       startAutoRefresh();
-      startTimer();
-    } else {
-      stopTimer();
     }
   }
 
@@ -307,7 +220,9 @@ class _SummaryPageState extends BetterState<SummaryPage> with AfterLayoutMixin<S
 
   autoRefresh({bool noFetch, VoidCallback callBack}) async {
     var lastUpdateTime = prefs.getString("last_update-${currentUser.number}");
-    if (!(lastUpdateTime != null && DateTime.now().difference(DateTime.parse(lastUpdateTime)).inMinutes < 5)) {
+    if (!(lastUpdateTime != null &&
+        DateTime.now().difference(DateTime.parse(lastUpdateTime)).inMinutes <
+            5)) {
       try {
         await Future.wait(
           <Future>[
