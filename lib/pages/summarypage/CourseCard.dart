@@ -20,8 +20,9 @@ class CourseCard extends StatelessWidget {
       this.course,
       this.showIcons = true,
       this.showAnimations = true,
-      this.showPadding = true})
-      : super(key: Key(course.displayName));
+      this.showPadding = true,
+      Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,9 @@ class CourseCard extends StatelessWidget {
     if (course.room != null) {
       infoStr.add(sprintf(Strings.get("room_number"), [course.room]));
     }
-    if (Config.showCourseCode && course.code != null && course.code.isNotEmpty) {
+    if (Config.showCourseCode &&
+        course.code != null &&
+        course.code.isNotEmpty) {
       infoStr.add(course.code);
     }
 

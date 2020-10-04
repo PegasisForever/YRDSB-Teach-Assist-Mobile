@@ -11,7 +11,7 @@ class HidableCourseCard extends StatelessWidget {
   final Course course;
 
   HidableCourseCard({this.isShow, this.menuText, this.onMenuTap, this.course})
-      : super(key: Key(course.hashCode.toString()));
+      : super(key: Key(course.displayName + "-hidable"));
 
   @override
   Widget build(BuildContext context) {

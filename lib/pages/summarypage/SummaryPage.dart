@@ -57,12 +57,6 @@ class _SummaryPageState extends BetterState<SummaryPage>
           CalendarSection(),
           UpdatesSection(),
         ])
-          ..add(FlatButton(
-            child: Text("setState"),
-            onPressed: () {
-              setState(() {});
-            },
-          ))
           ..add(SummaryCourseList()),
       );
     } else {
