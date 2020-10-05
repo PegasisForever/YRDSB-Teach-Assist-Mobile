@@ -71,24 +71,28 @@ class CalendarState extends State<Calendar> {
             text: Strings.getLocalizedMonth(currentMonth),
             onBack: (currentMonth.year == 2019 && currentMonth.month == 1)
                 ? null
-                : () => jumpToDate(DateTime(currentMonth.year, currentMonth.month - 1)),
+                : () => jumpToDate(
+                    DateTime(currentMonth.year, currentMonth.month - 1)),
             onNext: (currentMonth.year == 2023 && currentMonth.month == 12)
                 ? null
-                : () => jumpToDate(DateTime(currentMonth.year, currentMonth.month + 1)),
+                : () => jumpToDate(
+                    DateTime(currentMonth.year, currentMonth.month + 1)),
           ),
         ),
         Expanded(
           child: PageView.builder(
             onPageChanged: (index) {
               setState(() {
-                currentMonth = DateTime((index / 12).floor() + 2019, index % 12 + 1);
+                currentMonth =
+                    DateTime((index / 12).floor() + 2019, index % 12 + 1);
                 widget.onMonthChanged(currentMonth);
               });
             },
             controller: pageController,
             itemCount: 5 * 12, //2019/1 - 2023/12
             itemBuilder: (context, index) {
-              var timeInPageView = DateTime((index / 12).floor() + 2019, index % 12 + 1);
+              var timeInPageView =
+                  DateTime((index / 12).floor() + 2019, index % 12 + 1);
               return ListView(
                 children: [
                   CalendarWeekDayIndicator(
@@ -141,7 +145,8 @@ class CalendarEvent extends StatelessWidget {
   final DateTime endDate;
   final EdgeInsets padding;
 
-  CalendarEvent({this.leading, this.name, this.startDate, this.endDate, this.padding});
+  CalendarEvent(
+      {this.leading, this.name, this.startDate, this.endDate, this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -165,7 +170,9 @@ class CalendarEvent extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              endDate == null ? date2Str(startDate) : period2Str(startDate, endDate),
+              endDate == null
+                  ? date2Str(startDate)
+                  : period2Str(startDate, endDate),
               textAlign: TextAlign.end,
             ),
           )
@@ -225,7 +232,9 @@ class CalendarWeekDayIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[for (final weekDay in WEEKDAYS) indicatorBuilder(context, weekDay)],
+      children: <Widget>[
+        for (final weekDay in WEEKDAYS) indicatorBuilder(context, weekDay)
+      ],
     );
   }
 }
@@ -236,12 +245,25 @@ class CalendarMonth extends StatelessWidget {
 
   CalendarMonth({this.startMonth, this.builder});
 
+  // fix day light saving times
+  DateTime round2NearestDay(DateTime date) {
+    if (date.hour == 0) {
+      return date;
+    } else if (date.hour < 12) {
+      return date.subtract(Duration(hours: date.hour));
+    } else {
+      return date.add(Duration(hours: 24 - date.hour));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var calendarRows = <Widget>[];
-    for (var startDate = startMonth.subtract(Duration(days: startMonth.weekday - 1));
-        startDate.year * 12 + startDate.month <= startMonth.year * 12 + startMonth.month;
-        startDate = startDate.add(Duration(days: 7))) {
+    for (var startDate = round2NearestDay(
+            startMonth.subtract(Duration(days: startMonth.weekday - 1)));
+        startDate.year * 12 + startDate.month <=
+            startMonth.year * 12 + startMonth.month;
+        startDate = round2NearestDay(startDate.add(Duration(days: 7)))) {
       calendarRows.add(CalendarRow(
         startDate: startDate,
         builder: builder,
