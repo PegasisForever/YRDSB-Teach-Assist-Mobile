@@ -106,7 +106,7 @@ class _LoginPageState extends BetterState<LoginPage> {
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: !_isLoading
-                            ? () async {
+                            ? () {
                                 FocusScope.of(context).unfocus();
                                 _startLogin(context);
                               }

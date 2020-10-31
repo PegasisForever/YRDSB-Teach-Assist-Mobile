@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:convert/convert.dart' as convert;
 import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
@@ -16,7 +17,7 @@ import 'package:ta/tools.dart';
 part 'gdns.dart';
 
 Uri baseUri = (kReleaseMode || kProfileMode || true)
-    ? Uri.https("api2.pegasis.site", "/yrdsb_ta/")
+    ? Uri.https("api.pegasis.site", "/yrdsb_ta/")
     : Uri.http("192.168.1.81:5004", "/");
 
 const int apiVersion = 12;
@@ -27,16 +28,18 @@ class HttpResponse {
 }
 
 Client _client;
-Client _getClient(){
-  // if (_client == null)
-    _client = IOClient(HttpClient()
-      ..badCertificateCallback = (cert, host, port) {
-        return true;
-      });
+
+Client _getClient() {
+  if (_client == null)
+    _client = IOClient(
+      HttpClient()
+        ..badCertificateCallback =
+            (cert, host, _) => _gdnsValidateCert(cert, host),
+    );
   return _client;
 }
 
-bool _fallback = false;
+bool _fallback = true;
 
 Future<HttpResponse> _post(Uri uri, body) async {
   Response response = await _getClient().post(
@@ -86,8 +89,8 @@ Future<HttpResponse> _postWithMetric(String path, body) async {
         print("Trying fallback method");
         try {
           res = await _fallbackPost(uri, body);
-        } catch (e) {
-          print("Fallback method failed: $e");
+        } catch (e, t) {
+          print("Fallback method failed: $e\n$t");
         }
       } else {
         print("Not trying fallback method: not a domain");
@@ -97,8 +100,8 @@ Future<HttpResponse> _postWithMetric(String path, body) async {
     print("fallback=true, using fallback method");
     try {
       res = await _fallbackPost(uri, body);
-    } catch (e) {
-      print("Fallback method failed: $e");
+    } catch (e, t) {
+      print("Fallback method failed: $e\n$t");
     }
   }
 
