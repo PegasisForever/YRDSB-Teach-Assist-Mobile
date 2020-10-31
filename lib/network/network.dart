@@ -39,7 +39,7 @@ Client _getClient() {
   return _client;
 }
 
-bool _fallback = true;
+bool _fallback = false;
 
 Future<HttpResponse> _post(Uri uri, body) async {
   Response response = await _getClient().post(
@@ -82,8 +82,8 @@ Future<HttpResponse> _postWithMetric(String path, body) async {
       print("Sending post request to $uri");
       res = await _post(uri, body);
       print("Successfully posted $uri");
-    } catch (e) {
-      print("Post failed: $e");
+    } catch (e, t) {
+      print("Post failed: $e\n$t");
       // fallback
       if (_isDomain(uri)) {
         print("Trying fallback method");
