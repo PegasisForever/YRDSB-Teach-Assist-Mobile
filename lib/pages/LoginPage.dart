@@ -41,9 +41,14 @@ class _LoginPageState extends BetterState<LoginPage> {
                   SizedBox(
                     height: 28,
                   ),
-                  Image.asset(
-                    "assets/icons/app_logo_${isAndroid() ? "android" : "ios"}.png",
-                    height: 130,
+                  GestureDetector(
+                    onDoubleTap: (){
+                      Navigator.pushNamed(context, "/logs");
+                    },
+                    child: Image.asset(
+                      "assets/icons/app_logo_${isAndroid() ? "android" : "ios"}.png",
+                      height: 130,
+                    ),
                   ),
                   Center(
                     child: Text(

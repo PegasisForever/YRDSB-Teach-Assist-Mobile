@@ -17,7 +17,7 @@ class LogPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.copy),
             onPressed: () async {
-              await FlutterClipboard.copy("your text to copy");
+              await FlutterClipboard.copy(logBuffer.join("\n"));
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
