@@ -244,6 +244,8 @@ class Strings {
       "(no_credit)": "(No Credit)",
       "no_active_courses": "No active courses, you may want to go to ",
       "show_course_code_in_home_page": "Show course code in home page",
+      "logs": "Logs",
+      "logs_copied": "All logs copied to clipboard.",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -341,6 +343,9 @@ class Strings {
       "results_from": "来自 “%s” 的结果",
       "timeline_blank_text": "暂无动态",
       "version_no_longer_supported": "您的APP版本已不受支持，请更新。",
+      "ur_ta_pwd_has_changed": "你的 Teachassist 密码已更改",
+      "u_need_to_update_your_password": "你需要更新你的密码以查看最新数据",
+      "update_password": "更新密码",
       "what_if...": "如果 .....",
       "i_got_a_new_mark": "新的成绩发布了？",
       "teacher_updated_my_mark": "老师给我加分了？",
@@ -458,6 +463,8 @@ class Strings {
       "(no_credit)": "（无学分）",
       "no_active_courses": "没有正在进行的课程，你可能想去",
       "show_course_code_in_home_page": "在主页显示课程代码",
+      "logs": "日志",
+      "logs_copied": "已复制所有日志到剪切板",
     }
   };
 

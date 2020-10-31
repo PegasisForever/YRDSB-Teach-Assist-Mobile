@@ -231,6 +231,12 @@ class _SettingsPageState extends State<SettingsPage> {
               testFile.writeAsStringSync(exportJSONString);
               ShareExtend.share(testFile.path, "file");
             },
+          ),ListTile(
+            title: Text(Strings.get("logs")),
+            leading: Icon(Icons.format_align_left),
+            onTap: () async {
+              Navigator.pushNamed(context, "/logs");
+            },
           ),
         ],
       ),

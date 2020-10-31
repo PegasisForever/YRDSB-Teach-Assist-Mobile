@@ -29,14 +29,14 @@ bool _gdnsValidateCert(X509Certificate cert, String host) {
   if (_gdnsCache.containsKey(domain)) {
     var gdnsResponse = _gdnsCache[domain];
     if (gdnsResponse.ip == host && listsEqual(gdnsResponse.sha1, cert.sha1)) {
-      print("gdns validate successed");
+      log("gdns validate successed");
       return true;
     } else {
-      print(
+      logError(
           "gdns validate failed: expected: {ip: ${gdnsResponse.ip}, sha1:${gdnsResponse.sha1}}, got: {ip: $host, sha1:${cert.sha1}}");
     }
   } else {
-    print(
+    logError(
         "gdns validate failed: _gdnsCache keys ${_gdnsCache.keys} does not contain domain $domain");
   }
   return false;

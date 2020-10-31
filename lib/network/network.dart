@@ -6,6 +6,7 @@ import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:http/io_client.dart';
+import 'package:ta/log.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/model/User.dart';
@@ -59,12 +60,12 @@ Future<HttpResponse> _post(Uri uri, body) async {
 
 //awa
 Future<HttpResponse> _fallbackPost(Uri uri, body) async {
-  print("Using GDNS to resolve $uri");
+  log("Using GDNS to resolve $uri");
   final resolvedUri = await _gdnsResolve(uri);
-  print("$uri resolved: $resolvedUri, sending post request");
+  log("$uri resolved: $resolvedUri, sending post request");
   final res = await _post(resolvedUri, body);
   _fallback = true;
-  print("Setting fallback to true");
+  log("Setting fallback to true");
   return res;
 }
 
@@ -79,37 +80,37 @@ Future<HttpResponse> _postWithMetric(String path, body) async {
 
   if (!_fallback) {
     try {
-      print("Sending post request to $uri");
+      log("Sending post request to $uri");
       res = await _post(uri, body);
-      print("Successfully posted $uri");
+      log("Successfully posted $uri");
     } catch (e, t) {
-      print("Post failed: $e\n$t");
+      logError("Post failed: $e",trace: t);
       // fallback
       if (_isDomain(uri)) {
-        print("Trying fallback method");
+        log("Trying fallback method");
         try {
           res = await _fallbackPost(uri, body);
         } catch (e, t) {
-          print("Fallback method failed: $e\n$t");
+          logError("Fallback method failed: $e",trace: t);
         }
       } else {
-        print("Not trying fallback method: not a domain");
+        log("Not trying fallback method: not a domain");
       }
     }
   } else {
-    print("fallback=true, using fallback method");
+    log("fallback=true, using fallback method");
     try {
       res = await _fallbackPost(uri, body);
     } catch (e, t) {
-      print("Fallback method failed: $e\n$t");
+      logError("Fallback method failed: $e",trace: t);
     }
   }
 
   if (res.statusCode != null) {
     metric.httpResponseCode = res.statusCode;
-    print("Post to $uri successed, got status code: ${res.statusCode}");
+    log("Post to $uri successed, got status code: ${res.statusCode}");
   } else {
-    print("Post to $uri failed.");
+    logError("Post to $uri failed.");
   }
   await metric.stop();
 

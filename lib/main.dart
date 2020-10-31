@@ -18,6 +18,7 @@ import 'package:ta/pages/drawerpages/AboutPage.dart';
 import 'package:ta/pages/drawerpages/AccountsList.dart';
 import 'package:ta/pages/drawerpages/EditAccount.dart';
 import 'package:ta/pages/drawerpages/FeedbackPage.dart';
+import 'package:ta/pages/logpage/LogPage.dart';
 import 'package:ta/pages/settingspage/SettingsPage.dart';
 import 'package:ta/pages/setuppage/SetupPage.dart';
 import 'package:ta/pages/summarypage/SummaryPage.dart';
@@ -163,6 +164,8 @@ class _AppState extends State<App> {
         return _createRoute(SettingsPage(), settings);
       case "/setup":
         return _createRoute(SetupPage(), settings);
+      case "/logs":
+        return _createRoute(LogPage(), settings);
     }
   }
 
