@@ -58,7 +58,6 @@ Future<HttpResponse> _post(Uri uri, body) async {
   return res;
 }
 
-//awa
 Future<HttpResponse> _fallbackPost(Uri uri, body) async {
   log("Using GDNS to resolve $uri");
   final resolvedUri = await _gdnsResolve(uri);
