@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:http/io_client.dart';
 import 'package:ta/model/Mark.dart';
 import 'package:ta/model/TimeLineUpdateModels.dart';
 import 'package:ta/model/User.dart';
@@ -12,9 +13,12 @@ import 'package:ta/plugins/packageinfo.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
-const String baseUrl = (kReleaseMode || kProfileMode)
-    ? "https://api.pegasis.site/yrdsb_ta/"
-    : "http://192.168.1.81:5004/";
+part 'gdns.dart';
+
+Uri baseUri = (kReleaseMode || kProfileMode || true)
+    ? Uri.https("api2.pegasis.site", "/yrdsb_ta/")
+    : Uri.http("192.168.1.81:5004", "/");
+
 const int apiVersion = 12;
 
 class HttpResponse {
@@ -22,36 +26,102 @@ class HttpResponse {
   int statusCode;
 }
 
-Future<HttpResponse> _postWithMetric(String url, body) async {
-  final metric = FirebasePerformance.instance.newHttpMetric(url, HttpMethod.Post);
+Client _client;
+Client _getClient(){
+  // if (_client == null)
+    _client = IOClient(HttpClient()
+      ..badCertificateCallback = (cert, host, port) {
+        return true;
+      });
+  return _client;
+}
+
+bool _fallback = false;
+
+Future<HttpResponse> _post(Uri uri, body) async {
+  Response response = await _getClient().post(
+    uri,
+    headers: {"api-version": apiVersion.toString()},
+    body: body,
+  );
+
+  var res = HttpResponse();
+  res.statusCode = response.statusCode;
+  if (res.statusCode == 200 && response.body != "") {
+    res.body = unGzip(response.bodyBytes);
+  }
+
+  return res;
+}
+
+//awa
+Future<HttpResponse> _fallbackPost(Uri uri, body) async {
+  print("Using GDNS to resolve $uri");
+  final resolvedUri = await _gdnsResolve(uri);
+  print("$uri resolved: $resolvedUri, sending post request");
+  final res = await _post(resolvedUri, body);
+  _fallback = true;
+  print("Setting fallback to true");
+  return res;
+}
+
+Future<HttpResponse> _postWithMetric(String path, body) async {
+  final uri = baseUri.replace(path: baseUri.path + path);
+  final metric = FirebasePerformance.instance
+      .newHttpMetric(uri.toString(), HttpMethod.Post);
 
   await metric.start();
 
   var res = HttpResponse();
-  try {
-    Response response =
-        await post(url, headers: {"api-version": apiVersion.toString()}, body: body);
 
-    res.statusCode = response.statusCode;
-    if (res.statusCode == 200 && response.body != "") {
-      res.body = unGzip(response.bodyBytes);
+  if (!_fallback) {
+    try {
+      print("Sending post request to $uri");
+      res = await _post(uri, body);
+      print("Successfully posted $uri");
+    } catch (e) {
+      print("Post failed: $e");
+      // fallback
+      if (_isDomain(uri)) {
+        print("Trying fallback method");
+        try {
+          res = await _fallbackPost(uri, body);
+        } catch (e) {
+          print("Fallback method failed: $e");
+        }
+      } else {
+        print("Not trying fallback method: not a domain");
+      }
     }
-
-    metric
-      ..responsePayloadSize = response.contentLength
-      ..httpResponseCode = response.statusCode;
-  } finally {
-    await metric.stop();
+  } else {
+    print("fallback=true, using fallback method");
+    try {
+      res = await _fallbackPost(uri, body);
+    } catch (e) {
+      print("Fallback method failed: $e");
+    }
   }
+
+  if (res.statusCode != null) {
+    metric.httpResponseCode = res.statusCode;
+    print("Post to $uri successed, got status code: ${res.statusCode}");
+  } else {
+    print("Post to $uri failed.");
+  }
+  await metric.stop();
 
   return res;
 }
 
 Future<String> regi(User user) async {
   var res = await _postWithMetric(
-      baseUrl + "regi",
-      jsonEncode(
-          {"user": user, "token": Config.firebaseToken, "language": Strings.currentLanguage}));
+    "regi",
+    jsonEncode({
+      "user": user,
+      "token": Config.firebaseToken,
+      "language": Strings.currentLanguage,
+    }),
+  );
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -63,9 +133,13 @@ Future<String> regi(User user) async {
 
 Future<void> deregi(User user) async {
   var res = await _postWithMetric(
-      baseUrl + "deregi",
-      jsonEncode(
-          {"user": user, "token": Config.firebaseToken, "language": Strings.currentLanguage}));
+    "deregi",
+    jsonEncode({
+      "user": user,
+      "token": Config.firebaseToken,
+      "language": Strings.currentLanguage,
+    }),
+  );
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -77,9 +151,13 @@ Future<void> deregi(User user) async {
 
 Future<String> getMarkTimeLine(User user) async {
   var res = await _postWithMetric(
-      baseUrl + "getmark_timeline",
-      jsonEncode(
-          {"user": user, "token": Config.firebaseToken, "language": Strings.currentLanguage}));
+    "getmark_timeline",
+    jsonEncode({
+      "user": user,
+      "token": Config.firebaseToken,
+      "language": Strings.currentLanguage,
+    }),
+  );
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -91,9 +169,13 @@ Future<String> getMarkTimeLine(User user) async {
 
 Future<String> updateNoFetch(User user) async {
   var res = await _postWithMetric(
-      baseUrl + "update_nofetch",
-      jsonEncode(
-          {"user": user, "token": Config.firebaseToken, "language": Strings.currentLanguage}));
+    "update_nofetch",
+    jsonEncode({
+      "user": user,
+      "token": Config.firebaseToken,
+      "language": Strings.currentLanguage,
+    }),
+  );
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -105,7 +187,12 @@ Future<String> updateNoFetch(User user) async {
 
 Future<String> getArchived(User user) async {
   var res = await _postWithMetric(
-      baseUrl + "getarchived", jsonEncode({"number": user.number, "password": user.password}));
+    "getarchived",
+    jsonEncode({
+      "number": user.number,
+      "password": user.password,
+    }),
+  );
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -117,13 +204,14 @@ Future<String> getArchived(User user) async {
 
 Future<void> sendFeedBack(String contactInfo, String feedback) async {
   var res = await _postWithMetric(
-      baseUrl + "feedback",
-      jsonEncode({
-        "contact_info": contactInfo,
-        "feedback": feedback,
-        "platform": isAndroid() ? "Android" : "iOS",
-        "version": packageInfo.version + " " + packageInfo.buildNumber,
-      }));
+    "feedback",
+    jsonEncode({
+      "contact_info": contactInfo,
+      "feedback": feedback,
+      "platform": isAndroid() ? "Android" : "iOS",
+      "version": packageInfo.version + " " + packageInfo.buildNumber,
+    }),
+  );
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -132,7 +220,10 @@ Future<void> sendFeedBack(String contactInfo, String feedback) async {
 }
 
 Future<String> getCalendar() async {
-  var res = await _postWithMetric(baseUrl + "getcalendar", {});
+  var res = await _postWithMetric(
+    "getcalendar",
+    {},
+  );
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -143,7 +234,10 @@ Future<String> getCalendar() async {
 }
 
 Future<String> getAnnouncement() async {
-  var res = await _postWithMetric(baseUrl + "getannouncement", {});
+  var res = await _postWithMetric(
+    "getannouncement",
+    {},
+  );
 
   int statusCode = res.statusCode;
   if (statusCode != 200) {
@@ -163,7 +257,9 @@ getAndSaveMarkTimeline(User user, {bool noFetch = false}) async {
   var json = jsonDecode(res) as Map<String, dynamic>;
 
   saveCourseListOf(user.number, json["course_list"],
-      time: json.containsKey("update_time") ? DateTime.parse(json["update_time"]) : null);
+      time: json.containsKey("update_time")
+          ? DateTime.parse(json["update_time"])
+          : null);
   saveTimelineOf(user.number, json["time_line"]);
 }
 
@@ -185,7 +281,10 @@ regiAndSave(User user) async {
 getAndSaveCalendar() async {
   var lastCalendarUpdateTime = prefs.getString("last_update_calendar");
   if (lastCalendarUpdateTime != null &&
-      DateTime.now().difference(DateTime.parse(lastCalendarUpdateTime)).inHours < 2) {
+      DateTime.now()
+              .difference(DateTime.parse(lastCalendarUpdateTime))
+              .inHours <
+          2) {
     return;
   }
 
@@ -197,7 +296,10 @@ getAndSaveCalendar() async {
 getAndSaveAnnouncement() async {
   var lastAnnouncementUpdateTime = prefs.getString("last_update_announcement");
   if (lastAnnouncementUpdateTime != null &&
-      DateTime.now().difference(DateTime.parse(lastAnnouncementUpdateTime)).inMinutes < 2) {
+      DateTime.now()
+              .difference(DateTime.parse(lastAnnouncementUpdateTime))
+              .inMinutes <
+          2) {
     return;
   }
 

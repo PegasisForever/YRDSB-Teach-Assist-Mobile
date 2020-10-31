@@ -42,7 +42,7 @@ class _LoginPageState extends BetterState<LoginPage> {
                     height: 28,
                   ),
                   Image.asset(
-                    "assets/icons/app_logo_${isAndroid()?"android":"ios"}.png",
+                    "assets/icons/app_logo_${isAndroid() ? "android" : "ios"}.png",
                     height: 130,
                   ),
                   Center(
@@ -51,13 +51,16 @@ class _LoginPageState extends BetterState<LoginPage> {
                       style: TextStyle(fontSize: 26),
                     ),
                   ),
-                  Center(child: Text("Teach Assist Pro", style: TextStyle(fontSize: 24))),
+                  Center(
+                      child: Text("Teach Assist Pro",
+                          style: TextStyle(fontSize: 24))),
                   SizedBox(
                     height: 80,
                   ),
                   Center(
                     widthFactor: 0,
-                    child: Text(Strings.get("login_your_account", context), style: Theme.of(context).textTheme.title),
+                    child: Text(Strings.get("login_your_account", context),
+                        style: Theme.of(context).textTheme.title),
                   ),
                   SizedBox(height: 18),
                   EditText(
@@ -68,7 +71,8 @@ class _LoginPageState extends BetterState<LoginPage> {
                     hint: Strings.get("student_number"),
                     errorText: _studentNumberErrorText,
                     icon: Icons.account_circle,
-                    inputType: TextInputType.numberWithOptions(signed: false, decimal: false),
+                    inputType: TextInputType.numberWithOptions(
+                        signed: false, decimal: false),
                   ),
                   SizedBox(height: 12),
                   EditText(
@@ -95,13 +99,14 @@ class _LoginPageState extends BetterState<LoginPage> {
                             ),
                       RaisedButton(
                         color: Theme.of(context).colorScheme.primary,
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
                         child: Text(
                           Strings.get("login").toUpperCase(),
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: !_isLoading
-                            ? () {
+                            ? () async {
                                 FocusScope.of(context).unfocus();
                                 _startLogin(context);
                               }
@@ -124,7 +129,8 @@ class _LoginPageState extends BetterState<LoginPage> {
   _startLogin(BuildContext context) async {
     if (_studentNumberController.text == "") {
       setState(() {
-        _studentNumberErrorText.text = Strings.get("plz_fill_in_ur_student_number");
+        _studentNumberErrorText.text =
+            Strings.get("plz_fill_in_ur_student_number");
       });
       return;
     }
@@ -139,7 +145,8 @@ class _LoginPageState extends BetterState<LoginPage> {
       _isLoading = true;
     });
 
-    var user = User(_studentNumberController.text, _passwordController.text, true);
+    var user =
+        User(_studentNumberController.text, _passwordController.text, true);
 
     try {
       await regiAndSave(user);
@@ -160,17 +167,22 @@ class _LoginPageState extends BetterState<LoginPage> {
 
   _handleError(Exception e, BuildContext context) {
     if (e is SocketException) {
-      if (e.message == "Connection failed" || e.osError.message == "Connection refused") {
+      if (e.message == "Connection failed" ||
+          e.osError.message == "Connection refused") {
         showSnackBar(context, Strings.get("connection_failed"));
       } else {
-        showSnackBar(context, Strings.get("error") + (e.message != "" ? e.message : e.osError.message));
+        showSnackBar(
+            context,
+            Strings.get("error") +
+                (e.message != "" ? e.message : e.osError.message));
       }
     } else if (e is HttpException) {
       switch (e.message) {
         case "401":
           {
             setState(() {
-              _passwordErrorText.text = Strings.get("student_number_or_password_incorrect");
+              _passwordErrorText.text =
+                  Strings.get("student_number_or_password_incorrect");
             });
             break;
           }
