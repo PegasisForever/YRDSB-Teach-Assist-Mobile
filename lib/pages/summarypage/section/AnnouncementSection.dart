@@ -53,12 +53,14 @@ class _AnnouncementSectionState extends State<AnnouncementSection> {
               fitContent: false,
               styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(
                 a: TextStyle(
-                  color: isLightMode(context: context) ? lightLinkColor : darkLinkColor,
+                  color: isLightMode(context: context)
+                      ? lightLinkColor
+                      : darkLinkColor,
                   decoration: TextDecoration.underline,
                 ),
               ),
               data: announcement,
-              onTapLink: (url) {
+              onTapLink: (_, url, __) {
                 openCustomTab(context, url);
               },
             ),

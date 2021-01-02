@@ -56,15 +56,14 @@ class _EditAssignmentDialogState extends BetterState<EditAssignmentDialog> with 
   @override
   void afterFirstLayout(BuildContext context) {
     if (!isAndroid()) {
-      KeyboardVisibilityNotification().addNewListener(
-        onChange: (bool visible) {
-          if (visible) {
-            showOverlay(context);
-          } else {
-            removeOverlay();
-          }
-        },
-      );
+      var keyboardVisibilityController = KeyboardVisibilityController();
+      keyboardVisibilityController.onChange.listen((bool visible) {
+        if (visible) {
+          showOverlay(context);
+        } else {
+          removeOverlay();
+        }
+      });
     }
   }
 
@@ -233,7 +232,6 @@ class _EditAssignmentDialogState extends BetterState<EditAssignmentDialog> with 
 
   showOverlay(BuildContext context) {
     if (overlayEntry != null) return;
-    print("show");
     OverlayState overlayState = Overlay.of(context);
     overlayEntry = OverlayEntry(builder: (context) {
       return Positioned(
