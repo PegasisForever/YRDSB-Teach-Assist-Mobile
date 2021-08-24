@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ta/model/CalendarModels.dart';
+import 'package:ta/model/User.dart';
 import 'package:ta/pages/calendarpage/Calendar.dart';
+import 'package:ta/plugins/dataStore.dart';
 import 'package:ta/res/Strings.dart';
 import 'package:ta/tools.dart';
 
@@ -15,7 +17,8 @@ class CalendarSection extends SectionCandidate {
   @override
   bool shouldDisplay() {
     calendar.clear();
-    calendar.addAll(readCalendar(""));
+    calendar.addAll(readCalendar(
+        prefs.getString("calendar-diff-${currentUser.number}") ?? "default"));
 
     var today = DateTime.now();
     var days = [for (int i = 0; i < 5; i++) today.add(Duration(days: i))];
@@ -103,7 +106,9 @@ class _CalenderDate extends StatelessWidget {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: dateType == DateType.FILL ? getPrimary() : Colors.grey.withAlpha(40),
+            color: dateType == DateType.FILL
+                ? getPrimary()
+                : Colors.grey.withAlpha(40),
             shape: BoxShape.circle,
             border: dateType == DateType.OUTLINE
                 ? Border.all(
@@ -116,7 +121,9 @@ class _CalenderDate extends StatelessWidget {
             child: Text(
               date.toString(),
               style: TextStyle(
-                color: dateType == DateType.FILL ? getGrey(-400, context: context) : null,
+                color: dateType == DateType.FILL
+                    ? getGrey(-400, context: context)
+                    : null,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),

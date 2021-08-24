@@ -46,8 +46,8 @@ Map<String, Map<String, String>> readCalendarDiffs() {
 
   var json = jsonDecode(str);
   var diffsJson = json["calendar_difference"] as Map<String, dynamic>;
-  return diffsJson
-      .map((diffName, diffJson) => MapEntry(diffName, diffJson["name"]));
+  return diffsJson.map((diffName, diffJson) =>
+      MapEntry(diffName, diffJson["name"].cast<String, String>()));
 }
 
 extension CalenderList on List<Event> {

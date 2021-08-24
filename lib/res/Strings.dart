@@ -246,6 +246,7 @@ class Strings {
       "show_course_code_in_home_page": "Show course code in home page",
       "logs": "Logs",
       "logs_copied": "All logs copied to clipboard.",
+      "select_calendar": "Select the calendar your school uses:",
     },
     "zh": {
       "login_your_account": "登录帐号：",
@@ -465,6 +466,7 @@ class Strings {
       "show_course_code_in_home_page": "在主页显示课程代码",
       "logs": "日志",
       "logs_copied": "已复制所有日志到剪切板",
+      "select_calendar": "选择您学校所使用的日历：",
     }
   };
 

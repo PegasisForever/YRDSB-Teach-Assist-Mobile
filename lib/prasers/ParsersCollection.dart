@@ -19,6 +19,7 @@ const _JSONCourseListParsers = {
   10: CourseListParserV10.parseJSONCourseList,
   11: CourseListParserV11.parseJSONCourseList,
   12: CourseListParserV12.parseJSONCourseList,
+  13: CourseListParserV12.parseJSONCourseList,
 };
 
 List<Course> parseCourseList(Map<String, dynamic> json) {
@@ -45,6 +46,7 @@ const _jsonTimelineParsers = {
   10: TimelineParserV9.parseTimeline,
   11: TimelineParserV9.parseTimeline,
   12: TimelineParserV9.parseTimeline,
+  13: TimelineParserV9.parseTimeline,
 };
 
 List<TAUpdate> parseTimeLine(Map<String, dynamic> json) {
