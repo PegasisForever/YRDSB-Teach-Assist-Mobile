@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_privacy_screen/flutter_privacy_screen.dart';
-import 'package:syncfusion_flutter_core/core.dart';
-import 'package:ta/licence.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:ta/model/User.dart';
 import 'package:ta/pages/LoginPage.dart';
 import 'package:ta/pages/archivedpage/ArchivedCoursesPage.dart';
@@ -33,9 +32,9 @@ import 'package:ta/widgets/ZoomPageTransition.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+  await Firebase.initializeApp();
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   await initPref();
-  SyncfusionLicense.registerLicense(SyncfusionCommunityLicenceKey);
   initPackageInfo();
   initFirebaseMsg();
   if (Config.hideAppContent) {
@@ -45,7 +44,7 @@ void main() async {
 
   runZoned(() {
     runApp(App());
-  }, onError: Crashlytics.instance.recordError);
+  }, onError: FirebaseCrashlytics.instance.recordError);
 }
 
 class App extends StatefulWidget {

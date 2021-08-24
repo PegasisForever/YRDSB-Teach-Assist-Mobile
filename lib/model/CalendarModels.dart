@@ -8,25 +8,46 @@ class Event {
 
   DateTime startDate;
   DateTime endDate;
-}
 
-List<Event> readCalendar() {
-  var str = prefs.getString("calendar");
-  var list = <Event>[];
-  if (str == null) return list;
-  jsonDecode(str).forEach((obj) {
+  static Event fromJson(dynamic json) {
     var event = Event();
-    obj["name"].forEach((language, name) {
+    json["name"].forEach((language, name) {
       event.name[language] = name;
     });
-    event.startDate = str2Date(obj["start_date"]);
-    event.endDate = obj["end_date"] == null
+    event.startDate = str2Date(json["start_date"]);
+    event.endDate = json["end_date"] == null
         ? null
-        : str2Date(obj["end_date"]).add(Duration(hours: 23, minutes: 59));
-    list.add(event);
-  });
+        : str2Date(json["end_date"]).add(Duration(hours: 23, minutes: 59));
+    return event;
+  }
+}
 
-  return list;
+List<Event> readCalendar(String name) {
+  var str = prefs.getString("calendar_v2");
+  if (str == null) return [];
+
+  var json = jsonDecode(str);
+  var calendar = (json["calendar_common"] as List<dynamic>)
+      .map((e) => Event.fromJson(e))
+      .toList(growable: true);
+  try {
+    var calendarDiff =
+        (json["calendar_difference"][name]["events"] as List<dynamic>)
+            .map((e) => Event.fromJson(e));
+    calendar.addAll(calendarDiff);
+  } catch (e) {}
+
+  return calendar;
+}
+
+Map<String, Map<String, String>> readCalendarDiffs() {
+  var str = prefs.getString("calendar_v2");
+  if (str == null) return {};
+
+  var json = jsonDecode(str);
+  var diffsJson = json["calendar_difference"] as Map<String, dynamic>;
+  return diffsJson
+      .map((diffName, diffJson) => MapEntry(diffName, diffJson["name"]));
 }
 
 extension CalenderList on List<Event> {

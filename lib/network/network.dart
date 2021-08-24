@@ -17,11 +17,11 @@ import 'package:ta/tools.dart';
 
 part 'gdns.dart';
 
-Uri baseUri = (kReleaseMode || kProfileMode || true)
+Uri baseUri = (kReleaseMode || kProfileMode)
     ? Uri.https("api.pegasis.site", "/yrdsb_ta/")
-    : Uri.http("192.168.1.81:5004", "/");
+    : Uri.http("192.168.0.81:5004", "/");
 
-const int apiVersion = 12;
+const int apiVersion = 13;
 
 class HttpResponse {
   String body = "";
@@ -282,7 +282,7 @@ regiAndSave(User user) async {
 }
 
 getAndSaveCalendar() async {
-  var lastCalendarUpdateTime = prefs.getString("last_update_calendar");
+  var lastCalendarUpdateTime = prefs.getString("last_update_calendar_v2");
   if (lastCalendarUpdateTime != null &&
       DateTime.now()
               .difference(DateTime.parse(lastCalendarUpdateTime))
@@ -292,8 +292,8 @@ getAndSaveCalendar() async {
   }
 
   var res = await getCalendar();
-  prefs.setString("last_update_calendar", DateTime.now().toString());
-  prefs.setString("calendar", res);
+  prefs.setString("last_update_calendar_v2", DateTime.now().toString());
+  prefs.setString("calendar_v2", res);
 }
 
 getAndSaveAnnouncement() async {

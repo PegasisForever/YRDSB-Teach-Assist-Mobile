@@ -18,7 +18,7 @@ class _CalendarPageState extends BetterState<CalendarPage> {
   Widget build(BuildContext context) {
     super.build(context);
     var today = DateTime.now();
-    List<Event> calendar = readCalendar();
+    List<Event> calendar = readCalendar("");
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.get("calendar")),

@@ -15,7 +15,7 @@ class CalendarSection extends SectionCandidate {
   @override
   bool shouldDisplay() {
     calendar.clear();
-    calendar.addAll(readCalendar());
+    calendar.addAll(readCalendar(""));
 
     var today = DateTime.now();
     var days = [for (int i = 0; i < 5; i++) today.add(Duration(days: i))];
